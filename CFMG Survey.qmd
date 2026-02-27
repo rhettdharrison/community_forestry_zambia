@@ -1,0 +1,516 @@
+---
+title: "CFMG Backgroud"
+author: "Rhett D Harrison"
+format: 
+        html: default
+        pdf: default
+editor: visual
+---
+
+```{r}
+#| label: Load_data_and_libraries
+#| include: false
+
+library(tidyverse)
+library(grid)
+library(gt)
+library(ggplot2)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(scales)
+
+load("cfmg.RData")
+```
+
+# Overview of survey data
+
+## Community Forests
+
+The sampling protocol initially targeted 80 community forests (CF) across eight provinces. However, some provinces had very few CFs and hence we selected up to 12 CFs from provinces with more. In addition, occasionally we were unable to survey a CF when Community Forest Management Group (CFMG) members were not available.
+
+### Number of Community Forests surveyed
+
+The final sample included 75 CFs. The numbers per province are given in @fig-CFMGs_by_Province.
+
+```{r}
+#| label: fig-CFMGs_by_Province
+#| code-fold: true
+#| warning: false         
+#| message: false 
+#| error:   false
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-cap: "Number of community forests surveyed by province."
+#| fig-cap-location: bottom
+
+cfmg |> filter(!is.na(Name)) |>
+        group_by(province,Name) |>
+        summarise(
+                Obs = sign(n()),
+                .groups = "drop"
+        ) |>
+        group_by(province) |>
+        summarise(
+                Obs = sum(Obs)
+        ) |>
+        ggplot(aes(x = province, y = Obs)) +
+        geom_col(position = position_dodge(width = 0.9), color = "black") +
+        theme(legend.position = "none",
+              axis.text.x = element_text(size = 14, angle = 45,
+                                         hjust = 1, vjust = 1),
+              axis.text.y = element_text(size = 14),
+              axis.title = element_text(size = 18),
+              ) +
+        ylim(0,15) +
+        xlab("") +
+        ylab("Number of Community Forests")
+
+```
+
+### Size of community forests surveyed
+
+The CFs surveyed range widely in size from less than 100 ha to over 10,000 ha (@fig-CFMGs_size).
+
+```{r}
+#| label: fig-CFMGs_size
+#| code-fold: true
+#| warning: false         
+#| message: false 
+#| error:   false
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-cap: "Size of community forests surveyed by province."
+#| fig-cap-location: bottom
+
+cfmg |> group_by(province,Name) |>
+        summarise(
+                Size = mean(`Size (Hectares)`, na.rm = TRUE),
+                .groups = "drop"
+        ) |>
+        ggplot(aes(x = province, y = Size)) +
+        geom_boxplot() +
+        geom_jitter()+
+        scale_y_log10() +
+        stat_summary(fun=mean, geom="point", size=3, col = 'red') +
+        theme(legend.position = "none",
+              axis.text.x = element_text(size = 14, angle = 45,
+                                         hjust = 1, vjust = 1),
+              axis.text.y = element_text(size = 14),
+              axis.title = element_text(size = 18),
+              ) +
+        #ylim(0,15) +
+        xlab("") +
+        ylab("Size of Community Forests")
+
+```
+
+### Age of community forests
+
+The regulations enabling the formation of community forests were approved in 2018. Hence, the oldest CFs are approximately 8 yrs. However, most are less than 3 yrs. We randomly selected CFs from among those that were at least 1 yr old in Jan 2024 (@fig-CFMGs_age). However, the data on Establishment Date has some errors, so some CFs appear younger.
+
+```{r}
+#| label: fig-CFMGs_age
+#| code-fold: true
+#| warning: false         
+#| message: false 
+#| error:   false
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-cap: "Age of community forests surveyed by province."
+#| fig-cap-location: bottom
+
+cfmg |> group_by(province,Name) |>
+        summarise(
+                Mean_date = mean(`Date Established`),
+                .groups = "drop"
+        ) |>
+        mutate(
+                Age = interval(Mean_date,ymd("2025-01-01")) / dyears(1),
+        ) |>
+        ggplot(aes(x = province, y = Age)) +
+        geom_boxplot() +
+        geom_jitter()+
+        scale_y_continuous(limits = c(0,8)) +
+        stat_summary(fun=mean, geom="point", size=3, col = 'red') +
+        theme(legend.position = "none",
+              axis.text.x = element_text(size = 14, angle = 45,
+                                         hjust = 1, vjust = 1),
+              axis.text.y = element_text(size = 14),
+              axis.title = element_text(size = 18),
+              ) +
+        xlab("") +
+        ylab("Age of Community Forests on 01/01/2025")
+
+```
+
+## Interviews
+
+### Number of interviews
+
+A total of `{r} with(cfmg, sum(table(cfmg_name)))` interviews across `{r} with(cfmg, sum(sign(table(cfmg_name))))` Community Forest Management Groups (CFMGs) were surveyed across the eight provinces. The number of interviews per CFMG varied from six to 14 (@fig-Interviews_by_Province).
+
+```{r}
+#| label: fig-Interviews_by_Province
+#| code-fold: true
+#| warning: false         
+#| message: false 
+#| error:   false
+#| echo: false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-cap: "Number of interviews per CFMG. Mean and standard deviation of the number of interviews held per CFMG by province"
+#| fig-cap-location: bottom
+
+cfmg |> group_by(province,cfmg_name) |>
+        summarise(
+                Obs = n(),
+                .groups = "drop"
+        ) |>
+        group_by(province) |>
+        summarise(
+                n_int = mean(Obs),
+                sd_int = sd(Obs),
+                .groups = "drop"
+        ) |>
+        ggplot(aes(x = province, y = n_int)) +
+        geom_col(position = position_dodge(width = 0.9), color = "black") +
+        geom_errorbar(aes(ymin = n_int - sd_int, ymax = n_int + sd_int),
+                      position = position_dodge(width = 0.9),
+                      width    = 0.25, 
+                      linewidth = 0.8
+                      ) +
+        theme(legend.position = "none",
+              axis.text.x = element_text(size = 14, angle = 45,
+                                         hjust = 1, vjust = 1),
+              axis.text.y = element_text(size = 14),
+              axis.title = element_text(size = 18),
+              ) +
+        ylim(0,15) +
+        xlab("") +
+        ylab("Number of interviews")
+
+```
+
+In every CFMG, we aimed to hold four Focal Group Discussions (FDGs) with the (i) CFMG Executive, (ii) Community members - male, (iii) Community members - female, and (iv) Community members - youth. Below (@tbl-Breakdown_FGD_by_type) are the total numbers of the different categories of FDG we were able to conduct. As can be seen, we were unable to arrange FGDs for community males and youths in some CFMGs. We have an extra FGD for female community members, because in one case two groups were surveyed.
+
+```{r}
+#| label: tbl-Breakdown_FGD_by_type
+#| code-fold: true
+#| echo: false
+#| tbl-cap: "Number of Focal Group Discussions by type"
+
+cfmg |> filter(interview_type != "individual_interview") |>
+        droplevels() |>
+        group_by(interview_type) |>
+        summarise(
+                Obs = n()
+        ) |>
+        mutate(
+                interview_type = case_when(
+                        interview_type == "cfmg_executive" ~  "CFMG Executive",
+                        interview_type == "cfmg_female" ~  "Community - Female",
+                        interview_type == "cfmg_male" ~  "Community - Male",
+                        interview_type == "cfmg_youth" ~  "Community - Youth",
+                        TRUE                               ~ interview_type
+                )
+        ) |>
+        gt(rowname_col = "interview_type") |>
+        tab_stubhead(label = "FDG type")
+```
+
+The number of individual interviews with key stakeholders also varied among the CFMGs. However, we attempted to hold interviews with at least one CFMG Executive member (usually the secretary), the District Forest Officer and the community headmen or headwoman (@tbl-Breakdown_interviews_by_interviewee_role).
+
+```{r}
+#| label: tbl-Breakdown_interviews_by_interviewee_role
+#| code-fold: true
+#| warning: false         
+#| message: false 
+#| error:   false
+#| echo: false
+#| tbl-cap: "Number of Individual Interviews by interviewee role"
+ 
+cfmg |> filter(!is.na(interviewee_role)) |>
+        group_by(interviewee_role) |>
+        summarise(
+                Obs = n()
+        ) |>
+        mutate(
+                interviewee_role = case_when(
+                        interviewee_role == "cfmg_exec_member" ~  "CFMG Executive",
+                        interviewee_role == "cfmg_member" ~  "Community member",
+                        interviewee_role == "trad_leader" ~  "Traditional leader",
+                        interviewee_role == "dfo" ~  "District Forest Officer",
+                        interviewee_role == "NGO_rep" ~  "NGO representative",
+                        TRUE                               ~ interviewee_role)
+                ) |>
+        gt(rowname_col = "interviewee_role") |>
+        tab_stubhead(label = "Interviewee Role")
+```
+
+### Gender breakdown of interviewees
+
+Reflecting gender biases among the stakeholder groups, there was a much higher representation of men than of women among the interviewees (@tbl-Gender_breakdown_among_FGDs, @fig-Gender_breakdown_among_individual_interviewees).
+
+```{r}
+#| label: tbl-Gender_breakdown_among_FGDs
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "Gender and youth breakdown of FGDs. Mean number of participants in each category."
+
+cfmg |> filter(interview_type != "individual_interview") |>
+        group_by(interview_type) |>
+        summarise(
+                Male = mean(senior_male),
+                Female = mean(senior_female),
+                `Youth-male` = mean(youth_male),
+                `Youth-female` = mean(youth_female)
+        ) |>
+        mutate(
+                interview_type = case_when(
+                        interview_type == "cfmg_executive" ~  "CFMG Executive",
+                        interview_type == "cfmg_female" ~  "Community - Female",
+                        interview_type == "cfmg_male" ~  "Community - Male",
+                        interview_type == "cfmg_youth" ~  "Community - Youth",
+                        TRUE                               ~ interview_type
+                )
+        ) |>
+        gt(
+                rowname_col = "interview_type"
+        ) |>
+        tab_stubhead(label = "FDG Type") |>
+                cols_label(
+                        Male  = "Senior Male",
+                        Female = "Senior Female",
+                        `Youth-male`   = "Youth Male",
+                        `Youth-female` = "Youth Female"
+                        ) |>
+        fmt_number(n_sigfig    = 2,
+                   drop_trailing_zeros = TRUE) 
+
+```
+
+```{r}
+#| label: fig-Gender_breakdown_among_individual_interviewees
+#| code-fold: true
+#| warning: false         
+#| message: false 
+#| error:   false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-cap: "Gender breakdown of individual interviews."
+#| fig-cap-location: bottom
+
+cfmg |> filter(interview_type == "individual_interview") |>
+        group_by(interviewee_role,demo_information_interviewee_gender) |>
+        summarise(
+                Obs = n()
+        ) |>
+        rename(
+                Gender = demo_information_interviewee_gender
+        ) |>
+        mutate(
+    Gender = tolower(Gender),
+    Obs_plot = if_else(Gender == "female", -Obs, Obs),
+    interviewee_role = case_when(
+            interviewee_role == "trad_leader" ~ "Traditional leader",
+            interviewee_role == "NGO_rep" ~ "NGO representative",
+            interviewee_role == "dfo" ~ "District Forest Officer",
+            interviewee_role == "cfmg_member" ~ "Community member",
+            interviewee_role == "cfmg_exec_member" ~ "CFMG executive",
+    )
+  ) |>
+        ggplot(aes(x = interviewee_role, y = Obs_plot, fill = Gender)) +
+        geom_col(position = "identity") + 
+        coord_flip() +
+        scale_y_continuous(
+                breaks = seq(-20, 50, by = 10), 
+                labels = abs,
+                limits = c(-20,50)
+                ) +
+        scale_fill_manual(
+                values = c("female" = "#FFAB91", "male" = "#80CBC4"),
+                labels = c("Female", "Male"),
+                name = "Gender"
+                ) +
+        geom_hline(yintercept = 0, color = "grey30", linewidth = 0.7) +
+        geom_vline(xintercept = 0, color = "grey30", linewidth = 0.7) +
+  
+  labs(
+          x = NULL,
+          y = NULL) +
+  theme_minimal(base_size = 13) +
+        theme(
+                legend.position = "bottom",
+                legend.key.justification = "centre",
+      
+    # Remove all vertical grid lines except the zero line (already kept via geom_vline)
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    
+    axis.text.y = element_text(size = 14, vjust = 0.5),
+    axis.text.x = element_text(size = 14),
+    plot.margin = margin(t = 50, r = 15, b = 10, l = 15)
+        )
+ 
+```
+
+### Age breakdown of intrerviewees
+
+The ages of interviewees were broadly similar among men and women (@fig-Age_of_interviewees). While the median age of individual interviewees was slightly lower among men, the mean age was slight higher. This arises because the male sample included some much older men.
+
+```{r}
+#| label: fig-Age_of_interviewees
+#| code-fold: true
+#| warning: false         
+#| message: false 
+#| error:   false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-cap: "The age of individual interviewees by gender"
+#| fig-cap-location: bottom
+
+cfmg |> filter(!is.na(demo_information_interviewee_gender)) |>
+        ggplot(aes(x = demo_information_interviewee_gender, y = demo_information_interviewee_age, fill = demo_information_interviewee_gender)) +
+        geom_boxplot() +
+        geom_jitter()+
+        stat_summary(fun=mean, geom="point", size=3, col = 'red') +
+        scale_fill_manual(
+    values = c("female" = "#FFAB91", "male" = "#80CBC4"),
+    labels = c("Female", "Male"),   
+    name = "Gender"
+  ) +
+        scale_y_continuous(
+                limits = c(20,90)
+        ) +
+        theme(legend.position = "none",
+              axis.text.y = element_text(size = 14),
+              axis.text.x = element_text(size = 14, angle = 0, vjust = 1, hjust=0.5),
+              axis.title = element_text(size = 18)) +
+        xlab("") +
+        ylab("Age of interviewees")
+
+```
+
+### Years interviewees have lived in their communities
+
+When we examine the number of years living in the community (@fig-Years_living_in_community_gender), we find that the men interviewed had on average lived in the community longer than the women interviewed. In addition, the results reveal that some people interviewed had moved into the community in recent years.
+
+```{r}
+#| label: fig-Years_living_in_community_gender
+#| code-fold: true
+#| warning: false         
+#| message: false 
+#| error:   false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-cap: "The number of years individual interviewees claimed to have lived in the community by gender"
+#| fig-cap-location: bottom
+
+cfmg |> filter(!is.na(demo_information_interviewee_gender)) |>
+        ggplot(aes(x = demo_information_interviewee_gender,
+                   y = demo_information_interviewee_years_living_comm,
+                   fill = demo_information_interviewee_gender)) +
+        geom_boxplot() +
+        geom_jitter()+
+        stat_summary(fun=mean, geom="point", size=3, col = 'red') +
+        scale_fill_manual(
+    values = c("female" = "#FFAB91", "male" = "#80CBC4"),
+    labels = c("Female", "Male"),   
+    name = "Gender"
+  ) +
+        scale_y_continuous(
+                limits = c(0,80)
+        ) +
+        theme(legend.position = "none",
+              axis.text.y = element_text(size = 14),
+              axis.text.x = element_text(size = 14, angle = 0, vjust = 1, hjust=0.5),
+              axis.title = element_text(size = 18)) +
+        xlab("") +
+        ylab("Years in community")
+
+```
+
+Looking at the same information by interviewee role (@fig-Years_living_in_community_role), we see that both the CFMG executive member interviewed and the community members interviewed included a wide range of participants from those who had recently moved into the community to those that had lived there for 50 yrs or more.
+
+```{r}
+#| label: fig-Years_living_in_community_role
+#| code-fold: true
+#| warning: false         
+#| message: false 
+#| error:   false
+#| fig-width: 8
+#| fig-height: 6
+#| fig-cap: "The number of years individual interviewees claimed to have lived in the community by interviewee role"
+#| fig-cap-location: bottom
+
+cfmg |> filter(interviewee_role == "cfmg_member" |
+                       interviewee_role == "cfmg_exec_member" ) |>
+        mutate(
+                interviewee_role = case_when(
+                        interviewee_role == "cfmg_member" ~ "Community member",
+                        interviewee_role == "cfmg_exec_member" ~ "CFMG executive")
+                ) |>
+        ggplot(aes(x = interviewee_role,
+                   y = demo_information_interviewee_years_living_comm,
+                   )) +
+        geom_boxplot() +
+        geom_jitter()+
+        stat_summary(fun=mean, geom="point", size=3, col = 'red') +
+        scale_fill_manual(
+                values = c("CFMG executive" = "#FFAB91",
+                           "Community member" = "#80CBC4"),
+                labels = c("CFMG executive", "Community member"),
+                name = "Interviewee Role"
+                ) +
+        scale_y_continuous(
+                limits = c(0,80)
+        ) +
+        theme(legend.position = "none",
+              axis.text.y = element_text(size = 14),
+              axis.text.x = element_text(size = 14, angle = 0, vjust = 1, hjust=0.5),
+              axis.title = element_text(size = 18)) +
+        xlab("") +
+        ylab("Years in community")
+
+```
+
+### Duration of involvement with CFMG
+
+We asked the interviewees how many years they had been involved in the CFMG (@fig-interviewee_years_involved_cfmg). The answers ranged from zero to ten years with the median among provinces ranging from around 3 yrs to 4.5 yrs. As the regulations for community forest management were only approved in 2018, claims of over 7 yrs seem unlikely but they may have been involved in a Community Resource Board (CRM) or Joint Forest Management, which preceded CFM in some areas.
+
+```{r}
+#| label: fig-interviewee_years_involved_cfmg
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| fig-cap: "Number of years interviewees claimed to be involved in the CFMG by province. The horizontal bar is the 50th quantile while the red dot is the mean."
+
+cfmg |> filter(!is.na(demo_information_interviewee_years_involved_cfmg)) |>
+
+        ggplot(aes(x = province,
+                   y = demo_information_interviewee_years_involved_cfmg)) +
+        geom_boxplot() +
+        geom_jitter(width = 0.1) +
+        stat_summary(fun=mean, geom="point", size=3, col = 'red') +
+        theme(legend.position = "none",
+              axis.text.x = element_text(size = 14, angle = 45, hjust=1),
+              axis.text.y = element_text(size = 14),
+              axis.title.y = element_text(size = 18)) +
+        scale_y_continuous(
+                limits = c(0,10)
+        ) +
+        xlab("") +
+        ylab("Years involved in CFMG")
+
+```

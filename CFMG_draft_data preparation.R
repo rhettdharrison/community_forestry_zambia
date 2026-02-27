@@ -6,6 +6,7 @@ library(ggplot2)
 library(lme4)
 library(lmerTest)
 library(emmeans)
+library(scales)
 
 gitcreds_set()
 
@@ -81,6 +82,12 @@ cfmg |> group_by(province_name,cfmg_name) |>
         ) |>
         gt(row_group_as_column = TRUE)
 
+cfmg <- cfmg |> 
+        filter(cfmg_name != "kalumphila")
+
+cfmg <- cfmg |> 
+        filter(cfmg_name != "koloko")
+
 
 cfmg |> group_by(province_name,cfmg_name) |>
         summarise(
@@ -92,16 +99,28 @@ cfmg |> group_by(province_name,cfmg_name) |>
         #stat_summary(fun=mean, geom="point", size=3) +
         theme(legend.position = "none",
               axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-        ylim(0,12) +
+        #ylim(0,12) +
         xlab("") +
         ylab("Number of interviews")
 
 # Question on why we only got 1 interview from Kalumphila and Koloko
 # Land Alliance pulled out of process so only the cfmg_exec were interviewed
-
+cfmg |> group_by(province_name) |>
+        summarise(
+                Obs = n()
+        ) |>
+        gt()
 
 cfmg |> filter(!is.na(fgd_type)) |>
         group_by(fgd_type) |>
+        summarise(
+                Obs = n()
+        ) |>
+        gt()
+
+cfmg |> filter(!is.na(interviewee_role)) |>
+        filter(interview_type == "individual_interview") |>
+        group_by(interviewee_role) |>
         summarise(
                 Obs = n()
         ) |>
@@ -141,7 +160,8 @@ cfmg |> filter(!is.na(interview_type)) |>
         gt()
 
 
-cfmg |> group_by(interviewee_role) |>
+cfmg |> filter(!is.na(interviewee_role)) |>
+        group_by(interviewee_role) |>
         summarise(
                 Obs = n()
         ) |>
@@ -173,14 +193,17 @@ cfmg |> filter(know_size_area_managed_cfmg...43 == 1) |>
                 CFMG_size = round(mean(size_cfma),digits = 0)
         ) |>
         ungroup() |>
-        ggplot(aes(x = province_name, y = log(CFMG_size))) +
+        ggplot(aes(x = province_name, y = CFMG_size)) +
         geom_violin() +
         geom_jitter(width = 0.1)+
         theme(legend.position = "none",
               axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-        #ylim(0,10) +
+        scale_y_log10(
+                labels = label_number(accuracy = 1),   # ← this gives you 10, 100, 1000, …
+                breaks = breaks_log(n = 7, base = 10)  # or scales::breaks_width(width = 1) etc.
+        ) +
         xlab("") +
-        ylab("log(Size of CFMGs)")
+        ylab("CFMG Size (ha)")
 
 ## Interest in expanding Community Forest
 # Examine responses by role and CFMG
@@ -285,7 +308,7 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
         gt()
 
 cfmg |> filter(interview_type == "cfmg_executive") |>
-        group_by(province_name) |>
+        #group_by(province_name) |>
         gather(key = "plans", val = "yes",
                cfmg_workplan,
                cfmg_budget,
@@ -293,7 +316,7 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
                any_user_groups) |>
         count(plans, yes) |>
         spread(yes, n) |>
-        gt(row_group_as_column = TRUE)
+        gt(row_group_as_column = FALSE)
 
 cfmg |> filter(interview_type == "cfmg_executive") |>
         summarise(
@@ -307,13 +330,13 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
                bamboo = sum(bamboo, na.rm = TRUE),
                medicines = sum(medicinal_plants, na.rm = TRUE),
                bushmeat = sum(bushmeat, na.rm = TRUE),
-               resins = sum(resins_gums, na.rm = TRUE),
-               thatching = sum(thatching_grass, na.rm = TRUE),
-               fibers = sum(fibers, na.rm = TRUE),
+               #resins = sum(resins_gums, na.rm = TRUE),
+               #thatching = sum(thatching_grass, na.rm = TRUE),
+               #fibers = sum(fibers, na.rm = TRUE),
                eco_tourism = sum(eco_tourism, na.rm = TRUE),
-               carbon = sum(carbon_credits, na.rm = TRUE)
+               #carbon = sum(carbon_credits, na.rm = TRUE)
                ) |>
-        pivot_longer(cols = 1:15, names_to = "value_chain", values_to = "# of cfmgs") |>
+        pivot_longer(cols = 1:11, names_to = "value_chain", values_to = "# of cfmgs") |>
         gt() 
         
 cfmg |> filter(interview_type == "cfmg_executive") |>
@@ -496,6 +519,7 @@ cfmg |> filter(!is.na(fgd_type)) |>
                                       dont_know = c("do_not_know","other"))
         ) |>
         filter(!is.na(HFO)) |>
+        filter(HFO != "dont_know") |>
         group_by(fgd_type, HFO) |>
         summarise(
                 Obs = n()
@@ -977,8 +1001,8 @@ cfmg |> filter(!is.na(fgd_type)) |>
                 After = sum(num_employed_after_cfmg, na.rm = T),
                 After_male = sum(males_employed_cfmg_full_time, na.rm = T),
                 After_female = sum(females_employed_cfmg_full_time, na.rm = T),
-                After_male_y = sum(male_youth_employed_cfmg_full_time, na.rm = T),
-                After_female_y = sum(female_youth_employed_cfmg_full_time, na.rm = T)
+                #After_male_y = sum(male_youth_employed_cfmg_full_time, na.rm = T),
+                #After_female_y = sum(female_youth_employed_cfmg_full_time, na.rm = T)
         ) |>
         
         gt() |>
@@ -1033,7 +1057,7 @@ cfmg |> filter(!is.na(fgd_type)) |>
                 Admin = sum(administrative_staff, na.rm = T),
                 Professional = sum(Professional, na.rm = T),
                 Guides = sum(eco_tourism_operators_e_g_tour_guides_lodge_staff, na.rm = T),
-                Processing_NTFPs = sum(Processing_NTFPs),
+                Processing_NTFPs = sum(Processing_NTFPs, na.rm = T),
                 Miller = sum(Miller, na.rm = T),
                 Herder = sum(Herder, na.rm = T)
         ) |>

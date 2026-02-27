@@ -1,0 +1,934 @@
+---
+title: "CFMG Governance"
+author: "Rhett D Harrison"
+format: 
+        html: default
+        pdf: default
+filters:
+- collapse-output
+editor: visual
+---
+
+
+```{r}
+#| label: Load_data_and_libraries
+#| include: false
+#| #| warning: false         
+#| message: false 
+#| error:   false
+
+library(tidyverse)
+library(grid)
+library(gt)
+library(ggplot2)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(scales)
+library(broom.mixed)
+library(modelsummary)
+
+load("cfmg.RData")
+```
+
+## Introduction
+
+In this chapter, we consider questions concerning the governance and management of CFMGs.
+
+## CFMG legal processes
+Through the survey we asked CFMG executives what community forest management required legal processes had been completed, including the recognition letter, forest management agreement, forest management plan, community forest registration certificate, forest user-rights permit, CFMG bylaws & constitution, and benefit sharing agreement (@tbl-legal_processes).
+
+```{r}
+#| label: tbl-legal_processes
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "CFMG completed legal process by province."
+
+cfmg |> filter(interview_type == "cfmg_executive") |>
+        group_by(province) |>
+        summarise(
+                `CFMG recongnition` = round(mean(
+                        cfmg_governance_legal_documents_recognition_letter,
+                        na.rm = TRUE), digits =2),
+                `CF agreement` = round(mean(
+                        cfmg_governance_legal_documents_community_forest_management_agreement,
+                        na.rm = TRUE), digits = 2),
+                `Management plan` = round(mean(
+                        cfmg_governance_legal_documents_forest_management_plan,
+                        na.rm = TRUE), digits = 2),
+                `Registration certificate` = round(mean(
+                        cfmg_governance_legal_documents_community_forest_registration_certificate,
+                        na.rm = TRUE), digits = 2),
+                `User-rights permit` = round(mean(
+                        cfmg_governance_legal_documents_forest_user_rights_license_permit,
+                        na.rm = TRUE), digits = 2),
+                `Bylaws & constitution` = round(mean(
+                        cfmg_governance_legal_documents_bylaws_and_constitution,
+                        na.rm = TRUE), digits = 2),
+                `Benefit sharing agreement` = round(mean(
+                        cfmg_governance_legal_documents_benefit_sharing_agreement,
+                        na.rm = TRUE), digits = 2)
+        ) |>
+        gt() |>
+        tab_header(
+                title = md("**Completed legal processes in formation of CFMGs**"),
+                subtitle = "Proportion of CFMGs by province"
+                )|>
+        opt_align_table_header(align = "left") |>
+        tab_options(
+                column_labels.font.weight = "bold", 
+                row_group.font.weight = "bold"
+                ) |>
+        cols_align(
+                align = "center",
+                columns = everything()
+                )
+
+        
+```
+
+Lusaka Province was the only province in which all the processes had been completed across all CFMGs. Completion of legal processes in other provinces was patching. Eastern Province had the highest proportion of incomplete legal processes. Some processes, such as the recognition letter, CF agreement and management plan seem to have been completed in most CFMGs, but the other processes were less often completed. We stress that this information is based on the responses of the CFMG Executives. It may be that more processes have been completed than they are aware of, especially if they are being supported by external agencies such as NGOs.
+
+## CFMG govenance processes
+Through the survey we asked CFMG executives what govenance processes had been completed, holding elections and annual reporting (@tbl-governance_processes).
+
+```{r}
+#| label: tbl-governance_processes
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "CFMG governance processes by province."
+
+cfmg |> filter(interview_type == "cfmg_executive") |>
+        mutate(
+               cfmg_elections = case_match(
+                       cfmg_governance_cfmg_held_election,
+                       "yes" ~ 1,
+                       "no" ~ 0,
+                       "don't_know" ~ NA),
+               cfmg_term_limits = case_match(
+                       cfmg_governance_term_limits_exist,
+                       "yes" ~ 1,
+                       "no" ~ 0,
+                       "don't_know" ~ NA),
+               cfmg_HFO = case_match(
+                       cfmg_governance_yn_employ_honorary_forest_officers,
+                       "yes" ~ 1,
+                       "no" ~ 0,
+                       "don't_know" ~ NA),
+               cfmg_receipt_book = case_match(
+                       cfmg_governance_receipt_book_maintained,
+                       "yes" ~ 1,
+                       "no" ~ 0,
+                       "don't_know" ~ NA),
+               cfmg_bank_acc = case_match(
+                       cfmg_governance_bank_account,
+                       "yes" ~ 1,
+                       "no" ~ 0,
+                       "don't_know" ~ NA),
+               cfmg_permits = case_match(
+                       cfmg_governance_issue_licenses_permits,
+                       "yes" ~ 1,
+                       "no" ~ 0,
+                       "don't_know" ~ NA)
+               
+        ) |>
+        group_by(province) |>
+        summarise(
+                `CFMG elections` = round(mean(
+                        cfmg_elections,
+                        na.rm = TRUE), digits =2),
+                `CFMG term limits` = round(mean(
+                        cfmg_term_limits,
+                        na.rm = TRUE), digits = 2),
+                `Receipt book` = round(mean(
+                        cfmg_receipt_book,
+                        na.rm = TRUE), digits = 2),
+                `Bank acc` = round(mean(
+                        cfmg_bank_acc,
+                        na.rm = TRUE), digits = 2),
+                `Permits` = round(mean(
+                        cfmg_permits,
+                        na.rm = TRUE), digits = 2),
+                `Honary forest officers` = round(mean(
+                        cfmg_HFO,
+                        na.rm = TRUE), digits = 2)
+        ) |>
+        gt() |>
+        tab_header(
+                title = md("**Completed business processes in management of CFMGs**"),
+                subtitle = "Proportion of CFMGs by province"
+                )|>
+        opt_align_table_header(align = "left") |>
+        tab_options(
+                column_labels.font.weight = "bold", 
+                row_group.font.weight = "bold"
+                ) |>
+        cols_align(
+                align = "center",
+                columns = everything()
+                )
+
+        
+```
+
+While most CFMGs claim to have held elections, have term limits for executive officers and employ honary forest officers, most do not maintain a receipt book, have a bank account or issue permits.
+
+It is also concerning that most CFMGs do not appear to have held elections since they were formed, up to five years ago (@tbl-last_election).
+
+```{r}
+#| label: tbl-last_election
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "Number of years since the last CFMG election."
+
+cfmg |> filter(interview_type == "cfmg_executive") |>
+        mutate(
+               `Last election` = case_match(
+                       cfmg_governance_last_cfmg_election_when,
+                       "Less than a month" ~ "<1 year ago",
+                       "less_than_1_year_ago" ~ "<1 year ago",
+                       "1_2_years_ago" ~ "1 to 2 years ago",
+                       "2 years" ~ "1 to 2 years ago",
+                       "2 years ago" ~ "1 to 2 years ago",
+                       "3_5_years_ago" ~ "3 to 5 years ago",
+                       "3 years" ~ "3 to 5 years ago",
+                       "3 years ago" ~ "3 to 5 years ago",
+                       "4 years ago" ~ "3 to 5 years ago",
+                       "more_than_5_years_ago" ~ ">5 years ago",
+                       .default = NA
+               ),
+               `Last election` = factor(`Last election`, levels = c(
+                       "<1 year ago", "1 to 2 years ago", "3 to 5 years ago", ">5 years ago")
+               )
+        ) |>
+        drop_na(`Last election`) |>
+        count(`Last election`)|>
+        gt() |>
+        tab_header(
+                title = md("**Number of years since the last CFMG election**"),
+                subtitle = "n = number of CFMGs in each category"
+                )|>
+        opt_align_table_header(align = "left") |>
+        tab_options(
+                column_labels.font.weight = "bold", 
+                row_group.font.weight = "bold"
+                ) |>
+        cols_align(
+                align = "center",
+                columns = everything()
+                )
+
+        
+```
+
+It is concerning that 43 out of 72 CFMGs have not held elections for over 3 years, especially as in most CFMGs positions only have a tenure of 3 years or less.
+
+```{r}
+#| label: tbl-tenure
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "Tenure of CFMG positions"
+
+cfmg |> filter(interview_type == "cfmg_executive") |>
+        mutate(
+               Tenure = case_match(
+                       cfmg_governance_cfmg_postions_tenure,
+                       "2_years" ~ "2 years",
+                       "3_years" ~ "3 years",
+                       "5 time" ~ "5 years",
+                       "5years" ~ "5 years",
+                       "6 years" ~ ">5 years",
+                       "7 years" ~ ">5 years",
+                       "dont_know" ~ NA,
+                       .default = NA
+               )
+        ) |>
+        drop_na(Tenure) |>
+        count(Tenure)|>
+        gt() |>
+        tab_header(
+                title = md("**Tenure of CFMG positions**"),
+                subtitle = "n = number of CFMGs in each category"
+                )|>
+        opt_align_table_header(align = "left") |>
+        tab_options(
+                column_labels.font.weight = "bold", 
+                row_group.font.weight = "bold"
+                ) |>
+        cols_align(
+                align = "center",
+                columns = everything()
+                )
+
+        
+```
+
+So most CFMGs are currently not adhering to their constitutions.
+
+Many CFMGs also appear very lax about holding meetings (@tbl-meetings).
+
+```{r}
+#| label: tbl-meetings
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "Frequence of CFMG meetings"
+
+cfmg |> filter(interview_type == "cfmg_executive") |>
+        mutate(
+               Meetings = case_match(
+                       cfmg_governance_cfmg_meetings,
+                       "Bi monthly" ~ ">4 times per year",
+                       "monthly" ~ ">4 times per year",
+                       "Quarterly" ~ "4 times per year",
+                       "quarterly" ~ "4 times per year",
+                       "yearly" ~ "1 time per year",
+                       "only_when_needed_adhoc_meetings " ~ "rarely or ad hoc",
+                       "Due to lack of support the Executive does not meet often"
+                       ~ "rarely or ad hoc",
+                       "Quarterly but the executive has not had meetings in the last 2 years"
+                       ~ "never",
+                       "Quarterly but they don't meet" ~ "never",
+                       .default = NA
+               ),
+               Meetings = factor(Meetings, levels = c(
+                       ">4 times per year","4 times per year","1 time per year","rarely or ad hoc",
+                       "never")
+               )
+        ) |>
+        drop_na(Meetings) |>
+        count(Meetings)|>
+        gt() |>
+        tab_header(
+                title = md("**Frequency of CFMG meetings**"),
+                subtitle = "n = number of CFMGs in each category"
+                )|>
+        opt_align_table_header(align = "left") |>
+        tab_options(
+                column_labels.font.weight = "bold", 
+                row_group.font.weight = "bold"
+                ) |>
+        cols_align(
+                align = "center",
+                columns = everything()
+                )
+
+        
+```
+
+## CFMG business processes
+As with the legal processes, we also asked CFMG Executives abot the state of their business processes. Specifically, we asked if they had annual workplans and budgets, whether they had developed a business plan and if any forest user groups had been established (@tbl-business_processes).
+
+```{r}
+#| label: tbl-business_processes
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "CFMG completed business process by province."
+
+cfmg |> filter(interview_type == "cfmg_executive") |>
+        mutate(
+               cfmg_workplan = case_match(
+                       cfmg_governance_cfmg_workplan,
+                       "yes" ~ 1,
+                       "no" ~ 0,
+                       "don't_know" ~ NA),
+               cfmg_budget = case_match(
+                       cfmg_governance_cfmg_budget,
+                       "yes" ~ 1,
+                       "no" ~ 0,
+                       "don't_know" ~ NA),
+               cfmg_business_plan = case_match(
+                       cfmg_governance_cfma_business_plan,
+                       "yes" ~ 1,
+                       "no" ~ 0,
+                       "don't_know" ~ NA),
+               cfmg_user_groups = case_match(
+                       cfmg_governance_any_user_groups,
+                       "yes" ~ 1,
+                       "no" ~ 0,
+                       "don't_know" ~ NA)
+        ) |>
+        group_by(province) |>
+        summarise(
+                `CFMG workplan` = round(mean(
+                        cfmg_workplan,
+                        na.rm = TRUE), digits =2),
+                `Implementing plan` = round(mean(
+                        cfmg_governance_implementing_plans_cfmg_executive,
+                        na.rm = TRUE), digits = 2),
+                `CFMG budget` = round(mean(
+                        cfmg_budget,
+                        na.rm = TRUE), digits = 2),
+                `Business plan` = round(mean(
+                        cfmg_business_plan,
+                        na.rm = TRUE), digits = 2),
+                `User groups` = round(mean(
+                        cfmg_user_groups,
+                        na.rm = TRUE), digits = 2)
+        ) |>
+        gt() |>
+        tab_header(
+                title = md("**Completed business processes in management of CFMGs**"),
+                subtitle = "Proportion of CFMGs by province"
+                )|>
+        opt_align_table_header(align = "left") |>
+        tab_options(
+                column_labels.font.weight = "bold", 
+                row_group.font.weight = "bold"
+                ) |>
+        cols_align(
+                align = "center",
+                columns = everything()
+                )
+
+        
+```
+
+The management processes were even more erratically completed than the legal processes. As substantial proportion of CFMGs did not have workplans, budgets or business plan. Even more surprising many did not have recognised user groups, which is critical to managing forest resources.
+
+
+## External support
+All CFMGs are supported by the Forestry Deparment. However, the frequency of visits by District Forest Officers (DFOs) varied widely and in most cases they rarely or never visit.
+
+```{r}
+#| label: tbl-dfo_visits
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "Frequence of DFO visits"
+
+cfmg |> filter(interview_type == "cfmg_executive") |>
+        mutate(
+               `DFO visits` = case_match(dfo_visits,
+                                         "never" ~ "never",
+                                         "rarely" ~ "rarely",
+                                         "occasionally" ~ "occasionally",
+                                         "often" ~ "often",
+                                         "very_often" ~ "very often",
+                                         "dont_know" ~ NA,
+                                         .default = NA
+               ),
+               `DFO visits` = factor(`DFO visits`,
+                                     levels = c(
+                                             "never","rarely","occasionally","often","very often")
+               )
+        ) |>
+        drop_na(`DFO visits`) |>
+        count(`DFO visits`)|>
+        gt() |>
+        tab_header(
+                title = md("**Frequency of DFO visits**"),
+                subtitle = "n = number of CFMGs in each category"
+                )|>
+        opt_align_table_header(align = "left") |>
+        tab_options(
+                column_labels.font.weight = "bold", 
+                row_group.font.weight = "bold"
+                ) |>
+        cols_align(
+                align = "center",
+                columns = everything()
+                )
+
+        
+```
+
+Most CFMGs operate in partnership with an NGO or a private enterprise, such as a Carbon developer (@tbl-support).
+
+```{r}
+#| label: tbl-support
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "CFMG governance processes by province."
+
+cfmg |> filter(interview_type == "cfmg_executive") |>
+        mutate(
+               `cfmg partner` = cfmg_governance_yn_institutions_support_cfmg
+        ) |>
+        count(`cfmg partner`) |>
+        gt() |>
+        tab_header(
+                title = md("**CFMGs partnered with organisations**"),
+                subtitle = "n = number of CFMGs per catergory"
+                )|>
+        opt_align_table_header(align = "left") |>
+        tab_options(
+                column_labels.font.weight = "bold", 
+                row_group.font.weight = "bold"
+                ) |>
+        cols_align(
+                align = "center",
+                columns = everything()
+                )
+```
+
+Within the 
+
+
+```{r}
+#| label: tbl-support
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "CFMG governance processes by province."
+
+cfmg |> filter(interview_type == "cfmg_executive") |>
+        mutate(
+               `cfmg partner` = cfmg_governance_yn_institutions_support_cfmg
+        ) |>
+        count(`cfmg partner`) |>
+        gt() |>
+        tab_header(
+                title = md("**CFMGs partnered with organisations**"),
+                subtitle = "n = number of CFMGs per catergory"
+                )|>
+        opt_align_table_header(align = "left") |>
+        tab_options(
+                column_labels.font.weight = "bold", 
+                row_group.font.weight = "bold"
+                ) |>
+        cols_align(
+                align = "center",
+                columns = everything()
+                )
+```
+
+
+## Community forest size
+We asked CFMG Executives the size of their community forest (CF). In @fig-size_of_CF, their answers are plotted against the size given in the forest department database.
+
+```{r}
+#| label: fig-size_of_CF
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| fig-cap: "Size of CF as reported by the CFMG executive, compared to the size recorded in the Forest Department database"
+
+cfmg |> filter(interview_type == "cfmg_executive") |>
+
+        ggplot(aes(x = cfmg_governance_size_cfma,
+                   y = `Size (Hectares)`)) +
+        geom_abline(intercept = log(1), slope = 1,color = "lightblue",
+              linewidth = 1.2) +
+        geom_point(alpha = 0.6) +
+        theme(legend.position = "none",
+              axis.text.x = element_text(
+                      size = 14, angle = 0, hjust=0.5),
+              axis.text.y = element_text(size = 14),
+              axis.title.x = element_text(size = 18),
+              axis.title.y = element_text(size = 18)) +
+        scale_y_log10(
+                limits = c(10,100000)) +
+        scale_x_log10(
+                limits = c(10,100000)
+        ) +
+        xlab("Reported size (ha)") +
+        ylab("Size (ha) in dataset")
+
+```
+
+While most answers lie along the line, several are off - some by huge amounts. In some cases, there may be errors in the FD database. However, the other possibility is that the FPIC was not conducted properly and the CFMG Executive are misinformed about the size of their CF.
+
+## Interest in expanding the community forest
+Next we asked interviewees whether they were interested in expanding the area of their community forest. A "yes" answer can be taken as an endorsement of community forest management (CFM). On the other hand, a negative response might reflect dissatisfaction with the CFMG management, but it could reflect a number of other reasons, such as a lack of sufficient addition forest area in the community.
+
+```{r}
+#| label: tbl-interest_in_expanding_FGDs
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "Interest in expanding community forest by FDG type."
+
+cfmg |> filter(interview_type != "individual_interview") |>
+        mutate(
+                expand_cfma = substr(
+                        cfmg_governance_interest_expanding_cfma, 1,1),
+                expand_cfma = case_match(
+                        expand_cfma,
+                        "y" ~ "Yes",
+                        "n" ~ "No",
+                        "d" ~ "Don't know"
+                        ),
+                expand_cfma = factor(expand_cfma,
+                         levels = c("Yes", "No", "Don't know")
+                         )
+        ) |>
+        count(interview_type, expand_cfma, name = "Obs") |>
+        mutate(
+                interview_type = case_match(
+                        interview_type,
+                        "cfmg_executive" ~ "Executive",
+                        "cfmg_female" ~ "Female",
+                        "cfmg_male" ~ "Male",
+                        "cfmg_youth" ~ "Youth"
+                )
+        ) |>
+        filter(!is.na(expand_cfma)) |>
+        pivot_wider(
+                names_from  = interview_type,
+                values_from = Obs,
+                values_fill = 0) |>
+        gt() |>
+        cols_label(expand_cfma = "Interest in expanding CFMA") |>
+        sub_missing(missing_text = "—") |>
+        tab_header(
+                title = md("**Interest in expanding community forest by FGD type**"),
+                subtitle = "Number of groups in each category"
+                )|>
+        opt_align_table_header(align = "left") |>
+        tab_options(
+                column_labels.font.weight = "bold", 
+                row_group.font.weight = "bold") |>
+        cols_align(
+                align = "center",
+                columns = everything()
+                )
+
+```
+
+As can be seen in @tbl-interest_in_expanding_FGDs, the CFMG executives were enthusiastic to expand the CF in most cases. However, among the community this number dropped to 41 for female groups, 37 for male groups and to just 23 for youth groups.
+
+The difference in attitudes between CFMG Executive and Youth FGD groups was significant, but the pairwise comparisons among other groups were not significant. These results might suggest that community forest management is entrenching elite capture (or other power dynamics) and that, at least across a proportion of the CFs, the youth do not feel they are realizing sufficient benefit from community forest management.
+
+:::{.callout-note collapse=true}
+### Interest in expanding community forest - FGDs - Model methods
+To examine the differences among FGD types, we employed a binomial GLMM (i.e. yes = want to expand, no = do not want to expand), with random intercepts for province and CFMG nested within province. We used FDG type as the factor. We examined the significance of pairwise differences among FDG types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_expand_cfma_fgd
+#| include: true
+#| warning: false         
+#| message: false 
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |> filter(interview_type != "individual_interview") |>
+        mutate(
+                expand_cfma = substr(
+                        cfmg_governance_interest_expanding_cfma, 1,1),
+                expand_cfma = case_match(
+                        expand_cfma,
+                        "y" ~ "Yes",
+                        "n" ~ "No",
+                        "d" ~ "Don't know"
+                        ),
+                expand_cfma = factor(expand_cfma,
+                         levels = c("Yes", "No", "Don't know")
+                         )
+        ) |>
+        mutate(
+                expand_cfma = if_else(expand_cfma == "Don't know", NA, expand_cfma)
+        )
+
+M1 <- glmer(expand_cfma ~
+                    interview_type +
+                    (1 | province/cfmg_name),
+            family = binomial(link = "logit"),
+            data = test.data
+)
+
+emm.M1 <- emmeans(M1, specs = ~ interview_type)
+pairwise.M1 <- pairs(emm.M1, adjust = "Tukey")
+```
+
+
+```{r}
+#| label: M1_expand_cfma_FDG
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+summary(M1)
+
+```
+
+```{r}
+#| label: pairwise_expand_cfma_FDG
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+summary(pairwise.M1)
+
+```
+
+Among the individual interviewees (@tbl-interest_in_expanding_individual), traditional leaders and community members more often reported that they did not want to expand the CF than other groups. However, the only pairwise comparisons that were significant were NGO representative with traditional leader and NGO representative with community member.
+
+```{r}
+#| label: tbl-interest_in_expanding_individual
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "Interest in expanding community forest by FDG type."
+
+cfmg |> filter(interview_type == "individual_interview") |>
+        mutate(
+                expand_cfma = substr(
+                        cfmg_governance_interest_expanding_cfma, 1,1),
+                expand_cfma = case_match(
+                        expand_cfma,
+                        "y" ~ "Yes",
+                        "n" ~ "No",
+                        "d" ~ "Don't know"
+                        ),
+                expand_cfma = factor(expand_cfma,
+                         levels = c("Yes", "No", "Don't know")
+                         )
+        ) |>
+        count(interviewee_role, expand_cfma, name = "Obs") |>
+        mutate(
+                interviewee_role = case_match(
+                        interviewee_role,
+                        "cfmg_exec_member" ~ "CFMG Exec",
+                        "cfmg_member" ~ "Community member",
+                        "trad_leader" ~ "Traditional Leader",
+                        "dfo" ~ "District Forest Officer",
+                        "NGO_rep" ~ "NGO representative"
+                )
+        ) |>
+        filter(!is.na(expand_cfma)) |>
+        pivot_wider(
+                names_from  = interviewee_role,
+                values_from = Obs,
+                values_fill = 0) |>
+        gt() |>
+        cols_label(expand_cfma = "Interest in expanding CFMA") |>
+        sub_missing(missing_text = "—") |>
+        tab_header(
+                title = md(
+                        "**Interest in expanding community forest by interviewee role**"),
+                subtitle = "Number of interviewees in each category"
+                )|>
+        opt_align_table_header(align = "left") |>
+        tab_options(
+                column_labels.font.weight = "bold", 
+                row_group.font.weight = "bold"
+                ) |>
+        cols_align(
+                align = "center",
+                columns = everything()
+                )
+
+```
+
+:::{.callout-note collapse=true}
+### Interest in expanding community forest - Individual interviewees - Model methods
+To examine differences among individual interviewees in their stated interest in expanding their community forest, we employed a binomial GLMM (i.e. yes = want to expand, no = do not want to expand) and included interviewee role, interviewee gender and interviewee age as factors. We specified random intercepts for province and cfmg nested within province. To examine the pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: test_data_expand_cfma_individual
+#| echo: true
+#| warning: false         
+#| message: false 
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |> filter(interview_type == "individual_interview") |>
+        mutate(
+                expand_cfma = substr(
+                        cfmg_governance_interest_expanding_cfma, 1,1),
+                expand_cfma = case_match(
+                        expand_cfma,
+                        "y" ~ "Yes",
+                        "n" ~ "No",
+                        "d" ~ "Don't know"
+                        ),
+                expand_cfma = factor(expand_cfma,
+                         levels = c("Yes", "No", "Don't know")
+                         )
+        ) |>
+        mutate(
+                expand_cfma = if_else(expand_cfma == "Don't know", NA, expand_cfma),
+                interviewee_gender = demo_information_interviewee_gender,
+                interviewee_age = demo_information_interviewee_age
+        )
+
+M2 <- glmer(expand_cfma ~
+                    interviewee_role +
+                    interviewee_gender +
+                    interviewee_age +
+                    (1 | province/cfmg_name),
+            family = binomial(link = "logit"),
+            data = test.data
+)
+
+emm.M2 <- emmeans(M2, specs = ~ interviewee_role)
+pairwise.M2 <- pairs(emm.M2, adjust = "Tukey")
+
+```
+
+
+```{r}
+#| label: M2_expand_cfma_individual
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+summary(M2)
+
+```
+
+```{r}
+#| label: pairwise_expand_cfma_individual
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+summary(pairwise.M2)
+
+```
+
+## Defined user groups
+Among those CFMGs that had recognised user groups, they were involved in managing the following resources (@tbl-user_groups).
+
+```{r}
+#| label: tbl-user_groups
+#| code-fold: true
+#| echo: false
+#| warning: false         
+#| message: false 
+#| error:   false
+#| tbl-cap: "CFMG user-groups."
+
+cfmg |> filter(interview_type == "cfmg_executive") |>
+        summarise(
+                `Timber` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_timber,
+                        na.rm = TRUE),
+                `Poles` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_poles,
+                        na.rm = TRUE),
+                `Firewood` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_firewood,
+                        na.rm = TRUE),
+                `Charcoal` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_charcoal,
+                        na.rm = TRUE),
+                `Honey` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_honey,
+                        na.rm = TRUE),
+                `Mushrooms` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_mushrooms,
+                        na.rm = TRUE),
+                 `Wild fruit` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_wild_fruits,
+                        na.rm = TRUE),
+                `Caterpillars` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_caterpillars,
+                        na.rm = TRUE),
+                `Chikanda` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_chikanda,
+                        na.rm = TRUE),
+                `Munkoyo` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_munkoyo,
+                        na.rm = TRUE),
+                `Lusala busala` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_lusala_busala,
+                        na.rm = TRUE),
+                `Mungongo` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_mungongo,
+                        na.rm = TRUE),
+                `Devil's claw` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_devils_claw,
+                        na.rm = TRUE),
+                `Fish` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_fish,
+                        na.rm = TRUE),
+                `Pupwe` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_pupwe,
+                        na.rm = TRUE),
+                `Brooms` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_brooms,
+                        na.rm = TRUE),
+                `Bamboo` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_bamboo,
+                        na.rm = TRUE),
+                `Medicinal plants` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_medicinal_plants,
+                        na.rm = TRUE),
+                `Wild meat` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_bushmeat,
+                        na.rm = TRUE),
+                `Resins` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_resins_gums,
+                        na.rm = TRUE),
+                `Thatching` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_thatching_grass,
+                        na.rm = TRUE),
+                `Fibres` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_fibers,
+                        na.rm = TRUE),
+                `Eco-tourism` = sum(
+                        cfmg_governance_forest_resources_managed_usergroups_eco_tourism,
+                        na.rm = TRUE)
+        ) |>
+        pivot_longer(
+                cols = everything(),
+                names_to  = "Resource type",
+                values_to = "Number") |>
+        gt() |>
+        tab_header(
+                title = md("**Recognised CFMG user-groups**"),
+                subtitle = "Totals across 75 CFMGs"
+                )|>
+        opt_align_table_header(align = "left") |>
+        tab_options(
+                column_labels.font.weight = "bold", 
+                row_group.font.weight = "bold"
+                ) |>
+        cols_align(
+                align = "center",
+                columns = everything()
+                )
+
+        
+```
+
+Evidently, people are harvesting a wide variety of products from CFs. It is not clear, and probably not well defined, if these user-groups are defined within the CF management plan, or whether these are just informal groups that are nevertheless recognised by the CFMG.
+
+
+
