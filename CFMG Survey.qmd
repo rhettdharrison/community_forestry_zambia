@@ -1,8 +1,9 @@
 ---
 title: "CFMG Backgroud"
 author: "Rhett D Harrison"
-format: 
-        html: default
+format:
+        html:
+                css: custom.css
         pdf: default
 editor: visual
 ---
