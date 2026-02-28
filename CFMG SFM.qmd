@@ -1,0 +1,2821 @@
+---
+title: "CFMG Sustainable Forest Management"
+author: "Rhett D Harrison"
+format:
+        html:
+                css: custom.css
+        pdf: default
+filters:
+- collapse-output
+editor: visual
+---
+
+```{r}
+#| label: Load_data_and_libraries
+#| include: false
+#| warning: false
+#| message: false
+#| error:   false
+
+library(tidyverse)
+library(grid)
+library(gt)
+library(ggplot2)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(scales)
+library(broom.mixed)
+library(modelsummary)
+library(ordinal)
+
+load("cfmg.RData")
+```
+
+## Introduction
+
+Here we consider the effect of CFMG management on indicators of sustainable forest management.
+
+### Deforestation
+
+We asked interviewees whether community forest management has reduced deforestation inside the community forest, and whether it has increased outside the community forest (leakage).
+
+#### Deforestation inside the community forest
+
+```{r}
+#| label: fig-reduced_forest_clearing
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Responses to the question, 'Has CFM reduced deforestation inside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+
+cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    deforestation = case_match(
+            impact_on_sfm_cfm_reduced_forest_clearing_cfma,
+            "no_there_has_never_been_clearing_for_agriculture" ~ "No change",
+            "Agricultural practices ceased way before CFM" ~ "No change",
+            "One field for cassava" ~ "No change",
+            "Yes there no more fields_  it's all forests" ~ "Significant",
+            "Yes_ significant reduction. There was chitemene system before CFM" ~ "Significant",
+            "no_increase" ~ "No change",
+            "yes_moderate" ~ "Moderate",
+            "yes_significant" ~ "Significant",
+            .default = NA
+    ),
+    deforestation = factor(deforestation, levels = c("Significant","Moderate","No change")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    )
+  ) |>
+  drop_na(deforestation) |>
+  count(interview_type, deforestation) |>
+  group_by(interview_type) |>
+  mutate(
+    prop = n / sum(n)
+  ) |>
+  ungroup() |>
+  ggplot(aes(y = interview_type, x = prop, fill = deforestation)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.05, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of groups"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "No change"         = "#C0392B",
+      "Moderate" = "#F0C040",
+      "Significant"        = "#2A9D8F"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  labs(
+    y    = NULL,
+    fill = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+As can be seen, a majority of groups report a moderate or significant reduction in deforestation in the community forest. Below we examine whether these differences among FDG categories are significant. However, the results indicate that the differences in responses among FDG groups were not significant.
+
+::: {.callout-note collapse="true"}
+### Deforestation - FGDs - Model methods
+
+To examine the differences among FGD types in their assessment of whether CFM had reduced forest clearing, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_deforestation_fgd
+#| include: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    deforestation = case_match(
+      impact_on_sfm_cfm_reduced_forest_clearing_cfma,
+      "no_there_has_never_been_clearing_for_agriculture" ~ "No change",
+      "Agricultural practices ceased way before CFM"     ~ "No change",
+      "One field for cassava"                            ~ "No change",
+      "Yes there no more fields_  it's all forests"      ~ "Significant",
+      "Yes_ significant reduction. There was chitemene system before CFM" ~ "Significant",
+      "no_increase"    ~ "No change",
+      "yes_moderate"   ~ "Moderate",
+      "yes_significant" ~ "Significant",
+      .default = NA
+    ),
+    deforestation = factor(deforestation,
+                           levels = c("No change", "Moderate", "Significant"),
+                           ordered = TRUE),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    )
+  ) |>
+  drop_na(deforestation) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M1 <- clmm(deforestation ~
+              interview_type +
+              (1 | province) +
+              (1 | province_cfmg),
+            data = test.data)
+
+emm.M1     <- emmeans(M1, specs = ~ interview_type)
+pairwise.M1 <- pairs(emm.M1, adjust = "Tukey")
+```
+
+```{r}
+#| label: M1_deforestation_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+summary(M1)
+```
+
+```{r}
+#| label: pairwise_deforestation_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+summary(pairwise.M1)
+```
+
+
+Among the individual interviewees (@tbl-deforestation_individual), there were also some differences in opinion, but again these differences were not significant.
+
+```{r}
+#| label: tbl-deforestation_individual
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Perceived reduction in deforestation inside the community forest by individual interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    deforestation = case_match(
+      impact_on_sfm_cfm_reduced_forest_clearing_cfma,
+      "no_there_has_never_been_clearing_for_agriculture" ~ "No change",
+      "Agricultural practices ceased way before CFM"     ~ "No change",
+      "One field for cassava"                            ~ "No change",
+      "Yes there no more fields_  it's all forests"      ~ "Significant",
+      "Yes_ significant reduction. There was chitemene system before CFM" ~ "Significant",
+      "no_increase"    ~ "No change",
+      "yes_moderate"   ~ "Moderate",
+      "yes_significant" ~ "Significant",
+      .default = NA
+    ),
+    deforestation = factor(deforestation,
+                           levels = c("No change", "Moderate", "Significant")),
+    interviewee_role = case_match(
+      interviewee_role,
+      "cfmg_exec_member" ~ "CFMG Exec",
+      "cfmg_member"      ~ "Community member",
+      "trad_leader"      ~ "Traditional Leader",
+      "dfo"              ~ "District Forest Officer",
+      "NGO_rep"          ~ "NGO representative"
+    )
+  ) |>
+  filter(!is.na(deforestation)) |>
+  count(interviewee_role, deforestation, name = "Obs") |>
+  arrange(deforestation) |>
+  pivot_wider(
+    names_from  = interviewee_role,
+    values_from = Obs,
+    values_fill = 0
+  ) |>
+  gt() |>
+  cols_label(deforestation = "Reduction in deforestation") |>
+  sub_missing(missing_text = "—") |>
+  tab_header(
+    title    = md("**Perceived reduction in deforestation by interviewee role**"),
+    subtitle = "Number of interviewees in each category"
+  ) |>
+  opt_align_table_header(align = "left") |>
+  tab_options(
+    column_labels.font.weight = "bold",
+    row_group.font.weight     = "bold"
+  ) |>
+  cols_align(
+    align   = "center",
+    columns = everything()
+  )
+```
+
+
+::: {.callout-note collapse="true"}
+### Reduced forest clearing - Individual interviewees - Model methods
+
+To examine differences among individual interviewees in their assessment of whether CFM had reduced forest clearing, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: test_data_deforestation_individual
+#| echo: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    deforestation = case_match(
+      impact_on_sfm_cfm_reduced_forest_clearing_cfma,
+      "no_there_has_never_been_clearing_for_agriculture" ~ "No change",
+      "Agricultural practices ceased way before CFM"     ~ "No change",
+      "One field for cassava"                            ~ "No change",
+      "Yes there no more fields_  it's all forests"      ~ "Significant",
+      "Yes_ significant reduction. There was chitemene system before CFM" ~ "Significant",
+      "no_increase"    ~ "No change",
+      "yes_moderate"   ~ "Moderate",
+      "yes_significant" ~ "Significant",
+      .default = NA
+    ),
+    deforestation = factor(deforestation,
+                           levels = c("No change", "Moderate", "Significant"),
+                           ordered = TRUE),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(deforestation) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M2 <- clmm(deforestation ~
+              interviewee_role +
+              interviewee_gender +
+              interviewee_age +
+              (1 | province) +
+              (1 | province_cfmg),
+            data = test.data)
+
+emm.M2     <- emmeans(M2, specs = ~ interviewee_role)
+pairwise.M2 <- pairs(emm.M2, adjust = "Tukey")
+```
+
+```{r}
+#| label: M2_deforestation_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+summary(M2)
+```
+
+```{r}
+#| label: pairwise_deforestation_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+summary(pairwise.M2)
+```
+
+#### Deforestation outside the community forest
+
+We also asked interviewees whether community forest management has led to an increase in deforestation outside the community forest (i.e. leakage).
+
+```{r}
+#| label: fig-increased_deforestation_outside
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Responses to the question, 'Has CFM increased deforestation outside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+
+cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    deforestation = case_match(
+      impact_on_sfm_forest_clearing_increased_outside_cfma,
+      "Clearing only done for field opening" ~ "No change",
+      "In Mboshya there are no agricultural activities" ~ "No change",
+      "It increases according to seasons_ especially during the tobacco harvesting" ~ "Moderate",
+      "No change_ community members' concentration is on farming. They have appreciation for gover…" ~ "No change",
+      "There has never been  cutting of trees out side the cfma" ~ "No change",
+      "There has never been any forest clearing outside the cfma." ~ "No change",
+      "There has never been cutting of trees" ~ "No change",
+      "no_decrease" ~ "Decrease",
+      "no_increase"    ~ "No change",
+      "yes_moderate"   ~ "Moderate",
+      "yes_significant" ~ "Significant",
+      .default = NA
+    ),
+    deforestation = factor(deforestation,
+                           levels = c("Significant", "Moderate", "No change", "Decrease")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    )
+  ) |>
+  drop_na(deforestation) |>
+  count(interview_type, deforestation) |>
+  group_by(interview_type) |>
+  mutate(
+    prop = n / sum(n)
+  ) |>
+  ungroup() |>
+  ggplot(aes(y = interview_type, x = prop, fill = deforestation)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.05, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of groups"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Decrease" = "#2A9D8F",
+      "No change"   = "#76B7A0",
+      "Moderate"    = "#F0C040",
+      "Significant" = "#C0392B"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  labs(
+    y    = NULL,
+    fill = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1),    colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+::: {.callout-note collapse="true"}
+### Deforestation outside the CF - FGDs - Model methods
+
+To examine the differences among FGD types in their assessment of whether CFM had increased deforestation outside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_deforestation_outside_fgd
+#| include: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    deforestation = case_match(
+      impact_on_sfm_forest_clearing_increased_outside_cfma,
+      "Clearing only done for field opening" ~ "No change",
+      "In Mboshya there are no agricultural activities" ~ "No change",
+      "It increases according to seasons_ especially during the tobacco harvesting" ~ "Moderate",
+      "No change_ community members' concentration is on farming. They have appreciation for gover…" ~ "No change",
+      "There has never been  cutting of trees out side the cfma" ~ "No change",
+      "There has never been any forest clearing outside the cfma." ~ "No change",
+      "There has never been cutting of trees" ~ "No change",
+      "no_decrease" ~ "Decrease",
+      "no_increase"    ~ "No change",
+      "yes_moderate"   ~ "Moderate",
+      "yes_significant" ~ "Significant",
+      .default = NA
+    ),
+    deforestation = factor(deforestation,
+                           levels = c("Significant", "Moderate", "No change", "Decrease")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    )
+  ) |>
+  drop_na(deforestation) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M3 <- clmm(deforestation ~
+              interview_type +
+              (1 | province) +
+              (1 | province_cfmg),
+            data = test.data)
+
+emm.M3     <- emmeans(M3, specs = ~ interview_type)
+pairwise.M3 <- pairs(emm.M3, adjust = "Tukey")
+```
+
+```{r}
+#| label: M3_deforestation_outside_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+summary(M3)
+```
+
+```{r}
+#| label: pairwise_deforestation_outside_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+summary(pairwise.M3)
+```
+
+Among the individual interviewees (@tbl-deforestation_outside_individual), ...
+
+```{r}
+#| label: tbl-deforestation_outside_individual
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Perceived increase in deforestation outside the community forest by individual interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    deforestation = case_match(
+      impact_on_sfm_forest_clearing_increased_outside_cfma,
+      "Clearing only done for field opening" ~ "No change",
+      "In Mboshya there are no agricultural activities" ~ "No change",
+      "It increases according to seasons_ especially during the tobacco harvesting" ~ "Moderate",
+      "No change_ community members' concentration is on farming. They have appreciation for gover…" ~ "No change",
+      "There has never been  cutting of trees out side the cfma" ~ "No change",
+      "There has never been any forest clearing outside the cfma." ~ "No change",
+      "There has never been cutting of trees" ~ "No change",
+      "no_decrease" ~ "Decrease",
+      "no_increase"    ~ "No change",
+      "yes_moderate"   ~ "Moderate",
+      "yes_significant" ~ "Significant",
+      .default = NA
+    ),
+    deforestation = factor(deforestation,
+                           levels = c("Decrease", "No change", "Moderate", "Significant")),
+    interviewee_role = case_match(
+      interviewee_role,
+      "cfmg_exec_member" ~ "CFMG Exec",
+      "cfmg_member"      ~ "Community member",
+      "trad_leader"      ~ "Traditional Leader",
+      "dfo"              ~ "District Forest Officer",
+      "NGO_rep"          ~ "NGO representative"
+    )
+  ) |>
+  filter(!is.na(deforestation)) |>
+  count(interviewee_role, deforestation, name = "Obs") |>
+  arrange(deforestation) |>
+  pivot_wider(
+    names_from  = interviewee_role,
+    values_from = Obs,
+    values_fill = 0
+  ) |>
+  gt() |>
+  cols_label(deforestation = "Increase in deforestation") |>
+  sub_missing(missing_text = "—") |>
+  tab_header(
+    title    = md("**Perceived increase in deforestation outside the CF by interviewee role**"),
+    subtitle = "Number of interviewees in each category"
+  ) |>
+  opt_align_table_header(align = "left") |>
+  tab_options(
+    column_labels.font.weight = "bold",
+    row_group.font.weight     = "bold"
+  ) |>
+  cols_align(
+    align   = "center",
+    columns = everything()
+  )
+```
+
+::: {.callout-note collapse="true"}
+### Deforestation outside the CF - Individual interviewees - Model methods
+
+To examine differences among individual interviewees in their assessment of whether CFM had increased deforestation outside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: test_data_deforestation_outside_individual
+#| echo: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    deforestation = case_match(
+      impact_on_sfm_forest_clearing_increased_outside_cfma,
+      "Clearing only done for field opening" ~ "No change",
+      "In Mboshya there are no agricultural activities" ~ "No change",
+      "It increases according to seasons_ especially during the tobacco harvesting" ~ "Moderate",
+      "No change_ community members' concentration is on farming. They have appreciation for gover…" ~ "No change",
+      "There has never been  cutting of trees out side the cfma" ~ "No change",
+      "There has never been any forest clearing outside the cfma." ~ "No change",
+      "There has never been cutting of trees" ~ "No change",
+      "no_decrease" ~ "Decrease",
+      "no_increase"    ~ "No change",
+      "yes_moderate"   ~ "Moderate",
+      "yes_significant" ~ "Significant",
+      .default = NA
+    ),
+    deforestation = factor(deforestation,
+                           levels = c("Significant", "Moderate", "No change", "Decrease")),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(deforestation) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M4 <- clmm(deforestation ~
+              interviewee_role +
+              interviewee_gender +
+              interviewee_age +
+              (1 | province) +
+              (1 | province_cfmg),
+            data = test.data)
+
+emm.M4     <- emmeans(M4, specs = ~ interviewee_role)
+pairwise.M4 <- pairs(emm.M4, adjust = "Tukey")
+```
+
+```{r}
+#| label: M4_deforestation_outside_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+summary(M4)
+```
+
+```{r}
+#| label: pairwise_deforestation_outside_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+summary(pairwise.M4)
+```
+
+### Charcoal production
+
+We asked interviewees whether community forest management has reduced charcoal production inside the community forest, and whether it has increased outside (leakage).
+
+#### Charcoal production inside the community forest
+
+```{r}
+#| label: fig-reduced_charcoal_inside
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Responses to the question, 'Has CFM reduced charcoal production inside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+
+cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    charcoal = case_match(
+      impact_on_sfm_charcoal_production_in_cfma,
+      "No. There have never been  charcoal  production  in this forest"    ~ "No change",
+      "No_ charcoal production is not a common practice for community members"    ~ "No change",
+      "Some areas are encroached by charcoal production"    ~ "No change",
+      "There has never been  charcoal  production"    ~ "No change",
+      "There has never been  charcoal  production in this forest"    ~ "No change",
+      "yes_reduced"   ~ "Moderate",
+      "yes_high" ~ "Significant",
+      "no" ~ "Significant",
+      "no_stopped" ~ "Significant",
+      .default = NA
+    ),
+    charcoal = factor(charcoal,
+                      levels = c("Significant", "Moderate", "No change")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    )
+  ) |>
+  drop_na(charcoal) |>
+  count(interview_type, charcoal) |>
+  group_by(interview_type) |>
+  mutate(prop = n / sum(n)) |>
+  ungroup() |>
+  ggplot(aes(y = interview_type, x = prop, fill = charcoal)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.05, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of groups"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "No change"   = "#C0392B",
+      "Moderate"    = "#F0C040",
+      "Significant" = "#2A9D8F"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1),    colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+::: {.callout-note collapse="true"}
+### Charcoal production inside the CF - FGDs - Model methods
+
+To examine the differences among FGD types in their assessment of whether CFM had reduced charcoal production inside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_charcoal_inside_fgd
+#| include: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    charcoal = case_match(
+      impact_on_sfm_charcoal_production_in_cfma,
+      "No. There have never been  charcoal  production  in this forest"    ~ "No change",
+      "No_ charcoal production is not a common practice for community members"    ~ "No change",
+      "Some areas are encroached by charcoal production"    ~ "No change",
+      "There has never been  charcoal  production"    ~ "No change",
+      "There has never been  charcoal  production in this forest"    ~ "No change",
+      "yes_reduced"   ~ "Moderate",
+      "yes_high" ~ "Significant",
+      "no" ~ "Significant",
+      "no_stopped" ~ "Significant",
+      .default = NA
+    ),
+    charcoal = factor(charcoal,
+                      levels = c("No change", "Moderate", "Significant"),
+                      ordered = TRUE),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    )
+  ) |>
+  drop_na(charcoal) |>
+  mutate(province_cfmg = interaction(province, cfmg_name)) |>
+  droplevels()
+
+if (nlevels(test.data$charcoal) >= 2) {
+  M5 <- clmm(charcoal ~
+                interview_type +
+                (1 | province) +
+                (1 | province_cfmg),
+              data = test.data)
+  emm.M5     <- emmeans(M5, specs = ~ interview_type)
+  pairwise.M5 <- pairs(emm.M5, adjust = "Tukey")
+} else {
+  M5 <- NULL
+  cat("Model not fitted: only", nlevels(test.data$charcoal),
+      "level(s) present in charcoal after filtering.\n")
+}
+```
+
+```{r}
+#| label: M5_charcoal_inside_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+if (!is.null(M5)) summary(M5) else cat("Model not fitted.")
+```
+
+```{r}
+#| label: pairwise_charcoal_inside_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+if (!is.null(M5)) summary(pairwise.M5) else cat("Model not fitted.")
+```
+
+Among the individual interviewees (@tbl-charcoal_inside_individual), ...
+
+```{r}
+#| label: tbl-charcoal_inside_individual
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Perceived reduction in charcoal production inside the community forest by individual interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    charcoal = case_match(
+      impact_on_sfm_charcoal_production_in_cfma,
+      "No. There have never been  charcoal  production  in this forest"    ~ "No change",
+      "No_ charcoal production is not a common practice for community members"    ~ "No change",
+      "Some areas are encroached by charcoal production"    ~ "No change",
+      "There has never been  charcoal  production"    ~ "No change",
+      "There has never been  charcoal  production in this forest"    ~ "No change",
+      "yes_reduced"   ~ "Moderate",
+      "yes_high" ~ "Significant",
+      "no" ~ "Significant",
+      "no_stopped" ~ "Significant",
+      .default = NA
+    ),
+    charcoal = factor(charcoal,
+                      levels = c("No change", "Moderate", "Significant")),
+    interviewee_role = case_match(
+      interviewee_role,
+      "cfmg_exec_member" ~ "CFMG Exec",
+      "cfmg_member"      ~ "Community member",
+      "trad_leader"      ~ "Traditional Leader",
+      "dfo"              ~ "District Forest Officer",
+      "NGO_rep"          ~ "NGO representative"
+    )
+  ) |>
+  filter(!is.na(charcoal)) |>
+  count(interviewee_role, charcoal, name = "Obs") |>
+  arrange(charcoal) |>
+  pivot_wider(
+    names_from  = interviewee_role,
+    values_from = Obs,
+    values_fill = 0
+  ) |>
+  gt() |>
+  cols_label(charcoal = "Reduction in charcoal production") |>
+  sub_missing(missing_text = "—") |>
+  tab_header(
+    title    = md("**Perceived reduction in charcoal production inside the CF by interviewee role**"),
+    subtitle = "Number of interviewees in each category"
+  ) |>
+  opt_align_table_header(align = "left") |>
+  tab_options(
+    column_labels.font.weight = "bold",
+    row_group.font.weight     = "bold"
+  ) |>
+  cols_align(align = "center", columns = everything())
+```
+
+::: {.callout-note collapse="true"}
+### Charcoal production inside the CF - Individual interviewees - Model methods
+
+To examine differences among individual interviewees in their assessment of whether CFM had reduced charcoal production inside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: test_data_charcoal_inside_individual
+#| echo: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    charcoal = case_match(
+      impact_on_sfm_charcoal_production_in_cfma,
+      "No. There have never been  charcoal  production  in this forest"    ~ "No change",
+      "No_ charcoal production is not a common practice for community members"    ~ "No change",
+      "Some areas are encroached by charcoal production"    ~ "No change",
+      "There has never been  charcoal  production"    ~ "No change",
+      "There has never been  charcoal  production in this forest"    ~ "No change",
+      "yes_reduced"   ~ "Moderate",
+      "yes_high" ~ "Significant",
+      "no" ~ "Significant",
+      "no_stopped" ~ "Significant",
+      .default = NA
+    ),
+    charcoal = factor(charcoal,
+                      levels = c("No change", "Moderate", "Significant"),
+                      ordered = TRUE),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(charcoal) |>
+  mutate(province_cfmg = interaction(province, cfmg_name)) |>
+  droplevels()
+
+if (nlevels(test.data$charcoal) >= 2) {
+  M6 <- clmm(charcoal ~
+                interviewee_role +
+                interviewee_gender +
+                interviewee_age +
+                (1 | province) +
+                (1 | province_cfmg),
+              data = test.data)
+  emm.M6     <- emmeans(M6, specs = ~ interviewee_role)
+  pairwise.M6 <- pairs(emm.M6, adjust = "Tukey")
+} else {
+  M6 <- NULL
+  cat("Model not fitted: only", nlevels(test.data$charcoal),
+      "level(s) present in charcoal after filtering.\n")
+}
+```
+
+```{r}
+#| label: M6_charcoal_inside_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+if (!is.null(M6)) summary(M6) else cat("Model not fitted.")
+```
+
+```{r}
+#| label: pairwise_charcoal_inside_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+if (!is.null(M6)) summary(pairwise.M6) else cat("Model not fitted.")
+```
+
+#### Charcoal production outside the community forest
+
+We also asked interviewees whether community forest management has led to an increase in charcoal production outside the community forest (i.e. leakage).
+
+```{r}
+#| label: fig-increased_charcoal_outside
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Responses to the question, 'Has CFM increased charcoal production outside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+
+cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    charcoal = case_match(
+      impact_on_sfm_charcoal_production_increased_outside_cfma,
+      "no_reduced"    ~ "Decrease",
+      "no_change"    ~ "No change",
+      "yes_moderate_increase"   ~ "Moderate",
+      "yes_significant_increase" ~ "Significant",
+      "Yes_ moderate increase. Only for household use"   ~ "Moderate",
+      "Moderate decrease"    ~ "Decrease",
+      "Due to increase in population_ some charcoal production now being observed in some open are…"   ~ "Moderate",
+      "CFMG members not involved in charcoal production"    ~ "No change",
+      "Charcoal  production  is not allowed in the chiefdom"    ~ "No change",
+      "Charcoal  production is not allowed in the chiefdom"    ~ "No change",
+      "Charcoal production  is not allowed  in the chiefdom"    ~ "No change",
+      "Charcoal production has been banned from the chiefdom"    ~ "No change",
+      "Charcoal production is not common in this part of the district"    ~ "No change",
+      "Charcoal production is not commonly practiced. There is no market for charcoal production"    ~ "No change",
+      "Charcoal production is not practiced in the community"    ~ "No change",
+      "Charcoal production not a common practice in the community"    ~ "No change",
+      "Charcoal production only done when clearing an area for new agricultural fields"    ~ "No change",
+      "No charcoal  production"    ~ "No change",
+      "No charcoal  production In this area"    ~ "No change",
+      "No charcoal  production in this community"    ~ "No change",
+      "No charcoal production"    ~ "No change",
+      "No charcoal production near CFMA"    ~ "No change",
+      "No. There has never been charcoal  production"    ~ "No change",
+      .default = NA
+    ),
+    charcoal = factor(charcoal,
+                      levels = c("Significant", "Moderate", "No change", "Decrease")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    )
+  ) |>
+  drop_na(charcoal) |>
+  count(interview_type, charcoal) |>
+  group_by(interview_type) |>
+  mutate(prop = n / sum(n)) |>
+  ungroup() |>
+  ggplot(aes(y = interview_type, x = prop, fill = charcoal)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.05, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of groups"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Decrease"    = "#2A9D8F",
+      "No change"   = "#76B7A0",
+      "Moderate"    = "#F0C040",
+      "Significant" = "#C0392B"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1),    colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+::: {.callout-note collapse="true"}
+### Charcoal production outside the CF - FGDs - Model methods
+
+To examine the differences among FGD types in their assessment of whether CFM had increased charcoal production outside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_charcoal_outside_fgd
+#| include: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    charcoal = case_match(
+      impact_on_sfm_charcoal_production_increased_outside_cfma,
+      "no_reduced"    ~ "Decrease",
+      "no_change"    ~ "No change",
+      "yes_moderate_increase"   ~ "Moderate",
+      "yes_significant_increase" ~ "Significant",
+      "Yes_ moderate increase. Only for household use"   ~ "Moderate",
+      "Moderate decrease"    ~ "Decrease",
+      "Due to increase in population_ some charcoal production now being observed in some open are…"   ~ "Moderate",
+      "CFMG members not involved in charcoal production"    ~ "No change",
+      "Charcoal  production  is not allowed in the chiefdom"    ~ "No change",
+      "Charcoal  production is not allowed in the chiefdom"    ~ "No change",
+      "Charcoal production  is not allowed  in the chiefdom"    ~ "No change",
+      "Charcoal production has been banned from the chiefdom"    ~ "No change",
+      "Charcoal production is not common in this part of the district"    ~ "No change",
+      "Charcoal production is not commonly practiced. There is no market for charcoal production"    ~ "No change",
+      "Charcoal production is not practiced in the community"    ~ "No change",
+      "Charcoal production not a common practice in the community"    ~ "No change",
+      "Charcoal production only done when clearing an area for new agricultural fields"    ~ "No change",
+      "No charcoal  production"    ~ "No change",
+      "No charcoal  production In this area"    ~ "No change",
+      "No charcoal  production in this community"    ~ "No change",
+      "No charcoal production"    ~ "No change",
+      "No charcoal production near CFMA"    ~ "No change",
+      "No. There has never been charcoal  production"    ~ "No change",
+      .default = NA
+    ),
+    charcoal = factor(charcoal,
+                      levels = c("Decrease", "No change", "Moderate", "Significant"),
+                      ordered = TRUE),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    )
+  ) |>
+  drop_na(charcoal) |>
+  mutate(province_cfmg = interaction(province, cfmg_name)) |>
+  droplevels()
+
+if (nlevels(test.data$charcoal) >= 2) {
+  M7 <- clmm(charcoal ~
+                interview_type +
+                (1 | province) +
+                (1 | province_cfmg),
+              data = test.data)
+  emm.M7     <- emmeans(M7, specs = ~ interview_type)
+  pairwise.M7 <- pairs(emm.M7, adjust = "Tukey")
+} else {
+  M7 <- NULL
+  cat("Model not fitted: only", nlevels(test.data$charcoal),
+      "level(s) present in charcoal after filtering.\n")
+}
+```
+
+```{r}
+#| label: M7_charcoal_outside_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+if (!is.null(M7)) summary(M7) else cat("Model not fitted.")
+```
+
+```{r}
+#| label: pairwise_charcoal_outside_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+if (!is.null(M7)) summary(pairwise.M7) else cat("Model not fitted.")
+```
+
+Among the individual interviewees (@tbl-charcoal_outside_individual), ...
+
+```{r}
+#| label: tbl-charcoal_outside_individual
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Perceived increase in charcoal production outside the community forest by individual interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    charcoal = case_match(
+      impact_on_sfm_charcoal_production_increased_outside_cfma,
+      "no_reduced"    ~ "Decrease",
+      "no_change"    ~ "No change",
+      "yes_moderate_increase"   ~ "Moderate",
+      "yes_significant_increase" ~ "Significant",
+      "Yes_ moderate increase. Only for household use"   ~ "Moderate",
+      "Moderate decrease"    ~ "Decrease",
+      "Due to increase in population_ some charcoal production now being observed in some open are…"   ~ "Moderate",
+      "CFMG members not involved in charcoal production"    ~ "No change",
+      "Charcoal  production  is not allowed in the chiefdom"    ~ "No change",
+      "Charcoal  production is not allowed in the chiefdom"    ~ "No change",
+      "Charcoal production  is not allowed  in the chiefdom"    ~ "No change",
+      "Charcoal production has been banned from the chiefdom"    ~ "No change",
+      "Charcoal production is not common in this part of the district"    ~ "No change",
+      "Charcoal production is not commonly practiced. There is no market for charcoal production"    ~ "No change",
+      "Charcoal production is not practiced in the community"    ~ "No change",
+      "Charcoal production not a common practice in the community"    ~ "No change",
+      "Charcoal production only done when clearing an area for new agricultural fields"    ~ "No change",
+      "No charcoal  production"    ~ "No change",
+      "No charcoal  production In this area"    ~ "No change",
+      "No charcoal  production in this community"    ~ "No change",
+      "No charcoal production"    ~ "No change",
+      "No charcoal production near CFMA"    ~ "No change",
+      "No. There has never been charcoal  production"    ~ "No change",
+      .default = NA
+    ),
+    charcoal = factor(charcoal,
+                      levels = c("Decrease", "No change", "Moderate", "Significant")),
+    interviewee_role = case_match(
+      interviewee_role,
+      "cfmg_exec_member" ~ "CFMG Exec",
+      "cfmg_member"      ~ "Community member",
+      "trad_leader"      ~ "Traditional Leader",
+      "dfo"              ~ "District Forest Officer",
+      "NGO_rep"          ~ "NGO representative"
+    )
+  ) |>
+  filter(!is.na(charcoal)) |>
+  count(interviewee_role, charcoal, name = "Obs") |>
+  arrange(charcoal) |>
+  pivot_wider(
+    names_from  = interviewee_role,
+    values_from = Obs,
+    values_fill = 0
+  ) |>
+  gt() |>
+  cols_label(charcoal = "Increase in charcoal production") |>
+  sub_missing(missing_text = "—") |>
+  tab_header(
+    title    = md("**Perceived increase in charcoal production outside the CF by interviewee role**"),
+    subtitle = "Number of interviewees in each category"
+  ) |>
+  opt_align_table_header(align = "left") |>
+  tab_options(
+    column_labels.font.weight = "bold",
+    row_group.font.weight     = "bold"
+  ) |>
+  cols_align(align = "center", columns = everything())
+```
+
+::: {.callout-note collapse="true"}
+### Charcoal production outside the CF - Individual interviewees - Model methods
+
+To examine differences among individual interviewees in their assessment of whether CFM had increased charcoal production outside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: test_data_charcoal_outside_individual
+#| echo: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    charcoal = case_match(
+      impact_on_sfm_charcoal_production_increased_outside_cfma,
+      "no_reduced"    ~ "Decrease",
+      "no_change"    ~ "No change",
+      "yes_moderate_increase"   ~ "Moderate",
+      "yes_significant_increase" ~ "Significant",
+      "Yes_ moderate increase. Only for household use"   ~ "Moderate",
+      "Moderate decrease"    ~ "Decrease",
+      "Due to increase in population_ some charcoal production now being observed in some open are…"   ~ "Moderate",
+      "CFMG members not involved in charcoal production"    ~ "No change",
+      "Charcoal  production  is not allowed in the chiefdom"    ~ "No change",
+      "Charcoal  production is not allowed in the chiefdom"    ~ "No change",
+      "Charcoal production  is not allowed  in the chiefdom"    ~ "No change",
+      "Charcoal production has been banned from the chiefdom"    ~ "No change",
+      "Charcoal production is not common in this part of the district"    ~ "No change",
+      "Charcoal production is not commonly practiced. There is no market for charcoal production"    ~ "No change",
+      "Charcoal production is not practiced in the community"    ~ "No change",
+      "Charcoal production not a common practice in the community"    ~ "No change",
+      "Charcoal production only done when clearing an area for new agricultural fields"    ~ "No change",
+      "No charcoal  production"    ~ "No change",
+      "No charcoal  production In this area"    ~ "No change",
+      "No charcoal  production in this community"    ~ "No change",
+      "No charcoal production"    ~ "No change",
+      "No charcoal production near CFMA"    ~ "No change",
+      "No. There has never been charcoal  production"    ~ "No change",
+      .default = NA
+    ),
+    charcoal = factor(charcoal,
+                      levels = c("Decrease", "No change", "Moderate", "Significant"),
+                      ordered = TRUE),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(charcoal) |>
+  mutate(province_cfmg = interaction(province, cfmg_name)) |>
+  droplevels()
+
+if (nlevels(test.data$charcoal) >= 2) {
+  M8 <- clmm(charcoal ~
+                interviewee_role +
+                interviewee_gender +
+                interviewee_age +
+                (1 | province) +
+                (1 | province_cfmg),
+              data = test.data)
+  emm.M8     <- emmeans(M8, specs = ~ interviewee_role)
+  pairwise.M8 <- pairs(emm.M8, adjust = "Tukey")
+} else {
+  M8 <- NULL
+  cat("Model not fitted: only", nlevels(test.data$charcoal),
+      "level(s) present in charcoal after filtering.\n")
+}
+```
+
+```{r}
+#| label: M8_charcoal_outside_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+if (!is.null(M8)) summary(M8) else cat("Model not fitted.")
+```
+
+```{r}
+#| label: pairwise_charcoal_outside_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+if (!is.null(M8)) summary(pairwise.M8) else cat("Model not fitted.")
+```
+
+### Fire
+
+We asked interviewees about fire monitoring practices and whether community forest management has reduced fire incidence inside the community forest.
+
+#### Fire monitoring
+
+```{r}
+#| label: fig-fire_monitoring
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Whether CFMGs have established fire monitoring in the community forest, by province. The length of the bars represents the number of CFMGs either monitoring fires (Yes) or not (No). The numbers on the bars represent the actual number of CFMGs in each category."
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  mutate(
+    response = substr(impact_on_sfm_fire_monitoring_in_cfma, 1, 1),
+    response = case_match(
+      response,
+      "y" ~ "Yes",
+      "n" ~ "No"
+    )
+  ) |>
+  filter(!is.na(response)) |>
+  count(province, response) |>
+  mutate(
+    n_signed = if_else(response == "No", -n, n),
+    response  = factor(response, levels = c("No", "Yes"))
+  ) |>
+  ggplot(aes(y = reorder(province, n_signed), x = n_signed, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label = n,
+        hjust = if_else(response == "No", 1.4, -0.4)),
+    size = 3.5, fontface = "bold", colour = "grey25"
+  ) +
+  scale_x_continuous(
+    labels = ~abs(.x),
+    expand = expansion(mult = 0.18),
+    name   = "Number of CFMGs"
+  ) +
+  scale_fill_manual(
+    values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+    guide  = guide_legend(reverse = FALSE)
+  ) +
+  labs(
+    y    = NULL,
+    fill = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+#### Fire incidence inside the community forest
+
+We asked interviewees whether community forest management has reduced fire incidence inside the community forest.
+
+```{r}
+#| label: fig-reduced_fire_inside
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Responses to the question, 'Has CFM reduced fire incidence inside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+
+cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    fire = case_match(
+      impact_on_sfm_fire_incidence_reduction_cfma,
+      "no_incidents_have_increased" ~ "Increase",
+      "no_change"     ~ "No change",
+      "yes_moderate_reduction"    ~ "Moderate",
+      "yes_significant_reduction" ~ "Significant",
+      "No change observed as at now" ~ "No change",
+      .default = NA
+    ),
+    fire = factor(fire, levels = c("Significant", "Moderate", "No change","Increase")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    )
+  ) |>
+  drop_na(fire) |>
+  count(interview_type, fire) |>
+  group_by(interview_type) |>
+  mutate(
+    prop = n / sum(n)
+  ) |>
+  ungroup() |>
+  ggplot(aes(y = interview_type, x = prop, fill = fire)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.05, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of groups"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Increase" = "#C0392B",
+      "No change"   = "#F0C040",
+      "Moderate"    = "#2A9D8F",
+      "Significant" = "#76B7A0"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  labs(
+    y    = NULL,
+    fill = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+As can be seen, a majority of groups report a moderate or significant reduction in fire incidence in the community forest. Below we examine whether these differences among FGD categories are significant.
+
+::: {.callout-note collapse="true"}
+### Fire incidence - FGDs - Model methods
+
+To examine the differences among FGD types in their assessment of whether CFM had reduced fire incidence, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_fire_fgd
+#| include: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    fire = case_match(
+      impact_on_sfm_fire_incidence_reduction_cfma,
+      "no_incidents_have_increased" ~ "Increase",
+      "no_change"     ~ "No change",
+      "yes_moderate_reduction"    ~ "Moderate",
+      "yes_significant_reduction" ~ "Significant",
+      "No change observed as at now" ~ "No change",
+      .default = NA
+    ),
+    fire = factor(fire,
+                  levels = c("Increase","No change", "Moderate", "Significant"),
+                  ordered = TRUE),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    )
+  ) |>
+  drop_na(fire) |>
+  mutate(province_cfmg = interaction(province, cfmg_name)) |>
+  droplevels()
+
+if (nlevels(test.data$fire) >= 2) {
+  M9 <- clmm(fire ~
+                interview_type +
+                (1 | province) +
+                (1 | province_cfmg),
+              data = test.data)
+  emm.M9      <- emmeans(M9, specs = ~ interview_type)
+  pairwise.M9 <- pairs(emm.M9, adjust = "Tukey")
+} else {
+  M9 <- NULL
+  cat("Model not fitted: only", nlevels(test.data$fire),
+      "level(s) present in fire after filtering.\n")
+}
+```
+
+```{r}
+#| label: M9_fire_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+if (!is.null(M9)) summary(M9) else cat("Model not fitted.")
+```
+
+```{r}
+#| label: pairwise_fire_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+if (!is.null(M9)) summary(pairwise.M9) else cat("Model not fitted.")
+```
+
+Among the individual interviewees (@tbl-fire_individual), there were also some differences in opinion.
+
+```{r}
+#| label: tbl-fire_individual
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Perceived reduction in fire incidence inside the community forest by individual interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    fire = case_match(
+      impact_on_sfm_fire_incidence_reduction_cfma,
+      "no_incidents_have_increased" ~ "Increase",
+      "no_change"     ~ "No change",
+      "yes_moderate_reduction"    ~ "Moderate",
+      "yes_significant_reduction" ~ "Significant",
+      "No change observed as at now" ~ "No change",
+      .default = NA
+    ),
+    fire = factor(fire,
+                  levels = c("Increase","No change", "Moderate", "Significant"),
+                  ordered = TRUE),
+    interviewee_role = case_match(
+      interviewee_role,
+      "cfmg_exec_member" ~ "CFMG Exec",
+      "cfmg_member"      ~ "Community member",
+      "trad_leader"      ~ "Traditional Leader",
+      "dfo"              ~ "District Forest Officer",
+      "NGO_rep"          ~ "NGO representative"
+    )
+  ) |>
+  filter(!is.na(fire)) |>
+  count(interviewee_role, fire, name = "Obs") |>
+  arrange(fire) |>
+  pivot_wider(
+    names_from  = interviewee_role,
+    values_from = Obs,
+    values_fill = 0
+  ) |>
+  gt() |>
+  cols_label(fire = "Reduction in fire incidence") |>
+  sub_missing(missing_text = "—") |>
+  tab_header(
+    title    = md("**Perceived reduction in fire incidence by interviewee role**"),
+    subtitle = "Number of interviewees in each category"
+  ) |>
+  opt_align_table_header(align = "left") |>
+  tab_options(
+    column_labels.font.weight = "bold",
+    row_group.font.weight     = "bold"
+  ) |>
+  cols_align(
+    align   = "center",
+    columns = everything()
+  )
+```
+
+::: {.callout-note collapse="true"}
+### Fire incidence - Individual interviewees - Model methods
+
+To examine differences among individual interviewees in their assessment of whether CFM had reduced fire incidence, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: test_data_fire_individual
+#| echo: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    fire = case_match(
+      impact_on_sfm_fire_incidence_reduction_cfma,
+      "no_incidents_have_increased" ~ "Increase",
+      "no_change"     ~ "No change",
+      "yes_moderate_reduction"    ~ "Moderate",
+      "yes_significant_reduction" ~ "Significant",
+      "No change observed as at now" ~ "No change",
+      .default = NA
+    ),
+    fire = factor(fire,
+                  levels = c("Increase","No change", "Moderate", "Significant"),
+                  ordered = TRUE),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(fire) |>
+  mutate(province_cfmg = interaction(province, cfmg_name)) |>
+  droplevels()
+
+if (nlevels(test.data$fire) >= 2) {
+  M10 <- clmm(fire ~
+                 interviewee_role +
+                 interviewee_gender +
+                 interviewee_age +
+                 (1 | province) +
+                 (1 | province_cfmg),
+               data = test.data)
+  emm.M10      <- emmeans(M10, specs = ~ interviewee_role)
+  pairwise.M10 <- pairs(emm.M10, adjust = "Tukey")
+} else {
+  M10 <- NULL
+  cat("Model not fitted: only", nlevels(test.data$fire),
+      "level(s) present in fire after filtering.\n")
+}
+```
+
+```{r}
+#| label: M10_fire_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+if (!is.null(M10)) summary(M10) else cat("Model not fitted.")
+```
+
+```{r}
+#| label: pairwise_fire_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+if (!is.null(M10)) summary(pairwise.M10) else cat("Model not fitted.")
+```
+
+### Wildlife
+
+We asked interviewees whether community forest management has led to an increase in wildlife inside the community forest.
+
+```{r}
+#| label: fig-wildlife_increase
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Responses to the question, 'Has CFM led to an increase in wildlife in the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+
+cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    wildlife = case_match(
+      impact_on_sfm_wildlife_increase,
+      "no_reduced"              ~ "Decrease",
+      "no_change"               ~ "No change",
+      "yes_moderate_increase"   ~ "Moderate",
+      "yes_significant_increase" ~ "Significant",
+      .default = NA
+    ),
+    wildlife = factor(wildlife,
+                      levels = c("Significant", "Moderate", "No change", "Decrease")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    )
+  ) |>
+  drop_na(wildlife) |>
+  count(interview_type, wildlife) |>
+  group_by(interview_type) |>
+  mutate(prop = n / sum(n)) |>
+  ungroup() |>
+  ggplot(aes(y = interview_type, x = prop, fill = wildlife)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.05, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of groups"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Significant" = "#2A9D8F",
+      "Moderate"    = "#F0C040",
+      "No change"   = "#E07B54",
+      "Decrease"    = "#C0392B"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+As can be seen, responses vary among FGD groups in their assessment of wildlife increase. Below we examine whether these differences are significant.
+
+::: {.callout-note collapse="true"}
+### Wildlife increase - FGDs - Model methods
+
+To examine the differences among FGD types in their assessment of whether CFM had increased wildlife, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_wildlife_fgd
+#| include: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    wildlife = case_match(
+      impact_on_sfm_wildlife_increase,
+      "no_reduced"              ~ "Decrease",
+      "no_change"               ~ "No change",
+      "yes_moderate_increase"   ~ "Moderate",
+      "yes_significant_increase" ~ "Significant",
+      .default = NA
+    ),
+    wildlife = factor(wildlife,
+                      levels = c("Decrease", "No change", "Moderate", "Significant"),
+                      ordered = TRUE),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    )
+  ) |>
+  drop_na(wildlife) |>
+  mutate(province_cfmg = interaction(province, cfmg_name)) |>
+  droplevels()
+
+if (nlevels(test.data$wildlife) >= 2) {
+  M11 <- clmm(wildlife ~
+                interview_type +
+                (1 | province) +
+                (1 | province_cfmg),
+              data = test.data)
+  emm.M11      <- emmeans(M11, specs = ~ interview_type)
+  pairwise.M11 <- pairs(emm.M11, adjust = "Tukey")
+} else {
+  M11 <- NULL
+  cat("Model not fitted: only", nlevels(test.data$wildlife),
+      "level(s) present in wildlife after filtering.\n")
+}
+```
+
+```{r}
+#| label: M11_wildlife_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+if (!is.null(M11)) summary(M11) else cat("Model not fitted.")
+```
+
+```{r}
+#| label: pairwise_wildlife_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+if (!is.null(M11)) summary(pairwise.M11) else cat("Model not fitted.")
+```
+
+Among the individual interviewees (@tbl-wildlife_individual), there were also some differences in opinion.
+
+```{r}
+#| label: tbl-wildlife_individual
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Perceived increase in wildlife inside the community forest by individual interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    wildlife = case_match(
+      impact_on_sfm_wildlife_increase,
+      "no_reduced"              ~ "Decrease",
+      "no_change"               ~ "No change",
+      "yes_moderate_increase"   ~ "Moderate",
+      "yes_significant_increase" ~ "Significant",
+      .default = NA
+    ),
+    wildlife = factor(wildlife,
+                      levels = c("Decrease", "No change", "Moderate", "Significant")),
+    interviewee_role = case_match(
+      interviewee_role,
+      "cfmg_exec_member" ~ "CFMG Exec",
+      "cfmg_member"      ~ "Community member",
+      "trad_leader"      ~ "Traditional Leader",
+      "dfo"              ~ "District Forest Officer",
+      "NGO_rep"          ~ "NGO representative"
+    )
+  ) |>
+  filter(!is.na(wildlife)) |>
+  count(interviewee_role, wildlife, name = "Obs") |>
+  arrange(wildlife) |>
+  pivot_wider(
+    names_from  = interviewee_role,
+    values_from = Obs,
+    values_fill = 0
+  ) |>
+  gt() |>
+  cols_label(wildlife = "Increase in wildlife") |>
+  sub_missing(missing_text = "—") |>
+  tab_header(
+    title    = md("**Perceived increase in wildlife by interviewee role**"),
+    subtitle = "Number of interviewees in each category"
+  ) |>
+  opt_align_table_header(align = "left") |>
+  tab_options(
+    column_labels.font.weight = "bold",
+    row_group.font.weight     = "bold"
+  ) |>
+  cols_align(align = "center", columns = everything())
+```
+
+::: {.callout-note collapse="true"}
+### Wildlife increase - Individual interviewees - Model methods
+
+To examine differences among individual interviewees in their assessment of whether CFM had increased wildlife, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: test_data_wildlife_individual
+#| echo: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    wildlife = case_match(
+      impact_on_sfm_wildlife_increase,
+      "no_reduced"              ~ "Decrease",
+      "no_change"               ~ "No change",
+      "yes_moderate_increase"   ~ "Moderate",
+      "yes_significant_increase" ~ "Significant",
+      .default = NA
+    ),
+    wildlife = factor(wildlife,
+                      levels = c("Decrease", "No change", "Moderate", "Significant"),
+                      ordered = TRUE),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(wildlife) |>
+  mutate(province_cfmg = interaction(province, cfmg_name)) |>
+  droplevels()
+
+if (nlevels(test.data$wildlife) >= 2) {
+  M12 <- clmm(wildlife ~
+                 interviewee_role +
+                 interviewee_gender +
+                 interviewee_age +
+                 (1 | province) +
+                 (1 | province_cfmg),
+               data = test.data)
+  emm.M12      <- emmeans(M12, specs = ~ interviewee_role)
+  pairwise.M12 <- pairs(emm.M12, adjust = "Tukey")
+} else {
+  M12 <- NULL
+  cat("Model not fitted: only", nlevels(test.data$wildlife),
+      "level(s) present in wildlife after filtering.\n")
+}
+```
+
+```{r}
+#| label: M12_wildlife_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+if (!is.null(M12)) summary(M12) else cat("Model not fitted.")
+```
+
+```{r}
+#| label: pairwise_wildlife_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+if (!is.null(M12)) summary(pairwise.M12) else cat("Model not fitted.")
+```
+
+### Forest resources management
+
+We asked interviewees whether community forest management has improved the management of forest resources inside the community forest.
+
+```{r}
+#| label: fig-forest_resources_management
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Responses to the question, 'Has CFM improved forest resources management inside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+
+cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    frm = case_match(
+      impact_on_sfm_forest_resources_management,
+      "no_management_has_worsened"    ~ "Management worse",
+      "no_change"                     ~ "No change",
+      "yes_moderate_improvement"      ~ "Moderate improvement",
+      "yes_significant_improvement"   ~ "Significant improvement",
+      .default = NA
+    ),
+    frm = factor(frm, levels = c("Significant improvement", "Moderate improvement",
+                                 "No change", "Management worse")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    )
+  ) |>
+  drop_na(frm) |>
+  count(interview_type, frm) |>
+  group_by(interview_type) |>
+  mutate(prop = n / sum(n)) |>
+  ungroup() |>
+  ggplot(aes(y = interview_type, x = prop, fill = frm)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.05, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of groups"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Significant improvement" = "#2A9D8F",
+      "Moderate improvement"    = "#F0C040",
+      "No change"               = "#E07B54",
+      "Management worse"        = "#C0392B"
+    ),
+    guide = guide_legend(reverse = TRUE, nrow = 2)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+As can be seen, responses vary among FGD groups in their assessment of improvements in forest resources management. We also asked which specific forest resources had improved under CFM (@fig-harvested_resources).
+
+```{r}
+#| label: fig-harvested_resources
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Forest resources reported as improved under CFM, as reported by female and male FGDs. The length of the bars represents the number of FGDs reporting an improvement (Yes) or no improvement (No) for each resource. Resources with no FGDs reporting improvement in either group are not shown."
+#| fig-width: 12
+#| fig-height: 9
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
+  mutate(interview_type = case_match(
+    interview_type,
+    "cfmg_female" ~ "Female FGD",
+    "cfmg_male"   ~ "Male FGD"
+  )) |>
+  select(
+    interview_type,
+    "Pupwe"            = impact_on_sfm_harvested_forest_resources_pupwe,
+    "Devil's claw"     = impact_on_sfm_harvested_forest_resources_devils_claw,
+    "Fish"             = impact_on_sfm_harvested_forest_resources_fish,
+    "Lusala"           = impact_on_sfm_harvested_forest_resources_lusala,
+    "Mungongo"         = impact_on_sfm_harvested_forest_resourcesmungongo,
+    "Bamboo"           = impact_on_sfm_harvested_forest_resources_bamboo,
+    "Munkoyo"          = impact_on_sfm_harvested_forest_resources_munkoyo,
+    "Poles"            = impact_on_sfm_harvested_forest_resources_poles,
+    "Bushmeat"         = impact_on_sfm_harvested_forest_resources_bushmeat,
+    "Timber"           = impact_on_sfm_harvested_forest_resources_timber,
+    "Fibres"           = impact_on_sfm_harvested_forest_resources_fibers,
+    "Chikanda"         = impact_on_sfm_harvested_forest_resources_chikanda,
+    "Firewood"         = interview_grp_impact_on_sfm_harvested_forest_resources_firewood,
+    "Thatching grass"  = impact_on_sfm_harvested_forest_resources_thatching_grass,
+    "Medicinal plants" = impact_on_sfm_harvested_forest_resources_medicinal_plants,
+    "Caterpillars"     = impact_on_sfm_harvested_forest_resources_caterpillars,
+    "Honey"            = impact_on_sfm_harvested_forest_resources_honey,
+    "Wild fruits"      = impact_on_sfm_harvested_forest_resources_wild_fruits,
+    "Mushrooms"        = impact_on_sfm_harvested_forest_resources_mushrooms
+  ) |>
+  pivot_longer(-interview_type, names_to = "resource", values_to = "value") |>
+  filter(!is.na(value)) |>
+  mutate(
+    response = case_match(as.character(value), "1" ~ "Yes", "0" ~ "No"),
+    response = factor(response, levels = c("No", "Yes")),
+    resource = factor(resource, levels = c(
+      "Pupwe", "Devil's claw", "Fish", "Lusala",
+      "Mungongo", "Bamboo", "Munkoyo",
+      "Poles", "Bushmeat", "Timber", "Fibres",
+      "Chikanda", "Firewood", "Thatching grass",
+      "Medicinal plants", "Caterpillars", "Honey",
+      "Wild fruits", "Mushrooms"
+    )),
+    interview_type = factor(interview_type, levels = c("Female FGD", "Male FGD"))
+  ) |>
+  count(interview_type, resource, response) |>
+  mutate(n_signed = if_else(response == "No", -n, n)) |>
+  ggplot(aes(y = resource, x = n_signed, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label = n,
+        hjust = if_else(response == "No", 1.4, -0.4)),
+    size = 3, fontface = "bold", colour = "grey25"
+  ) +
+  scale_x_continuous(
+    labels = ~abs(.x),
+    expand = expansion(mult = 0.22),
+    name   = "Number of FGDs"
+  ) +
+  scale_fill_manual(
+    values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+    guide  = guide_legend(reverse = FALSE)
+  ) +
+  facet_grid(. ~ interview_type) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    strip.text         = element_text(size = rel(1.14), face = "bold"),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+Below we examine whether differences among FGD groups in their overall assessment of forest resource management are significant.
+
+::: {.callout-note collapse="true"}
+### Forest resources management - FGDs - Model methods
+
+To examine the differences among FGD types in their assessment of whether CFM had improved forest resources management, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_frm_fgd
+#| include: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    frm = case_match(
+      impact_on_sfm_forest_resources_management,
+      "no_management_has_worsened"    ~ "Management worse",
+      "no_change"                     ~ "No change",
+      "yes_moderate_improvement"      ~ "Moderate improvement",
+      "yes_significant_improvement"   ~ "Significant improvement",
+      .default = NA
+    ),
+    frm = factor(frm,
+                 levels = c("Management worse", "No change",
+                            "Moderate improvement", "Significant improvement"),
+                 ordered = TRUE),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    )
+  ) |>
+  drop_na(frm) |>
+  mutate(province_cfmg = interaction(province, cfmg_name)) |>
+  droplevels()
+
+if (nlevels(test.data$frm) >= 2) {
+  M13 <- clmm(frm ~
+                interview_type +
+                (1 | province) +
+                (1 | province_cfmg),
+              data = test.data)
+  emm.M13      <- emmeans(M13, specs = ~ interview_type)
+  pairwise.M13 <- pairs(emm.M13, adjust = "Tukey")
+} else {
+  M13 <- NULL
+  cat("Model not fitted: only", nlevels(test.data$frm),
+      "level(s) present in frm after filtering.\n")
+}
+```
+
+```{r}
+#| label: M13_frm_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+if (!is.null(M13)) summary(M13) else cat("Model not fitted.")
+```
+
+```{r}
+#| label: pairwise_frm_fgd
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+if (!is.null(M13)) summary(pairwise.M13) else cat("Model not fitted.")
+```
+
+Among the individual interviewees (@tbl-frm_individual), there were also some differences in opinion.
+
+```{r}
+#| label: tbl-frm_individual
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Perceived improvement in forest resources management inside the community forest by individual interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    frm = case_match(
+      impact_on_sfm_forest_resources_management,
+      "no_management_has_worsened"    ~ "Management worse",
+      "no_change"                     ~ "No change",
+      "yes_moderate_improvement"      ~ "Moderate improvement",
+      "yes_significant_improvement"   ~ "Significant improvement",
+      .default = NA
+    ),
+    frm = factor(frm,
+                 levels = c("Management worse", "No change",
+                            "Moderate improvement", "Significant improvement")),
+    interviewee_role = case_match(
+      interviewee_role,
+      "cfmg_exec_member" ~ "CFMG Exec",
+      "cfmg_member"      ~ "Community member",
+      "trad_leader"      ~ "Traditional Leader",
+      "dfo"              ~ "District Forest Officer",
+      "NGO_rep"          ~ "NGO representative"
+    )
+  ) |>
+  filter(!is.na(frm)) |>
+  count(interviewee_role, frm, name = "Obs") |>
+  arrange(frm) |>
+  pivot_wider(
+    names_from  = interviewee_role,
+    values_from = Obs,
+    values_fill = 0
+  ) |>
+  gt() |>
+  cols_label(frm = "Forest resources management") |>
+  sub_missing(missing_text = "—") |>
+  tab_header(
+    title    = md("**Perceived improvement in forest resources management by interviewee role**"),
+    subtitle = "Number of interviewees in each category"
+  ) |>
+  opt_align_table_header(align = "left") |>
+  tab_options(
+    column_labels.font.weight = "bold",
+    row_group.font.weight     = "bold"
+  ) |>
+  cols_align(align = "center", columns = everything())
+```
+
+::: {.callout-note collapse="true"}
+### Forest resources management - Individual interviewees - Model methods
+
+To examine differences among individual interviewees in their assessment of whether CFM had improved forest resources management, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: test_data_frm_individual
+#| echo: true
+#| warning: false
+#| message: false
+#| error:   false
+#| code-fold: true
+
+test.data <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    frm = case_match(
+      impact_on_sfm_forest_resources_management,
+      "no_management_has_worsened"    ~ "Management worse",
+      "no_change"                     ~ "No change",
+      "yes_moderate_improvement"      ~ "Moderate improvement",
+      "yes_significant_improvement"   ~ "Significant improvement",
+      .default = NA
+    ),
+    frm = factor(frm,
+                 levels = c("Management worse", "No change",
+                            "Moderate improvement", "Significant improvement"),
+                 ordered = TRUE),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(frm) |>
+  mutate(province_cfmg = interaction(province, cfmg_name)) |>
+  droplevels()
+
+if (nlevels(test.data$frm) >= 2) {
+  M14 <- clmm(frm ~
+                 interviewee_role +
+                 interviewee_gender +
+                 interviewee_age +
+                 (1 | province) +
+                 (1 | province_cfmg),
+               data = test.data)
+  emm.M14      <- emmeans(M14, specs = ~ interviewee_role)
+  pairwise.M14 <- pairs(emm.M14, adjust = "Tukey")
+} else {
+  M14 <- NULL
+  cat("Model not fitted: only", nlevels(test.data$frm),
+      "level(s) present in frm after filtering.\n")
+}
+```
+
+```{r}
+#| label: M14_frm_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Model results (click to expand)"
+
+if (!is.null(M14)) summary(M14) else cat("Model not fitted.")
+```
+
+```{r}
+#| label: pairwise_frm_individual
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Pairwise comparisons (click to expand)"
+
+if (!is.null(M14)) summary(pairwise.M14) else cat("Model not fitted.")
+```
+
+### Restoration
+
+We asked CFMG executives whether natural forest restoration is practised inside the community forest.
+
+```{r}
+#| label: fig-natural_forest_restoration
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Whether CFMGs undertake natural forest restoration in the community forest, by province. The length of the bars represents the number of CFMGs either undertaking restoration (Yes) or not (No). The numbers on the bars represent the actual number of CFMGs in each category."
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  mutate(
+    response = substr(impact_on_sfm_natural_forest_restoration, 1, 1),
+    response = case_match(
+      response,
+      "y" ~ "Yes",
+      "n" ~ "No"
+    )
+  ) |>
+  filter(!is.na(response)) |>
+  count(province, response) |>
+  mutate(
+    n_signed = if_else(response == "No", -n, n),
+    response  = factor(response, levels = c("No", "Yes"))
+  ) |>
+  ggplot(aes(y = reorder(province, n_signed), x = n_signed, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label = n,
+        hjust = if_else(response == "No", 1.4, -0.4)),
+    size = 3.5, fontface = "bold", colour = "grey25"
+  ) +
+  scale_x_continuous(
+    labels = ~abs(.x),
+    expand = expansion(mult = 0.18),
+    name   = "Number of CFMGs"
+  ) +
+  scale_fill_manual(
+    values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+    guide  = guide_legend(reverse = FALSE)
+  ) +
+  labs(
+    y    = NULL,
+    fill = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+We also asked CFMG executives about the specific methods of restoration applied inside the community forest.
+
+```{r}
+#| label: fig-restoration_methods
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Restoration methods applied inside the community forest, as reported by CFMG executives. The length of the bars represents the number of CFMGs either using (Yes) or not using (No) each method. The numbers on the bars represent the actual number of CFMGs in each category."
+#| fig-height: 4
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  select(
+    "Protecting natural regeneration" = impact_on_sfm_restoration_methods_applied_protection,
+    "Planting indigenous"             = impact_on_sfm_restoration_methods_applied_planting_with_indigineous_species,
+    "Invasives removal"               = impact_on_sfm_restoration_methods_applied_removal
+  ) |>
+  pivot_longer(everything(), names_to = "method", values_to = "value") |>
+  filter(!is.na(value)) |>
+  mutate(
+    response = case_match(as.character(value), "1" ~ "Yes", "0" ~ "No"),
+    response = factor(response, levels = c("No", "Yes")),
+    method   = factor(method, levels = c("Invasives removal",
+                                         "Planting indigenous",
+                                         "Protecting natural regeneration"))
+  ) |>
+  count(method, response) |>
+  mutate(n_signed = if_else(response == "No", -n, n)) |>
+  ggplot(aes(y = method, x = n_signed, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label = n,
+        hjust = if_else(response == "No", 1.4, -0.4)),
+    size = 3.5, fontface = "bold", colour = "grey25"
+  ) +
+  scale_x_continuous(
+    labels = ~abs(.x),
+    expand = expansion(mult = 0.18),
+    name   = "Number of CFMGs"
+  ) +
+  scale_fill_manual(
+    values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+    guide  = guide_legend(reverse = FALSE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+### Plantations
+
+We asked CFMG executives whether a plantation has been established inside the community forest.
+
+```{r}
+#| label: fig-plantation_establishment
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Whether CFMGs have established a plantation inside the community forest, by province. The length of the bars represents the number of CFMGs either with (Yes) or without (No) a plantation. The numbers on the bars represent the actual number of CFMGs in each category."
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  mutate(
+    response = substr(impact_on_sfm_planted_forest_establishment, 1, 1),
+    response = case_match(
+      response,
+      "y" ~ "Yes",
+      "n" ~ "No"
+    )
+  ) |>
+  filter(!is.na(response)) |>
+  count(province, response) |>
+  mutate(
+    n_signed = if_else(response == "No", -n, n),
+    response  = factor(response, levels = c("No", "Yes"))
+  ) |>
+  ggplot(aes(y = reorder(province, n_signed), x = n_signed, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label = n,
+        hjust = if_else(response == "No", 1.4, -0.4)),
+    size = 3.5, fontface = "bold", colour = "grey25"
+  ) +
+  scale_x_continuous(
+    labels = ~abs(.x),
+    expand = expansion(mult = 0.18),
+    name   = "Number of CFMGs"
+  ) +
+  scale_fill_manual(
+    values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+    guide  = guide_legend(reverse = FALSE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+We also asked executives to estimate the number of hectares planted in the plantation.
+
+```{r}
+#| label: fig-hectares_planted
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Estimated area of plantation established inside the community forest, as reported by CFMG executives (n = 6 CFMGs; total area = 20.5 ha). The horizontal bar is the median and the red dot is the mean. Species planted include *Gliricidia sepium* (n = 3 CFMGs), *Pinus* spp. (n = 2), *Acacia* spp. (n = 1), *Faidherbia albidia* (n = 1), and miombo species (n = 1)."
+#| fig-width: 4
+#| fig-height: 5
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  filter(!is.na(impact_on_sfm_hectares_planted)) |>
+  ggplot(aes(x = "", y = impact_on_sfm_hectares_planted)) +
+  geom_boxplot(width = 0.4, outlier.shape = NA) +
+  geom_jitter(width = 0.1, alpha = 0.6) +
+  stat_summary(fun = mean, geom = "point", size = 3, col = "red") +
+  theme_bw(base_size = 14) +
+  theme(
+    legend.position = "none",
+    axis.text.x  = element_text(size = rel(1.14)),
+    axis.text.y  = element_text(size = rel(1.14)),
+    axis.title.y = element_text(size = rel(1.29))
+  ) +
+  xlab("") +
+  ylab("Hectares planted")
+```
+
+### Agroforestry
+
+We asked CFMG executives whether community forest management has had an impact on agroforestry practices in the community.
+
+```{r}
+#| label: fig-yn_agroforestry
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Whether agroforestry are employed to enhance SFM, as reported by CFMG executives. The length of the bars represents the number of CFMGs reporting either a positive impact (Yes) or no impact (No). The numbers on the bars represent the actual number of CFMGs in each category."
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  mutate(
+    response = substr(impact_on_sfm_yn_agroforestry, 1, 1),
+    response = case_match(
+      response,
+      "y" ~ "Yes",
+      "n" ~ "No"
+    )
+  ) |>
+  filter(!is.na(response)) |>
+  count(province, response) |>
+  mutate(
+    n_signed = if_else(response == "No", -n, n),
+    response  = factor(response, levels = c("No", "Yes"))
+  ) |>
+  ggplot(aes(y = reorder(province, n_signed), x = n_signed, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label = n,
+        hjust = if_else(response == "No", 1.4, -0.4)),
+    size = 3.5, fontface = "bold", colour = "grey25"
+  ) +
+  scale_x_continuous(
+    labels = ~abs(.x),
+    expand = expansion(mult = 0.18),
+    name   = "Number of CFMGs"
+  ) +
+  scale_fill_manual(
+    values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+    guide  = guide_legend(reverse = FALSE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+We also asked CFMG executives about the types of agroforestry practices present in the community.
+
+```{r}
+#| label: fig-agroforestry_types
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Types of agroforestry practices reported by CFMG executives (n = 30 CFMGs). The length of the bars represents the number of CFMGs either reporting (Yes) or not reporting (No) each practice."
+#| fig-height: 4.5
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  select(
+    "Silvopasture"               = impact_on_sfm_types_agroforestry_practices_Silvopasture,
+    "Windbreaks"                 = impact_on_sfm_types_agroforestry_practices_wind_breaks,
+    "Home gardens"               = impact_on_sfm_types_agroforestry_practices_home_gardens,
+    "Boundary planting/woodlots" = impact_on_sfm_types_agroforestry_practices_boundary_planting_woodlots,
+    "Intercropping"              = impact_on_sfm_types_agroforestry_practices_intercropping
+  ) |>
+  pivot_longer(everything(), names_to = "practice", values_to = "value") |>
+  filter(!is.na(value)) |>
+  mutate(
+    response = case_match(as.character(value), "1" ~ "Yes", "0" ~ "No"),
+    response = factor(response, levels = c("No", "Yes")),
+    practice = factor(practice, levels = c(
+      "Silvopasture", "Windbreaks", "Home gardens",
+      "Boundary planting/woodlots", "Intercropping"
+    ))
+  ) |>
+  count(practice, response) |>
+  mutate(n_signed = if_else(response == "No", -n, n)) |>
+  ggplot(aes(y = practice, x = n_signed, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label = n,
+        hjust = if_else(response == "No", 1.4, -0.4)),
+    size = 3.5, fontface = "bold", colour = "grey25"
+  ) +
+  scale_x_continuous(
+    labels = ~abs(.x),
+    expand = expansion(mult = 0.18),
+    name   = "Number of CFMGs"
+  ) +
+  scale_fill_manual(
+    values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+    guide  = guide_legend(reverse = FALSE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+We also asked CFMG executives about the species planted in agroforestry systems.
+
+```{r}
+#| label: fig-agroforestry_species
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Agroforestry species planted, as reported by CFMG executives (n = 30 CFMGs). The length of the bars represents the number of CFMGs either planting (Yes) or not planting (No) each species."
+#| fig-height: 4
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  select(
+    "Bamboo"             = impact_on_sfm_agroforestry_species_planted_bamboo,
+    "Moringa"            = impact_on_sfm_agroforestry_species_planted_moringa,
+    "Exotic fruit trees" = impact_on_sfm_agroforestry_species_planted_exotic_fruit_tree,
+    "Faidherbia albidia" = impact_on_sfm_agroforestry_species_planted_faidherbia_albidia,
+    "Gliricidia sepium"  = impact_on_sfm_agroforestry_species_planted_gliricidia_sepium
+  ) |>
+  pivot_longer(everything(), names_to = "species", values_to = "value") |>
+  filter(!is.na(value)) |>
+  mutate(
+    response = case_match(as.character(value), "1" ~ "Yes", "0" ~ "No"),
+    response = factor(response, levels = c("No", "Yes")),
+    species  = factor(species, levels = c(
+      "Bamboo", "Moringa", "Exotic fruit trees",
+      "Faidherbia albidia", "Gliricidia sepium"
+    ))
+  ) |>
+  count(species, response) |>
+  mutate(n_signed = if_else(response == "No", -n, n)) |>
+  ggplot(aes(y = species, x = n_signed, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label = n,
+        hjust = if_else(response == "No", 1.4, -0.4)),
+    size = 3.5, fontface = "bold", colour = "grey25"
+  ) +
+  scale_x_continuous(
+    labels = ~abs(.x),
+    expand = expansion(mult = 0.18),
+    name   = "Number of CFMGs"
+  ) +
+  scale_fill_manual(
+    values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+    guide  = guide_legend(reverse = FALSE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20",
+                                      face  = "italic"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
