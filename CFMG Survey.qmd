@@ -58,11 +58,12 @@ cfmg |> filter(!is.na(Name)) |>
         ) |>
         ggplot(aes(x = province, y = Obs)) +
         geom_col(position = position_dodge(width = 0.9), color = "black") +
+        theme_bw(base_size = 14) +
         theme(legend.position = "none",
-              axis.text.x = element_text(size = 14, angle = 45,
+              axis.text.x = element_text(size = rel(1.14), angle = 45,
                                          hjust = 1, vjust = 1),
-              axis.text.y = element_text(size = 14),
-              axis.title = element_text(size = 18),
+              axis.text.y = element_text(size = rel(1.14)),
+              axis.title = element_text(size = rel(1.29)),
               ) +
         ylim(0,15) +
         xlab("") +
@@ -96,17 +97,55 @@ cfmg |> group_by(province,Name) |>
         geom_jitter()+
         scale_y_log10() +
         stat_summary(fun=mean, geom="point", size=3, col = 'red') +
+        theme_bw(base_size = 14) +
         theme(legend.position = "none",
-              axis.text.x = element_text(size = 14, angle = 45,
+              axis.text.x = element_text(size = rel(1.14), angle = 45,
                                          hjust = 1, vjust = 1),
-              axis.text.y = element_text(size = 14),
-              axis.title = element_text(size = 18),
+              axis.text.y = element_text(size = rel(1.14)),
+              axis.title = element_text(size = rel(1.29)),
               ) +
         #ylim(0,15) +
         xlab("") +
         ylab("Size of Community Forests")
 
 ```
+
+We asked CFMG Executives the size of their community forest (CF). In @fig-size_of_CF, their answers are plotted against the size given in the forestry department database.
+
+```{r}
+#| label: fig-size_of_CF
+#| code-fold: true
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Size of CF as reported by the CFMG executive, compared to the size recorded in the Forest Department database"
+
+cfmg |> filter(interview_type == "cfmg_executive") |>
+
+        ggplot(aes(x = cfmg_governance_size_cfma,
+                   y = `Size (Hectares)`)) +
+        geom_abline(intercept = log(1), slope = 1,color = "lightblue",
+              linewidth = 1.2) +
+        geom_point(alpha = 0.6) +
+        theme_bw(base_size = 14) +
+        theme(legend.position = "none",
+              axis.text.x = element_text(
+                      size = rel(1.14), angle = 0, hjust=0.5),
+              axis.text.y = element_text(size = rel(1.14)),
+              axis.title.x = element_text(size = rel(1.29)),
+              axis.title.y = element_text(size = rel(1.29))) +
+        scale_y_log10(
+                limits = c(10,100000)) +
+        scale_x_log10(
+                limits = c(10,100000)
+        ) +
+        xlab("Reported size (ha)") +
+        ylab("Size (ha) in dataset")
+
+```
+
+While most answers lie along the line, several are off - some by huge amounts. In some cases, these differences may reflect errors in the forestry department database. However, the other possibility is that the FPIC was not conducted properly and the CFMG Executive are misinformed about the size of their CF.
 
 ### Age of community forests
 
@@ -137,11 +176,12 @@ cfmg |> group_by(province,Name) |>
         geom_jitter()+
         scale_y_continuous(limits = c(0,8)) +
         stat_summary(fun=mean, geom="point", size=3, col = 'red') +
+        theme_bw(base_size = 14) +
         theme(legend.position = "none",
-              axis.text.x = element_text(size = 14, angle = 45,
+              axis.text.x = element_text(size = rel(1.14), angle = 45,
                                          hjust = 1, vjust = 1),
-              axis.text.y = element_text(size = 14),
-              axis.title = element_text(size = 18),
+              axis.text.y = element_text(size = rel(1.14)),
+              axis.title = element_text(size = rel(1.29)),
               ) +
         xlab("") +
         ylab("Age of Community Forests on 01/01/2025")
@@ -181,14 +221,15 @@ cfmg |> group_by(province,cfmg_name) |>
         geom_col(position = position_dodge(width = 0.9), color = "black") +
         geom_errorbar(aes(ymin = n_int - sd_int, ymax = n_int + sd_int),
                       position = position_dodge(width = 0.9),
-                      width    = 0.25, 
+                      width    = 0.25,
                       linewidth = 0.8
                       ) +
+        theme_bw(base_size = 14) +
         theme(legend.position = "none",
-              axis.text.x = element_text(size = 14, angle = 45,
+              axis.text.x = element_text(size = rel(1.14), angle = 45,
                                          hjust = 1, vjust = 1),
-              axis.text.y = element_text(size = 14),
-              axis.title = element_text(size = 18),
+              axis.text.y = element_text(size = rel(1.14)),
+              axis.title = element_text(size = rel(1.29)),
               ) +
         ylim(0,15) +
         xlab("") +
@@ -340,25 +381,25 @@ cfmg |> filter(interview_type == "individual_interview") |>
                 labels = c("Female", "Male"),
                 name = "Gender"
                 ) +
-        geom_hline(yintercept = 0, color = "grey30", linewidth = 0.7) +
+        geom_hline(yintercept = 0, colour = "white", linewidth = 1.2) +
         geom_vline(xintercept = 0, color = "grey30", linewidth = 0.7) +
   
   labs(
           x = NULL,
           y = NULL) +
-  theme_minimal(base_size = 13) +
+  theme_minimal(base_size = 14) +
         theme(
                 legend.position = "bottom",
                 legend.key.justification = "centre",
-      
+
     # Remove all vertical grid lines except the zero line (already kept via geom_vline)
     panel.grid.major.x = element_blank(),
     panel.grid.minor.x = element_blank(),
     panel.grid.major.y = element_blank(),
     panel.grid.minor.y = element_blank(),
-    
-    axis.text.y = element_text(size = 14, vjust = 0.5),
-    axis.text.x = element_text(size = 14),
+
+    axis.text.y = element_text(size = rel(1.14), vjust = 0.5),
+    axis.text.x = element_text(size = rel(1.14)),
     plot.margin = margin(t = 50, r = 15, b = 10, l = 15)
         )
  
@@ -386,16 +427,17 @@ cfmg |> filter(!is.na(demo_information_interviewee_gender)) |>
         stat_summary(fun=mean, geom="point", size=3, col = 'red') +
         scale_fill_manual(
     values = c("female" = "#FFAB91", "male" = "#80CBC4"),
-    labels = c("Female", "Male"),   
+    labels = c("Female", "Male"),
     name = "Gender"
   ) +
         scale_y_continuous(
                 limits = c(20,90)
         ) +
+        theme_bw(base_size = 14) +
         theme(legend.position = "none",
-              axis.text.y = element_text(size = 14),
-              axis.text.x = element_text(size = 14, angle = 0, vjust = 1, hjust=0.5),
-              axis.title = element_text(size = 18)) +
+              axis.text.y = element_text(size = rel(1.14)),
+              axis.text.x = element_text(size = rel(1.14), angle = 0, vjust = 1, hjust=0.5),
+              axis.title = element_text(size = rel(1.29))) +
         xlab("") +
         ylab("Age of interviewees")
 
@@ -425,16 +467,17 @@ cfmg |> filter(!is.na(demo_information_interviewee_gender)) |>
         stat_summary(fun=mean, geom="point", size=3, col = 'red') +
         scale_fill_manual(
     values = c("female" = "#FFAB91", "male" = "#80CBC4"),
-    labels = c("Female", "Male"),   
+    labels = c("Female", "Male"),
     name = "Gender"
   ) +
         scale_y_continuous(
                 limits = c(0,80)
         ) +
+        theme_bw(base_size = 14) +
         theme(legend.position = "none",
-              axis.text.y = element_text(size = 14),
-              axis.text.x = element_text(size = 14, angle = 0, vjust = 1, hjust=0.5),
-              axis.title = element_text(size = 18)) +
+              axis.text.y = element_text(size = rel(1.14)),
+              axis.text.x = element_text(size = rel(1.14), angle = 0, vjust = 1, hjust=0.5),
+              axis.title = element_text(size = rel(1.29))) +
         xlab("") +
         ylab("Years in community")
 
@@ -475,10 +518,11 @@ cfmg |> filter(interviewee_role == "cfmg_member" |
         scale_y_continuous(
                 limits = c(0,80)
         ) +
+        theme_bw(base_size = 14) +
         theme(legend.position = "none",
-              axis.text.y = element_text(size = 14),
-              axis.text.x = element_text(size = 14, angle = 0, vjust = 1, hjust=0.5),
-              axis.title = element_text(size = 18)) +
+              axis.text.y = element_text(size = rel(1.14)),
+              axis.text.x = element_text(size = rel(1.14), angle = 0, vjust = 1, hjust=0.5),
+              axis.title = element_text(size = rel(1.29))) +
         xlab("") +
         ylab("Years in community")
 
@@ -504,10 +548,11 @@ cfmg |> filter(!is.na(demo_information_interviewee_years_involved_cfmg)) |>
         geom_boxplot() +
         geom_jitter(width = 0.1) +
         stat_summary(fun=mean, geom="point", size=3, col = 'red') +
+        theme_bw(base_size = 14) +
         theme(legend.position = "none",
-              axis.text.x = element_text(size = 14, angle = 45, hjust=1),
-              axis.text.y = element_text(size = 14),
-              axis.title.y = element_text(size = 18)) +
+              axis.text.x = element_text(size = rel(1.14), angle = 45, hjust=1),
+              axis.text.y = element_text(size = rel(1.14)),
+              axis.title.y = element_text(size = rel(1.29))) +
         scale_y_continuous(
                 limits = c(0,10)
         ) +

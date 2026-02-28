@@ -46,7 +46,7 @@ We asked CFMG executives what required legal processes had been completed, inclu
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "CFMG completed legal process by province."
+#| tbl-cap: "CFMG completed legal processes by province."
 
 cfmg |> filter(interview_type == "cfmg_executive") |>
         group_by(province) |>
@@ -75,8 +75,8 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
         ) |>
         gt() |>
         tab_header(
-                title = md("**Completed legal processes in formation of CFMGs**"),
-                subtitle = "Proportion of CFMGs by province"
+                title = md("**CFMG legal processes**"),
+                subtitle = "Proportion of CFMGs with completed legal processes by province"
                 )|>
         opt_align_table_header(align = "left") |>
         tab_options(
@@ -91,11 +91,11 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
 
 ```
 
-Lusaka Province was the only province in which all the processes had been completed across all CFMGs, while Eastern Province had the highest proportion of incomplete legal processes. Overall, completion of legal processes was patchy. Some processes, such as the Recognition letter, CF Agreement, Management Plan and Bylaws & Constitution seem to have been completed for most CFMGs, but the Registration Certificate, User-rights Permit and Benefit-sharing Agreement were less often completed. This assessment is based on the responses of the CFMG Executives. It may be that more processes have been completed, but that the CFMG Executives are unaware. This may, especially be the case, if they are being supported by external agencies such as NGOs.
+Lusaka Province was the only province in which all the processes had been completed across all CFMGs, while Eastern Province had the highest proportion of incomplete legal processes. Overall, completion of legal processes was patchy. Some processes, such as the Recognition letter, CF Agreement, Management Plan and Bylaws & Constitution seem to have been completed for most CFMGs, but the Registration Certificate, User-rights Permit and Benefit-sharing Agreement were less often completed. This assessment is based on the responses of the CFMG Executives. It may be that more processes have been completed, but that the CFMG Executives are unaware, for example, if they are being supported by external agencies such as NGOs.
 
-## CFMG govenance processes
+## CFMG governance processes
 
-Through the survey we asked CFMG executives what govenance processes had been completed, such as holding elections and annual reporting (@tbl-governance_processes).
+Through the survey we asked CFMG executives what governance processes were being implemented, such as holding CFMG elections, issuing permits and annual reporting (@tbl-governance_processes).
 
 ```{r}
 #| label: tbl-governance_processes
@@ -104,7 +104,7 @@ Through the survey we asked CFMG executives what govenance processes had been co
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "CFMG governance processes by province."
+#| tbl-cap: "CFMG governance processes conducted by province"
 
 cfmg |> filter(interview_type == "cfmg_executive") |>
         mutate(
@@ -112,32 +112,42 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
                        cfmg_governance_cfmg_held_election,
                        "yes" ~ 1,
                        "no" ~ 0,
-                       "don't_know" ~ NA),
+                       .default = NA_integer_),
                cfmg_term_limits = case_match(
                        cfmg_governance_term_limits_exist,
                        "yes" ~ 1,
                        "no" ~ 0,
-                       "don't_know" ~ NA),
+                       .default = NA_integer_),
                cfmg_HFO = case_match(
                        cfmg_governance_yn_employ_honorary_forest_officers,
                        "yes" ~ 1,
                        "no" ~ 0,
-                       "don't_know" ~ NA),
+                       .default = NA_integer_),
                cfmg_receipt_book = case_match(
                        cfmg_governance_receipt_book_maintained,
                        "yes" ~ 1,
                        "no" ~ 0,
-                       "don't_know" ~ NA),
+                       .default = NA_integer_),
                cfmg_bank_acc = case_match(
                        cfmg_governance_bank_account,
                        "yes" ~ 1,
                        "no" ~ 0,
-                       "don't_know" ~ NA),
+                       .default = NA_integer_),
+               cfmg_financial_rep = case_match(
+                       cfmg_governance_financial_reports_to_community,
+                       "yes" ~ 1,
+                       "no" ~ 0,
+                       .default = NA_integer_),
+               cfmg_annual_rep = case_match(
+                       cfmg_governance_annual_report_to_community,
+                       "yes" ~ 1,
+                       "no" ~ 0,
+                       .default = NA_integer_),
                cfmg_permits = case_match(
                        cfmg_governance_issue_licenses_permits,
                        "yes" ~ 1,
                        "no" ~ 0,
-                       "don't_know" ~ NA)
+                       .default = NA_integer_)
 
         ) |>
         group_by(province) |>
@@ -145,7 +155,7 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
                 `CFMG elections` = round(mean(
                         cfmg_elections,
                         na.rm = TRUE), digits =2),
-                `CFMG term limits` = round(mean(
+                `CFMG term-limits` = round(mean(
                         cfmg_term_limits,
                         na.rm = TRUE), digits = 2),
                 `Receipt book` = round(mean(
@@ -154,17 +164,23 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
                 `Bank acc` = round(mean(
                         cfmg_bank_acc,
                         na.rm = TRUE), digits = 2),
-                `Permits` = round(mean(
+                `Permits issued` = round(mean(
                         cfmg_permits,
                         na.rm = TRUE), digits = 2),
-                `Honary forest officers` = round(mean(
+                `Financial reporting` = round(mean(
+                        cfmg_financial_rep,
+                        na.rm = TRUE), digits = 2),
+                `Annual reporting` = round(mean(
+                        cfmg_annual_rep,
+                        na.rm = TRUE), digits = 2),
+                `HFOs appointed` = round(mean(
                         cfmg_HFO,
                         na.rm = TRUE), digits = 2)
         ) |>
         gt() |>
         tab_header(
-                title = md("**Completed business processes in management of CFMGs**"),
-                subtitle = "Proportion of CFMGs by province"
+                title = md("**CFMG governance processes completed**"),
+                subtitle = "Proportion of CFMGs completing or conducting governance processes by province"
                 )|>
         opt_align_table_header(align = "left") |>
         tab_options(
@@ -179,7 +195,7 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
 
 ```
 
-While most CFMGs claim to have held elections, have term limits for executive officers and employ honary forest officers, most do not maintain a receipt book, have a bank account or issue permits.
+While most CFMGs claim to have held elections, have term limits for executive officers and employ honorary forest officers (HFOs), other governance processes were not consistently being implemented. Most CFMGs have not opened bank accounts, do not maintain a receipt book, or issue permits. Financial and annual reporting to community members was also apparently irregularly implemented.
 
 It is also concerning that most CFMGs do not appear to have held elections since they were formed, up to five years ago (@fig-last_election).
 
@@ -242,7 +258,7 @@ cfmg |>
     fill = NULL
   ) +
   scale_y_discrete(expand = expansion(add = c(0.3, 0.3))) +
-  theme_minimal(base_size = 12) +
+  theme_minimal(base_size = 14) +
   theme(
     panel.grid.major.y = element_blank(),
     panel.grid.minor   = element_blank(),
@@ -250,15 +266,15 @@ cfmg |>
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
     axis.text.y        = element_blank(),
     axis.ticks.y       = element_blank(),
-    axis.text.x        = element_text(size = 14, colour = "grey20"),
-    axis.title.x       = element_text(size = 14, colour = "grey40"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
     legend.position    = "bottom",
-    legend.text        = element_text(size = 14),
+    legend.text        = element_text(size = rel(1)),
     plot.margin        = margin(2, 25, 10, 10)
   )
 ```
 
-It is concerning that 43 out of 72 CFMGs have not held elections for over 3 years, especially as in most CFMGs positions only have a tenure of 3 years or less.
+Furthermore, 43 out of 72 CFMGs have not held elections for over 3 years, although term limits for executive officers are usually 2-3 years (@fig-tenure). Thus, most CFMGs are not complying with their Bylaws & Constitutions.
 
 ```{r}
 #| label: fig-tenure
@@ -315,7 +331,7 @@ cfmg |>
     fill = NULL
   ) +
   scale_y_discrete(expand = expansion(add = c(0.3, 0.3))) +
-  theme_minimal(base_size = 12) +
+  theme_minimal(base_size = 14) +
   theme(
     panel.grid.major.y = element_blank(),
     panel.grid.minor   = element_blank(),
@@ -323,17 +339,15 @@ cfmg |>
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
     axis.text.y        = element_blank(),
     axis.ticks.y       = element_blank(),
-    axis.text.x        = element_text(size = 14, colour = "grey20"),
-    axis.title.x       = element_text(size = 14, colour = "grey40"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
     legend.position    = "bottom",
-    legend.text        = element_text(size = 14),
+    legend.text        = element_text(size = rel(1)),
     plot.margin        = margin(2, 25, 10, 10)
   )
 ```
 
-So most CFMGs are currently not adhering to their constitutions.
-
-Many CFMGs also appear very lax about holding meetings (@fig-meetings).
+In contrast, most CFMGs do appear to be holding meetings regularly, at least according to the responses of the CFMG Executives (@fig-meetings). Nonetheless, there are a small proportion of CFMGs that hold meetings rarely or have never held a meeting.
 
 ```{r}
 #| label: fig-meetings
@@ -342,7 +356,7 @@ Many CFMGs also appear very lax about holding meetings (@fig-meetings).
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Frequency of CFMG executive meetings. The length of each bar segment represents the proportion of CFMGs with the specified meeting frequency. The numbers superimposed on the bars represent the actual number of CFMGs in each category."
+#| fig-cap: "Number of CFMG meetings per year. The length of each bar segment represents the proportion of CFMGs with the specified meeting frequency. The numbers superimposed on the bars represent the actual number of CFMGs in each category."
 #| fig-height: 2.5
 
 cfmg |>
@@ -401,7 +415,7 @@ cfmg |>
     fill = NULL
   ) +
   scale_y_discrete(expand = expansion(add = c(0.3, 0.3))) +
-  theme_minimal(base_size = 12) +
+  theme_minimal(base_size = 14) +
   theme(
     panel.grid.major.y = element_blank(),
     panel.grid.minor   = element_blank(),
@@ -409,17 +423,17 @@ cfmg |>
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
     axis.text.y        = element_blank(),
     axis.ticks.y       = element_blank(),
-    axis.text.x        = element_text(size = 14, colour = "grey20"),
-    axis.title.x       = element_text(size = 14, colour = "grey40"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
     legend.position    = "bottom",
-    legend.text        = element_text(size = 14),
+    legend.text        = element_text(size = rel(1)),
     plot.margin        = margin(2, 25, 10, 10)
   )
 ```
 
 ## CFMG business processes
 
-As with the legal processes, we also asked CFMG Executives abot the state of their business processes. Specifically, we asked if they had annual workplans and budgets, whether they had developed a business plan and if any forest user groups had been established (@tbl-business_processes).
+As with the legal processes, we also asked CFMG Executives about the state of their business processes. Specifically, we asked if they had annual workplans and budgets, whether these plans were being implemented. We also asked if they had developed a business plan and if any forest user groups had been established (@tbl-business_processes).
 
 ```{r}
 #| label: tbl-business_processes
@@ -458,11 +472,11 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
                 `CFMG workplan` = round(mean(
                         cfmg_workplan,
                         na.rm = TRUE), digits =2),
-                `Implementing plan` = round(mean(
-                        cfmg_governance_implementing_plans_cfmg_executive,
-                        na.rm = TRUE), digits = 2),
                 `CFMG budget` = round(mean(
                         cfmg_budget,
+                        na.rm = TRUE), digits = 2),
+                `Implementing plan` = round(mean(
+                        cfmg_governance_implementing_plans_cfmg_executive,
                         na.rm = TRUE), digits = 2),
                 `Business plan` = round(mean(
                         cfmg_business_plan,
@@ -491,11 +505,11 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
 
 ```
 
-The management processes were even more erratically completed than the legal processes. As substantial proportion of CFMGs did not have workplans, budgets or business plan. Even more surprising many did not have recognised user groups, which is critical to managing forest resources.
+As is evident from the table, these business management processes were even more erratically completed than the legal and governance processes. As substantial proportion of CFMGs did not have workplans, budgets or a business plan. Even more surprising many did not have recognised user groups, which is critical to managing forest resources.
 
 ## External support
 
-All CFMGs are supported by the Forestry Deparment. However, the frequency of visits by District Forest Officers (DFOs) varied widely and in most cases they rarely or never visit.
+All CFMGs are supported by the Forestry Deparment, which has a statutory duty to implement the community forest policy and regulations. However, the frequency of visits by District Forest Officers (DFOs) varied widely and in many cases it is clear they rarely or never visit.
 
 ```{r}
 #| label: fig-dfo_visits
@@ -504,7 +518,7 @@ All CFMGs are supported by the Forestry Deparment. However, the frequency of vis
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Frequency of District Forest Officer visits, by province. The length of the bars represents the proportion of CFMGs with a specified frequency of visits. The numbers superimposed on the bars represent the actual number of CFMGs in each category."
+#| fig-cap: "Frequency of District Forest Officer (DFO) visits, by province. The length of the bars represents the proportion of CFMGs with a specified frequency of visits. The numbers superimposed on the bars represent the actual number of CFMGs in each category."
 
 cfmg |>
   filter(interview_type == "cfmg_executive") |>
@@ -548,26 +562,27 @@ cfmg |>
       "Very often"   = "#2A9D8F"
     )
   ) +
+        guides(fill = guide_legend(reverse = TRUE)) +
   labs(
     y    = NULL,
     fill = NULL
   ) +
-  theme_minimal(base_size = 12) +
+  theme_minimal(base_size = 14) +
   theme(
     panel.grid.major.y = element_blank(),
     panel.grid.minor   = element_blank(),
     panel.grid.major.x = element_blank(),
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text.y        = element_text(size = 14, colour = "grey20"),
-    axis.text.x        = element_text(size = 14, colour = "grey20"),
-    axis.title.x       = element_text(size = 14, colour = "grey40"),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
     legend.position    = "bottom",
-    legend.text        = element_text(size = 14),
+    legend.text        = element_text(size = rel(1)),
     plot.margin        = margin(10, 25, 10, 10)
   )
 ```
 
-Most CFMGs operate in partnership with an NGO or a private enterprise, such as a Carbon developer (@fig-support).
+Many CFMGs also operate in partnership with an NGO or private enterprise, such as a conservation organisation or carbon enterprise (@fig-support).
 
 ```{r}
 #| label: fig-support
@@ -576,7 +591,7 @@ Most CFMGs operate in partnership with an NGO or a private enterprise, such as a
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "CFMGs partnered with an external organisation by province. The length of the bars represents the number of CFMGs either partnered (Yes) or not partnered (No) with an external organisation. The numbers on the bars represent the actual number of CFMGs in each category."
+#| fig-cap: "CFMGs partnered with another external organisation, such as a conservation NGO or carbon enterprise, by province. The length of the bars represents the number of CFMGs either partnered (Yes) or not partnered (No) with an external organisation. The numbers on the bars represent the actual number of CFMGs in each category."
 
 cfmg |>
   filter(interview_type == "cfmg_executive") |>
@@ -615,41 +630,48 @@ cfmg |>
     y    = NULL,
     fill = NULL
   ) +
-  theme_minimal(base_size = 12) +
+  theme_minimal(base_size = 14) +
   theme(
     panel.grid.major.y = element_blank(),
     panel.grid.minor   = element_blank(),
     panel.grid.major.x = element_blank(),
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text.y        = element_text(size = 14, colour = "grey20"),
-    axis.text.x        = element_text(size = 14, colour = "grey20"),
-    axis.title.x       = element_text(size = 14, colour = "grey40"),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
     legend.position    = "bottom",
-    legend.text        = element_text(size = 14),
+    legend.text        = element_text(size = rel(1)),
     plot.margin        = margin(10, 25, 10, 10)
   )
 ```
 
-Within the
+The table below (@tbl-support_organisations) lists the organisations and the number of CFMGs they are partnering with. These numbers pertain to our sample of 75 CFMGs, not the all CFMGs in the country.
 
 ```{r}
-#| label: tbl-support2
+#| label: tbl-support_organisations
 #| code-fold: true
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "CFMG governance processes by province."
+#| tbl-cap: "Organisations partnering with CFMGs"
 
 cfmg |> filter(interview_type == "cfmg_executive") |>
         mutate(
-               `cfmg partner` = cfmg_governance_yn_institutions_support_cfmg
-        ) |>
-        count(`cfmg partner`) |>
+               `CFMG partner` = cfmg_governance_support_institutions_quests_supportinstitutionsdetails_1__institution_partner_name,
+               `CFMG partner` = case_match(
+                       `CFMG partner`,
+                       "EP-JSLP" ~ "Forestry Department",
+                       "Community Climate Solutions Zambia" ~ "Community Climate Solutions",
+                       .default = `CFMG partner`
+               )
+               ) |>
+        count(`CFMG partner`) |>
         gt() |>
+        sub_missing(missing_text = "—") |>
         tab_header(
-                title = md("**CFMGs partnered with organisations**"),
-                subtitle = "n = number of CFMGs per catergory"
+                title = md("**Partner organisations**"),
+                subtitle = "n = number of CFMGs partnered"
                 )|>
         opt_align_table_header(align = "left") |>
         tab_options(
@@ -657,48 +679,112 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
                 row_group.font.weight = "bold"
                 ) |>
         cols_align(
-                align = "center",
+                align = "left",
                 columns = everything()
                 )
 ```
 
-## Community forest size
+These organisation provide support (@fig-partner_visits).
 
-We asked CFMG Executives the size of their community forest (CF). In @fig-size_of_CF, their answers are plotted against the size given in the forest department database.
 
 ```{r}
-#| label: fig-size_of_CF
+#| label: fig-partner_visits
 #| code-fold: true
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Size of CF as reported by the CFMG executive, compared to the size recorded in the Forest Department database"
+#| fig-width: 8
+#| fig-height: 10
+#| fig-cap: "Frequency of visits by the supporting organisation. The length of the bars represents the proportion of CFMGs with a specified frequency of visits. The numbers superimposed on the bars represent the actual number of CFMGs in each category."
 
-cfmg |> filter(interview_type == "cfmg_executive") |>
-
-        ggplot(aes(x = cfmg_governance_size_cfma,
-                   y = `Size (Hectares)`)) +
-        geom_abline(intercept = log(1), slope = 1,color = "lightblue",
-              linewidth = 1.2) +
-        geom_point(alpha = 0.6) +
-        theme(legend.position = "none",
-              axis.text.x = element_text(
-                      size = 14, angle = 0, hjust=0.5),
-              axis.text.y = element_text(size = 14),
-              axis.title.x = element_text(size = 18),
-              axis.title.y = element_text(size = 18)) +
-        scale_y_log10(
-                limits = c(10,100000)) +
-        scale_x_log10(
-                limits = c(10,100000)
-        ) +
-        xlab("Reported size (ha)") +
-        ylab("Size (ha) in dataset")
-
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  mutate(
+          `Support freq` = cfmg_governance_support_institutions_quests_supportinstitutionsdetails_1__times_institutions_visit_cfmg,
+          `Support freq` = case_match(`Support freq`,
+                                         "never_0_times"        ~ "Never",
+                                         "twice_2_times" ~ "Occasionally",
+                                         "thrice_3_times" ~ "Occasionally",
+                                         "once_1_time" ~ "Occasionally",
+                                         "more_than_5_times" ~ "Occasionally",
+                                         "more_than_3_times" ~ "Occasionally",
+                                         "More than 3 times" ~ "Occasionally",
+                                         "More 3" ~ "Occasionally",
+                                         "Dependent on their activities" ~ "Occasionally",
+                                         "8_times" ~ "Occasionally",
+                                         "4_times" ~ "Occasionally",
+                                         "12_time (at_least_every_month)" ~ "Frequently",
+                                         "12_times (every_month)" ~ "Frequently",
+                                         "36_times" ~ "Frequently",
+                                         "COMACO 15 to 20 times per year" ~ "Frequently",
+                                         "Very often" ~ "Frequently",
+                                         "Very often/regularly. They have a Field Officer living within the community" ~ "Frequently",
+                                         "Very_often" ~ "Frequently",
+                                         "more_than_12_times" ~ "Frequently",
+                                         "several/often_times" ~ "Frequently",
+                                         "very_often" ~ "Frequently",
+                                         "very_often (60_meetings_per_quater)" ~ "Frequently",
+                                         "very_often (they_have_a_lot_of_activities_with_the_cfmg)" ~ "Frequently",
+                                         "very_often (they_have_an_officer_within_the_community)" ~ "Frequently",
+                                         .default = NA),
+    `Support freq` = factor(`Support freq`, levels = c("Frequently", "Occasionally", "Never")),
+    `CFMG partner` = cfmg_governance_support_institutions_quests_supportinstitutionsdetails_1__institution_partner_name,
+               `CFMG partner` = case_match(
+                       `CFMG partner`,
+                       "EP-JSLP" ~ "Forestry Department",
+                       "Community Climate Solutions Zambia" ~ "Community Climate Solutions",
+                       .default = `CFMG partner`
+               )
+  ) |>
+  drop_na(`Support freq`) |>
+        drop_na(`CFMG partner`) |>
+  count(`CFMG partner`, `Support freq`) |>
+  group_by(`CFMG partner`) |>
+  mutate(
+    prop       = n / sum(n),
+    mean_score = sum(as.numeric(`Support freq`) * prop)
+  ) |>
+  ungroup() |>
+  ggplot(aes(y = reorder(`CFMG partner`, mean_score), x = prop, fill = `Support freq`)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.08, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of CFMGs"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Never"        = "#C0392B",
+      "Occasionally" = "#F0C040",
+      "Frequently"   = "#2A9D8F"
+    )
+  ) +
+        guides(fill = guide_legend(reverse = TRUE)) +
+  labs(
+    y    = NULL,
+    fill = NULL
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
 ```
 
-While most answers lie along the line, several are off - some by huge amounts. In some cases, there may be errors in the FD database. However, the other possibility is that the FPIC was not conducted properly and the CFMG Executive are misinformed about the size of their CF.
 
 ## Interest in expanding the community forest
 
@@ -764,17 +850,17 @@ cfmg |>
     y    = NULL,
     fill = NULL
   ) +
-  theme_minimal(base_size = 12) +
+  theme_minimal(base_size = 14) +
   theme(
     panel.grid.major.y = element_blank(),
     panel.grid.minor   = element_blank(),
     panel.grid.major.x = element_blank(),
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text.y        = element_text(size = 14, colour = "grey20"),
-    axis.text.x        = element_text(size = 14, colour = "grey20"),
-    axis.title.x       = element_text(size = 14, colour = "grey40"),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
     legend.position    = "bottom",
-    legend.text        = element_text(size = 14),
+    legend.text        = element_text(size = rel(1)),
     plot.margin        = margin(10, 25, 10, 10)
   )
 ```
