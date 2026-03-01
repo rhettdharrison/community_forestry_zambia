@@ -30,6 +30,8 @@ library(modelsummary)
 library(ordinal)
 library(tidytext)
 library(ggwordcloud)
+library(ggbreak)
+library(patchwork)
 
 load("cfmg.RData")
 ```
@@ -776,6 +778,125 @@ cfmg |>
   )
 ```
 
+#### Full-time employment by gender and province
+
+Executive FGDs also reported the number of males and females in full-time employment in the CFMG (@fig-et_fulltime_gender).
+
+```{r}
+#| label: fig-et_fulltime_gender
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Number of males and females employed full-time in CFMGs, by province, as reported by executive FGDs."
+#| fig-width: 8
+#| fig-height: 5
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  select(
+    province,
+    "Male"   = economic_transformation_formal_employment_quests_formalemploymentdetails_1__males_employed_cfmg_full_time,
+    "Female" = economic_transformation_formal_employment_quests_formalemploymentdetails_1__females_employed_cfmg_full_time
+  ) |>
+  pivot_longer(-province, names_to = "gender", values_to = "n_employed") |>
+  filter(!is.na(n_employed)) |>
+  mutate(gender = factor(gender, levels = c("Male", "Female"))) |>
+  group_by(province, gender) |>
+  summarise(total = sum(n_employed, na.rm = TRUE), .groups = "drop") |>
+  ggplot(aes(y = reorder(province, total), x = total, fill = gender)) +
+  geom_col(
+    position = position_dodge(width = 0.7), width = 0.6,
+    colour = "white", linewidth = 0.3
+  ) +
+  geom_text(
+    aes(label = total),
+    position = position_dodge(width = 0.7),
+    hjust = -0.2, size = 3.5, colour = "grey25", fontface = "bold"
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.18)),
+    name   = "Number employed full-time"
+  ) +
+  coord_cartesian(clip = "off") +
+  scale_fill_manual(
+    values = c("Male" = "#2A9D8F", "Female" = "#E07B54")
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_line(colour = "grey85", linewidth = 0.4),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+Executive FGDs also reported the number of male and female youth in full-time employment in the CFMG (@fig-et_fulltime_youth).
+
+```{r}
+#| label: fig-et_fulltime_youth
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Number of male and female youth employed full-time in CFMGs, by province, as reported by executive FGDs."
+#| fig-width: 8
+#| fig-height: 5
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  select(
+    province,
+    "Male youth"   = economic_transformation_formal_employment_quests_formalemploymentdetails_1__male_youth_employed_cfmg_full_time,
+    "Female youth" = economic_transformation_formal_employment_quests_formalemploymentdetails_1__female_youth_employed_cfmg_full_time
+  ) |>
+  pivot_longer(-province, names_to = "gender", values_to = "n_employed") |>
+  filter(!is.na(n_employed)) |>
+  mutate(gender = factor(gender, levels = c("Male youth", "Female youth"))) |>
+  group_by(province, gender) |>
+  summarise(total = sum(n_employed, na.rm = TRUE), .groups = "drop") |>
+  ggplot(aes(y = reorder(province, total), x = total, fill = gender)) +
+  geom_col(
+    position = position_dodge(width = 0.7), width = 0.6,
+    colour = "white", linewidth = 0.3
+  ) +
+  geom_text(
+    aes(label = total),
+    position = position_dodge(width = 0.7),
+    hjust = -0.2, size = 3.5, colour = "grey25", fontface = "bold"
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.18)),
+    name   = "Number of youth employed full-time"
+  ) +
+  coord_cartesian(clip = "off") +
+  scale_fill_manual(
+    values = c("Male youth" = "#2A9D8F", "Female youth" = "#E07B54")
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_line(colour = "grey85", linewidth = 0.4),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+
 #### Types of formal employment opportunities
 
 Female and male FGDs identified the types of formal employment opportunities generated by CFM (@fig-et_employment_types).
@@ -864,6 +985,610 @@ ggplot(wc_data, aes(label = word, size = freq, colour = freq)) +
 ```
 
 ### Income earning opportunities
+#### Carbon finance
+
+Executive FGDs reported whether their CFMG was involved in carbon finance (@fig-et_carbon_finance).
+
+```{r}
+#| label: fig-et_carbon_finance
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "CFMG involvement in carbon finance by province, as reported by executive FGDs."
+#| fig-width: 8
+#| fig-height: 6
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  transmute(
+    province,
+    response = case_when(
+      economic_transformation_cfma_involved_carbon_finance == "yes"                          ~ "Yes",
+      str_starts(economic_transformation_cfma_involved_carbon_finance, "Yes")                ~ "Yes",
+      economic_transformation_cfma_involved_carbon_finance == "no"                           ~ "No",
+      str_starts(economic_transformation_cfma_involved_carbon_finance, "No")                 ~ "No",
+      economic_transformation_cfma_involved_carbon_finance %in% c(
+        "Not yet", "At the moment_they are not",
+        "The cfmg is yet to enter into partnership with the carbon credit organization",
+        "The CFMG has not signed form 7 and MOU. They had to cancel the one they had signed earlier due to disagreements in the benefits sharing mechanism for income from carbon credits",
+        "Has not signed the agreement with CCS yet due to dispute  over percentages in the benefit sharing mechanism"
+      ) ~ "No",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  drop_na(response) |>
+  mutate(response = factor(response, levels = c("Yes", "No"))) |>
+  count(province, response) |>
+  mutate(n_signed = if_else(response == "No", -n, n)) |>
+  ggplot(aes(y = reorder(province, n_signed), x = n_signed, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label  = n,
+        hjust  = if_else(response == "No", -0.4, -0.4),
+        colour = response),
+    size = 4, fontface = "bold"
+  ) +
+  scale_colour_manual(values = c("No" = "white", "Yes" = "grey25"),
+                      guide = "none") +
+  scale_fill_manual(values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+                    guide  = guide_legend(reverse = TRUE)) +
+  scale_x_continuous(labels = ~abs(.x),
+                     expand = expansion(add = 1.5),
+                     name   = "Number of CFMGs") +
+  scale_y_discrete(expand = expansion(add = 0.5)) +
+  coord_cartesian(clip = "off") +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text          = element_text(colour = "grey20"),
+    legend.position    = "bottom",
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+FGD groups were also asked whether the community was aware of the carbon credit agreement (@fig-et_carbon_awareness).
+
+```{r}
+#| label: fig-et_carbon_awareness
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Community awareness of the carbon credit agreement by FGD group."
+#| fig-width: 8
+#| fig-height: 5
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_executive", "cfmg_female",
+                                "cfmg_male", "cfmg_youth")) |>
+  transmute(
+    group = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    ),
+    response = case_when(
+      economic_transformation_community_awareness_carbon_credit_agreement == "yes" ~ "Yes",
+      economic_transformation_community_awareness_carbon_credit_agreement == "no"  ~ "No",
+      economic_transformation_community_awareness_carbon_credit_agreement %in% c(
+        "Not aware of the agreement of the Juristiction project we just know what's involved",
+        "The agreement is not clear we don't know where they sale the carbon and we don't know how much they get from the money",
+        "So far we have just heard the chief signed"
+      ) ~ "No",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  drop_na(response) |>
+  mutate(response = factor(response, levels = c("Yes", "No"))) |>
+  count(group, response) |>
+  mutate(n_signed = if_else(response == "No", -n, n)) |>
+  ggplot(aes(y = group, x = n_signed, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label  = n,
+        hjust  = if_else(response == "No", -0.4, -0.4),
+        colour = response),
+    size = 4, fontface = "bold"
+  ) +
+  scale_colour_manual(values = c("No" = "white", "Yes" = "grey25"),
+                      guide = "none") +
+  scale_fill_manual(values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+                    guide  = guide_legend(reverse = TRUE)) +
+  scale_x_continuous(labels = ~abs(.x),
+                     expand = expansion(add = 3),
+                     name   = "Number of FGDs") +
+  scale_y_discrete(expand = expansion(add = 0.5)) +
+  coord_cartesian(clip = "off") +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text          = element_text(colour = "grey20"),
+    legend.position    = "bottom",
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+::: {.callout-note collapse="true"}
+### Carbon finance awareness – FGDs – Model methods
+
+To examine differences among FGD types in whether they reported community awareness of the carbon credit agreement, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_et_fgd_carbon_awareness
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data.ca <- cfmg |>
+  filter(interview_type %in% c("cfmg_executive", "cfmg_female",
+                                "cfmg_male", "cfmg_youth")) |>
+  transmute(
+    province, cfmg_name,
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    ),
+    empl = case_when(
+      economic_transformation_community_awareness_carbon_credit_agreement == "yes" ~ 1L,
+      economic_transformation_community_awareness_carbon_credit_agreement == "no"  ~ 0L,
+      economic_transformation_community_awareness_carbon_credit_agreement %in% c(
+        "Not aware of the agreement of the Juristiction project we just know what's involved",
+        "The agreement is not clear we don't know where they sale the carbon and we don't know how much they get from the money",
+        "So far we have just heard the chief signed"
+      ) ~ 0L,
+      TRUE ~ NA_integer_
+    )
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M11 <- glmer(empl ~ interview_type + (1 | province) + (1 | province_cfmg),
+             data = test.data.ca, family = binomial)
+
+emm.M11      <- emmeans(M11, specs = ~ interview_type, type = "response")
+pairwise.M11 <- pairs(emm.M11, adjust = "Tukey")
+```
+
+```{r}
+#| label: M11_et_fgd_carbon_awareness
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Carbon finance awareness – FGD model results (click to expand)"
+
+summary(M11)
+```
+
+```{r}
+#| label: pairwise_et_fgd_carbon_awareness
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Carbon finance awareness – FGD pairwise comparisons (click to expand)"
+
+summary(pairwise.M11)
+```
+
+Individual interviewees were also asked whether the community was aware of the carbon credit agreement. @tbl-et_individual_carbon_awareness shows the percentage reporting awareness, broken down by interviewee role.
+
+```{r}
+#| label: tbl-et_individual_carbon_awareness
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Percentage of individual interviewees reporting community awareness of the carbon credit agreement, by interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  select(
+    interviewee_role,
+    empl = economic_transformation_community_awareness_carbon_credit_agreement
+  ) |>
+  mutate(
+    interviewee_role = case_match(
+      as.character(interviewee_role),
+      "cfmg_member"      ~ "Community member",
+      "cfmg_exec_member" ~ "CFMG executive member",
+      "trad_leader"      ~ "Traditional leader",
+      "dfo"              ~ "District Forestry Officer",
+      "NGO_rep"          ~ "NGO representative"
+    ),
+    interviewee_role = factor(interviewee_role, levels = c(
+      "Community member", "CFMG executive member", "Traditional leader",
+      "District Forestry Officer", "NGO representative"
+    )),
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no"  ~ 0,
+                      .default = NA)
+  ) |>
+  group_by(interviewee_role) |>
+  summarise(
+    n         = n(),
+    Awareness = mean(empl, na.rm = TRUE),
+    .groups   = "drop"
+  ) |>
+  arrange(interviewee_role) |>
+  gt() |>
+  cols_label(
+    interviewee_role = "Role",
+    n                = "n",
+    Awareness        = "Aware of carbon credit agreement"
+  ) |>
+  fmt_percent(
+    columns  = Awareness,
+    decimals = 0
+  ) |>
+  tab_header(
+    title    = "Community awareness of the carbon credit agreement, as reported by individual interviewees",
+    subtitle = "Values represent the % of positive responses. n = the total number of interview responses."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "left",   columns = interviewee_role) |>
+  cols_align(align = "center", columns = c(n, Awareness)) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
+  ) |>
+  sub_missing()
+```
+
+::: {.callout-note collapse="true"}
+### Carbon finance awareness – Individual interviewees – Model methods
+
+To examine differences among individual interviewee roles in whether they reported community awareness of the carbon credit agreement, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: model_et_individual_carbon_awareness
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data.ca.ind <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    empl = case_match(
+      economic_transformation_community_awareness_carbon_credit_agreement,
+      "yes" ~ 1,
+      "no"  ~ 0,
+      .default = NA
+    ),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M12 <- glmer(empl ~ interviewee_role + interviewee_gender + interviewee_age +
+               (1 | province) + (1 | province_cfmg),
+             data = test.data.ca.ind, family = binomial)
+
+emm.M12      <- emmeans(M12, specs = ~ interviewee_role, type = "response")
+pairwise.M12 <- pairs(emm.M12, adjust = "Tukey")
+```
+
+```{r}
+#| label: M12_et_individual_carbon_awareness
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Carbon finance awareness – Individual model results (click to expand)"
+
+summary(M12)
+```
+
+```{r}
+#| label: pairwise_et_individual_carbon_awareness
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Carbon finance awareness – Individual pairwise comparisons (click to expand)"
+
+summary(pairwise.M12)
+```
+
+Executive FGDs reported which elements were included in their carbon finance benefit-sharing arrangement (@fig-et_benefit_sharing).
+
+```{r}
+#| label: fig-et_benefit_sharing
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Elements included in the carbon finance benefit-sharing arrangement between company and community, as reported by executive FGDs."
+#| fig-width: 9
+#| fig-height: 4
+
+prefix_bs <- "economic_transformation_benefit_sharing_arrangement_company_community_"
+
+bs_labels <- c(
+  "revenue_sharing_percentage_of_carbon_finance_proceeds_given_to_the_community"              = "Revenue sharing",
+  "employment_opportunities_for_community_members"                                             = "Employment",
+  "investment_in_community_infrastructure_e_g_schools_clinics_roads"                          = "Infrastructure investment",
+  "support_for_sustainable_livelihoods_e_g_alternative_income_generating_activities_training_programs" = "Livelihood support"
+)
+
+full_bs_vars <- paste0(prefix_bs, names(bs_labels))
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  select(all_of(full_bs_vars)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "n") |>
+  mutate(label = factor(bs_labels[sub(prefix_bs, "", variable, fixed = TRUE)],
+                        levels = rev(bs_labels))) |>
+  ggplot(aes(x = n, y = label)) +
+  geom_col(fill = "#2A9D8F", width = 0.55) +
+  geom_text(aes(label = n), hjust = -0.3, size = 5, colour = "grey30") +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.15)),
+    name   = "Number of CFMGs"
+  ) +
+  scale_y_discrete(expand = expansion(add = 0.5)) +
+  labs(y = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text          = element_text(colour = "grey20"),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+FGD groups reported how carbon income is shared within the community (@fig-et_benefit_sharing_community).
+
+```{r}
+#| label: fig-et_benefit_sharing_community
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Benefit-sharing arrangements for carbon income within the community, by FGD group. Note: for 12 executive FGDs, the benefit-sharing arrangement is enshrined in the CFMG constitution; this is not shown in the figure."
+#| fig-width: 10
+#| fig-height: 5
+
+prefix_bsc <- "economic_transformation_benefit_sharing_arrangement_carbon_income_"
+
+bsc_labels <- c(
+  "equally_among_all_members_regardless_of_gender_or_group"                                = "Equal shares",
+  "based_on_contributions_or_roles_in_cfmg_activities"                                     = "By contribution",
+  "prioritized_for_marginalized_groups_e_g_women_youth_aged_persons_with_disabilities"     = "Marginalised groups",
+  "decided_by_the_cfmg_executive"                                                           = "Executive decision",
+  "decided_by_the_whole_cfmg"                                                               = "Whole CFMG"
+)
+
+full_bsc_vars <- paste0(prefix_bsc, names(bsc_labels))
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_executive", "cfmg_female",
+                                "cfmg_male", "cfmg_youth")) |>
+  mutate(group = factor(
+    case_match(
+      interview_type,
+      "cfmg_executive" ~ "Executive",
+      "cfmg_female"    ~ "Female",
+      "cfmg_male"      ~ "Male",
+      "cfmg_youth"     ~ "Youth"
+    ),
+    levels = c("Youth", "Male", "Female", "Executive")
+  )) |>
+  select(group, all_of(full_bsc_vars)) |>
+  pivot_longer(all_of(full_bsc_vars), names_to = "variable", values_to = "val") |>
+  filter(val == 1) |>
+  mutate(mechanism = factor(
+    bsc_labels[sub(prefix_bsc, "", variable, fixed = TRUE)],
+    levels = bsc_labels
+  )) |>
+  count(group, mechanism) |>
+  ggplot(aes(y = group, x = n, fill = mechanism)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.3) +
+  geom_text(
+    aes(label = n),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, colour = "white", fontface = "bold"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Equal shares"       = "#2A9D8F",
+      "By contribution"    = "#57B8B0",
+      "Marginalised groups"= "#E9C46A",
+      "Executive decision" = "#F4A261",
+      "Whole CFMG"         = "#E07B54"
+    ),
+    guide = guide_legend(reverse = TRUE, nrow = 2, byrow = TRUE)
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    name   = "Number of FGDs"
+  ) +
+  scale_y_discrete(expand = expansion(add = 0.5)) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text          = element_text(colour = "grey20"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(0.85)),
+    plot.margin        = margin(10, 15, 10, 10)
+  )
+```
+
+FGD groups also reported who determines the benefit-sharing arrangement outside the community (@fig-et_benefit_sharing_external).
+
+```{r}
+#| label: fig-et_benefit_sharing_external
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Who determines the benefit-sharing arrangement outside the community, by FGD group."
+#| fig-width: 10
+#| fig-height: 5
+
+prefix_bse <- "economic_transformation_benefit_sharing_mechanism_determined_by_"
+
+bse_labels <- c(
+  "the_community"                        = "Community",
+  "carbon_trader"                        = "Carbon trader",
+  "the_forestry_department_fd"           = "Forestry Dept",
+  "an_ngo_or_external_organization"      = "NGO",
+  "a_multiple_stakeholder_joint_decision"= "Joint decision",
+  "traditional_leaders"                  = "Traditional leaders"
+)
+
+full_bse_vars <- paste0(prefix_bse, names(bse_labels))
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_executive", "cfmg_female",
+                                "cfmg_male", "cfmg_youth")) |>
+  mutate(group = factor(
+    case_match(
+      interview_type,
+      "cfmg_executive" ~ "Executive",
+      "cfmg_female"    ~ "Female",
+      "cfmg_male"      ~ "Male",
+      "cfmg_youth"     ~ "Youth"
+    ),
+    levels = c("Youth", "Male", "Female", "Executive")
+  )) |>
+  select(group, all_of(full_bse_vars)) |>
+  pivot_longer(all_of(full_bse_vars), names_to = "variable", values_to = "val") |>
+  filter(val == 1) |>
+  mutate(mechanism = factor(
+    bse_labels[sub(prefix_bse, "", variable, fixed = TRUE)],
+    levels = bse_labels
+  )) |>
+  count(group, mechanism) |>
+  ggplot(aes(y = group, x = n, fill = mechanism)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.3) +
+  geom_text(
+    aes(label = n),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, colour = "white", fontface = "bold"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Community"          = "#264653",
+      "Carbon trader"      = "#2A9D8F",
+      "Forestry Dept"      = "#57B8B0",
+      "NGO" = "#E9C46A",
+      "Joint decision"     = "#F4A261",
+      "Traditional leaders"= "#E07B54"
+    ),
+    guide = guide_legend(reverse = TRUE, nrow = 2, byrow = TRUE)
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    name   = "Number of FGDs"
+  ) +
+  scale_y_discrete(expand = expansion(add = 0.5)) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text          = element_text(colour = "grey20"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(0.85)),
+    plot.margin        = margin(10, 15, 10, 10)
+  )
+```
+
+The types of CFM activities supported by the carbon trader are shown in @fig-et_trader_support.
+
+```{r}
+#| label: fig-et_trader_support
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Types of CFM activities supported by the carbon trader."
+#| fig-width: 8
+#| fig-height: 5
+
+prefix_ts <- "economic_transformation_cfm_activities_supported_by_carbon_trader_"
+
+ts_labels <- c(
+  "patrolling_and_monitoring"                        = "Patrolling",
+  "fire_management"                                  = "Fire management",
+  "biodiversity_conservation"                        = "Biodiversity",
+  "agroforestry"                                     = "Agroforestry",
+  "climate_smart_farming"                            = "Climate-smart farming",
+  "non_timber_forest_products_ntfps"                 = "NTFPs",
+  "eco_tourism"                                      = "Eco-tourism",
+  "tree_planting"                                    = "Tree planting",
+  "training_and_capacity_building"                   = "Training",
+  "carbon_stock_tracking"                            = "Carbon tracking",
+  "market"                                           = "Market access",
+  "alternative_livelihood_activities"                = "Livelihoods",
+  "infractrure"                                      = "Infrastructure",
+  "social_gatherings"                                = "Social gatherings",
+  "employment"                                       = "Employment",
+  "community_sensitization_awareness_engangement"    = "Sensitisation"
+)
+
+full_ts_vars <- paste0(prefix_ts, names(ts_labels))
+
+ts_freq <- cfmg |>
+  select(all_of(full_ts_vars)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(word = ts_labels[sub(prefix_ts, "", variable, fixed = TRUE)]) |>
+  filter(freq > 0) |>
+  select(word, freq)
+
+set.seed(42)
+ggplot(ts_freq, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 18)) +
+  scale_colour_gradient(low = "#6ABFB8", high = "#1A6B63") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
+#### Other income earning opportunities
 FGD groups also reported whether CFM had generated specific income earning opportunities (@fig-et_income_opportunities).
 
 ```{r}
@@ -961,7 +1686,993 @@ cfmg |>
   )()
 ```
 
+Female and male FGDs also identified additional sources of income generated by CFM (@fig-et_income_sources).
+
+```{r}
+#| label: fig-et_income_sources
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Additional sources of income from CFM reported by female and male FGDs. Word size is proportional to the number of FGDs reporting each income source."
+#| fig-width: 10
+#| fig-height: 7
+
+prefix_income <- "economic_transformatioNAdditional_sources_of_income_additional_income_sources_from_cfm_"
+
+income_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
+  select(starts_with(prefix_income)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(
+    word = variable |>
+      sub(prefix_income, "", x = _, fixed = TRUE) |>
+      gsub("_", " ", x = _) |>
+      str_to_title(),
+    word = case_match(word,
+      "Community Business And Enterprise" ~ "Community business",
+      "Wildlife Based And Safari Income"  ~ "Wildlife based",
+      .default = word
+    )
+  ) |>
+  filter(
+    freq > 0,
+    !str_starts(word, "Rank"),
+    !word %in% c("None", "Dont Know")
+  ) |>
+  select(word, freq)
+
+set.seed(42)
+ggplot(income_freq, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 22)) +
+  scale_colour_gradient(low = "#6ABFB8", high = "#1A6B63") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
+Female and male FGDs also ranked their top three additional sources of income from CFM (@fig-et_income_ranks).
+
+```{r}
+#| label: fig-et_income_ranks
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Ranking of additional income sources from CFM by female and male FGDs. Bars show the number of FGDs assigning each rank. Only income sources receiving at least one top-three ranking are shown."
+#| fig-width: 9
+#| fig-height: 7
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
+  select(matches("Additional_sources_of_income.*rank_")) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "rank_val") |>
+  mutate(
+    rank_val = as.numeric(rank_val),
+    source   = sub(".*rank_", "", variable) |>
+      gsub("_", " ", x = _) |>
+      str_to_title(),
+    source = case_match(source,
+      "Wildlife Based And Safari Income"  ~ "Wildlife Based",
+      "Community Business And Enterprise" ~ "Community Business",
+      .default = source
+    )
+  ) |>
+  filter(rank_val %in% c(1, 2, 3), source != "Carbon Credits") |>
+  mutate(rank = factor(paste0("Rank ", rank_val), levels = c("Rank 3", "Rank 2", "Rank 1"))) |>
+  count(source, rank) |>
+  group_by(source) |>
+  mutate(total = sum(n)) |>
+  ungroup() |>
+  ggplot(aes(y = reorder(source, total), x = n, fill = rank)) +
+  geom_col(width = 0.7, colour = "white", linewidth = 0.3) +
+  geom_text(
+    aes(label = n),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, colour = "white", fontface = "bold"
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    name   = "Number of FGDs"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Rank 1" = "#264653",
+      "Rank 2" = "#E9C46A",
+      "Rank 3" = "#E07B54"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_line(colour = "grey85", linewidth = 0.4),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+Executive FGDs also reported the estimated annual income generated by the CFMG from CFM activities (@fig-et_annual_income).
+
+```{r}
+#| label: fig-et_annual_income
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Mean estimated annual income from CFM by province, as reported by executive FGDs."
+#| fig-width: 9
+#| fig-height: 5
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  select(
+    province,
+    income = economic_transformation_estimated_annual_income_from_cfm
+  ) |>
+  filter(!is.na(income), income <= 250000) |>
+  mutate(province = reorder(province, income, FUN = median)) |>
+  ggplot(aes(y = province, x = income)) +
+  geom_boxplot(
+    width = 0.5, fill = "grey92", colour = "grey40",
+    outlier.shape = NA
+  ) +
+  geom_jitter(
+    height = 0.15, width = 0,
+    size = 2, alpha = 0.7, colour = "#2A9D8F"
+  ) +
+  stat_summary(
+    fun = mean, geom = "point",
+    colour = "red", size = 3, shape = 16
+  ) +
+  scale_x_continuous(
+    labels = label_comma(),
+    expand = expansion(mult = c(0.02, 0.1)),
+    name   = "Estimated annual income from CFM"
+  ) +
+  labs(y = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_line(colour = "grey85", linewidth = 0.4),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+Female and male FGDs also reported which forest products were harvested for household use (@fig-et_household_products).
+
+```{r}
+#| label: fig-et_household_products
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Forest products harvested for household use reported by female and male FGDs. Word size is proportional to the number of FGDs reporting each product."
+#| fig-width: 10
+#| fig-height: 7
+
+prefix_hh <- "economic_transformation_products_harvested_household_use_"
+
+hh_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
+  select(starts_with(prefix_hh)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(
+    word = variable |>
+      sub(prefix_hh, "", x = _, fixed = TRUE) |>
+      gsub("_", " ", x = _) |>
+      str_to_title()
+  ) |>
+  filter(
+    freq > 0,
+    !word %in% c("Carbon Credits", "Dont Know", "None")
+  ) |>
+  select(word, freq)
+
+set.seed(42)
+ggplot(hh_freq, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 22)) +
+  scale_colour_gradient(low = "#6ABFB8", high = "#1A6B63") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
+Executive FGDs were asked whether the CFMG had collaborated with private enterprise (@fig-et_collaboration).
+
+```{r}
+#| label: fig-et_collaboration
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "CFMG collaboration with private enterprise, as reported by executive FGDs by province."
+#| fig-width: 8
+#| fig-height: 6
+
+collab_theme <- list(
+  theme_minimal(base_size = 18),
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.title         = element_text(size = rel(1.14), face = "bold"),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+)
+
+# Plot 1: private enterprise collaboration (Yes / No)
+p1 <- cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  transmute(
+    province,
+    response = case_match(
+      economic_transformation_cfmg_private_enterprise_collaboration,
+      "yes" ~ "Yes", "no" ~ "No"
+    )
+  ) |>
+  drop_na(response) |>
+  mutate(response = factor(response, levels = c("Yes", "No"))) |>
+  count(province, response) |>
+  mutate(n_signed = if_else(response == "No", -n, n)) |>
+  ggplot(aes(y = reorder(province, n_signed), x = n_signed, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label  = n,
+        hjust  = if_else(response == "No", 0.4, -0.4),
+        colour = response),
+    size = 3.5, fontface = "bold"
+  ) +
+  scale_colour_manual(values = c("No" = "white", "Yes" = "grey25"), guide = "none") +
+  scale_x_continuous(labels = ~abs(.x), expand = expansion(add = 1),
+                     name = "Number of CFMGs") +
+  scale_y_discrete(expand = expansion(add = 0.5)) +
+  scale_fill_manual(values = c("No" = "#E07B54", "Yes" = "#2A9D8F")) +
+  coord_cartesian(clip = "off") +
+  labs(y = NULL, fill = NULL,
+       title = "CFMG-private enterprise collaboration") +
+  collab_theme
+
+p1
+```
+
+The value chains that CFMGs reported working with through private enterprise partnerships are shown in @fig-et_value_chains.
+
+```{r}
+#| label: fig-et_value_chains
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Value chains that CFMGs collaborate with through private enterprise partnerships, as reported by executive FGDs."
+#| fig-width: 8
+#| fig-height: 5
+
+prefix_vc <- "economic_transformation_private_enterprises_cfmg_works_with_"
+
+vc_labels <- c(
+  "timber_companies"               = "Timber",
+  "sawmills"                       = "Sawmills",
+  "furniture_manufacturers"        = "Furniture",
+  "wood_processing_enterprises"    = "Wood processing",
+  "eco_tourism_operators"          = "Eco-tourism",
+  "mushroom_processors_traders"    = "Mushrooms",
+  "wild_fruit_processors_traders"  = "Wild fruit",
+  "insect_processors_traders"      = "Insects",
+  "chikanda_processors_traders"    = "Chikanda",
+  "carbon_credit_traders"          = "Carbon credits",
+  "beekeeping_and_honey_producers" = "Honey",
+  "charcoal"                       = "Charcoal",
+  "botanicals_harvesting"          = "Botanicals"
+)
+
+full_vc_vars <- paste0(prefix_vc, names(vc_labels))
+
+vc_freq <- cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  select(all_of(full_vc_vars)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(label = vc_labels[sub(prefix_vc, "", variable, fixed = TRUE)]) |>
+  filter(freq > 0) |>
+  select(label, freq)
+
+ggplot(vc_freq, aes(x = freq, y = reorder(label, freq))) +
+  geom_col(fill = "#2A9D8F", width = 0.6) +
+  geom_text(aes(label = freq), hjust = -0.3, size = 4.5, colour = "grey30") +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.15)),
+    name   = "Number of CFMGs"
+  ) +
+  scale_y_discrete(expand = expansion(add = 0.5)) +
+  labs(y = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text          = element_text(colour = "grey20"),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+FGD groups also identified economic opportunities that remained unrealised within their CFMGs (@fig-et_unrealised).
+
+```{r}
+#| label: fig-et_unrealised
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Unrealised economic opportunities identified by FGD groups."
+#| fig-width: 8
+#| fig-height: 5
+
+prefix_ur <- "economic_transformation_economic_oppportunities_unrealized_economic_opportunities_"
+
+ur_labels <- c(
+  "timber"                    = "Timber",
+  "firewood"                  = "Firewood",
+  "charcoal"                  = "Charcoal",
+  "honey"                     = "Honey",
+  "mushrooms"                 = "Mushrooms",
+  "wild_fruits"               = "Wild fruits",
+  "caterpillars"              = "Caterpillars",
+  "chikanda"                  = "Chikanda",
+  "munkoyo"                   = "Munkoyo",
+  "lusala_busala"             = "Lusala/Busala",
+  "mungongo"                  = "Mungongo",
+  "water"                     = "Water",
+  "devils_claw"               = "Devil's claw",
+  "fish"                      = "Fish",
+  "wildlife"                  = "Wildlife",
+  "minerals_mining"           = "Minerals",
+  "clay"                      = "Clay",
+  "sand"                      = "Sand",
+  "grass"                     = "Grass",
+  "livestock"                 = "Livestock",
+  "crops"                     = "Crops",
+  "tourism_education_tours"   = "Tourism",
+  "permitting"                = "Permitting",
+  "infrastruture_utilities"   = "Infrastructure",
+  "bamboo"                    = "Bamboo",
+  "medicinal_plants"          = "Medicinal plants",
+  "bushmeat"                  = "Bushmeat",
+  "resins_gums"               = "Resins",
+  "thatching_grass"           = "Thatching grass",
+  "fibers"                    = "Fibres",
+  "eco_tourism"               = "Eco-tourism"
+)
+
+full_ur_vars <- paste0(prefix_ur, names(ur_labels))
+
+ur_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
+  select(all_of(full_ur_vars)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(word = ur_labels[sub(prefix_ur, "", variable, fixed = TRUE)]) |>
+  filter(freq > 0) |>
+  select(word, freq)
+
+set.seed(42)
+ggplot(ur_freq, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 22)) +
+  scale_colour_gradient(low = "#6ABFB8", high = "#1A6B63") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
+The ranking of those unrealised opportunities is shown in @fig-et_unrealised_ranks.
+
+```{r}
+#| label: fig-et_unrealised_ranks
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Ranking of unrealised economic opportunities by FGD groups. Bars show the frequency of rank 1 (highest priority), rank 2, and rank 3 responses."
+#| fig-width: 9
+#| fig-height: 7
+
+prefix_ur_r <- "economic_transformation_economic_oppportunities_rank_"
+
+ur_rank_labels <- c(
+  "timber"                    = "Timber",
+  "firewood"                  = "Firewood",
+  "charcoal"                  = "Charcoal",
+  "honey"                     = "Honey",
+  "mushrooms"                 = "Mushrooms",
+  "wild_fruits"               = "Wild fruits",
+  "caterpillars"              = "Caterpillars",
+  "chikanda"                  = "Chikanda",
+  "munkoyo"                   = "Munkoyo",
+  "lusala_busala"             = "Lusala/Busala",
+  "mungongo"                  = "Mungongo",
+  "water"                     = "Water",
+  "devils_claw"               = "Devil's claw",
+  "fish"                      = "Fish",
+  "wildlife"                  = "Wildlife",
+  "minerals_mining"           = "Minerals",
+  "clay"                      = "Clay",
+  "sand"                      = "Sand",
+  "grass"                     = "Grass",
+  "livestock"                 = "Livestock",
+  "crops"                     = "Crops",
+  "tourism_education_tours"   = "Tourism",
+  "permitting"                = "Permitting",
+  "bamboo"                    = "Bamboo",
+  "medicinal_plants"          = "Medicinal plants",
+  "bushmeat"                  = "Bushmeat",
+  "resins_gums"               = "Resins",
+  "thatching_grass"           = "Thatching grass",
+  "fibers"                    = "Fibres",
+  "eco_tourism"               = "Eco-tourism"
+)
+
+full_ur_rank_vars <- paste0(prefix_ur_r, names(ur_rank_labels))
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
+  select(all_of(full_ur_rank_vars)) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "rank_val") |>
+  mutate(
+    rank_val = as.numeric(rank_val),
+    source   = ur_rank_labels[sub(prefix_ur_r, "", variable, fixed = TRUE)]
+  ) |>
+  filter(rank_val %in% c(1, 2, 3)) |>
+  mutate(rank = factor(paste0("Rank ", rank_val), levels = c("Rank 3", "Rank 2", "Rank 1"))) |>
+  count(source, rank) |>
+  group_by(source) |>
+  mutate(total = sum(n)) |>
+  ungroup() |>
+  ggplot(aes(y = reorder(source, total), x = n, fill = rank)) +
+  geom_col(width = 0.7, colour = "white", linewidth = 0.3) +
+  geom_text(
+    aes(label = n),
+    position  = position_stack(vjust = 0.5),
+    size      = 3.5, colour = "white", fontface = "bold"
+  ) +
+  scale_fill_manual(
+    values = c("Rank 1" = "#264653", "Rank 2" = "#E9C46A", "Rank 3" = "#E07B54"),
+    guide  = guide_legend(reverse = TRUE)
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    name   = "Number of responses"
+  ) +
+  scale_y_discrete(expand = expansion(add = 0.5)) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text          = element_text(colour = "grey20"),
+    legend.position    = "bottom",
+    plot.margin        = margin(10, 15, 10, 10)
+  )
+```
+
+FGD groups also identified potential value-added opportunities from CFM resources (@fig-et_value_added).
+
+```{r}
+#| label: fig-et_value_added
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Potential value-added opportunities identified by FGD groups."
+#| fig-width: 8
+#| fig-height: 5
+
+prefix_va <- "economic_transformation_potential_value_added_opportunities_"
+
+va_labels <- c(
+  "timber_processing_e_g_furniture_carpentry_woodcrafts"                                                    = "Timber processing",
+  "charcoal_briquetting_eco_friendly_alternatives_to_traditional_charcoal"                                  = "Charcoal briquettes",
+  "honey_processing_and_packaging_e_g_branded_honey_beeswax_products"                                      = "Honey processing",
+  "mushroom_drying_and_packaging_for_extended_shelf_life_and_market_access"                                 = "Dried mushrooms",
+  "wild_fruit_processing_e_g_juices_jams_dried_fruits"                                                     = "Wild fruits",
+  "caterpillar_preservation_and_packaging_e_g_dried_or_canned_for_sale"                                    = "Caterpillars",
+  "chikanda"                                                                                                 = "Chikanda",
+  "munkoyo"                                                                                                  = "Munkoyo",
+  "lusala_busala"                                                                                            = "Lusala/Busala",
+  "mungongo"                                                                                                 = "Mungongo",
+  "devils_claw"                                                                                              = "Devil's claw",
+  "palm_leaves"                                                                                              = "Palm leaves",
+  "grass"                                                                                                    = "Grass",
+  "fish"                                                                                                     = "Fish",
+  "minerals"                                                                                                 = "Minerals",
+  "bamboo_products_e_g_furniture_handicrafts_construction_materials"                                        = "Bamboo products",
+  "medicinal_plant_extraction_e_g_herbal_teas_essential_oils_medicinal_creams"                              = "Medicinal plants",
+  "handicrafts_and_woven_products_e_g_baskets_mats_textiles"                                                = "Handicrafts",
+  "resin_and_gum_processing_e_g_adhesives_fragrances"                                                       = "Resins",
+  "ecotourism_development_e_g_eco_lodges_cultural_experiences_tour_guiding"                                 = "Eco-tourism",
+  "agroforestry_based_businesses_e_g_tree_nurseries_sustainable_agriculture"                                = "Agroforestry"
+)
+
+full_va_vars <- paste0(prefix_va, names(va_labels))
+
+va_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
+  select(all_of(full_va_vars)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(word = va_labels[sub(prefix_va, "", variable, fixed = TRUE)]) |>
+  filter(freq > 0) |>
+  select(word, freq)
+
+set.seed(42)
+ggplot(va_freq, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 22)) +
+  scale_colour_gradient(low = "#6ABFB8", high = "#1A6B63") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
+Executive FGDs reported which primary markets CFM products are sold into (@fig-et_markets).
+
+```{r}
+#| label: fig-et_markets
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Primary markets for CFM products, as reported by executive FGDs."
+#| fig-width: 7
+#| fig-height: 4
+
+market_labels <- c(
+  "economic_transformation_cfm_products_primary_market_local_markets"    = "Local",
+  "economic_transformation_cfm_products_primary_market_national_markets" = "National",
+  "economic_transformation_cfm_products_primary_market_regional_markets" = "Regional",
+  "economic_transformation_cfm_products_primary_market_eu_markets"       = "EU"
+)
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  select(all_of(names(market_labels))) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "n") |>
+  mutate(market = factor(market_labels[variable],
+                         levels = c("Local", "National", "Regional", "EU"))) |>
+  ggplot(aes(x = n, y = market)) +
+  geom_col(fill = "#2A9D8F", width = 0.55) +
+  geom_text(aes(label = n), hjust = -0.3, size = 5, colour = "grey30") +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.15)),
+    name   = "Number of CFMGs"
+  ) +
+  scale_y_discrete(limits = rev) +
+  labs(y = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text          = element_text(colour = "grey20"),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+FGD groups identified economic activities that are precluded under CFM rules (@fig-et_precluded).
+
+```{r}
+#| label: fig-et_precluded
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Economic activities precluded by CFM, as reported by FGD groups."
+#| fig-width: 8
+#| fig-height: 5
+
+prefix_p <- "economic_transformation_economic_activities_precluded_cfm_"
+
+precluded_labels <- c(
+  "logging"                              = "Logging",
+  "timber_harvesting"                    = "Timber harvesting",
+  "hunting"                              = "Hunting",
+  "charcoal_production"                  = "Charcoal",
+  "commercial_mining"                    = "Mining",
+  "farming"                              = "Farming",
+  "livestock_grazing"                    = "Livestock grazing",
+  "land_conversion"                      = "Land conversion",
+  "introduction_of_invasive_species"     = "Invasive species",
+  "ntfp_harvesting_of_forest_products"   = "NTFP harvesting",
+  "fishing"                              = "Fishing",
+  "beekeping_tradtional"                 = "Beekeeping",
+  "fire_based_livelihood_activities"     = "Fire livelihoods"
+)
+
+full_p_vars <- paste0(prefix_p, names(precluded_labels))
+
+p_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
+  select(all_of(full_p_vars)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(word = precluded_labels[sub(prefix_p, "", variable, fixed = TRUE)]) |>
+  filter(freq > 0) |>
+  select(word, freq)
+
+set.seed(42)
+ggplot(p_freq, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 22)) +
+  scale_colour_gradient(low = "#F4A582", high = "#8B0000") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
 ### Equity of economic benefits
+
+FGD groups were asked whether CFM entails opportunity costs for the community (@fig-et_opp_costs).
+
+```{r}
+#| label: fig-et_opp_costs
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Whether CFM entails opportunity costs for the community, by FGD group."
+#| fig-width: 8
+#| fig-height: 5
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_executive", "cfmg_female",
+                                "cfmg_male", "cfmg_youth")) |>
+  transmute(
+    group = case_match(
+      interview_type,
+      "cfmg_executive" ~ "Executive",
+      "cfmg_female"    ~ "Female",
+      "cfmg_male"      ~ "Male",
+      "cfmg_youth"     ~ "Youth"
+    ),
+    response = case_when(
+      economic_transformation_opportunity_costs_of_cfm == "yes"          ~ "Yes",
+      economic_transformation_opportunity_costs_of_cfm == "no"           ~ "No",
+      str_starts(economic_transformation_opportunity_costs_of_cfm, "No_") ~ "No",
+      economic_transformation_opportunity_costs_of_cfm %in% c(
+        "Community forest situated very far from community",
+        "The Major livelihood for this community is fishing. They don't depend so much on the forest. They can still get materials for construction in the open areas"
+      ) ~ "No",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  drop_na(response) |>
+  mutate(
+    group    = factor(group, levels = c("Youth", "Male", "Female", "Executive")),
+    response = factor(response, levels = c("Yes", "No"))
+  ) |>
+  count(group, response) |>
+  mutate(n_signed = if_else(response == "No", -n, n)) |>
+  ggplot(aes(y = group, x = n_signed, fill = response)) +
+  geom_col(width = 0.6, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label  = n,
+        hjust  = if_else(response == "No", -0.4, -0.4),
+        colour = response),
+    size = 4, fontface = "bold"
+  ) +
+  scale_colour_manual(values = c("No" = "white", "Yes" = "grey25"),
+                      guide = "none") +
+  scale_fill_manual(values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+                    guide  = guide_legend(reverse = TRUE)) +
+  scale_x_continuous(labels = ~abs(.x),
+                     expand = expansion(add = 3),
+                     name   = "Number of FGDs") +
+  scale_y_discrete(expand = expansion(add = 0.5)) +
+  coord_cartesian(clip = "off") +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text          = element_text(colour = "grey20"),
+    legend.position    = "bottom",
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+::: {.callout-note collapse="true"}
+### Opportunity costs – FGDs – Model methods
+
+To examine differences among FGD types in whether they reported that CFM entails opportunity costs for the community, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_et_fgd_opp_costs
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data.opp <- cfmg |>
+  filter(interview_type %in% c("cfmg_executive", "cfmg_female",
+                                "cfmg_male", "cfmg_youth")) |>
+  transmute(
+    province, cfmg_name,
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    ),
+    empl = case_when(
+      economic_transformation_opportunity_costs_of_cfm == "yes"           ~ 1L,
+      economic_transformation_opportunity_costs_of_cfm == "no"            ~ 0L,
+      str_starts(economic_transformation_opportunity_costs_of_cfm, "No_") ~ 0L,
+      economic_transformation_opportunity_costs_of_cfm %in% c(
+        "Community forest situated very far from community",
+        "The Major livelihood for this community is fishing. They don't depend so much on the forest. They can still get materials for construction in the open areas"
+      ) ~ 0L,
+      TRUE ~ NA_integer_
+    )
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M9 <- glmer(empl ~ interview_type + (1 | province) + (1 | province_cfmg),
+            data = test.data.opp, family = binomial)
+
+emm.M9      <- emmeans(M9, specs = ~ interview_type, type = "response")
+pairwise.M9 <- pairs(emm.M9, adjust = "Tukey")
+```
+
+```{r}
+#| label: M9_et_fgd_opp_costs
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Opportunity costs – FGD model results (click to expand)"
+
+summary(M9)
+```
+
+```{r}
+#| label: pairwise_et_fgd_opp_costs
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Opportunity costs – FGD pairwise comparisons (click to expand)"
+
+summary(pairwise.M9)
+```
+
+Individual interviewees were also asked whether CFM entails opportunity costs. @tbl-et_individual_opp_costs shows the percentage reporting this, broken down by interviewee role.
+
+```{r}
+#| label: tbl-et_individual_opp_costs
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Percentage of individual interviewees reporting that CFM entails opportunity costs for the community, by interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  select(
+    interviewee_role,
+    empl = economic_transformation_opportunity_costs_of_cfm
+  ) |>
+  mutate(
+    interviewee_role = case_match(
+      as.character(interviewee_role),
+      "cfmg_member"      ~ "Community member",
+      "cfmg_exec_member" ~ "CFMG executive member",
+      "trad_leader"      ~ "Traditional leader",
+      "dfo"              ~ "District Forestry Officer",
+      "NGO_rep"          ~ "NGO representative"
+    ),
+    interviewee_role = factor(interviewee_role, levels = c(
+      "Community member", "CFMG executive member", "Traditional leader",
+      "District Forestry Officer", "NGO representative"
+    )),
+    empl = case_when(
+      empl == "yes"           ~ 1,
+      empl == "no"            ~ 0,
+      str_starts(empl, "No_") ~ 0,
+      TRUE                    ~ NA_real_
+    )
+  ) |>
+  group_by(interviewee_role) |>
+  summarise(
+    n             = n(),
+    Opp_costs     = mean(empl, na.rm = TRUE),
+    .groups       = "drop"
+  ) |>
+  arrange(interviewee_role) |>
+  gt() |>
+  cols_label(
+    interviewee_role = "Role",
+    n                = "n",
+    Opp_costs        = "Report opportunity costs"
+  ) |>
+  fmt_percent(
+    columns  = Opp_costs,
+    decimals = 0
+  ) |>
+  tab_header(
+    title    = "Opportunity costs of CFM, as reported by individual interviewees",
+    subtitle = "Values represent the % of positive responses. n = the total number of interview responses. A positive response indicates that the respondent considers CFM to entail opportunity costs for the community."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "left",   columns = interviewee_role) |>
+  cols_align(align = "center", columns = c(n, Opp_costs)) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
+  ) |>
+  sub_missing()
+```
+
+::: {.callout-note collapse="true"}
+### Opportunity costs – Individual interviewees – Model methods
+
+To examine differences among individual interviewee roles in whether they reported that CFM entails opportunity costs for the community, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: model_et_individual_opp_costs
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data.opp.ind <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    empl = case_when(
+      economic_transformation_opportunity_costs_of_cfm == "yes"           ~ 1,
+      economic_transformation_opportunity_costs_of_cfm == "no"            ~ 0,
+      str_starts(economic_transformation_opportunity_costs_of_cfm, "No_") ~ 0,
+      TRUE                                                                 ~ NA_real_
+    ),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M10 <- glmer(empl ~ interviewee_role + interviewee_gender + interviewee_age +
+               (1 | province) + (1 | province_cfmg),
+             data = test.data.opp.ind, family = binomial)
+
+emm.M10      <- emmeans(M10, specs = ~ interviewee_role, type = "response")
+pairwise.M10 <- pairs(emm.M10, adjust = "Tukey")
+```
+
+```{r}
+#| label: M10_et_individual_opp_costs
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Opportunity costs – Individual model results (click to expand)"
+
+summary(M10)
+```
+
+```{r}
+#| label: pairwise_et_individual_opp_costs
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Opportunity costs – Individual pairwise comparisons (click to expand)"
+
+summary(pairwise.M10)
+```
+
+The types of opportunity costs experienced are shown in @fig-et_opp_cost_types.
+
+```{r}
+#| label: fig-et_opp_cost_types
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Types of opportunity costs experienced under CFM."
+#| fig-width: 8
+#| fig-height: 5
+
+prefix_oc <- "economic_transformation_main_opportunity_costs_experienced_"
+
+oc_labels <- c(
+  "reduced_access_to_forest_resources_e_g_firewood_building_materials"    = "Reduced access",
+  "time_spent_on_cfm_activities_instead_of_income_generating_work"        = "Time cost",
+  "conflict_with_other_land_resource_uses"                                = "Land use conflict",
+  "restrictions_on_land_use_for_farming_or_other_activities"              = "Land restrictions",
+  "economic_costs_from_diverting_community_resources_to_cfm"              = "Diverting resources"
+)
+
+full_oc_vars <- paste0(prefix_oc, names(oc_labels))
+
+binary_oc <- cfmg |>
+  select(all_of(full_oc_vars)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(word = oc_labels[sub(prefix_oc, "", variable, fixed = TRUE)]) |>
+  filter(freq > 0) |>
+  select(word, freq)
+
+comment_oc <- cfmg |>
+  select(text = economic_transformation_main_opportunity_costs_experienced_comment) |>
+  filter(!is.na(text), trimws(text) != "") |>
+  unnest_tokens(word, text) |>
+  anti_join(stop_words, by = "word") |>
+  mutate(word = case_match(
+    word,
+    c("charcoal", "production", "prohibition", "stopped",
+      "restriction", "restrictions") ~ "Charcoal",
+    "chitemene"                        ~ "Chitemene",
+    "grazing"                          ~ "Grazing",
+    "timber"                           ~ "Timber",
+    "logging"                          ~ "Logging",
+    "fruits"                           ~ "Fruits",
+    "medicine"                         ~ "Medicinal plants",
+    .default                           = word
+  )) |>
+  filter(!word %in% c("reduced", "involved", "traditional",
+                       "interference", "access", "source",
+                       "villages", "moment")) |>
+  count(word, name = "freq")
+
+wc_oc <- bind_rows(binary_oc, comment_oc) |>
+  group_by(word) |>
+  summarise(freq = sum(freq), .groups = "drop")
+
+set.seed(42)
+ggplot(wc_oc, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 18)) +
+  scale_colour_gradient(low = "#F4A582", high = "#8B0000") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
 We asked FGD groups whether the benefits of CFM were equitably distributed (@fig-et_equity).
 
 ```{r}
