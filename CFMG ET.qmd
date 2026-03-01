@@ -713,8 +713,8 @@ FGD groups also reported whether CFM had generated specific income opportunities
 #| message: false
 #| error:   false
 #| fig-cap: "Income opportunities reported as economic benefits of CFM, as reported by female and male FGDs. The length of the bars represents the number of FGDs reporting a benefit (Yes) or no benefit (No) for each income source."
-#| fig-width: 12
-#| fig-height: 5
+#| fig-width: 9
+#| fig-height: 7
 
 cfmg |>
   filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
