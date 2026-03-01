@@ -409,6 +409,84 @@ summary(M3)
 summary(pairwise.M3)
 ```
 
+FGD groups also reported whether CFM had generated specific income opportunities (@fig-et_income_opportunities).
+
+```{r}
+#| label: fig-et_income_opportunities
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Income opportunities reported as economic benefits of CFM, as reported by female and male FGDs. The length of the bars represents the number of FGDs reporting a benefit (Yes) or no benefit (No) for each income source."
+#| fig-width: 12
+#| fig-height: 6
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
+  mutate(interview_type = case_match(
+    interview_type,
+    "cfmg_female" ~ "Female FGD",
+    "cfmg_male"   ~ "Male FGD"
+  )) |>
+  select(
+    interview_type,
+    "Ecotourism income"          = economic_transformation_economic_benefits_from_cfm_income_from_ecotourism_e_g_guided_tours_camping_fees,
+    "Forest product processing"  = economic_transformation_economic_benefits_from_cfm_income_from_forest_product_processing_e_g_honey_bamboo,
+    "Conservation revenue"       = economic_transformation_economic_benefits_from_cfm_revenue_from_forest_conservation_programs_e_g_carbon_credits,
+    "Alternative livelihoods"    = `economic_transformation_economic_benefits_from_cfm_alternative-livelihoods_local_business_development_e_g_forest_based_crafts_small_scale_industries`,
+    "Market linkages"            = economic_transformation_economic_benefits_from_cfm_market_linkages_and_trade_opportunities_for_forest_products,
+    "Increased land value"       = economic_transformation_economic_benefits_from_cfm_increased_land_value_due_to_improved_forest_management,
+    "Infrastructure development" = economic_transformation_economic_benefits_from_cfm_infrastructure_development_e_g_boreholes_roads_markets_processing_centres
+  ) |>
+  pivot_longer(-interview_type, names_to = "income_source", values_to = "value") |>
+  filter(!is.na(value)) |>
+  mutate(
+    response = case_match(as.character(value), "1" ~ "Yes", "0" ~ "No"),
+    response = factor(response, levels = c("No", "Yes")),
+    income_source = factor(income_source, levels = c(
+      "Ecotourism income", "Forest product processing", "Conservation revenue",
+      "Alternative livelihoods", "Market linkages", "Increased land value",
+      "Infrastructure development"
+    )),
+    interview_type = factor(interview_type, levels = c("Female FGD", "Male FGD"))
+  ) |>
+  count(interview_type, income_source, response) |>
+  mutate(n_signed = if_else(response == "No", -n, n)) |>
+  ggplot(aes(y = income_source, x = n_signed, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+  geom_text(
+    aes(label = n,
+        hjust = if_else(response == "No", 1.4, -0.4)),
+    size = 3, fontface = "bold", colour = "grey25"
+  ) +
+  scale_x_continuous(
+    labels = ~abs(.x),
+    expand = expansion(mult = 0.22),
+    name   = "Number of FGDs"
+  ) +
+  scale_fill_manual(
+    values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+    guide  = guide_legend(reverse = FALSE)
+  ) +
+  facet_grid(. ~ interview_type) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    strip.text         = element_text(size = rel(1.14), face = "bold"),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
 We also asked individual interviewees whether CFM had delivered each economic benefit. @tbl-et_individual_benefits shows the proportion reporting each benefit, broken down by interviewee role.
 
 ```{r}
