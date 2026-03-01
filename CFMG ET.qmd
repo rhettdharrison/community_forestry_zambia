@@ -754,10 +754,11 @@ cfmg |>
   ) +
   scale_x_continuous(
     labels = ~abs(.x),
-    breaks = seq(-40, 40, by = 10),
-    expand = expansion(add = 4),
+    breaks = seq(-80, 10, by = 10),
+    expand = expansion(add = 0),
     name   = "Number of FGDs"
   ) +
+  coord_cartesian(xlim = c(-80, 10), clip = "off") +
   scale_y_discrete(expand = expansion(add = 0.5)) +
   scale_fill_manual(
     values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
