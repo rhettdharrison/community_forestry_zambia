@@ -744,40 +744,54 @@ cfmg |>
   ) |>
   count(interview_type, income_source, response) |>
   mutate(n_signed = if_else(response == "No", -n, n)) |>
-  ggplot(aes(y = income_source, x = n_signed, fill = response)) +
-  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
-  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
-  geom_text(
-    aes(label = n,
-        hjust = if_else(response == "No", 1.4, -0.4)),
-    size = 3, fontface = "bold", colour = "grey25"
-  ) +
-  scale_x_continuous(
-    labels = ~abs(.x),
-    breaks = seq(-80, 10, by = 10),
-    expand = expansion(add = 0),
-    name   = "Number of FGDs"
-  ) +
-  coord_cartesian(xlim = c(-80, 10), clip = "off") +
-  scale_y_discrete(expand = expansion(add = 0.5)) +
-  scale_fill_manual(
-    values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
-    guide  = guide_legend(reverse = FALSE)
-  ) +
-  facet_grid(. ~ interview_type) +
-  labs(y = NULL, fill = NULL) +
-  theme_minimal(base_size = 18) +
-  theme(
-    panel.grid.major.y = element_blank(),
-    panel.grid.minor   = element_blank(),
-    panel.grid.major.x = element_blank(),
-    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
-    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
-    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
-    legend.position    = "bottom",
-    legend.text        = element_text(size = rel(1)),
-    strip.text         = element_text(size = rel(1.14), face = "bold"),
-    plot.margin        = margin(10, 25, 10, 10)
-  )
+  (\(d) ggplot(d, aes(y = income_source, x = n_signed, fill = response)) +
+    geom_blank(data = tibble(
+      interview_type = factor(
+        c("Female FGD", "Female FGD", "Male FGD", "Male FGD"),
+        levels = c("Female FGD", "Male FGD")
+      ),
+      income_source = factor(
+        rep("Ecotourism income", 4),
+        levels = c("Ecotourism income", "Forest product processing",
+                   "Conservation revenue", "Alternative livelihoods", "Market linkages")
+      ),
+      n_signed = c(-70, 0, -70, 10),
+      response = factor(c("No", "Yes", "No", "Yes"), levels = c("No", "Yes"))
+    )) +
+    geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+    geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
+    geom_text(
+      aes(label = n,
+          hjust = if_else(response == "No", 1.4, -0.4)),
+      size = 3, fontface = "bold", colour = "grey25"
+    ) +
+    scale_x_continuous(
+      labels = ~abs(.x),
+      breaks = seq(-70, 10, by = 10),
+      expand = expansion(add = 0),
+      name   = "Number of FGDs"
+    ) +
+    coord_cartesian(clip = "off") +
+    scale_y_discrete(expand = expansion(add = 0.5)) +
+    scale_fill_manual(
+      values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
+      guide  = guide_legend(reverse = FALSE)
+    ) +
+    facet_wrap(~ interview_type, scales = "free_x") +
+    labs(y = NULL, fill = NULL) +
+    theme_minimal(base_size = 18) +
+    theme(
+      panel.grid.major.y = element_blank(),
+      panel.grid.minor   = element_blank(),
+      panel.grid.major.x = element_blank(),
+      axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+      axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+      axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+      axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+      legend.position    = "bottom",
+      legend.text        = element_text(size = rel(1)),
+      strip.text         = element_text(size = rel(1.14), face = "bold"),
+      plot.margin        = margin(10, 25, 10, 10)
+    )
+  )()
 ```
