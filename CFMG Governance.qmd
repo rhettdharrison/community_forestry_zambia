@@ -42,7 +42,6 @@ We asked CFMG executives what required legal processes had been completed, inclu
 ```{r}
 #| label: tbl-legal_processes
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -51,42 +50,40 @@ We asked CFMG executives what required legal processes had been completed, inclu
 cfmg |> filter(interview_type == "cfmg_executive") |>
         group_by(province) |>
         summarise(
-                `CFMG recongnition` = round(mean(
+                `CFMG recongnition` = mean(
                         cfmg_governance_legal_documents_recognition_letter,
-                        na.rm = TRUE), digits =2),
-                `CF agreement` = round(mean(
+                        na.rm = TRUE),
+                `CF agreement` = mean(
                         cfmg_governance_legal_documents_community_forest_management_agreement,
-                        na.rm = TRUE), digits = 2),
-                `Management plan` = round(mean(
+                        na.rm = TRUE),
+                `Management plan` = mean(
                         cfmg_governance_legal_documents_forest_management_plan,
-                        na.rm = TRUE), digits = 2),
-                `Registration certificate` = round(mean(
+                        na.rm = TRUE),
+                `Registration certificate` = mean(
                         cfmg_governance_legal_documents_community_forest_registration_certificate,
-                        na.rm = TRUE), digits = 2),
-                `User-rights permit` = round(mean(
+                        na.rm = TRUE),
+                `User-rights permit` = mean(
                         cfmg_governance_legal_documents_forest_user_rights_license_permit,
-                        na.rm = TRUE), digits = 2),
-                `Bylaws & constitution` = round(mean(
+                        na.rm = TRUE),
+                `Bylaws & constitution` = mean(
                         cfmg_governance_legal_documents_bylaws_and_constitution,
-                        na.rm = TRUE), digits = 2),
-                `Benefit sharing agreement` = round(mean(
+                        na.rm = TRUE),
+                `Benefit sharing agreement` = mean(
                         cfmg_governance_legal_documents_benefit_sharing_agreement,
-                        na.rm = TRUE), digits = 2)
+                        na.rm = TRUE)
         ) |>
         gt() |>
-        tab_header(
-                title = md("**CFMG legal processes**"),
-                subtitle = "Proportion of CFMGs with completed legal processes by province"
-                )|>
+        fmt_percent(columns = -province, decimals = 0) |>
+        tab_header(title = "CFMG legal processes",
+                   subtitle = "Values represent the % of CFMGs with each legal document, by province. n = 75 CFMGs.") |>
         opt_align_table_header(align = "left") |>
-        tab_options(
-                column_labels.font.weight = "bold",
-                row_group.font.weight = "bold"
-                ) |>
-        cols_align(
-                align = "center",
-                columns = everything()
-                )
+        cols_align(align = "center", columns = -province) |>
+        cols_align(align = "left", columns = province) |>
+        tab_style(
+          style     = cell_text(align = "center"),
+          locations = cells_column_labels(columns = province)
+        ) |>
+        sub_missing()
 
 
 ```
@@ -100,7 +97,6 @@ Through the survey we asked CFMG executives what governance processes were being
 ```{r}
 #| label: tbl-governance_processes
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -152,45 +148,43 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
         ) |>
         group_by(province) |>
         summarise(
-                `CFMG elections` = round(mean(
+                `CFMG elections` = mean(
                         cfmg_elections,
-                        na.rm = TRUE), digits =2),
-                `CFMG term-limits` = round(mean(
+                        na.rm = TRUE),
+                `CFMG term-limits` = mean(
                         cfmg_term_limits,
-                        na.rm = TRUE), digits = 2),
-                `Receipt book` = round(mean(
+                        na.rm = TRUE),
+                `Receipt book` = mean(
                         cfmg_receipt_book,
-                        na.rm = TRUE), digits = 2),
-                `Bank acc` = round(mean(
+                        na.rm = TRUE),
+                `Bank acc` = mean(
                         cfmg_bank_acc,
-                        na.rm = TRUE), digits = 2),
-                `Permits issued` = round(mean(
+                        na.rm = TRUE),
+                `Permits issued` = mean(
                         cfmg_permits,
-                        na.rm = TRUE), digits = 2),
-                `Financial reporting` = round(mean(
+                        na.rm = TRUE),
+                `Financial reporting` = mean(
                         cfmg_financial_rep,
-                        na.rm = TRUE), digits = 2),
-                `Annual reporting` = round(mean(
+                        na.rm = TRUE),
+                `Annual reporting` = mean(
                         cfmg_annual_rep,
-                        na.rm = TRUE), digits = 2),
-                `HFOs appointed` = round(mean(
+                        na.rm = TRUE),
+                `HFOs appointed` = mean(
                         cfmg_HFO,
-                        na.rm = TRUE), digits = 2)
+                        na.rm = TRUE)
         ) |>
         gt() |>
-        tab_header(
-                title = md("**CFMG governance processes completed**"),
-                subtitle = "Proportion of CFMGs completing or conducting governance processes by province"
-                )|>
+        fmt_percent(columns = -province, decimals = 0) |>
+        tab_header(title = "CFMG governance processes completed",
+                   subtitle = "Values represent the % of CFMGs completing each governance process, by province. n = 75 CFMGs.") |>
         opt_align_table_header(align = "left") |>
-        tab_options(
-                column_labels.font.weight = "bold",
-                row_group.font.weight = "bold"
-                ) |>
-        cols_align(
-                align = "center",
-                columns = everything()
-                )
+        cols_align(align = "center", columns = -province) |>
+        cols_align(align = "left", columns = province) |>
+        tab_style(
+          style     = cell_text(align = "center"),
+          locations = cells_column_labels(columns = province)
+        ) |>
+        sub_missing()
 
 
 ```
@@ -202,7 +196,6 @@ It is also concerning that most CFMGs do not appear to have held elections since
 ```{r}
 #| label: fig-last_election
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -279,7 +272,6 @@ Furthermore, 43 out of 72 CFMGs have not held elections for over 3 years, althou
 ```{r}
 #| label: fig-tenure
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -352,7 +344,6 @@ In contrast, most CFMGs do appear to be holding meetings regularly, at least acc
 ```{r}
 #| label: fig-meetings
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -438,7 +429,6 @@ As with the legal processes, we also asked CFMG Executives about the state of th
 ```{r}
 #| label: tbl-business_processes
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -469,38 +459,35 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
         ) |>
         group_by(province) |>
         summarise(
-                `CFMG workplan` = round(mean(
+                `CFMG workplan` = mean(
                         cfmg_workplan,
-                        na.rm = TRUE), digits =2),
-                `CFMG budget` = round(mean(
+                        na.rm = TRUE),
+                `CFMG budget` = mean(
                         cfmg_budget,
-                        na.rm = TRUE), digits = 2),
-                `Implementing plan` = round(mean(
+                        na.rm = TRUE),
+                `Implementing plan` = mean(
                         cfmg_governance_implementing_plans_cfmg_executive,
-                        na.rm = TRUE), digits = 2),
-                `Business plan` = round(mean(
+                        na.rm = TRUE),
+                `Business plan` = mean(
                         cfmg_business_plan,
-                        na.rm = TRUE), digits = 2),
-                `User groups` = round(mean(
+                        na.rm = TRUE),
+                `User groups` = mean(
                         cfmg_user_groups,
-                        na.rm = TRUE), digits = 2)
+                        na.rm = TRUE)
         ) |>
         mutate(across(where(is.numeric), ~ifelse(is.nan(.x), NA_real_, .x))) |>
         gt() |>
-        sub_missing(missing_text = "—") |>
-        tab_header(
-                title = md("**Completed business processes in management of CFMGs**"),
-                subtitle = "Proportion of CFMGs by province"
-                )|>
+        fmt_percent(columns = -province, decimals = 0) |>
+        tab_header(title = "Completed business processes in management of CFMGs",
+                   subtitle = "Values represent the % of CFMGs with each business process in place, by province. n = 75 CFMGs.") |>
         opt_align_table_header(align = "left") |>
-        tab_options(
-                column_labels.font.weight = "bold",
-                row_group.font.weight = "bold"
-                ) |>
-        cols_align(
-                align = "center",
-                columns = everything()
-                )
+        cols_align(align = "center", columns = -province) |>
+        cols_align(align = "left", columns = province) |>
+        tab_style(
+          style     = cell_text(align = "center"),
+          locations = cells_column_labels(columns = province)
+        ) |>
+        sub_missing()
 
 
 ```
@@ -514,7 +501,6 @@ All CFMGs are supported by the Forestry Deparment, which has a statutory duty to
 ```{r}
 #| label: fig-dfo_visits
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -587,7 +573,6 @@ Many CFMGs also operate in partnership with an NGO or private enterprise, such a
 ```{r}
 #| label: fig-support
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -650,7 +635,6 @@ The table below (@tbl-support_organisations) lists the organisations and the num
 ```{r}
 #| label: tbl-support_organisations
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -668,20 +652,16 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
                ) |>
         count(`CFMG partner`) |>
         gt() |>
-        sub_missing(missing_text = "—") |>
-        tab_header(
-                title = md("**Partner organisations**"),
-                subtitle = "n = number of CFMGs partnered"
-                )|>
+        tab_header(title = "Partner organisations",
+                   subtitle = "n = number of CFMGs partnered with each organisation.") |>
         opt_align_table_header(align = "left") |>
-        tab_options(
-                column_labels.font.weight = "bold",
-                row_group.font.weight = "bold"
-                ) |>
-        cols_align(
-                align = "left",
-                columns = everything()
-                )
+        cols_align(align = "center", columns = -`CFMG partner`) |>
+        cols_align(align = "left", columns = `CFMG partner`) |>
+        tab_style(
+          style     = cell_text(align = "center"),
+          locations = cells_column_labels(columns = `CFMG partner`)
+        ) |>
+        sub_missing()
 ```
 
 These organisation provide support (@fig-partner_visits).
@@ -690,7 +670,6 @@ These organisation provide support (@fig-partner_visits).
 ```{r}
 #| label: fig-partner_visits
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -793,7 +772,6 @@ Next we asked interviewees whether they were interested in expanding the area of
 ```{r}
 #| label: fig-interest_in_expanding_FGDs
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -943,59 +921,50 @@ Among the individual interviewees (@tbl-interest_in_expanding_individual), tradi
 ```{r}
 #| label: tbl-interest_in_expanding_individual
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
 #| tbl-cap: "Interest in expanding community forest by FDG type."
 
 cfmg |> filter(interview_type == "individual_interview") |>
-        mutate(
-                expand_cfma = substr(
-                        cfmg_governance_interest_expanding_cfma, 1,1),
-                expand_cfma = case_match(
-                        expand_cfma,
-                        "y" ~ "Yes",
-                        "n" ~ "No",
-                        "d" ~ "Don't know"
-                        ),
-                expand_cfma = factor(expand_cfma,
-                         levels = c("Yes", "No", "Don't know")
-                         )
-        ) |>
-        count(interviewee_role, expand_cfma, name = "Obs") |>
-        mutate(
-                interviewee_role = case_match(
-                        interviewee_role,
-                        "cfmg_exec_member" ~ "CFMG Exec",
-                        "cfmg_member" ~ "Community member",
-                        "trad_leader" ~ "Traditional Leader",
-                        "dfo" ~ "District Forest Officer",
-                        "NGO_rep" ~ "NGO representative"
-                )
-        ) |>
-        filter(!is.na(expand_cfma)) |>
-        pivot_wider(
-                names_from  = interviewee_role,
-                values_from = Obs,
-                values_fill = 0) |>
-        gt() |>
-        cols_label(expand_cfma = "Interest in expanding CFMA") |>
-        sub_missing(missing_text = "—") |>
-        tab_header(
-                title = md(
-                        "**Interest in expanding community forest by interviewee role**"),
-                subtitle = "Number of interviewees in each category"
-                )|>
-        opt_align_table_header(align = "left") |>
-        tab_options(
-                column_labels.font.weight = "bold",
-                row_group.font.weight = "bold"
-                ) |>
-        cols_align(
-                align = "center",
-                columns = everything()
-                )
+  mutate(
+    expand_cfma = substr(cfmg_governance_interest_expanding_cfma, 1, 1),
+    expand_cfma = case_match(expand_cfma, "y"~"Yes", "n"~"No", "d"~"Don't know"),
+    expand_cfma = factor(expand_cfma, levels = c("Yes", "No", "Don't know")),
+    interviewee_role = case_match(
+      as.character(interviewee_role),
+      "cfmg_exec_member" ~ "CFMG executive member",
+      "cfmg_member"      ~ "Community member",
+      "trad_leader"      ~ "Traditional leader",
+      "dfo"              ~ "District Forestry Officer",
+      "NGO_rep"          ~ "NGO representative"
+    ),
+    interviewee_role = factor(interviewee_role, levels = c(
+      "CFMG executive member", "Community member", "Traditional leader",
+      "District Forestry Officer", "NGO representative"
+    ))
+  ) |>
+  filter(!is.na(expand_cfma)) |>
+  count(interviewee_role, expand_cfma, name = "obs") |>
+  group_by(interviewee_role) |>
+  mutate(n = sum(obs), prop = obs / n) |>
+  ungroup() |>
+  select(interviewee_role, n, expand_cfma, prop) |>
+  pivot_wider(names_from = expand_cfma, values_from = prop, values_fill = 0) |>
+  arrange(interviewee_role) |>
+  gt() |>
+  cols_label(interviewee_role = "Role") |>
+  fmt_percent(columns = c(Yes, No, `Don't know`), decimals = 0) |>
+  tab_header(title = "Interest in expanding the community forest area by interviewee role",
+             subtitle = "Values represent the % of respondents in each response category. n = the total number of interview responses.") |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "center", columns = -interviewee_role) |>
+  cols_align(align = "left", columns = interviewee_role) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
+  ) |>
+  sub_missing()
 
 ```
 
@@ -1080,7 +1049,6 @@ Among those CFMGs that had recognised user groups, they were involved in managin
 ```{r}
 #| label: tbl-user_groups
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1163,19 +1131,16 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
                 names_to  = "Resource type",
                 values_to = "Number") |>
         gt() |>
-        tab_header(
-                title = md("**Recognised CFMG user-groups**"),
-                subtitle = "Totals across 75 CFMGs"
-                )|>
+        tab_header(title = "Recognised CFMG user-groups",
+                   subtitle = "Totals across 75 CFMGs.") |>
         opt_align_table_header(align = "left") |>
-        tab_options(
-                column_labels.font.weight = "bold",
-                row_group.font.weight = "bold"
-                ) |>
-        cols_align(
-                align = "center",
-                columns = everything()
-                )
+        cols_align(align = "center", columns = -`Resource type`) |>
+        cols_align(align = "left", columns = `Resource type`) |>
+        tab_style(
+          style     = cell_text(align = "center"),
+          locations = cells_column_labels(columns = `Resource type`)
+        ) |>
+        sub_missing()
 
 
 ```

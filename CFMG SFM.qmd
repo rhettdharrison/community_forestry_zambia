@@ -45,7 +45,6 @@ We asked interviewees whether community forest management has reduced deforestat
 ```{r}
 #| label: fig-reduced_forest_clearing
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -212,7 +211,6 @@ Among the individual interviewees (@tbl-deforestation_individual), there were al
 ```{r}
 #| label: tbl-deforestation_individual
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -235,39 +233,42 @@ cfmg |>
     ),
     deforestation = factor(deforestation,
                            levels = c("No change", "Moderate", "Significant")),
-    interviewee_role = case_match(
-      interviewee_role,
-      "cfmg_exec_member" ~ "CFMG Exec",
-      "cfmg_member"      ~ "Community member",
-      "trad_leader"      ~ "Traditional Leader",
-      "dfo"              ~ "District Forest Officer",
-      "NGO_rep"          ~ "NGO representative"
+    interviewee_role = factor(
+      case_match(
+        interviewee_role,
+        "cfmg_exec_member" ~ "CFMG executive member",
+        "cfmg_member"      ~ "Community member",
+        "trad_leader"      ~ "Traditional leader",
+        "dfo"              ~ "District Forestry Officer",
+        "NGO_rep"          ~ "NGO representative"
+      ),
+      levels = c("CFMG executive member", "Community member", "Traditional leader",
+                 "District Forestry Officer", "NGO representative")
     )
   ) |>
   filter(!is.na(deforestation)) |>
-  count(interviewee_role, deforestation, name = "Obs") |>
-  arrange(deforestation) |>
-  pivot_wider(
-    names_from  = interviewee_role,
-    values_from = Obs,
-    values_fill = 0
-  ) |>
+  count(interviewee_role, deforestation, name = "obs") |>
+  group_by(interviewee_role) |>
+  mutate(n = sum(obs), prop = obs / n) |>
+  ungroup() |>
+  select(interviewee_role, n, deforestation, prop) |>
+  pivot_wider(names_from = deforestation, values_from = prop, values_fill = 0) |>
+  arrange(interviewee_role) |>
   gt() |>
-  cols_label(deforestation = "Reduction in deforestation") |>
-  sub_missing(missing_text = "—") |>
+  cols_label(interviewee_role = "Role") |>
+  fmt_percent(columns = c(`No change`, Moderate, Significant), decimals = 0) |>
   tab_header(
-    title    = md("**Perceived reduction in deforestation by interviewee role**"),
-    subtitle = "Number of interviewees in each category"
+    title    = "Perceived reduction in deforestation inside the community forest by interviewee role",
+    subtitle = "Values represent the % of respondents in each response category. n = the total number of interview responses."
   ) |>
   opt_align_table_header(align = "left") |>
-  tab_options(
-    column_labels.font.weight = "bold",
-    row_group.font.weight     = "bold"
+  cols_align(align = "center", columns = -interviewee_role) |>
+  cols_align(align = "left", columns = interviewee_role) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
   ) |>
-  cols_align(
-    align   = "center",
-    columns = everything()
-  )
+  sub_missing()
 ```
 
 
@@ -352,7 +353,6 @@ We also asked interviewees whether community forest management has led to an inc
 ```{r}
 #| label: fig-increased_deforestation_outside
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -523,7 +523,6 @@ Among the individual interviewees (@tbl-deforestation_outside_individual), ...
 ```{r}
 #| label: tbl-deforestation_outside_individual
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -549,39 +548,42 @@ cfmg |>
     ),
     deforestation = factor(deforestation,
                            levels = c("Decrease", "No change", "Moderate", "Significant")),
-    interviewee_role = case_match(
-      interviewee_role,
-      "cfmg_exec_member" ~ "CFMG Exec",
-      "cfmg_member"      ~ "Community member",
-      "trad_leader"      ~ "Traditional Leader",
-      "dfo"              ~ "District Forest Officer",
-      "NGO_rep"          ~ "NGO representative"
+    interviewee_role = factor(
+      case_match(
+        interviewee_role,
+        "cfmg_exec_member" ~ "CFMG executive member",
+        "cfmg_member"      ~ "Community member",
+        "trad_leader"      ~ "Traditional leader",
+        "dfo"              ~ "District Forestry Officer",
+        "NGO_rep"          ~ "NGO representative"
+      ),
+      levels = c("CFMG executive member", "Community member", "Traditional leader",
+                 "District Forestry Officer", "NGO representative")
     )
   ) |>
   filter(!is.na(deforestation)) |>
-  count(interviewee_role, deforestation, name = "Obs") |>
-  arrange(deforestation) |>
-  pivot_wider(
-    names_from  = interviewee_role,
-    values_from = Obs,
-    values_fill = 0
-  ) |>
+  count(interviewee_role, deforestation, name = "obs") |>
+  group_by(interviewee_role) |>
+  mutate(n = sum(obs), prop = obs / n) |>
+  ungroup() |>
+  select(interviewee_role, n, deforestation, prop) |>
+  pivot_wider(names_from = deforestation, values_from = prop, values_fill = 0) |>
+  arrange(interviewee_role) |>
   gt() |>
-  cols_label(deforestation = "Increase in deforestation") |>
-  sub_missing(missing_text = "—") |>
+  cols_label(interviewee_role = "Role") |>
+  fmt_percent(columns = c(Decrease, `No change`, Moderate, Significant), decimals = 0) |>
   tab_header(
-    title    = md("**Perceived increase in deforestation outside the CF by interviewee role**"),
-    subtitle = "Number of interviewees in each category"
+    title    = "Perceived increase in deforestation outside the community forest by interviewee role",
+    subtitle = "Values represent the % of respondents in each response category. n = the total number of interview responses."
   ) |>
   opt_align_table_header(align = "left") |>
-  tab_options(
-    column_labels.font.weight = "bold",
-    row_group.font.weight     = "bold"
+  cols_align(align = "center", columns = -interviewee_role) |>
+  cols_align(align = "left", columns = interviewee_role) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
   ) |>
-  cols_align(
-    align   = "center",
-    columns = everything()
-  )
+  sub_missing()
 ```
 
 ::: {.callout-note collapse="true"}
@@ -669,7 +671,6 @@ We asked interviewees whether community forest management has reduced charcoal p
 ```{r}
 #| label: fig-reduced_charcoal_inside
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -837,7 +838,6 @@ Among the individual interviewees (@tbl-charcoal_inside_individual), ...
 ```{r}
 #| label: tbl-charcoal_inside_individual
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -861,36 +861,42 @@ cfmg |>
     ),
     charcoal = factor(charcoal,
                       levels = c("No change", "Moderate", "Significant")),
-    interviewee_role = case_match(
-      interviewee_role,
-      "cfmg_exec_member" ~ "CFMG Exec",
-      "cfmg_member"      ~ "Community member",
-      "trad_leader"      ~ "Traditional Leader",
-      "dfo"              ~ "District Forest Officer",
-      "NGO_rep"          ~ "NGO representative"
+    interviewee_role = factor(
+      case_match(
+        interviewee_role,
+        "cfmg_exec_member" ~ "CFMG executive member",
+        "cfmg_member"      ~ "Community member",
+        "trad_leader"      ~ "Traditional leader",
+        "dfo"              ~ "District Forestry Officer",
+        "NGO_rep"          ~ "NGO representative"
+      ),
+      levels = c("CFMG executive member", "Community member", "Traditional leader",
+                 "District Forestry Officer", "NGO representative")
     )
   ) |>
   filter(!is.na(charcoal)) |>
-  count(interviewee_role, charcoal, name = "Obs") |>
-  arrange(charcoal) |>
-  pivot_wider(
-    names_from  = interviewee_role,
-    values_from = Obs,
-    values_fill = 0
-  ) |>
+  count(interviewee_role, charcoal, name = "obs") |>
+  group_by(interviewee_role) |>
+  mutate(n = sum(obs), prop = obs / n) |>
+  ungroup() |>
+  select(interviewee_role, n, charcoal, prop) |>
+  pivot_wider(names_from = charcoal, values_from = prop, values_fill = 0) |>
+  arrange(interviewee_role) |>
   gt() |>
-  cols_label(charcoal = "Reduction in charcoal production") |>
-  sub_missing(missing_text = "—") |>
+  cols_label(interviewee_role = "Role") |>
+  fmt_percent(columns = c(`No change`, Moderate, Significant), decimals = 0) |>
   tab_header(
-    title    = md("**Perceived reduction in charcoal production inside the CF by interviewee role**"),
-    subtitle = "Number of interviewees in each category"
+    title    = "Perceived reduction in charcoal production inside the community forest by interviewee role",
+    subtitle = "Values represent the % of respondents in each response category. n = the total number of interview responses."
   ) |>
   opt_align_table_header(align = "left") |>
-  tab_options(
-    column_labels.font.weight = "bold",
-    row_group.font.weight     = "bold"
+  cols_align(align = "center", columns = -interviewee_role) |>
+  cols_align(align = "left", columns = interviewee_role) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
   ) |>
-  cols_align(align = "center", columns = everything())
+  sub_missing()
 ```
 
 ::: {.callout-note collapse="true"}
@@ -981,7 +987,6 @@ We also asked interviewees whether community forest management has led to an inc
 ```{r}
 #| label: fig-increased_charcoal_outside
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1178,7 +1183,6 @@ Among the individual interviewees (@tbl-charcoal_outside_individual), ...
 ```{r}
 #| label: tbl-charcoal_outside_individual
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1216,36 +1220,42 @@ cfmg |>
     ),
     charcoal = factor(charcoal,
                       levels = c("Decrease", "No change", "Moderate", "Significant")),
-    interviewee_role = case_match(
-      interviewee_role,
-      "cfmg_exec_member" ~ "CFMG Exec",
-      "cfmg_member"      ~ "Community member",
-      "trad_leader"      ~ "Traditional Leader",
-      "dfo"              ~ "District Forest Officer",
-      "NGO_rep"          ~ "NGO representative"
+    interviewee_role = factor(
+      case_match(
+        interviewee_role,
+        "cfmg_exec_member" ~ "CFMG executive member",
+        "cfmg_member"      ~ "Community member",
+        "trad_leader"      ~ "Traditional leader",
+        "dfo"              ~ "District Forestry Officer",
+        "NGO_rep"          ~ "NGO representative"
+      ),
+      levels = c("CFMG executive member", "Community member", "Traditional leader",
+                 "District Forestry Officer", "NGO representative")
     )
   ) |>
   filter(!is.na(charcoal)) |>
-  count(interviewee_role, charcoal, name = "Obs") |>
-  arrange(charcoal) |>
-  pivot_wider(
-    names_from  = interviewee_role,
-    values_from = Obs,
-    values_fill = 0
-  ) |>
+  count(interviewee_role, charcoal, name = "obs") |>
+  group_by(interviewee_role) |>
+  mutate(n = sum(obs), prop = obs / n) |>
+  ungroup() |>
+  select(interviewee_role, n, charcoal, prop) |>
+  pivot_wider(names_from = charcoal, values_from = prop, values_fill = 0) |>
+  arrange(interviewee_role) |>
   gt() |>
-  cols_label(charcoal = "Increase in charcoal production") |>
-  sub_missing(missing_text = "—") |>
+  cols_label(interviewee_role = "Role") |>
+  fmt_percent(columns = c(Decrease, `No change`, Moderate, Significant), decimals = 0) |>
   tab_header(
-    title    = md("**Perceived increase in charcoal production outside the CF by interviewee role**"),
-    subtitle = "Number of interviewees in each category"
+    title    = "Perceived increase in charcoal production outside the community forest by interviewee role",
+    subtitle = "Values represent the % of respondents in each response category. n = the total number of interview responses."
   ) |>
   opt_align_table_header(align = "left") |>
-  tab_options(
-    column_labels.font.weight = "bold",
-    row_group.font.weight     = "bold"
+  cols_align(align = "center", columns = -interviewee_role) |>
+  cols_align(align = "left", columns = interviewee_role) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
   ) |>
-  cols_align(align = "center", columns = everything())
+  sub_missing()
 ```
 
 ::: {.callout-note collapse="true"}
@@ -1352,7 +1362,6 @@ We asked interviewees about fire monitoring practices and whether community fore
 ```{r}
 #| label: fig-fire_monitoring
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1417,7 +1426,6 @@ We asked interviewees whether community forest management has reduced fire incid
 ```{r}
 #| label: fig-reduced_fire_inside
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1584,7 +1592,6 @@ Among the individual interviewees (@tbl-fire_individual), there were also some d
 ```{r}
 #| label: tbl-fire_individual
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1605,39 +1612,42 @@ cfmg |>
     fire = factor(fire,
                   levels = c("Increase","No change", "Moderate", "Significant"),
                   ordered = TRUE),
-    interviewee_role = case_match(
-      interviewee_role,
-      "cfmg_exec_member" ~ "CFMG Exec",
-      "cfmg_member"      ~ "Community member",
-      "trad_leader"      ~ "Traditional Leader",
-      "dfo"              ~ "District Forest Officer",
-      "NGO_rep"          ~ "NGO representative"
+    interviewee_role = factor(
+      case_match(
+        interviewee_role,
+        "cfmg_exec_member" ~ "CFMG executive member",
+        "cfmg_member"      ~ "Community member",
+        "trad_leader"      ~ "Traditional leader",
+        "dfo"              ~ "District Forestry Officer",
+        "NGO_rep"          ~ "NGO representative"
+      ),
+      levels = c("CFMG executive member", "Community member", "Traditional leader",
+                 "District Forestry Officer", "NGO representative")
     )
   ) |>
   filter(!is.na(fire)) |>
-  count(interviewee_role, fire, name = "Obs") |>
-  arrange(fire) |>
-  pivot_wider(
-    names_from  = interviewee_role,
-    values_from = Obs,
-    values_fill = 0
-  ) |>
+  count(interviewee_role, fire, name = "obs") |>
+  group_by(interviewee_role) |>
+  mutate(n = sum(obs), prop = obs / n) |>
+  ungroup() |>
+  select(interviewee_role, n, fire, prop) |>
+  pivot_wider(names_from = fire, values_from = prop, values_fill = 0) |>
+  arrange(interviewee_role) |>
   gt() |>
-  cols_label(fire = "Reduction in fire incidence") |>
-  sub_missing(missing_text = "—") |>
+  cols_label(interviewee_role = "Role") |>
+  fmt_percent(columns = c(Increase, `No change`, Moderate, Significant), decimals = 0) |>
   tab_header(
-    title    = md("**Perceived reduction in fire incidence by interviewee role**"),
-    subtitle = "Number of interviewees in each category"
+    title    = "Perceived reduction in fire incidence inside the community forest by interviewee role",
+    subtitle = "Values represent the % of respondents in each response category. n = the total number of interview responses."
   ) |>
   opt_align_table_header(align = "left") |>
-  tab_options(
-    column_labels.font.weight = "bold",
-    row_group.font.weight     = "bold"
+  cols_align(align = "center", columns = -interviewee_role) |>
+  cols_align(align = "left", columns = interviewee_role) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
   ) |>
-  cols_align(
-    align   = "center",
-    columns = everything()
-  )
+  sub_missing()
 ```
 
 ::: {.callout-note collapse="true"}
@@ -1724,7 +1734,6 @@ We asked interviewees whether community forest management has led to an increase
 ```{r}
 #| label: fig-wildlife_increase
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1885,7 +1894,6 @@ Among the individual interviewees (@tbl-wildlife_individual), there were also so
 ```{r}
 #| label: tbl-wildlife_individual
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1904,36 +1912,42 @@ cfmg |>
     ),
     wildlife = factor(wildlife,
                       levels = c("Decrease", "No change", "Moderate", "Significant")),
-    interviewee_role = case_match(
-      interviewee_role,
-      "cfmg_exec_member" ~ "CFMG Exec",
-      "cfmg_member"      ~ "Community member",
-      "trad_leader"      ~ "Traditional Leader",
-      "dfo"              ~ "District Forest Officer",
-      "NGO_rep"          ~ "NGO representative"
+    interviewee_role = factor(
+      case_match(
+        interviewee_role,
+        "cfmg_exec_member" ~ "CFMG executive member",
+        "cfmg_member"      ~ "Community member",
+        "trad_leader"      ~ "Traditional leader",
+        "dfo"              ~ "District Forestry Officer",
+        "NGO_rep"          ~ "NGO representative"
+      ),
+      levels = c("CFMG executive member", "Community member", "Traditional leader",
+                 "District Forestry Officer", "NGO representative")
     )
   ) |>
   filter(!is.na(wildlife)) |>
-  count(interviewee_role, wildlife, name = "Obs") |>
-  arrange(wildlife) |>
-  pivot_wider(
-    names_from  = interviewee_role,
-    values_from = Obs,
-    values_fill = 0
-  ) |>
+  count(interviewee_role, wildlife, name = "obs") |>
+  group_by(interviewee_role) |>
+  mutate(n = sum(obs), prop = obs / n) |>
+  ungroup() |>
+  select(interviewee_role, n, wildlife, prop) |>
+  pivot_wider(names_from = wildlife, values_from = prop, values_fill = 0) |>
+  arrange(interviewee_role) |>
   gt() |>
-  cols_label(wildlife = "Increase in wildlife") |>
-  sub_missing(missing_text = "—") |>
+  cols_label(interviewee_role = "Role") |>
+  fmt_percent(columns = c(Decrease, `No change`, Moderate, Significant), decimals = 0) |>
   tab_header(
-    title    = md("**Perceived increase in wildlife by interviewee role**"),
-    subtitle = "Number of interviewees in each category"
+    title    = "Perceived increase in wildlife by interviewee role",
+    subtitle = "Values represent the % of respondents in each response category. n = the total number of interview responses."
   ) |>
   opt_align_table_header(align = "left") |>
-  tab_options(
-    column_labels.font.weight = "bold",
-    row_group.font.weight     = "bold"
+  cols_align(align = "center", columns = -interviewee_role) |>
+  cols_align(align = "left", columns = interviewee_role) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
   ) |>
-  cols_align(align = "center", columns = everything())
+  sub_missing()
 ```
 
 ::: {.callout-note collapse="true"}
@@ -2019,7 +2033,6 @@ We asked interviewees whether community forest management has improved the manag
 ```{r}
 #| label: fig-forest_resources_management
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2096,7 +2109,6 @@ As can be seen, responses vary among FGD groups in their assessment of improveme
 ```{r}
 #| label: fig-harvested_resources
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2275,7 +2287,6 @@ Among the individual interviewees (@tbl-frm_individual), there were also some di
 ```{r}
 #| label: tbl-frm_individual
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2295,36 +2306,42 @@ cfmg |>
     frm = factor(frm,
                  levels = c("Management worse", "No change",
                             "Moderate improvement", "Significant improvement")),
-    interviewee_role = case_match(
-      interviewee_role,
-      "cfmg_exec_member" ~ "CFMG Exec",
-      "cfmg_member"      ~ "Community member",
-      "trad_leader"      ~ "Traditional Leader",
-      "dfo"              ~ "District Forest Officer",
-      "NGO_rep"          ~ "NGO representative"
+    interviewee_role = factor(
+      case_match(
+        interviewee_role,
+        "cfmg_exec_member" ~ "CFMG executive member",
+        "cfmg_member"      ~ "Community member",
+        "trad_leader"      ~ "Traditional leader",
+        "dfo"              ~ "District Forestry Officer",
+        "NGO_rep"          ~ "NGO representative"
+      ),
+      levels = c("CFMG executive member", "Community member", "Traditional leader",
+                 "District Forestry Officer", "NGO representative")
     )
   ) |>
   filter(!is.na(frm)) |>
-  count(interviewee_role, frm, name = "Obs") |>
-  arrange(frm) |>
-  pivot_wider(
-    names_from  = interviewee_role,
-    values_from = Obs,
-    values_fill = 0
-  ) |>
+  count(interviewee_role, frm, name = "obs") |>
+  group_by(interviewee_role) |>
+  mutate(n = sum(obs), prop = obs / n) |>
+  ungroup() |>
+  select(interviewee_role, n, frm, prop) |>
+  pivot_wider(names_from = frm, values_from = prop, values_fill = 0) |>
+  arrange(interviewee_role) |>
   gt() |>
-  cols_label(frm = "Forest resources management") |>
-  sub_missing(missing_text = "—") |>
+  cols_label(interviewee_role = "Role") |>
+  fmt_percent(columns = c(`Management worse`, `No change`, `Moderate improvement`, `Significant improvement`), decimals = 0) |>
   tab_header(
-    title    = md("**Perceived improvement in forest resources management by interviewee role**"),
-    subtitle = "Number of interviewees in each category"
+    title    = "Perceived improvement in forest resources management by interviewee role",
+    subtitle = "Values represent the % of respondents in each response category. n = the total number of interview responses."
   ) |>
   opt_align_table_header(align = "left") |>
-  tab_options(
-    column_labels.font.weight = "bold",
-    row_group.font.weight     = "bold"
+  cols_align(align = "center", columns = -interviewee_role) |>
+  cols_align(align = "left", columns = interviewee_role) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
   ) |>
-  cols_align(align = "center", columns = everything())
+  sub_missing()
 ```
 
 ::: {.callout-note collapse="true"}
@@ -2411,7 +2428,6 @@ We asked CFMG executives whether natural forest restoration is practised inside 
 ```{r}
 #| label: fig-natural_forest_restoration
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2474,7 +2490,6 @@ We also asked CFMG executives about the specific methods of restoration applied 
 ```{r}
 #| label: fig-restoration_methods
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2539,7 +2554,6 @@ We asked CFMG executives whether a plantation has been established inside the co
 ```{r}
 #| label: fig-plantation_establishment
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2599,7 +2613,6 @@ We also asked executives to estimate the number of hectares planted in the plant
 ```{r}
 #| label: fig-hectares_planted
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2632,7 +2645,6 @@ We asked CFMG executives whether community forest management has had an impact o
 ```{r}
 #| label: fig-yn_agroforestry
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2692,7 +2704,6 @@ We also asked CFMG executives about the types of agroforestry practices present 
 ```{r}
 #| label: fig-agroforestry_types
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2758,7 +2769,6 @@ We also asked CFMG executives about the species planted in agroforestry systems.
 ```{r}
 #| label: fig-agroforestry_species
 #| code-fold: true
-#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
