@@ -27,13 +27,14 @@ library(emmeans)
 library(scales)
 library(broom.mixed)
 library(modelsummary)
+library(ggwordcloud)
 
 load("cfmg.RData")
 ```
 
 ## Summary
 
-
+The implementation of community forest management processes is patchy. The legal processes required for establishment of a CF are mostly complete across our sample, but later processes such as the registration certificate, forest-use permits and benefit-sharing agreement have not been completed for a substantial number of CFs. While most CFMGs have held elections, have term-limits for executive officers and hold meetings with reasonable frequency, a large proportion have not opened a bank account, do not have a receipt book and have not completed annual financial and technical reports. Most CFMGs are overdue elections and hence are not compliant with the Bylaws & Constitutions. Business processes are even less well implemented. Many do not have a business plan, annual budgets or workplans. Many do not have defined user groups. Most CFMGs are only rarely visited by the District Forest Officers, but are supported by conservation NGOs or carbon trading enterprises, which in most cases do visit more frequently. Interest in expanding the CF, a possible indicator of satisfaction with CFM, was highest among CFMG executives and lows among community youth, a difference that was significant. Among individual interview respondants, NGO representatives indicated they would like to expand the CF significantly more often than traditional leaders (usually headmen or headwomen) and community members. For those CFMGs that recognised forest user groups, these user-groups harvested a very wide variety of resources, but honey and mushrooms were particularly important.
 
 ## Introduction
 
@@ -1046,105 +1047,63 @@ summary(pairwise.M2)
 
 ## Defined user groups
 
-Among those CFMGs that had recognised user groups, they were involved in managing the following resources (@tbl-user_groups).
+Among those CFMGs that had recognised user groups, they were involved in managing the following resources (@fig-gov_user_groups).
 
 ```{r}
-#| label: tbl-user_groups
+#| label: fig-gov_user_groups
 #| code-fold: true
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "CFMG user-groups."
+#| fig-cap: "Forest resources managed by user groups within CFMGs, as reported by CFMG executives. Word size is proportional to the number of CFMGs reporting a user-group for that resource type."
+#| fig-width: 10
+#| fig-height: 7
 
-cfmg |> filter(interview_type == "cfmg_executive") |>
-        summarise(
-                `Timber` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_timber,
-                        na.rm = TRUE),
-                `Poles` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_poles,
-                        na.rm = TRUE),
-                `Firewood` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_firewood,
-                        na.rm = TRUE),
-                `Charcoal` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_charcoal,
-                        na.rm = TRUE),
-                `Honey` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_honey,
-                        na.rm = TRUE),
-                `Mushrooms` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_mushrooms,
-                        na.rm = TRUE),
-                 `Wild fruit` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_wild_fruits,
-                        na.rm = TRUE),
-                `Caterpillars` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_caterpillars,
-                        na.rm = TRUE),
-                `Chikanda` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_chikanda,
-                        na.rm = TRUE),
-                `Munkoyo` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_munkoyo,
-                        na.rm = TRUE),
-                `Lusala busala` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_lusala_busala,
-                        na.rm = TRUE),
-                `Mungongo` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_mungongo,
-                        na.rm = TRUE),
-                `Devil's claw` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_devils_claw,
-                        na.rm = TRUE),
-                `Fish` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_fish,
-                        na.rm = TRUE),
-                `Pupwe` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_pupwe,
-                        na.rm = TRUE),
-                `Brooms` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_brooms,
-                        na.rm = TRUE),
-                `Bamboo` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_bamboo,
-                        na.rm = TRUE),
-                `Medicinal plants` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_medicinal_plants,
-                        na.rm = TRUE),
-                `Wild meat` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_bushmeat,
-                        na.rm = TRUE),
-                `Resins` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_resins_gums,
-                        na.rm = TRUE),
-                `Thatching` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_thatching_grass,
-                        na.rm = TRUE),
-                `Fibres` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_fibers,
-                        na.rm = TRUE),
-                `Eco-tourism` = sum(
-                        cfmg_governance_forest_resources_managed_usergroups_eco_tourism,
-                        na.rm = TRUE)
-        ) |>
-        pivot_longer(
-                cols = everything(),
-                names_to  = "Resource type",
-                values_to = "Number") |>
-        gt() |>
-        tab_header(title = "Recognised CFMG user-groups",
-                   subtitle = "Totals across 75 CFMGs.") |>
-        opt_align_table_header(align = "left") |>
-        cols_align(align = "center", columns = -`Resource type`) |>
-        cols_align(align = "left", columns = `Resource type`) |>
-        tab_style(
-          style     = cell_text(align = "center"),
-          locations = cells_column_labels(columns = `Resource type`)
-        ) |>
-        sub_missing()
+prefix <- "cfmg_governance_forest_resources_managed_usergroups_"
 
+resource_labels <- c(
+  "timber"           = "Timber",
+  "poles"            = "Poles",
+  "firewood"         = "Firewood",
+  "charcoal"         = "Charcoal",
+  "honey"            = "Honey",
+  "mushrooms"        = "Mushrooms",
+  "wild_fruits"      = "Wild fruit",
+  "caterpillars"     = "Caterpillars",
+  "chikanda"         = "Chikanda",
+  "munkoyo"          = "Munkoyo",
+  "lusala_busala"    = "Lusala busala",
+  "mungongo"         = "Mungongo",
+  "devils_claw"      = "Devil's claw",
+  "fish"             = "Fish",
+  "pupwe"            = "Pupwe",
+  "brooms"           = "Brooms",
+  "bamboo"           = "Bamboo",
+  "medicinal_plants" = "Medicinal plants",
+  "bushmeat"         = "Wild meat",
+  "resins_gums"      = "Resins",
+  "thatching_grass"  = "Thatching",
+  "fibers"           = "Fibres",
+  "eco_tourism"      = "Eco-tourism"
+)
 
+full_var_names <- paste0(prefix, names(resource_labels))
+
+wc_data <- cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  select(all_of(full_var_names)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(word = resource_labels[sub(prefix, "", variable, fixed = TRUE)]) |>
+  filter(freq > 0)
+
+set.seed(42)
+ggplot(wc_data, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 30)) +
+  scale_colour_gradient(low = "#6ABFB8", high = "#1A6B63") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-Evidently, people are harvesting a wide variety of products from CFs. It is not clear, and probably not well defined, if these user-groups are defined within the CF management plan, or whether these are just informal groups that are nevertheless recognised by the CFMG.
+Evidently, people are harvesting a wide variety of products from CFs, although honey and mushrooms appear especially important. It is not clear from the responses, if these user-groups are defined within the CF management plan or whether these are informal groups that are nevertheless recognised by the CFMG.
