@@ -1,5 +1,5 @@
 ---
-title: "CFMG Economic Transformation"
+title: "Economic Transformation"
 author: "Rhett D Harrison"
 format:
         html:
@@ -1022,7 +1022,7 @@ cfmg |>
   geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
   geom_text(
     aes(label  = n,
-        hjust  = if_else(response == "No", 0.4, -0.4),
+        hjust  = if_else(response == "No", -0.4, -0.4),
         colour = response),
     size = 4, fontface = "bold"
   ) +
@@ -1094,7 +1094,7 @@ cfmg |>
   geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
   geom_text(
     aes(label  = n,
-        hjust  = if_else(response == "No", 0.4, -0.4),
+        hjust  = if_else(response == "No", -0.4, -0.4),
         colour = response),
     size = 4, fontface = "bold"
   ) +
@@ -1682,7 +1682,7 @@ Executive FGDs were asked whether the CFMG had collaborated with private enterpr
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "CFMG collaboration with private enterprise, as reported by executive FGDs by province."
+#| fig-cap: "CFMG collaboration with private enterprise as reported by executive FGDs by province."
 #| fig-width: 8
 #| fig-height: 6
 
@@ -1722,7 +1722,7 @@ p1 <- cfmg |>
   geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
   geom_text(
     aes(label  = n,
-        hjust  = if_else(response == "No", 0.4, -0.4),
+        hjust  = if_else(response == "No", -0.4, -0.4),
         colour = response),
     size = 3.5, fontface = "bold"
   ) +
@@ -1733,7 +1733,7 @@ p1 <- cfmg |>
   scale_fill_manual(values = c("No" = "#E07B54", "Yes" = "#2A9D8F")) +
   coord_cartesian(clip = "off") +
   labs(y = NULL, fill = NULL,
-       title = "CFMG-private enterprise collaboration") +
+       title = "Collaboration with private enterprise") +
   collab_theme
 
 p1

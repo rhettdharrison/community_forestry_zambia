@@ -1,0 +1,1306 @@
+---
+title: "Appendix"
+author: "Rhett D Harrison"
+format:
+        html:
+                css: custom.css
+        pdf: default
+filters:
+- collapse-output
+editor: visual
+---
+
+## Appendix 1 - Survey tool
+
+COMMUNITY FOREST MANAGEMENT IN ZAMBIA: IS IT WORKING?
+
+
+
+
+
+FOCUS GROUP DISCUSSION (FGD) TOOL FOR ASSESSING THE EFFECTIVENESS OF COMMUNITY FOREST MANAGEMENT (CFM)
+
+INTRODUCTION
+Hello.
+My name is........................................................................ and we are from the Center for International Forestry Research and International Center for Research in Agroforestry (CIFOR-ICRAF). We are conducting a study to assess the effectiveness of Community Forest Management (CFM). This study is part of the Sustainable Agriculture for Forestry Ecosystems (SAFE) project, co-funded by the European Union (EU) and the German Federal Ministry for Economic Cooperation and Development (BMZ). The project is being implemented by GIZ through the Ministry of Green Economy and Environment (MoGEE) as the main partner, in collaboration with the Ministry of Agriculture (MoA) as a key partner.
+We would like to interview you for this study. The information and insights we collect from you are for research purposes only. It will otherwise remain confidential, and your names will not be explicitly or implicitly identified in the analysis produced by our team. We anticipate no risks to your participation in this interview/discussion.  
+Participation in this interview/discussion is voluntary, and you may refuse to participate, discontinue the interview/discussion at any time, or skip any question you do not want to answer. The discussion will take approximately 2 hours, and we encourage open and respectful sharing of experiences.
+CONSENT
+Do you consent to participate in this Focus Group Discussion?
+☐ Yes    ☐ No
+
+ General information
+Location details
+Province	
+Chiefdom	
+District	
+Village	
+Participant details
+Group type	☐CFMG     ☐NON-CFMG
+CFMG name	
+FGD gender	☐Female  ☐Male
+Age category	 ≤35		     Above 35		
+No. of participants	
+Activity details
+Date	
+GPS Coordinates	
+Name of Data collector	
+
+    1. Establishment process
+        1.1 What was the principal objective for establishing the CF? (Select one only)
+☐Conserve biodiversity (e.g., protecting habitats for wildlife)
+☐Enhance local livelihoods (e.g., promoting NTFPs like honey or mushrooms or caterpillars)
+☐Mitigate climate change (e.g., preserving forests as carbon sinks)
+☐Promote sustainable land use (e.g., agroforestry to improve soil health and productivity)  
+☐Improve forest governance (e.g., forming community management committees) 
+☐Restore degraded lands (e.g., reforesting with native tree species)
+☐Promote ecological balance (e.g., planting diverse trees for ecosystem services)
+☐Empower communities (e.g., training in forest management skills)
+☐Enhance food security (e.g., incorporating edible wild foods into diets).
+☐Preserve cultural heritage (e.g., safeguarding sacred sites and traditional practices)
+☐None (e.g., no clear objective defined)
+☐Other (Please specify)
+        1.2 How was the CFM process initiated in your area? (Select all that apply)
+☐Community members
+☐Community Resource Boards (CRBs)
+☐ Traditional leaders
+☐ Local Government Authorities
+☐ Forestry Department
+☐ Non-Governmental Organizations (NGOs)
+☐ Donor Organizations
+☐ Private Sector Companies
+☐ Research Institutions/Academia
+☐ Faith-Based Organizations
+☐ Development Agencies
+☐ Policy Markers
+☐ Internation Organizations
+☐ Other (Please specify)
+        1.3 Who led the awareness-raising efforts? (Select all that apply)
+☒ Community – Based Organizations
+☐Community Resource Boards
+☐ Community leaders
+☐ Traditional leaders
+☐ Local Government Representatives
+☐ Local Youth Groups
+☐ Local Women’s Groups
+☐ Forestry Department
+☐ Local NGOs/Civil Society Organization (CSOs)
+☐ Donor Organizations
+☐ Private Sector Companies
+☐ Research Institutions/Academia
+☐ Educational Institutions
+☐ Faith-Based Organizations
+☐ Development Agencies
+☐ Policy Markers
+☐ Internation Organizations
+☐ Media Campaigns
+☐ Other (Please specify)
+        1.4 How were the boundaries of your CFMA negotiated? (Select all that apply)
+☐Community consultations and consensus
+☐Traditional or customary boundaries
+☐Deliberations with neighbouring communities
+☐Government-mandated boundaries	
+☐Mapping exercises with external stakeholders (e.g., NGOs, government agencies)
+☐Use of geographic or natural landmarks (e.g., rivers, mountains)
+☐Mediation or conflict resolution processes
+☐Field surveys or technical assessments
+☐Through legal or policy frameworks
+☐Other (Please specify)
+        1.5 How were the boundaries of your CFMA mapped? (Select all that apply)
+☐Use of GPS and mapping technology
+☐Physical demarcation (e.g., markers, fences)
+☐Satellite imagery or remote sensing tools
+☐Traditional or customary knowledge
+☐Participatory mapping with community members
+☐Collaboration with government agencies or NGOs
+☐Field surveys and ground-truthing
+☐Based on natural landmarks (e.g., rivers, mountains)
+☐Integration of digital tools like Geographic Information Systems (GIS)
+☐Through aerial or drone surveys
+☐Other (Please specify)
+        1.6 Were there any conflicts? (Select only one)
+☐ Yes
+☐ No
+1.6.1 If yes, what were the conflicts? (Select all that apply)
+☐Disagreements over land ownership or rights
+☐Conflicts between traditional and legal land tenure systems
+☐Competing claims from neighbouring communities
+☐Environmental resource conflicts
+☐Lack of clear or accurate mapping
+☐Resistance from external actors (e.g., private sector, government)
+☐Boundary overlaps with protected areas or national forests
+☐Disputes over land use and resource allocation
+☐Social or ethnic tensions within the community
+☐Inadequate stakeholder consultation
+☐Land grabbing or encroachment by outside interests
+☐Cultural or sacred site disputes
+☐Other ( Please specify)
+            1.6.2 How were conflicts resolved? (Select all that apply)
+☐Mediation by community leaders
+☐Involvement of local government authorities
+☐Third-party mediation (NGOs, external facilitators)
+☐Community-led dialogue and consensus building
+☐Legal action or court involvement
+☐Adjusting boundaries or resource allocation
+☐Compensation or resource sharing agreements
+☐Use of traditional conflict resolution mechanisms
+☐Regular monitoring and mediation committees
+☐Community arbitration or dispute resolution boards
+☐None
+☐Other (Please specify)
+        1.7 Was the community fully aware of the agreement they were signing? i.e., was FPIC properly followed? (Select one)
+☐ Yes
+☐ No
+            1.7.1 If no, please specify why: (Select one only)
+☒Lack of proper communication about the terms
+☐Insufficient time to review the agreement
+☐Limited understanding of legal or technical language
+☐Inadequate consultation with all community members
+☐Exclusion of certain groups (e.g., women, youth, marginalized groups)
+☐No independent facilitation of the process
+☐Limited transparency about potential impacts
+☐Pressure or influence from external stakeholders
+☐Agreement documentation not provided in a language understood by the community
+☐Failure to address questions or concerns raised during the process
+☐Misrepresentation of benefits and risks
+☐Other (Please specify)
+        1.8 What challenges did you encounter during the establishment of the CF? (Select all that apply)
+☐Lack of awareness or understanding about CFM
+☐Conflicts over and ownership or boundaries
+☐Limited financial resources
+☐Insufficient technical expertise
+☐Resistance from community members or stakeholders
+☐Legal and regulatory barriers
+☐Lack of government support or coordination
+☐Environmental degradation or forest resource loss
+☐Inadequate monitoring and enforcement capacity
+☐Conflicting interests from external actors (e.g., businesses, other communities)
+☐Climate change or environmental factors
+☐Cultural or social barriers
+☐Poor infrastructure or access to resources
+☐None
+☐Other (Please specify)
+    2. Forest management plans
+        2.1 What key activities are outlined in your forest management plan? (Select all that apply)
+Practitioner: Verify the mentioned activities against the forest plan.
+☒Forest protection and conservation
+☐Sustainable resource harvesting
+☐Reforestation and afforestation
+☐Invasive species control
+☐Community engagement and awareness
+☐Monitoring and evaluation
+☐Wildlife conservation
+☐Forest-based livelihood development
+☐Soil and water conservation
+☐Conflict resolution and stakeholder coordination
+☐Climate change adaptation and mitigation
+☐Research and data collection
+☐Policy and advocacy
+☐None
+☐Other (Please specify)
+        2.2 What are the most important economics activities outlined in the CFM plan? (Select all that apply)
+Practitioner: Verify the mentioned activities against the forest plan.
+☒Sustainable timber harvesting
+☐Non-timber forest products (NTFPs) collection and sale
+☐Eco-tourism and nature-based tourism
+☐Agroforestry and agroecology practices
+☐Forest-based livelihoods (e.g., beekeeping, herbal products)
+☐Forest carbon credit programs
+☐Community forest enterprises (e.g., wood processing, handicrafts)
+☐Value addition and processing of forest products
+☐Sale of environmental services (e.g., watershed protection, biodiversity conservation)
+☐Livestock grazing or forest grazing rights
+☐Revenue sharing or benefit sharing mechanisms
+☐Small-scale forest-based industries (e.g., charcoal production, bamboo craft)
+☐None
+☐Other (please specify)
+        2.3 What are the most important governance activities outlined in CFM plan? (Select all that apply)
+Practitioner: Verify the mentioned activities against the forest plan.
+☒Establishment of a forest management committee
+☐Development of forest management rules and regulations
+☐Stakeholder engagement and consultation
+☐Conflict resolution mechanisms
+☐Monitoring and reporting of forest management activities
+☐Capacity building and training for community leaders
+☐Formalization of land tenure and forest rights
+☐Periodic review and adaptation of the CFM plan
+☐Transparency and accountability in financial management
+☐Resource allocation and benefit sharing
+☐Legal and policy advocacy
+☐Conflict resolution with external actors
+☐Regular communication with local and national authorities
+☐None
+☐Other (Please specify)
+        2.4 Have you reviewed or updated the management plan? (Select one only)
+☐Yes
+☐No
+            2.4.1 If yes, how often? (Select one only)
+☐Every 5+ years
+☐Every 3–5 years
+☐Every 1–2 years
+☐Annually
+☐Other (Please specify)
+        2.5 Are there any specific challenges you face in implementing the management plan? (Select one only)
+☐Yes
+☐ No
+            2.5.1 If yes, what are they? (Select all that apply)
+☒Insufficient funding or financial resources
+☐Lack of technical expertise or skilled personnel
+☐Resistance from community members or stakeholders
+☐Conflicts over resource allocation or use
+☐Weak governance or management structures
+☐Legal or regulatory barriers
+☐Inadequate monitoring and enforcement mechanisms
+☐Lack of government support or coordination
+☐Inadequate infrastructure (e.g., transportation, communication)
+☐Environmental degradation or climate change impacts
+☐Inadequate stakeholder engagement or consultation
+☐Conflicting interests among external actors (e.g., businesses, other communities)
+☐Cultural or social barriers
+☐Limited access to data or information
+☐Difficulty in achieving consensus or cooperation
+☐Other (Please specify)
+        2.6 How does the group monitor compliance with the plan’s rules and regulations? (Select all that apply)
+☒Regular patrols and field inspections
+☐Community-based monitoring (e.g., local volunteers or committees)
+☐Use of technology (e.g., GPS tracking, drones, remote sensing)
+☐Periodic audits and evaluations
+☐Reporting mechanisms for illegal activities or violations
+☐Engagement with local law enforcement or authorities
+☐Collaboration with NGOs or external experts for monitoring
+☐Community meetings to discuss compliance and issues
+☐Surveys and data collection on forest conditions and resource use
+☐Incentives for compliance (e.g., rewards or recognition for adherence to rules)
+☐Training and capacity building on rule enforcement
+☐Public awareness campaigns on the importance of compliance
+☐Conflict resolution or mediation processes for disputes
+☐None
+☐Other (Please specify)
+    3. Benefit-sharing agreements
+        3.1 What type of benefits does CFM generate? (Select all that apply)
+☐Financial benefits (e.g., income from timber sales, carbon credits, eco-tourism)
+☐Resource access (e.g., firewood, water, non-timber forest products like fruits, honey, mushrooms, caterpillars and medicinal plants)
+☐Social benefits (e.g., employment opportunities, agroforestry, forest-based enterprises)
+☐Livelihood improvements (e.g., employment opportunities, agroforestry, forest-based enterprises)
+☐Biodiversity conservation (e.g., protection of wildlife habitats, preservation of native species)
+☐Climate mitigation and resilience (e.g., carbon sequestration, microclimate regulation, erosion control)
+☐Educational and capacity building opportunities (e.g., training in sustainable practices, environmental education)
+☐Improved governance and community empowerment (e.g., stronger local governance, increased decision-making autonomy)
+☐Cultural and spiritual value (e.g., protection of sacred sites, maintaining cultural traditions)
+☐Other (Please specify)
+
+
+
+
+
+
+
+
+
+        3.2 Please rank the selected benefits generated by CFM according to importance.
+Practitioner: From the benefits selected, ask the group to indicate the top 3 in order of importance (1 = most important, 2 = second most important, 3 = third most important).
+Benefit Type	Rank
+Financial benefits (e.g., income from timber sales, carbon credits, eco-tourism)	
+Resource access (e.g., firewood, water, non-timber forest products like fruits, honey, mushrooms, caterpillars and medicinal plants)	
+Social benefits (e.g., stronger community cohesion, equitable decision-making, gender inclusivity)	
+Livelihood improvements (e.g., employment opportunities, agroforestry, forest-based enterprises)	
+Biodiversity conservation (e.g., protection of wildlife habitats, preservation of native species)	
+Climate mitigation and resilience (e.g., carbon sequestration, microclimate regulation, erosion control)	
+Educational and capacity building opportunities (e.g., training in sustainable practices, environmental education)	
+Improved governance and community empowerment (e.g., stronger local governance, increased decision-making autonomy)	
+Cultural and spiritual value (e.g., protection of sacred sites, maintaining cultural traditions)
+Other ( Please specify)	
+
+        3.3 How are these benefits distributed among women, men, youths and marginalized groups (i.e. persons with disabilities and the aged)?
+Practitioner: Mark all applicable options for each group under the relevant column with an “X” or checkmark.
+	Groups
+Benefit Type	Women	Men	Youth	The aged	Persons with disabilities
+Financial benefits (e.g., income from timber sales, carbon credits, eco-tourism)					
+Resource access (e.g., firewood, water, non-timber forest products like fruits, medicinal plants)					
+Social benefits (e.g., stronger community cohesion, equitable decision-making, gender inclusivity)					
+Livelihood improvements (e.g., employment opportunities, agroforestry, forest-based enterprises)					
+Biodiversity conservation (e.g., protection of wildlife habitats, preservation of native species)					
+Climate mitigation and resilience (e.g., carbon sequestration, microclimate regulation, erosion control)					
+Educational and capacity building opportunities (e.g., training in sustainable practices, environmental education)					
+Improved governance and community empowerment (e.g., stronger local governance, increased decision-making autonomy)					
+Cultural and spiritual value (e.g., protection of sacred sites, maintaining cultural traditions)	Other (specify)					
+
+        3.4 Do you feel the benefit-sharing agreement is fair? (Select one only)
+☐Yes
+☐No
+            3.4.1 If no, please specify why? (Select all that apply)
+☐Lack of transparency 
+☐Unequal distribution 
+☐Exclusion of marginalized groups 
+☐Dominance by powerful groups 
+☐Lack of participation in decision-making 
+☐Insufficient benefits 
+☐Conflicts over allocation 
+☐Inadequate monitoring and accountability 
+☐Other (Please specify)
+        3.5 Are there any challenges that have arisen regarding benefit distribution? (Select one only)
+☐Yes
+☐No
+            3.5.1 If yes, please specify the challenges (Select all that apply)
+☐Lack of transparency
+☐Conflicts among community members
+☐Exclusion of certain groups
+☐Inequitable allocation
+☐Corruption or mismanagement
+☐Insufficient benefits to distribute
+☐External interference
+☐Lack of monitoring or accountability
+☐Cultural or social barriers
+☐Disputes over eligibility criteria
+☐Other (Please specify)
+            3.5.2 How have the challenges been addressed? (Select all that apply)
+☒Improved transparency 
+☐Conflict resolution mechanisms 
+☐Inclusion of marginalized groups 
+☐Equitable allocation policies 
+☐Capacity building and training 
+☐External oversight or audits
+☐Increased resource mobilization 
+☐Community participation in decision-making 
+☐Clear eligibility criteria 
+☐Adaptation of cultural practices 
+☐None
+☐Other (Please specify)
+        3.6 Are there any mechanisms for resolving disputes over benefits? (Select one only)
+☐Yes
+☐No
+            3.6.1 If yes, please specify the  mechanisms: (Select all that apply)
+☐Mediation by community leaders 
+☐Use of existing traditional or cultural practices 
+☐Community meetings 
+☐Conflict resolution committees 
+☐Involvement of local government or authorities 
+☐External arbitration by third parties 
+☐Documentation and formal grievance processes 
+☐Awareness and training on dispute resolution 
+☐Regular monitoring and feedback mechanisms 
+☐Other (Please specify)
+
+        3.7 How effective are the mechanisms for resolving disputes over benefits? 
+Practitioner: Please ask the group to rate each mechanism on a scale from 1 to 5, where:1 = Not effective, 2 = Ineffective, 3 = Moderately effective 4 = Effective and 5 = Very effective
+	Effectiveness grievance redress mechanism
+Mechanisms	1	2	3	4	5
+Mediation by community leaders					
+Use of existing traditional or cultural practices					
+Community meetings					
+Conflict resolution committees					
+Involvement of local government or authorities					
+External arbitration by third parties					
+Documentation and formal grievance processes					
+Awareness and training on dispute resolution					
+Regular monitoring and feedback mechanisms					
+Other (Please specify)					
+
+    4. Sustainable forest management (SFM)
+        4.1 Has the establishment of CFM reduced deforestation and forest degradation? (Select one only)
+☐Strongly disagree
+☐Disagree
+☐Neutral
+☐Agree
+☐Strongly agree
+        4.2 What specific activities are undertaken to promote sustainable forest use? (Select all that apply)
+☐Controlled logging and low-impact timber extraction techniques
+☐Reforestation and afforestation programs
+☐Sustainable harvesting of non-timber forest products (NTFPs)
+☐Restoration of degraded areas
+☐Forest patrols and monitoring
+☐Wildlife habitat protection
+☐Soil and water conservation techniques
+☐Awareness campaigns on forest conservation
+☐Training on sustainable forest management practices
+☐Promoting alternative livelihoods (e.g., eco-tourism, agroforestry)
+☐None
+☐Other (Please specify)
+        4.3 What specific activities are prohibited to promote sustainable forest use? (Select all that apply)
+☒Illegal logging
+☐Clear-cutting of forests
+☐Unregulated harvesting of non-timber forest products (NTFPs)
+☐Setting fires in forested areas (except controlled burns)
+☐Poaching or illegal hunting of wildlife
+☐Mining activities within forest areas
+☐Conversion of forest land to agriculture or settlements
+☐Dumping waste or pollutants in forested areas
+☐Overgrazing by livestock in sensitive forest zones
+☐Extraction of resources from protected or buffer zones
+☐Use of non-biodegradable chemicals in forested areas
+☐Unauthorized construction or infrastructure development
+☐Removal of soil, rocks, or vegetation beyond sustainable limits
+☐Harvesting during restricted seasons (e.g., breeding periods)
+☐None
+☐Other (Please specify)
+        4.4 How are community members made aware of or trained on sustainable practices? (Select all that apply)
+☐Community workshops and seminars
+☐Training with forest experts or NGOs
+☐Field demonstrations of practices
+☐Awareness campaigns (posters, radio, media)
+☐Participatory learning in forest management
+☐Peer-to-peer exchange visits
+☐School-based education programs
+☐Training in alternative livelihoods
+☐Distribution of training materials
+☐Involvement in forest monitoring activities
+☐Community-led forest management groups
+☐Consultation with traditional leaders
+☐Use of mobile apps or online platforms
+☐Government programs
+☐NGO-led programs
+☐None
+☐Other (Please specify)
+    5. Economic transformation
+        5.1 Livelihoods
+            5.1.1 Has CFM brought any livelihood benefits? (Select one only)
+☐Strongly disagree
+☐Disagree
+☐Neutral
+☐Agree
+☐Strongly agree
+            5.1.2 In what ways has CFM brought livelihood benefits? (Select all that apply)
+☒Increased income from sustainable timbe
+☐Employment in forest management and restoration
+☐Development of eco-tourism businesses
+☐Improved access to forest resources
+☐Enhanced food security through agroforestry
+☐Skills training and capacity-building
+☐Alternative livelihoods reducing forest pressure
+☐Strengthened community cooperation for business ventures
+☐Access to ecosystem service payments (e.g., carbon credits)
+☐Better market access through certification schemes
+☐Improved forest health leading to sustainable yields
+☐Increased income from honey, mushrooms, caterpillars and other NTFPs
+☐Access to microcredit or financial support for sustainable ventures
+☐Enhanced resilience to climate change impacts
+☐Knowledge sharing and partnerships with local businesses
+☐Increased property values due to improved forest management
+☐Improved community infrastructure through sustainable development
+☐Capacity to sell forest products at fair trade or higher prices
+☐None
+☐Other (Please specify)
+            5.1.3 What are the important materials that are harvested from the forest for household use)? (Select all that apply)
+☒Fuelwood
+☐Timber
+☐Non-timber forest products (e.g., fruits, mushrooms, caterpillars, honey)
+☐Wild vegetables and edible plants
+☐Medicinal plants and herbs
+☐Wild game
+☐Fish
+☐Fodder for livestock
+☐Bamboo or construction materials
+☐Water from forested areas (e.g., springs, streams)
+☐Resins, gums, and latex
+☐Fibers for weaving or making tools
+☐Tree sap for food or craft purposes
+☐Wild fruits for juice or preserves
+☐Leaves for mulch or compost
+☐Bark for crafting or making containers
+☐Other (Please specify)
+
+            5.1.4 How important are the materials harvested from the forest?
+Practitioner: Please ask the group to rate the importance of the selected materials on a scale from 1 to 5, where:1 = Not Important, 2 = Slightly Important, 3 = Moderately Important, 4 = Very Important and 5 = Extremely Important
+	Rating
+Products	1	2	3	4	5
+Fuelwood					
+Timber					
+Non-timber forest products (e.g., fruits, mushrooms, honey)					
+Wild vegetables and edible plants					
+Medicinal plants and herbs					
+Wild game					
+Fish					
+Fodder for livestock					
+Bamboo or construction materials					
+Water from forested areas (e.g., springs, streams)					
+Resins, gums, and latex					
+Fibers for weaving or making tools					
+Tree sap for food or craft purposes					
+Wild fruits for juice or preserves					
+Leaves for mulch or compost					
+Bark for crafting or making containers					
+Other (Specify)					
+
+            5.1.5 Has CFM changed the way these materials are harvested from the forest? (Select one only)
+☐Strongly disagree
+☐Disagree
+☐Neutral
+☐Agree
+☐Strongly agree
+
+            5.1.6 Have harvests increased or decreased due to CFM?
+Practitioner: Please for the selected products ask the group to indicate whether harvests have increased, decreased, no change or not sure. Mark all applicable options for each product under the relevant column with an “X” or checkmark.
+	Changes in harvests due to CFM
+Products	Increased	Decreased	No change	Not sure
+Fuelwood				
+Timber				
+Non-timber forest products (e.g., fruits, mushrooms, honey)				
+Wild vegetables and edible plants				
+Medicinal plants and herbs				
+Wild game				
+Fish				
+Fodder for livestock				
+Bamboo or construction materials				
+Water from forested areas (e.g., springs, streams)				
+Resins, gums, and latex				
+Fibers for weaving or making tools				
+Tree sap for food or craft purposes				
+Wild fruits for juice or preserves				
+Leaves for mulch or compost				
+Bark for crafting or making containers				
+Other (Specify)				
+
+            5.1.7 What income-generating activities are directly supported by the CFM? (Select all that apply)
+☒Sustainable timber harvesting
+☐Non-timber forest product collection (e.g., fruits, mushrooms, caterpillars, honey)
+☐Eco-tourism and nature-based tourism
+☐Agroforestry (e.g., cultivating crops alongside trees)
+☐Bee-keeping (honey production)
+☐Craft production (e.g., baskets, tools from forest materials)
+☐Medicinal plant harvesting
+☐Forest carbon credit programs (e.g., REDD+)
+☐Sale of seeds, saplings, and seedlings
+☐Livestock grazing (managed through sustainable forest practices)
+☐Wildlife conservation programs (e.g., eco-tourism, community wildlife monitoring)
+☐Production of resin, latex, or other forest-derived products
+☐Forest management consultancy services
+☐Forest-based educational programs or workshops
+☐Sales of firewood or charcoal (if sustainably managed)
+☐Other (Please specify)
+            5.1.8 Has CFM increased or decreased the household income? (Select one only)
+☐Increased
+☐Decreased
+☐No change
+☐Not sure
+            5.1.9 How has CFM increased household income? (Select all that apply)
+☒Increased income from sustainable timber harvesting
+☐Increased income from non-timber forest products (e.g., fruits, honey, caterpillars, mushrooms)
+☐Increased income from eco-tourism or nature-based tourism
+☐Improved income through alternative livelihoods (e.g., agroforestry, beekeeping)
+☐Increased sales of forest products (e.g., firewood, bamboo, resin)
+☐Increased income from community-managed conservation activities (e.g., wildlife monitoring, forest restoration)
+☐Access to new markets or higher prices for forest products
+☐Income from forest-based carbon credits (e.g., REDD+)
+☐Improved income due to better forest management and resource availability
+☐Increased income through community-based forest enterprises
+☐Other (Please specify)
+            5.1.10 How has CFM decreased the income? (Select all that apply)
+☐Limited timber harvesting
+☐Reduced access to non-timber forest products (e.g., fruits, honey, caterpillars, mushrooms)
+☐Restrictions on traditional practices or land use
+☐Restrictions on firewood collection
+☐Decreased access to grazing land for livestock
+☐Reduced market opportunities for certain forest products
+☐Reduced or restricted fishing or hunting opportunities
+☐Land conversion limitations (e.g., no more land for agriculture)
+☐Time or labour needed for sustainable forest management activities
+☐Other (Please specify)
+            5.1.11 Have there been any ecosystem benefits to CFM? (Select one only)
+☐Strongly disagree
+☐Disagree
+☐Neutral
+☐Agree
+☐Strongly agree
+            5.1.12 What specific ecosystem benefits have you observed due to CFM? (Select all that apply)
+☒Improved forest health (e.g., increased biodiversity, better tree growth)
+☐Reduced deforestation and forest degradation
+☐Enhanced soil quality and reduced erosion
+☐Improved water quality and availability
+☐Increased wildlife habitat and biodiversity
+☐Better carbon sequestration and climate change mitigation
+☐Restoration of degraded lands
+☐Increased resilience to climate change impacts
+☐Improved forest regeneration
+☐Recovery of endangered or threatened species
+☐Enhanced natural pest control and pollination
+☐Increased availability of forest products for sustainable use
+☐Improved air quality
+☐Enhanced watershed management
+☐Reduced forest fires or improved fire management
+☐Increased community participation in conservation efforts
+☐Improved biodiversity of plant species
+☐Strengthened forest ecosystem services (e.g., flood control, water retention)
+☐Improved management of invasive species
+☐None
+☐Other (Please specify)
+            5.1.13 Are there any partnerships with external organizations or businesses for economic activities? (Select one only)
+☐Yes
+☐No
+            5.1.14 If yes, please specify the partnerships? (Select all that apply)
+☐NGOs 
+☐Local businesses
+☐Government agencies
+☐Eco-tourism companies
+☐Private companies
+☐Research institutions
+☐Certification bodies (e.g., FSC)
+☐Agroforestry businesses
+☐Carbon offset programs (e.g., REDD+)
+☒Other (Please specify)
+        5.2 Carbon credit generation
+            5.2.1 Are you aware of any carbon credit projects associated with your CFM? (Select one only)
+☐Yes
+☐No
+            5.2.2 How were baselines for carbon credits established? (Select all that apply)
+☒Forest carbon stock assessments
+☐Remote sensing or satellite imagery
+☐Consultation with local experts or community members
+☐Historical data on forest cover and biomass
+☐Government or third-party assessments
+☐Modelling based on forest growth rates
+☐Field measurements (e.g., tree density, species composition)
+☐None
+☐Other (Please specify)
+            5.2.3 What share of revenue (if any) from carbon credits is allocated to the community? (Select one only)
+☐None
+☐Less than 10%
+☐10% to 25%
+☐26% to 50%
+☐51% to 75%
+☐More than 75%
+☐Not sure
+☐Other (Specify)
+            5.2.4 How is the community share divided among community members (Women, men, youth and marginalized groups)
+Practitioner: Please ask the group to rate the share for each group from 1 to 5, where:1 = None, 2 = A small share, 3 = Moderate share, 4 = Significant share and 5 = Most.
+	Rating
+Group	1	2	3	4	5
+Women					
+Men					
+Youth					
+The aged					
+Person with disabilities					
+
+
+        5.3 Other commercial economic opportunities
+            5.3.1 Are there any economic opportunities that are currently not being realized? (Select one only)
+☐ Yes
+☐No
+
+                5.3.1.1 If yes, please specify the economic opportunities: (Select all that apply)
+☐Eco-tourism.
+☐Non-timber forest products (e.g., medicinal plants, mushrooms, honey, caterpillars).
+☐Sustainable timber harvesting.
+☐Carbon credit markets.
+☐Value-added products (e.g., furniture, crafts).
+☐Forest-based education and workshops.
+☐Forest-based renewable energy (e.g., bioenergy).
+☐Agroforestry and sustainable agriculture.
+☐Partnerships with private sector or NGOs.
+☐Community-driven forest conservation initiatives.
+☐Digital platforms for forest resource marketing.
+☐Eco-friendly packaging (e.g., bamboo-based).
+☐Urban green spaces and forest restoration projects.
+☐Health and wellness retreats (e.g., forest bathing, yoga).
+☐Sustainable aquaculture in forest ecosystems.
+☐Bio-enterprise incubators for startups.
+☐Recreational activities (e.g., zip-lining, camping, trail running).
+☐Forestry data and remote sensing.
+☐Sustainable water resource management.
+☐Biodiversity banking.
+☐Forest-based bio-pharmaceutical research.
+☐Youth engagement programs for forest-based skills.
+☐Forest carbon farming.
+☐Art and cultural preservation through forest resources.
+☐Renewable construction materials (e.g., laminated bamboo).
+☐Innovative financial products for forestry enterprises.
+☐Bio-based fuels and chemicals from forest biomass.
+☐Edu tourism and citizen science initiatives.
+
+                5.3.1.2 Are these economic opportunities impacted by the implementation of CFM? (Select one only)
+Practitioner: Ensure all fields in this table are accurately filled based on responses provided by the group. Mark all applicable options for each economic opportunity under the relevant column with an “X” or checkmark.
+	Impact by CFM [Y/N]
+Economic opportunity	Yes	No
+Eco-tourism		
+Non-timber forest products (e.g., medicinal plants, mushrooms, honey, caterpillars)		
+Sustainable timber harvesting		
+Carbon credit markets		
+Value-added products (e.g., furniture, crafts)		
+Forest-based education and workshops		
+Forest-based renewable energy (e.g., bioenergy)		
+Agroforestry and sustainable agriculture		
+Partnerships with private sector or NGOs		
+Community-driven forest conservation initiatives		
+Digital platforms for forest resource marketing		
+Eco-friendly packaging (e.g., bamboo-based)		
+Urban green spaces and forest restoration projects		
+Health and wellness retreats (e.g., forest bathing, yoga)		
+Sustainable aquaculture in forest ecosystems.		
+Bio-enterprise incubators for startups		
+Recreational activities (e.g., zip-lining, camping, trail running)		
+Forestry data and remote sensing.		
+Sustainable water resource management		
+Biodiversity banking		
+Forest-based bio-pharmaceutical research		
+Youth engagement programs for forest-based skills		
+Forest carbon farming		
+Art and cultural preservation through forest resources		
+Renewable construction materials (e.g., laminated bamboo)		
+Innovative financial products for forestry enterprises		
+Bio-based fuels and chemicals from forest biomass		
+Edutourism and citizen science initiatives		
+Other (Please specify)		
+                5.3.1.3 If yes, how are these economic opportunities impacted by CFM: (Select all that apply)
+Practitioner: Ensure all fields in this table are accurately filled based on responses provided by the group. Enter cosed in the appropriate columns
+Economic opportunity	Impact by CFM	Codes
+ 	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19	20	21	22	23	24	25	 1= Enhanced resource sustainability
+2=Improved market access
+3=Increased carbon credit potential
+4=Improved livelihoods
+5=Enhanced investment opportunities
+6=Capacity building and skills development
+7=Improved biodiversity and resource management
+8=Strengthened governance
+9=Collective branding and certification
+10=Promotes ecotourism development
+11=Improved resource monitoring
+12=Support for small-scale enterprises
+13=Facilitates access to grants and funding
+14=Strengthened supply chains
+15=Resilience to climate change
+16=Stimulates local job creation
+17=Encourages value addition locally
+18=Fosters innovation
+19=Equitable benefit-sharing
+20=Strengthened cultural heritage initiatives
+21=Enhances Forest carbon farming potential
+22=Facilitates cross-sector partnerships
+23=Increases resilience of ecosystem services
+24=Diversifies income streams
+25=Other (Please specify)
+
+Eco-tourism	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Non-timber forest products (e.g., medicinal plants, mushrooms, honey, caterpillars)	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Sustainable timber harvesting	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Carbon credit markets	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Value-added products (e.g., furniture, crafts)	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Forest-based education and workshops	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Forest-based renewable energy (e.g., bioenergy)	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Agroforestry and sustainable agriculture	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Partnerships with private sector or NGOs	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Community-driven forest conservation initiatives	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Digital platforms for forest resource marketing	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Eco-friendly packaging (e.g., bamboo-based)	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Urban green spaces and forest restoration projects	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Health and wellness retreats (e.g., forest bathing, yoga)	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Sustainable aquaculture in forest ecosystems.	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Bio-enterprise incubators for startups	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Recreational activities (e.g., zip-lining, camping, trail running)	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Forestry data and remote sensing.	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Sustainable water resource management	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Biodiversity banking	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Forest-based bio-pharmaceutical research	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Youth engagement programs for forest-based skills	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Forest carbon farming	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Art and cultural preservation through forest resources	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Renewable construction materials (e.g., laminated bamboo)	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Innovative financial products for forestry enterprises	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Bio-based fuels and chemicals from forest biomass	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Edutourism and citizen science initiatives	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+Other (Please specify)	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	
+
+            5.3.2 What challenges does CFM face in diversifying economic opportunities? (Select all that apply)
+☐Limited access to financial resources or funding.
+☐Lack of technical knowledge or skills for alternative enterprises.
+☐Restricted access to markets for forest products.
+☐Inadequate infrastructure (e.g., roads, storage facilities).
+☐Conflicts or disagreements within the community about resource use.
+☐Environmental degradation or lack of resources to support new activities.
+☐Limited support from government or external organizations.
+☐Lack of capacity for sustainable management practices.
+☐Cultural or traditional practices that limit new economic ventures.
+☐Poor communication or coordination among stakeholders.
+☐Climate change impacts affecting forest resources.
+☐None
+☐Other (Please specify)
+            5.3.3 What other value-added opportunities can be realized? (Select all that apply)
+☐Processing and selling non-timber forest products (e.g., herbs, fruits, honey, caterpillars, mushroom).
+☐Crafts and handmade goods from wood, bark, or other materials.
+☐Timber-based products like furniture, flooring, or paper.
+☐Eco-tourism services (e.g., guided tours, nature walks, camping).
+☐Wildlife conservation and ecotourism packages.
+☐Bioenergy production (e.g., charcoal, wood pellets).
+☐Carbon credits and other environmental services (e.g., water management).
+☐Agroforestry and integrated farming systems.
+☐Sustainable fisheries and aquaculture in forested areas.
+☐Forest-based educational programs or workshops.
+☐Herbal medicine production or natural cosmetics.
+☐Environmental consulting or carbon footprint reduction services.
+☐None
+☐Other (Please specify)
+            5.3.4 Are there opportunities for linkage to private entities? (Select one only)
+☐Yes
+☒No
+                5.3.4.1 If yes, please specify the opportunities for linkages:
+☒Sustainable product sales
+☐Eco-tourism ventures
+☐Carbon credit sales
+☐Private investment in restoration
+☐Partnerships for value-added products
+☐Environmental certification
+☐Private sector funding
+☐Technology or innovation partnerships
+☐Supply chain partnerships
+☐Research and development collaborations
+☐Other (Please specify)
+            5.3.5. Do you have any certification (s)? (Select one only)
+☐Yes
+☐No
+                5.3.5.1 If yes, please specify the certifications you have: (Select all that apply)
+☐Forest Stewardship Council (FSC) certification
+☐Organic product certification
+☐Fair Trade certification
+☐Rainforest Alliance certification
+☐GlobalG.A.P. certification (Good Agricultural Practices)
+☐Carbon credits or carbon offset certification
+☐Other (Please specify)
+            5.3.6 Is the CFMG trying to attain any certification? (Select one only)
+☐Yes
+☐No
+5.3.6.1 If yes, please specify the certifications the CFMG is trying to attain: (Select all that apply)
+☐Forest Stewardship Council (FSC) certification
+☐Organic product certification
+☐Fair Trade certification
+☐Rainforest Alliance certification
+☐GlobalG.A.P. certification (Good Agricultural Practices)
+☐Carbon credits or carbon offset certification
+☐Other (Please specify)
+        5.4 Opportunity costs and adverse outcomes
+            5.4.1 What are the opportunity costs associated with participating in the CFM? (Select all that apply)
+☒Loss of income from traditional farming activities
+☐Reduced opportunities for livestock grazing
+☐Restriction on timber harvesting for commercial purposes
+☐Limits on collecting non-timber forest products for sale
+☐Reduced time for other income-generating work (e.g., trading, casual labor)
+☐Foregone income from alternative land uses (e.g., agriculture, mining)
+☐Cost of compliance with CFM rules (e.g., permits, attending meetings, patrols)
+☐Fines or penalties for activities restricted by CFM rules
+☐Loss of income from large-scale logging or clear-cutting
+☐Decreased access to previously unrestricted forest areas
+☐Reduced opportunities to lease or sell forest land
+☐Investment in time and effort for sustainable practices without immediate returns
+☐Increased dependency on seasonal or less profitable activities
+☐Conflict with personal or cultural practices (e.g., hunting or traditional land use)
+☐None
+☐Other (Please specify)
+            5.4.2 What, if any, economic activities are you no longer allowed to do? (Select all that apply)
+☒Commercial logging or large-scale timber harvesting.
+☐Clear-cutting for agriculture or infrastructure.
+☐Unregulated collection of non-timber forest products (e.g., honey, fruits, medicinal plants).
+☐Hunting, trapping, or harvesting wildlife.
+☐Charcoal production or unsustainable firewood harvesting.
+☐Livestock grazing in restricted or protected areas.
+☐Mining or resource extraction in forested areas.
+☐Shifting cultivation or slash-and-burn farming practices.
+☐Building settlements or structures within forest zones.
+☐Fishing or aquaculture in forest-adjacent areas without permits.
+☐Trading or selling forest resources without authorization.
+☐Collecting rare or endangered plant species.
+☐Harvesting water resources (e.g., springs, streams) without regulation.
+☐Using forest land for large-scale tourism without proper management.
+☐Conducting activities that damage biodiversity or ecosystems.
+☐Operating mechanized equipment in restricted zones.
+☐Burning forest areas for pest control or land clearing.
+☐None
+☐Other (Please specify)
+            5.4.3 Have there been any unintended negative economic consequences of CFM implementation? (Select one only)
+☐Yes
+☐No
+                5.4.3.1 If yes, please specify the unintended negative economic consequences: (Select all that apply)
+☐Reduced income from restricted activities (e.g., timber harvesting, grazing).
+☐Increased costs for permits, compliance, or alternative livelihoods.
+☐Loss of jobs in sectors dependent on unrestricted forest use.
+☐Conflicts over resource allocation within the community.
+☐Unequal distribution of benefits, excluding certain groups.
+☐Increased dependency on external aid or subsidies.
+☐Limited access to traditional resources, affecting cultural practices.
+☐Decreased economic opportunities due to unclear or poorly implemented policies.
+☐Displacement of income-generating activities to less profitable options.
+☐Higher vulnerability to climate change impacts due to reduced flexibility in land use.
+☐Other (Please specify)
+                5.4.3.2 How have they been addressed? (Select all that apply)
+☐Alternative livelihoods introduced (e.g., ecotourism, agroforestry).
+☐Training for sustainable practices.
+☐Financial support or subsidies.
+☐Improved market access for forest products.
+☐Community conflict resolution efforts.
+☐Policy adjustments to balance needs.
+☐Partnerships with NGOs or private entities.
+☐Benefit-sharing mechanisms implemented.
+☐Rehabilitation of degraded areas.
+☐None
+☒Other (Please specify)
+    6. Governance
+        6.1 What do you think are the strengths of CFM? (Select all that apply)
+☐Improved sustainable resource management.
+☐Enhanced community participation and ownership.
+☐Conservation of biodiversity and forest ecosystems.
+☐Increased income from sustainable forest products.
+☐Strengthened community governance and decision-making.
+☐Promotion of equitable benefit-sharing.
+☐Opportunities for capacity building and training.
+☐Access to funding and partnerships.
+☐Improved resilience to climate change.
+☐None
+☐Other (Please specify)
+        6.2 What do you think are the weaknesses of the CFM? (Select all that apply)
+☐Limited financial resources for implementation.
+☐Conflicts over resource access and benefit-sharing.
+☐Inadequate training or technical knowledge.
+☐High dependence on carbon finance or external funding.
+☐Weak enforcement of rules and regulations.
+☐Unequal participation of marginalized groups.
+☐Lack of access to markets for forest products.
+☐Bureaucratic or slow decision-making processes.
+☐Reduced income from restricted activities.
+☐Challenges in balancing conservation and community needs.
+☐None
+☐Other (Please specify)
+        6.3 How can the CFM be strengthened or improved? (Select all that apply)
+☐Increase financial support and funding access.
+☐Enhance community training and capacity-building.
+☐Improve conflict resolution mechanisms.
+☐Strengthen rule enforcement and monitoring.
+☐Improve access to markets for sustainable products.
+☐Ensure more inclusive decision-making.
+☐Develop alternative income-generating activities.
+☐Diversify funding sources, reduce reliance on carbon finance.
+☐Build stronger partnerships with government and businesses.
+☐Improve infrastructure (e.g., roads, processing facilities).
+☐Promote sustainable farming practices.
+☐Regularly review and adapt CFM policies.
+☐None
+☐Other (Please specify)
+        6.4 How often does the CFMG leadership meet? (Select one only)
+☐Weekly
+☐Bi-weekly
+☐Monthly
+☐Quarterly
+☐Annually
+☐As needed
+☐Never
+☐Other (Please specify)
+        6.5 What is the tenure of the CFMG leadership? (Select one only)
+☐1 year
+☐2 years
+☐3 years
+☐4 years
+☐5 years
+☐No fixed term
+☐Other (Please specify)
+            6.5.1 How are CFMG leaders selected? (Select one only)
+☐Elected by community members
+☐Appointed by a governing body or organization
+☐Rotational leadership among community members
+☐Nominated by community members
+☐Selection based on expertise or experience
+☐Selected by consensus or traditional methods
+☐Other (Please specify)
+            6.5.2 Who qualifies to be a candidate in the CFMG elections? (Select all that apply)
+☐Women
+☐Men
+☐Youth
+☐Aged (Elderly)
+☐Persons with disabilities
+            6.5.3 Who is eligible to vote in the CFMG elections? (Select all that apply)
+☐Women
+☐Men
+☐Youth
+☐Aged (Elderly)
+☐Persons with disabilities
+            6.5.4 What is the representation of men, women and youth in the CFMG?
+Practitioner: Ensure all fields in this table are accurately filled based on responses provided by the group.
+Groups	Representation
+Women	
+Men	
+Youth	
+Persons with disabilities	
+
+
+
+
+            6.5.5 What is the representation of men, women and youth and marginalized groups on the leadership board?
+Practitioner: Ensure all fields in this table are accurately filled based on responses provided by the group.
+Groups	Representation
+Women	
+Men	
+Youth	
+Persons with disabilities	
+
+        6.6 How does the CFMG leadership report back to the community? (Select all that apply)
+☐Community meetings or forums
+☐Written reports or newsletters
+☐Noticeboards or public displays
+☐Radio broadcasts or community announcements
+☐Direct communication through leaders or representatives
+☐Social media or online platforms
+☐Written reports submitted to local authorities
+☐Focus group discussions
+☐Village or town hall gatherings
+☐Mobile phone updates or text messages
+☐Annual or quarterly reports
+☐Workshops or training sessions
+☐Publicized meetings in local markets or gathering places
+☐None
+☐Other (Please specify)
+        6.7 Are there any CFUGs in the CF? (Select only only)
+☐Yes
+☐No
+            6.7.1 How many CFUGs are there?____________________
+
+
+
+
+            6.7.2 What is/are the name(s) of the CFUG(s)?
+Practitioner: Ensure all fields in this table are accurately filled based on responses provided by the group.
+No. 	Name of CFUG
+1	
+2	
+3	
+4	
+5	
+
+            6.7.3 How was the CFUG(s) formed?
+Practitioner: Ensure all fields in this table are accurately filled based on responses provided by the group.
+	Name (s) of CFUG (s)
+Formation process				
+Through a community decision or consensus				
+Government or local authority initiative				
+As part of a forest management program				
+Through an external NGO or donor initiative				
+Based on traditional or customary practices				
+Through a formal application or registration process				
+Due to land or resource access issues				
+By a group of individuals with shared interests in forest management				
+As a response to environmental or conservation concerns				
+By establishing legal or policy frameworks for community participation				
+Other (Please specify)				
+
+
+
+
+
+
+            6.7.4 Who facilitated the process of CFUG (s) formation?
+Practitioner: Ensure all fields in this table are accurately filled based on responses provided by the group.
+	Name (s) of CFUG (s)
+Facilitators				
+Government authorities				
+Local community leaders				
+Non-governmental organizations (NGOs)				
+Donor agencies or international organizations				
+Forest department or ministry				
+Traditional or indigenous leaders				
+Community members themselves				
+Academic or research institutions				
+Private sector or businesses				
+Other (Please specify)				
+
+            6.7.5 How often does the CFUG(s) leadership meet? (Select one only)
+☐Weekly
+☒Bi-weekly
+☐Monthly
+☐Quarterly
+☐Annually
+☐As needed
+☐Never
+☐Other (Please specify)
+            6.7.6 What is the tenure of the CFUG(s) leadership? (Select one only)
+☐1 year
+☐2 years
+☐3 years
+☐4 years
+☐5 years
+☐No fixed term
+☐Other (Please specify)
+            6.7.7 How are CFUG (s) leaders selected? (Select one only)
+☐Elected by community members
+☐Appointed by a governing body or organization
+☐Rotational leadership among community members
+☐Nominated by community members
+☐Selection based on expertise or experience
+☐Selected by consensus or traditional methods
+☐Other (Please specify)
+            6.7.8 Who qualifies to be a candidate in the CFUG (s) elections? (Select all that apply)
+☐Women
+☐Men
+☐Youth
+☐Aged (Elderly)
+☐Persons with disabilities
+            6.7.9 Who is eligible to vote in the CFUG (s) elections? (Select all that apply)
+☐Women
+☐Men
+☐Youth
+☐Aged (Elderly)
+☐Persons with disabilities
+
+            6.7.10 What is the representation of women, men, youth and marginalized group in CFUG (s)?
+Practitioner: Ensure all fields in this table are accurately filled based on responses provided by the group.
+	Name (s) of CFUG (s)
+Groups				
+Women				
+Men				
+Youth				
+Persons with disabilities				
+
+
+
+
+            6.7.11 What is the representation of women, men, youth and marginalized group on CFUG (s) leadership board?
+Practitioner: Ensure all fields in this table are accurately filled based on responses provided by the group.
+	Name (s) of CFUG (s)
+Groups				
+Women				
+Men				
+Youth				
+Persons with disabilities				
+
+            6.7.12 How does the CFUG(s) report back to the CFMG? (Select all that apply)
+☐Regular meetings or forums
+☐Written reports or updates
+☐Community gatherings or events
+☐Noticeboards or public displays
+☐Verbal reports through CFUG representatives
+☐Radio broadcasts or community announcements
+☐Social media or online platforms
+☐Direct communication with CFMG leaders
+☐Annual or quarterly reports
+☐Focus group discussions
+☐Workshops or training sessions
+☐Feedback through community surveys
+☐Publicized meetings in local markets or gathering places
+☐By submitting reports to local authorities
+☐None
+☐Other (Please specify)
+    7. Monitoring, evaluation, and learning
+        7.1 How is progress on forest management activities monitored? (Select all that apply)
+☐Regular field inspections by CFMG or CFUG members
+☐Surveys or assessments by forest management experts
+☐Satellite imagery or remote sensing tools
+☐Annual or periodic reports
+☐Community consultations or feedback sessions
+☐Monitoring through community-based data collection
+☐Use of forest inventory or management plans
+☐Third-party audits or evaluations
+☐Reports from local or national authorities
+☐Through monitoring committees or task forces
+☐Progress tracking through a management dashboard or software
+☐Data from forest-based businesses or private sector partners
+☐Monitoring via mobile apps or digital tools
+☐Collaboration with research institutions for data collection
+☐None
+☐Other (Please specify)
+        7.2 Who is responsible for collecting and analyzing data? (Select all that apply)
+☒Community Forest Management Group (CFMG) members
+☐Community Forest User Groups (CFUGs)
+☐Forestry department or ministry
+☐Local authorities or government agencies
+☐External consultants or experts
+☐Non-governmental organizations (NGOs)
+☐Research institutions or universities
+☐Private sector or businesses
+☐Third-party auditors or monitoring organizations
+☐Community volunteers or trained local individuals
+☐Local community leaders
+☐Youth or women’s groups in the community
+☐Environmental or conservation organizations
+☐International development organizations
+☐Members of the general public or forest users
+☐None
+☐Other (Please specify)
+        7.3 What tools or systems are used for monitoring and reporting? (Select all that apply)
+☐Forest inventory and management software
+☐Geographic Information Systems (GIS)
+☐Satellite imagery or remote sensing tools
+☐Mobile apps or digital platforms for data collection
+☐Community-based monitoring tools (e.g., paper surveys, logbooks)
+☐Monitoring committees or task force reports
+☐Annual or quarterly written reports
+☐Data management systems or databases
+☐Participatory monitoring systems (e.g., local volunteer teams)
+☐Monitoring through environmental or ecological indicators
+☐Third-party audits or certification systems
+☐GPS and mapping technologies
+☐Excel spreadsheets or other data analysis tools
+☐Online dashboards or real-time reporting tools
+☐Focus group discussions and community feedback
+☐None
+☐Other (Please specify)
+        7.4 What monitoring activities are conducted for CFM? (Select all that apply)
+☐Regular field inspections of forest conditions
+☐Forest growth and health assessments
+☐Wildlife and biodiversity monitoring
+☐Tree inventory and growth measurements
+☐Water quality and availability monitoring
+☐Soil health and erosion assessments
+☐Monitoring of forest-based livelihoods and economic activities
+☐Fire risk and prevention assessments
+☐Illegal logging or encroachment monitoring
+☐Forest regeneration and reforestation monitoring
+☐Community feedback and participatory monitoring
+☐Carbon stock measurements for carbon credit programs
+☐Pollution or waste management assessments
+☐Use of remote sensing (satellite imagery, drones) for forest monitoring
+☐Regular reporting on management plan progress
+☐None
+☐Other (Please specify)
+
+
+
+
+
+
+
+
+
+
+
+        7.5 Who is involved in CF monitoring activities?
+Practitioner: Ensure all fields in this table are accurately filled based on responses provided by the group.  Mark all applicable options for each economic opportunity under the relevant column with an “X” or checkmark.
+	Involvement of different groups in monitoring activities
+Activities	Women	Men	Youth	Persons with disabilities
+Regular field inspections of forest conditions				
+Forest growth and health assessments				
+Wildlife and biodiversity monitoring				
+Tree inventory and growth measurements				
+Water quality and availability monitoring				
+Soil health and erosion assessments				
+Monitoring of forest-based livelihoods and economic activities				
+Fire risk and prevention assessments				
+Illegal logging or encroachment monitoring				
+Forest regeneration and reforestation monitoring				
+Community feedback and participatory monitoring				
+Carbon stock measurements for carbon credit programs				
+Pollution or waste management assessments				
+Use of remote sensing (satellite imagery, drones) for forest monitoring				
+Regular reporting on management plan progress				
+Other (Please specify)				
+
+        7.6 How does the CFMG collaborate with external stakeholders (e.g., NGOs, government agencies) for monitoring? (Select all that apply)
+☐Joint monitoring and field inspections
+☐Sharing of data and reports
+☐Collaborative training or capacity-building activities
+☐Consultation and feedback sessions
+☐Co-hosting workshops or awareness programs
+☐Regular meetings or coordination with external stakeholders
+☐Involvement in joint research or studies
+☐Leveraging external funding for monitoring activities
+☐External audits or evaluations of monitoring activities
+☐Use of external technology or tools (e.g., satellite imagery, remote sensing)
+☐Community consultations organized by external stakeholders
+☐Co-management or joint decision-making for monitoring strategies
+☐None
+☐Other (Please specify)
+        7.7 What kind of support is provided by external stakeholders  for the monitoring activities? (Select all that apply)
+☐Technical support (e.g., tools, equipment, software)
+☐Financial support (e.g., funding for monitoring activities)
+☒Capacity-building support (e.g., training, workshops)
+☐Expert advice or consultancy services
+☐Access to research or scientific data
+☐Support for community engagement or participation
+☐Provision of human resources (e.g., staff or volunteers)
+☐Support for data analysis and reporting
+☐Infrastructure support (e.g., office space, transport)
+☐Collaboration with external organizations for resource mobilization
+☐Monitoring equipment (e.g., GPS devices, drones, cameras)
+☐None
+☐Other (Please specify)

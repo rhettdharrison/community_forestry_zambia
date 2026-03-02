@@ -1,5 +1,5 @@
 ---
-title: "CFMG Sustainable Forest Management"
+title: "Sustainable Forest Management"
 author: "Rhett D Harrison"
 format:
         html:

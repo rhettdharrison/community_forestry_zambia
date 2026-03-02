@@ -1,5 +1,5 @@
 ---
-title: "CFMG Governance"
+title: "CFM Governance"
 author: "Rhett D Harrison"
 format:
         html:
@@ -31,9 +31,13 @@ library(modelsummary)
 load("cfmg.RData")
 ```
 
+## Summary
+
+
+
 ## Introduction
 
-In this chapter, we consider questions concerning the governance and management of CFMGs.
+In this chapter, we consider questions concerning the governance and management of CFMGs. As our questions pertain to the running of the CFMGs, our analysis focuses on the responses of the CFMG Executives. However, the responses from other FGDs and from the individual interviews are included for comparison where appropriate.
 
 ## CFMG legal processes
 
@@ -75,7 +79,7 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
         gt() |>
         fmt_percent(columns = -province, decimals = 0) |>
         tab_header(title = "CFMG legal processes",
-                   subtitle = "Values represent the % of CFMGs with each legal document, by province. n = 75 CFMGs.") |>
+                   subtitle = "Values represent the % of CFMGs with each legal document by province. n = 75 CFMGs.") |>
         opt_align_table_header(align = "left") |>
         cols_align(align = "center", columns = -province) |>
         cols_align(align = "left", columns = province) |>
@@ -88,11 +92,11 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
 
 ```
 
-Lusaka Province was the only province in which all the processes had been completed across all CFMGs, while Eastern Province had the highest proportion of incomplete legal processes. Overall, completion of legal processes was patchy. Some processes, such as the Recognition letter, CF Agreement, Management Plan and Bylaws & Constitution seem to have been completed for most CFMGs, but the Registration Certificate, User-rights Permit and Benefit-sharing Agreement were less often completed. This assessment is based on the responses of the CFMG Executives. It may be that more processes have been completed, but that the CFMG Executives are unaware, for example, if they are being supported by external agencies such as NGOs.
+Lusaka Province was the only province in which all processes had been completed across all CFMGs, while Eastern Province had the highest proportion of incomplete legal processes. Overall, completion of legal processes was quite patchy. Some processes, such as the Recognition letter, CF Agreement, Management Plan and Bylaws & Constitution seem to have been completed for most CFMGs, but the Registration Certificate, User-rights Permit and Benefit-sharing Agreement were less often completed. This assessment is based on the responses of the CFMG Executives, who should be informed. Nevertheless, it may be that more processes have been completed, especially where the CFMG is being supported by external agencies such as NGOs or carbon trading agencies.
 
 ## CFMG governance processes
 
-Through the survey we asked CFMG executives what governance processes were being implemented, such as holding CFMG elections, issuing permits and annual reporting (@tbl-governance_processes).
+Through the survey, we asked CFMG executives what governance processes were being implemented, such as holding CFMG elections, issuing permits and annual reporting (@tbl-governance_processes).
 
 ```{r}
 #| label: tbl-governance_processes
@@ -175,8 +179,8 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
         ) |>
         gt() |>
         fmt_percent(columns = -province, decimals = 0) |>
-        tab_header(title = "CFMG governance processes completed",
-                   subtitle = "Values represent the % of CFMGs completing each governance process, by province. n = 75 CFMGs.") |>
+        tab_header(title = "CFMG governance processes",
+                   subtitle = "Values represent the % of CFMGs completing/conducting each governance process by province. n = 75 CFMGs.") |>
         opt_align_table_header(align = "left") |>
         cols_align(align = "center", columns = -province) |>
         cols_align(align = "left", columns = province) |>
@@ -189,9 +193,9 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
 
 ```
 
-While most CFMGs claim to have held elections, have term limits for executive officers and employ honorary forest officers (HFOs), other governance processes were not consistently being implemented. Most CFMGs have not opened bank accounts, do not maintain a receipt book, or issue permits. Financial and annual reporting to community members was also apparently irregularly implemented.
+While most CFMGs have held elections, have term limits for executive officers and employ honorary forest officers (HFOs), other governance processes were not as consistently implemented. Most CFMGs have not opened bank accounts, do not maintain a receipt book, or issue permits. Financial and annual reporting to community members was also apparently irregularly implemented.
 
-It is also concerning that most CFMGs do not appear to have held elections since they were formed, up to five years ago (@fig-last_election).
+It appears that most CFMGs have not held elections since they were formed, up to five years ago (@fig-last_election).
 
 ```{r}
 #| label: fig-last_election
@@ -267,7 +271,7 @@ cfmg |>
   )
 ```
 
-Furthermore, 43 out of 72 CFMGs have not held elections for over 3 years, although term limits for executive officers are usually 2-3 years (@fig-tenure). Thus, most CFMGs are not complying with their Bylaws & Constitutions.
+Forty-three out of 75 CFMGs have not held elections for over 3 yrs, although term limits for executive officers are typically 2-3 years (@fig-tenure). This would suggest that most CFMGs are not complying with their Bylaws & Constitutions.
 
 ```{r}
 #| label: fig-tenure
@@ -339,7 +343,7 @@ cfmg |>
   )
 ```
 
-In contrast, most CFMGs do appear to be holding meetings regularly, at least according to the responses of the CFMG Executives (@fig-meetings). Nonetheless, there are a small proportion of CFMGs that hold meetings rarely or have never held a meeting.
+In contrast, most CFMGs do appear to be holding meetings regularly (@fig-meetings). However, there is a small proportion of CFMGs that holds meetings rarely or never.
 
 ```{r}
 #| label: fig-meetings
@@ -424,7 +428,7 @@ cfmg |>
 
 ## CFMG business processes
 
-As with the legal processes, we also asked CFMG Executives about the state of their business processes. Specifically, we asked if they had annual workplans and budgets, whether these plans were being implemented. We also asked if they had developed a business plan and if any forest user groups had been established (@tbl-business_processes).
+As with the legal processes, we asked CFMG Executives about the state of their business processes. Specifically, we asked if they had developed annual workplans and budgets, and whether these plans were being implemented. We also asked if they had developed a business plan and if any forest user groups had been established (@tbl-business_processes).
 
 ```{r}
 #| label: tbl-business_processes
@@ -478,8 +482,8 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
         mutate(across(where(is.numeric), ~ifelse(is.nan(.x), NA_real_, .x))) |>
         gt() |>
         fmt_percent(columns = -province, decimals = 0) |>
-        tab_header(title = "Completed business processes in management of CFMGs",
-                   subtitle = "Values represent the % of CFMGs with each business process in place, by province. n = 75 CFMGs.") |>
+        tab_header(title = "Business processes in the management of CFMGs",
+                   subtitle = "Values represent the % of CFMGs with each business process in place by province. n = 75 CFMGs.") |>
         opt_align_table_header(align = "left") |>
         cols_align(align = "center", columns = -province) |>
         cols_align(align = "left", columns = province) |>
@@ -492,11 +496,11 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
 
 ```
 
-As is evident from the table, these business management processes were even more erratically completed than the legal and governance processes. As substantial proportion of CFMGs did not have workplans, budgets or a business plan. Even more surprising many did not have recognised user groups, which is critical to managing forest resources.
+As is evident from the table, these business management processes were even more erratically completed than the legal and governance processes. As substantial proportion of CFMGs did not have workplans, budgets or a business plan. More surprising, many did not have any recognised user groups, which is critical to managing forest resources.
 
 ## External support
 
-All CFMGs are supported by the Forestry Deparment, which has a statutory duty to implement the community forest policy and regulations. However, the frequency of visits by District Forest Officers (DFOs) varied widely and in many cases it is clear they rarely or never visit.
+All CFMGs are supported by the Forestry Deparment, which has a statutory duty to implement the community forest policy and regulations. Nonetheless, the frequency of visits by District Forest Officers (DFOs) varied widely and in many cases they rarely or never visited.
 
 ```{r}
 #| label: fig-dfo_visits
@@ -504,7 +508,7 @@ All CFMGs are supported by the Forestry Deparment, which has a statutory duty to
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Frequency of District Forest Officer (DFO) visits, by province. The length of the bars represents the proportion of CFMGs with a specified frequency of visits. The numbers superimposed on the bars represent the actual number of CFMGs in each category."
+#| fig-cap: "Frequency of visits by District Forest Officers (DFO) by province. The length of the bars represents the proportion of CFMGs with a specified frequency of visits. The numbers superimposed on the bars represent the actual number of CFMGs in each category."
 
 cfmg |>
   filter(interview_type == "cfmg_executive") |>
@@ -568,7 +572,7 @@ cfmg |>
   )
 ```
 
-Many CFMGs also operate in partnership with an NGO or private enterprise, such as a conservation organisation or carbon enterprise (@fig-support).
+Many CFMGs also operate in partnership with an NGO, such as a conservation organisation, or a private enterprise, such as a carbon trader (@fig-support).
 
 ```{r}
 #| label: fig-support
@@ -576,7 +580,7 @@ Many CFMGs also operate in partnership with an NGO or private enterprise, such a
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "CFMGs partnered with another external organisation, such as a conservation NGO or carbon enterprise, by province. The length of the bars represents the number of CFMGs either partnered (Yes) or not partnered (No) with an external organisation. The numbers on the bars represent the actual number of CFMGs in each category."
+#| fig-cap: "CFMGs partnered with an external organisation, such as a conservation NGO or carbon enterprise, by province. The length of the bars represents the number of CFMGs either partnered (Yes) or not partnered (No) with an external organisation. The numbers on the bars represent the actual number of CFMGs in each category."
 
 cfmg |>
   filter(interview_type == "cfmg_executive") |>
@@ -630,7 +634,7 @@ cfmg |>
   )
 ```
 
-The table below (@tbl-support_organisations) lists the organisations and the number of CFMGs they are partnering with. These numbers pertain to our sample of 75 CFMGs, not the all CFMGs in the country.
+The table below (@tbl-support_organisations) lists the partners organisations and the number of CFMGs they support. It is important to note that this list does not cover all organisations supporting CFMGs or all the CFMGs that are supported by a named organisation, but only those in our sample of 75 CFMGs
 
 ```{r}
 #| label: tbl-support_organisations
@@ -664,8 +668,7 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
         sub_missing()
 ```
 
-These organisation provide support (@fig-partner_visits).
-
+The figure below (@fig-partner_visits) indicates the frequence of visits to CFMGs by partner organiastions. The respondents did not state a specified number of visits per year, but from the context we assume the frequently indicates monthly or every other month, 1-4 times a year, while never means that they had not visited in over a year.
 
 ```{r}
 #| label: fig-partner_visits
@@ -764,10 +767,9 @@ cfmg |>
   )
 ```
 
-
 ## Interest in expanding the community forest
 
-Next we asked interviewees whether they were interested in expanding the area of their community forest. A "yes" answer can be taken as an endorsement of community forest management (CFM). On the other hand, a negative response might reflect dissatisfaction with the CFMG management, but it could reflect a number of other reasons, such as a lack of sufficient addition forest area in the community.
+Next we asked interviewees whether they were interested in expanding the area of their community forest. A "yes" answer can be taken as an endorsement of community forest management (CFM). On the other hand, a negative response might reflect dissatisfaction with the CFMG management or the benefits CFM has brought. However, a negative response could also reflect other reasons, such as a lack of sufficient addition forest area in the community. We compare the responses from different FGD groups.
 
 ```{r}
 #| label: fig-interest_in_expanding_FGDs
@@ -845,7 +847,7 @@ cfmg |>
 
 As can be seen in @fig-interest_in_expanding_FGDs, the CFMG executives were enthusiastic to expand the CF in most cases. However, among the community this number dropped to 41 for female groups, 37 for male groups and to just 23 for youth groups.
 
-The difference in attitudes between CFMG Executive and Youth FGD groups was significant, but the pairwise comparisons among other groups were not significant. These results might suggest that community forest management is entrenching elite capture (or other power dynamics) and that, at least across a proportion of the CFs, the youth do not feel they are realizing sufficient benefit from community forest management.
+The difference in attitudes between CFMG Executive and Youth FGD groups was significant, but the pairwise comparisons among other FGD groups were not significant. These results might suggest that community forest management is not benefiting youth to the same degree as other groups, or perhaps that they bear higher opportunity costs. Our analyses in other sections will help elucidate the reasons.
 
 ::: {.callout-note collapse="true"}
 ### Interest in expanding community forest - FGDs - Model methods
@@ -916,7 +918,7 @@ summary(pairwise.M1)
 
 ```
 
-Among the individual interviewees (@tbl-interest_in_expanding_individual), traditional leaders and community members more often reported that they did not want to expand the CF than other groups. However, the only pairwise comparisons that were significant were NGO representative with traditional leader and NGO representative with community member.
+We also compared the responses from the individual interviewees (@tbl-interest_in_expanding_individual). The traditional leaders and community members more often reported that they did not want to expand the CF than other groups. However, the only pairwise comparisons that were significant were NGO representative with traditional leader and NGO representative with community member.
 
 ```{r}
 #| label: tbl-interest_in_expanding_individual

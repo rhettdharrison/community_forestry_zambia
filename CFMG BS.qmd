@@ -1,5 +1,5 @@
 ---
-title: "CFMG Equitable Benefit Sharing"
+title: "Equity and Inclusion"
 author: "Rhett D Harrison"
 format:
         html:
