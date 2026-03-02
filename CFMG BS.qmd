@@ -1,0 +1,39 @@
+---
+title: "CFMG Equitable Benefit Sharing"
+author: "Rhett D Harrison"
+format:
+        html:
+                css: custom.css
+        pdf: default
+filters:
+- collapse-output
+editor: visual
+---
+
+```{r}
+#| label: Load_data_and_libraries
+#| include: false
+#| warning: false
+#| message: false
+#| error:   false
+
+library(tidyverse)
+library(grid)
+library(gt)
+library(ggplot2)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(scales)
+library(broom.mixed)
+library(modelsummary)
+library(ordinal)
+library(tidytext)
+library(ggwordcloud)
+library(patchwork)
+
+load("cfmg.RData")
+```
+
+## Introduction
+Here we consider the equitable sharing of benefits arising from community forest management (CFM) among CFMG members.
