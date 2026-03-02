@@ -1,5 +1,5 @@
 ---
-title: "CFMG Backgroud"
+title: "Survey synopsis"
 author: "Rhett D Harrison"
 format:
         html:
@@ -26,13 +26,19 @@ load("cfmg.RData")
 
 # Overview of survey data
 
-## Community Forests
+## Summary
 
-The sampling protocol initially targeted 80 community forests (CF) across eight provinces. However, some provinces had very few CFs and hence we selected up to 12 CFs from provinces with more. In addition, occasionally we were unable to survey a CF when Community Forest Management Group (CFMG) members were not available.
+We surveyed 75 community forests across eight provinces and conducted `{r} with(cfmg, sum(table(cfmg_name)))` interviews in total. The sample included CFs from ~20 ha to >80,000 ha and that varied in years since establishment from one to 7 yrs. In each community forest, we conducted four Focal Group Discussions with (i) CFMG Executive, (ii) Community men, (iii) Community women, and (iv) Community youths. This enables us to examine differences in perspectives towards community forest management across these stakeholder groups. In addition, we surveyed individual key stakeholders, including District Forest Officers, CFMG Executive members (usually the Secretary), NGO or private sector partners, and traditional leaders. Overall, the sample was male biased, reflecting gender biases in roles at the community level, but our information is balanced through specifically including a female Focal Group Discussion in each community. The sample included a wide range of ages from ~20 to >80 years. Although most interviewees had lived all their lives in the community, the sample include some who had moved into the community recently. Our sampling approach ensured an unbiased selection and these data demonstrate that we have covered a wide range of CFs, in terms of geography, size and age, and interviewees, in terms of gender, age and roles. Hence, our results should be generalisable at the national level.
+
+## Community Forests surveyed
+
+The sampling protocol targeted 80 community forests (CF) across eight provinces. Initially we attempted to sample ten CFs per province. However, as some provinces had very few CFs, this was not possible. Hence, to make up the numbers, we selected up to 12 CFs from provinces with more.
+
+Occasionally, we were unable to survey a CF when Community Forest Management Group (CFMG) members or community members were not available. The final sample, therefore, included 75 CFs. The list of surveyed CFs is given in Appendix 2.
 
 ### Number of Community Forests surveyed
 
-The final sample included 75 CFs. The numbers per province are given in @fig-CFMGs_by_Province.
+The numbers per province are given in @fig-CFMGs_by_Province. As can be seen, Southern province have the fewest, where we were only able to survey five CFs, and Muchinga had the most with 13 surveyed CFs.
 
 ```{r}
 #| label: fig-CFMGs_by_Province
@@ -72,7 +78,7 @@ cfmg |> filter(!is.na(Name)) |>
 
 ### Size of community forests surveyed
 
-The CFs surveyed range widely in size from less than 100 ha to over 10,000 ha (@fig-CFMGs_size).
+The CFs surveyed range widely in size from less than 100 ha to over 100,000 ha (@fig-CFMGs_size). Within provinces, we surveyed a wide range of CF sizes, but the median sizes varied from around 900 ha in Muchinga Province to approximately 80,000 ha in Lusaka Province.
 
 ```{r}
 #| label: fig-CFMGs_size
@@ -82,7 +88,7 @@ The CFs surveyed range widely in size from less than 100 ha to over 10,000 ha (@
 #| error:   false
 #| fig-width: 8
 #| fig-height: 6
-#| fig-cap: "Size of community forests surveyed by province."
+#| fig-cap: "Size of community forests surveyed by province. The black dots represent the individual CFs. The boxes represent the 25th to 75th percentiles, with the black bar denoting the 50th percentile. The red dot indicates the mean size."
 #| fig-cap-location: bottom
 
 cfmg |> group_by(province,Name) |>
@@ -108,7 +114,7 @@ cfmg |> group_by(province,Name) |>
 
 ```
 
-We asked CFMG Executives the size of their community forest (CF). In @fig-size_of_CF, their answers are plotted against the size given in the forestry department database.
+Through the survey tool, we asked respondents the size of their community forest (CF). Using only responses from the CFMG Executive groups, their answers are plotted against the size given in the Forestry Department database (@fig-size_of_CF). We restricted answers to the CFMG executive group, as we expected them to be the best informed as the the official size of their CF.
 
 ```{r}
 #| label: fig-size_of_CF
@@ -116,7 +122,7 @@ We asked CFMG Executives the size of their community forest (CF). In @fig-size_o
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Size of CF as reported by the CFMG executive, compared to the size recorded in the Forest Department database"
+#| fig-cap: "Size of CF as reported by the CFMG executive against the size recorded in the Forest Department database"
 
 cfmg |> filter(interview_type == "cfmg_executive") |>
 
@@ -142,11 +148,11 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
 
 ```
 
-While most answers lie along the line, several are off - some by huge amounts. In some cases, these differences may reflect errors in the forestry department database. However, the other possibility is that the FPIC was not conducted properly and the CFMG Executive are misinformed about the size of their CF.
+While most answers lie along the line, indicating perfect agreement between the Forestry Department database and the responses, several are off - some by very large amounts (note that the axes are log-scale). In some cases, these differences may reflect errors in the Forestry Department database. However, the other possibility is that the communities are misinformed as to the size of their CF, which in turn suggests FPIC may not have been properly conducted.
 
 ### Age of community forests
 
-The regulations enabling the formation of community forests were approved in 2018. Hence, the oldest CFs are approximately 8 yrs. However, most are less than 3 yrs. We randomly selected CFs from among those that were at least 1 yr old in Jan 2024 (@fig-CFMGs_age). However, the data on Establishment Date has some errors, so some CFs appear younger.
+The regulations enabling the formation of community forests were approved in 2018. Hence, the oldest CFs are approximately 8 yrs. However, most are less than 3 yrs old. We randomly selected CFs from among those that were at least 1 yr old in Jan 2024 (@fig-CFMGs_age). However, the data on Establishment Date in the Forestry Department database has some errors, so some CFs appear younger.
 
 ```{r}
 #| label: fig-CFMGs_age
@@ -156,7 +162,7 @@ The regulations enabling the formation of community forests were approved in 201
 #| error:   false
 #| fig-width: 8
 #| fig-height: 6
-#| fig-cap: "Age of community forests surveyed by province."
+#| fig-cap: "Age of community forests surveyed by province. The black dots indicate the individual CFs. The boxes represent the 25th and 75th percentile and the 50th percentile is indicated with the black bar. The red dot indicates the mean."
 #| fig-cap-location: bottom
 
 cfmg |> group_by(province,Name) |>
@@ -188,7 +194,7 @@ cfmg |> group_by(province,Name) |>
 
 ### Number of interviews
 
-A total of `{r} with(cfmg, sum(table(cfmg_name)))` interviews across `{r} with(cfmg, sum(sign(table(cfmg_name))))` Community Forest Management Groups (CFMGs) were surveyed across the eight provinces. The number of interviews per CFMG varied from six to 14 (@fig-Interviews_by_Province).
+A total of `{r} with(cfmg, sum(table(cfmg_name)))` interviews across `{r} with(cfmg, sum(sign(table(cfmg_name))))` Community Forest Management Groups (CFMGs) were surveyed across the eight provinces. The number of interviews per CFMG varied from five to 14 (@fig-Interviews_by_Province).
 
 ```{r}
 #| label: fig-Interviews_by_Province
@@ -198,7 +204,7 @@ A total of `{r} with(cfmg, sum(table(cfmg_name)))` interviews across `{r} with(c
 #| error:   false
 #| fig-width: 8
 #| fig-height: 6
-#| fig-cap: "Number of interviews per CFMG. Mean and standard deviation of the number of interviews held per CFMG by province"
+#| fig-cap: "Number of interviews per CF. Mean (main bar) and standard deviation (whisker) of the number of interviews held per CFMG by province"
 #| fig-cap-location: bottom
 
 cfmg |> group_by(province,cfmg_name) |>
@@ -232,7 +238,7 @@ cfmg |> group_by(province,cfmg_name) |>
 
 ```
 
-In every CFMG, we aimed to hold four Focal Group Discussions (FDGs) with the (i) CFMG Executive, (ii) Community members - male, (iii) Community members - female, and (iv) Community members - youth. Below (@tbl-Breakdown_FGD_by_type) are the total numbers of the different categories of FDG we were able to conduct. As can be seen, we were unable to arrange FGDs for community males and youths in some CFMGs. We have an extra FGD for female community members, because in one case two groups were surveyed.
+In every CFMG, we aimed to hold four Focal Group Discussions (FDGs) including, (i) CFMG Executive, (ii) Community members - male, (iii) Community members - female, and (iv) Community members - youth. Below (@tbl-Breakdown_FGD_by_type) are the total numbers of the different categories of FDG we were able to conduct. As can be seen, we were unable to arrange FGDs for community males and youths in some CFMGs. Meanwhile, we have an extra FGD for female community members, because in one CF two groups were surveyed.
 
 ```{r}
 #| label: tbl-Breakdown_FGD_by_type
@@ -243,7 +249,7 @@ cfmg |> filter(interview_type != "individual_interview") |>
         droplevels() |>
         group_by(interview_type) |>
         summarise(
-                Obs = n()
+                n = n()
         ) |>
         mutate(
                 interview_type = case_when(
@@ -271,7 +277,7 @@ cfmg |> filter(interview_type != "individual_interview") |>
         sub_missing()
 ```
 
-The number of individual interviews with key stakeholders also varied among the CFMGs. However, we attempted to hold interviews with at least one CFMG Executive member (usually the secretary), the District Forest Officer and the community headmen or headwoman (@tbl-Breakdown_interviews_by_interviewee_role).
+The number of individual interviews with key stakeholders also varied among the CFs. However, we attempted to hold interviews with a CFMG Executive member (usually the secretary), the District Forest Officer and the community headmen or headwoman in every CF (@tbl-Breakdown_interviews_by_interviewee_role).
 
 ```{r}
 #| label: tbl-Breakdown_interviews_by_interviewee_role
@@ -284,7 +290,7 @@ The number of individual interviews with key stakeholders also varied among the 
 cfmg |> filter(!is.na(interviewee_role)) |>
         group_by(interviewee_role) |>
         summarise(
-                Obs = n()
+                n = n()
         ) |>
         mutate(
                 interviewee_role = case_when(
@@ -314,7 +320,7 @@ cfmg |> filter(!is.na(interviewee_role)) |>
 
 ### Gender breakdown of interviewees
 
-Reflecting gender biases among the stakeholder groups, there was a much higher representation of men than of women among the interviewees (@tbl-Gender_breakdown_among_FGDs, @fig-Gender_breakdown_among_individual_interviewees).
+Reflecting gender biases among the stakeholder groups, there was a much higher representation of men than of women among the key stakeholders interviewed (@tbl-Gender_breakdown_among_FGDs, @fig-Gender_breakdown_among_individual_interviewees).
 
 ```{r}
 #| label: tbl-Gender_breakdown_among_FGDs
@@ -327,10 +333,10 @@ Reflecting gender biases among the stakeholder groups, there was a much higher r
 cfmg |> filter(interview_type != "individual_interview") |>
         group_by(interview_type) |>
         summarise(
-                Male = mean(senior_male),
-                Female = mean(senior_female),
-                `Youth-male` = mean(youth_male),
-                `Youth-female` = mean(youth_female)
+                senior_male = mean(senior_male),
+                senior_female = mean(senior_female),
+                youth_male = mean(youth_male),
+                youth_female = mean(youth_female)
         ) |>
         mutate(
                 interview_type = case_when(
@@ -346,14 +352,14 @@ cfmg |> filter(interview_type != "individual_interview") |>
         ) |>
         tab_stubhead(label = "FDG Type") |>
         cols_label(
-                Male  = "Senior Male",
-                Female = "Senior Female",
-                `Youth-male`   = "Youth Male",
-                `Youth-female` = "Youth Female"
+                senior_male  = "Senior Male",
+                senior_female = "Senior Female",
+                youth_male   = "Youth Male",
+                youth_female = "Youth Female"
         ) |>
-        fmt_percent(columns = c(Male, Female, `Youth-male`, `Youth-female`), decimals = 0) |>
+        fmt_number(columns = c(senior_male, senior_female, youth_male, youth_female), decimals = 1) |>
         tab_header(title = "Gender breakdown among FGD participants",
-                   subtitle = "Values represent the mean number of participants of each gender and age group per FGD.") |>
+                   subtitle = "Values represent the mean number of participants of each gender/age group per FGD type") |>
         opt_align_table_header(align = "left") |>
         cols_align(align = "center", columns = everything()) |>
         tab_style(
@@ -408,8 +414,7 @@ cfmg |> filter(interview_type == "individual_interview") |>
                 ) +
         scale_fill_manual(
                 values = c("female" = "#FFAB91", "male" = "#80CBC4"),
-                labels = c("Female", "Male"),
-                name = "Gender"
+                labels = c("Female", "Male")
                 ) +
         geom_hline(yintercept = 0, colour = "white", linewidth = 1.2) +
         geom_vline(xintercept = 0, color = "grey30", linewidth = 0.7) +
@@ -447,7 +452,7 @@ The ages of interviewees were broadly similar among men and women (@fig-Age_of_i
 #| error:   false
 #| fig-width: 8
 #| fig-height: 6
-#| fig-cap: "The age of individual interviewees by gender"
+#| fig-cap: "The age of individual interviewees by gender. The black dots represent individual interviewees. The box encompasses the 25th to 75th percentile with the 50th percentile denoted by the black bar. The red dot represents the mean."
 #| fig-cap-location: bottom
 
 cfmg |> filter(!is.na(demo_information_interviewee_gender)) |>
@@ -485,7 +490,7 @@ When we examine the number of years living in the community (@fig-Years_living_i
 #| error:   false
 #| fig-width: 8
 #| fig-height: 6
-#| fig-cap: "The number of years individual interviewees claimed to have lived in the community by gender"
+#| fig-cap: "The number of years individual interviewees claimed to have lived in the community by gender. The black dots represent individual interviewees. The box encompasses the 25th to 75th percentile with the 50th percentile denoted by the black bar. The red dot represents the mean."
 #| fig-cap-location: bottom
 
 cfmg |> filter(!is.na(demo_information_interviewee_gender)) |>
@@ -523,7 +528,7 @@ Looking at the same information by interviewee role (@fig-Years_living_in_commun
 #| error:   false
 #| fig-width: 8
 #| fig-height: 6
-#| fig-cap: "The number of years individual interviewees claimed to have lived in the community by interviewee role"
+#| fig-cap: "The number of years individual interviewees claimed to have lived in the community by interviewee role. The black dots represent individual interviewees. The box encompasses the 25th to 75th percentile with the 50th percentile denoted by the black bar. The red dot represents the mean."
 #| fig-cap-location: bottom
 
 cfmg |> filter(interviewee_role == "cfmg_member" |
@@ -560,7 +565,7 @@ cfmg |> filter(interviewee_role == "cfmg_member" |
 
 ### Duration of involvement with CFMG
 
-We asked the interviewees how many years they had been involved in the CFMG (@fig-interviewee_years_involved_cfmg). The answers ranged from zero to ten years with the median among provinces ranging from around 3 yrs to 4.5 yrs. As the regulations for community forest management were only approved in 2018, claims of over 7 yrs seem unlikely but they may have been involved in a Community Resource Board (CRM) or Joint Forest Management, which preceded CFM in some areas.
+We asked the interviewees how many years they had been involved in the CFMG (@fig-interviewee_years_involved_cfmg). The answers ranged from zero to ten years with the median among provinces ranging from around 3 yrs to 4.5 yrs. As the regulations for community forest management were only approved in 2018, claims of over 7 yrs seem unlikely but they may have been involved in a Community Resource Board (CRM) or Joint Forest Management, which preceded CFM in some areas. As most CFMGs have only held one election as part of their establishment process, we can expect that most people have been involved since the formation of their CFMG. 
 
 ```{r}
 #| label: fig-interviewee_years_involved_cfmg
@@ -568,7 +573,7 @@ We asked the interviewees how many years they had been involved in the CFMG (@fi
 #| warning: false         
 #| message: false 
 #| error:   false
-#| fig-cap: "Number of years interviewees claimed to be involved in the CFMG by province. The horizontal bar is the 50th quantile while the red dot is the mean."
+#| fig-cap: "Number of years interviewees claimed to be involved in the CFMG by province. The black dots represent individual interviewees. The box encompasses the 25th to 75th percentile with the 50th percentile denoted by the black bar. The red dot represents the mean."
 
 cfmg |> filter(!is.na(demo_information_interviewee_years_involved_cfmg)) |>
 
@@ -589,3 +594,4 @@ cfmg |> filter(!is.na(demo_information_interviewee_years_involved_cfmg)) |>
         ylab("Years involved in CFMG")
 
 ```
+
