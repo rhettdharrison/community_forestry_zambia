@@ -28,6 +28,7 @@ library(scales)
 library(broom.mixed)
 library(modelsummary)
 library(ordinal)
+library(ggwordcloud)
 
 load("cfmg.RData")
 ```
@@ -1742,7 +1743,7 @@ if (!is.null(M10)) summary(pairwise.M10) else cat("Model not fitted.")
 
 ### Wildlife
 
-We asked interviewees whether community forest management has led to an increase in wildlife inside the community forest.
+We asked interviewees whether CFM had led to an increase in wildlife inside their CF.
 
 ```{r}
 #| label: fig-wildlife_increase
@@ -1750,7 +1751,7 @@ We asked interviewees whether community forest management has led to an increase
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Responses to the question, 'Has CFM led to an increase in wildlife in the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+#| fig-cap: "'Has CFM led to an increase in wildlife in the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
 
 cfmg |>
   filter(interview_type != "individual_interview") |>
@@ -1818,12 +1819,12 @@ cfmg |>
   )
 ```
 
-As can be seen, responses vary among FGD groups in their assessment of wildlife increase. Below we examine whether these differences are significant.
+As can be seen, a magority of groups indicated a significant or moderate increase in wildlife in their CF. However, there were some that indicated there had been a decrease. The responses of the community female FDGs appear somewhat different from the other groups, but these differences were not significant.
 
 ::: {.callout-note collapse="true"}
 ### Wildlife increase - FGDs - Model methods
 
-To examine the differences among FGD types in their assessment of whether CFM had increased wildlife, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+To examine the differences among FGD types in their assessment of whether CFM had increased wildlife, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
 :::
 
 ```{r}
@@ -1902,7 +1903,7 @@ if (!is.null(M11)) summary(M11) else cat("Model not fitted.")
 if (!is.null(M11)) summary(pairwise.M11) else cat("Model not fitted.")
 ```
 
-Among the individual interviewees (@tbl-wildlife_individual), there were also some differences in opinion.
+Among the individual interviewees (@tbl-wildlife_individual), there were also some differences in opinion. For example, only 3% of NGO representatives suggested there had been a decline in wildlife in the CF, compared to between 10% and 22% for the other interviewee roles. However, again these differences were not significant.
 
 ```{r}
 #| label: tbl-wildlife_individual
@@ -1966,7 +1967,7 @@ cfmg |>
 ::: {.callout-note collapse="true"}
 ### Wildlife increase - Individual interviewees - Model methods
 
-To examine differences among individual interviewees in their assessment of whether CFM had increased wildlife, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+To examine differences among individual interviewees in their assessment of whether CFM had increased wildlife, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
 :::
 
 ```{r}
@@ -2041,7 +2042,7 @@ if (!is.null(M12)) summary(pairwise.M12) else cat("Model not fitted.")
 
 ### Forest resources management
 
-We asked interviewees whether community forest management has improved the management of forest resources inside the community forest.
+We asked interviewees whether CFM had improved the management of forest resources inside their CF.
 
 ```{r}
 #| label: fig-forest_resources_management
@@ -2049,7 +2050,7 @@ We asked interviewees whether community forest management has improved the manag
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Responses to the question, 'Has CFM improved forest resources management inside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+#| fig-cap: "'Has CFM improved forest resources management inside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
 
 cfmg |>
   filter(interview_type != "individual_interview") |>
@@ -2117,112 +2118,12 @@ cfmg |>
   )
 ```
 
-As can be seen, responses vary among FGD groups in their assessment of improvements in forest resources management. We also asked which specific forest resources had improved under CFM (@fig-harvested_resources).
-
-```{r}
-#| label: fig-harvested_resources
-#| code-fold: true
-#| warning: false
-#| message: false
-#| error:   false
-#| fig-cap: "Forest resources reported as improved under CFM as reported by female and male FGDs. The length of the bars represents the number of FGDs reporting an improvement (Yes) or no improvement (No) for each resource. Resources with no FGDs reporting improvement in either group are not shown."
-#| fig-width: 12
-#| fig-height: 20
-
-cfmg |>
-  filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
-  mutate(interview_type = case_match(
-    interview_type,
-    "cfmg_female" ~ "Female FGD",
-    "cfmg_male"   ~ "Male FGD"
-  )) |>
-  select(
-    interview_type,
-    "Pupwe"            = impact_on_sfm_harvested_forest_resources_pupwe,
-    "Devil's claw"     = impact_on_sfm_harvested_forest_resources_devils_claw,
-    "Fish"             = impact_on_sfm_harvested_forest_resources_fish,
-    "Lusala"           = impact_on_sfm_harvested_forest_resources_lusala,
-    "Mungongo"         = impact_on_sfm_harvested_forest_resourcesmungongo,
-    "Bamboo"           = impact_on_sfm_harvested_forest_resources_bamboo,
-    "Munkoyo"          = impact_on_sfm_harvested_forest_resources_munkoyo,
-    "Poles"            = impact_on_sfm_harvested_forest_resources_poles,
-    "Bushmeat"         = impact_on_sfm_harvested_forest_resources_bushmeat,
-    "Timber"           = impact_on_sfm_harvested_forest_resources_timber,
-    "Fibres"           = impact_on_sfm_harvested_forest_resources_fibers,
-    "Chikanda"         = impact_on_sfm_harvested_forest_resources_chikanda,
-    "Firewood"         = interview_grp_impact_on_sfm_harvested_forest_resources_firewood,
-    "Thatching grass"  = impact_on_sfm_harvested_forest_resources_thatching_grass,
-    "Medicinal plants" = impact_on_sfm_harvested_forest_resources_medicinal_plants,
-    "Caterpillars"     = impact_on_sfm_harvested_forest_resources_caterpillars,
-    "Honey"            = impact_on_sfm_harvested_forest_resources_honey,
-    "Wild fruits"      = impact_on_sfm_harvested_forest_resources_wild_fruits,
-    "Mushrooms"        = impact_on_sfm_harvested_forest_resources_mushrooms
-  ) |>
-  pivot_longer(-interview_type, names_to = "resource", values_to = "value") |>
-  filter(!is.na(value)) |>
-  mutate(
-    response = case_match(as.character(value), "1" ~ "Yes", "0" ~ "No"),
-    response = factor(response, levels = c("No", "Yes")),
-    resource = factor(resource, levels = c(
-      "Pupwe", "Devil's claw", "Fish", "Lusala",
-      "Mungongo", "Bamboo", "Munkoyo",
-      "Poles", "Bushmeat", "Timber", "Fibres",
-      "Chikanda", "Firewood", "Thatching grass",
-      "Medicinal plants", "Caterpillars", "Honey",
-      "Wild fruits", "Mushrooms"
-    )),
-    interview_type = factor(interview_type, levels = c("Female FGD", "Male FGD"))
-  ) |>
-  count(interview_type, resource, response) |>
-  mutate(n_signed = if_else(response == "No", -n, n)) |>
-  ggplot(aes(y = resource, x = n_signed, fill = response)) +
-  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
-  geom_vline(xintercept = 0, colour = "white", linewidth = 1.2) +
-  geom_text(
-    aes(label  = n,
-        hjust  = if_else(response == "No", -0.4, -0.4),
-        colour = response),
-    size = 3, fontface = "bold"
-  ) +
-  scale_colour_manual(
-    values = c("No" = "white", "Yes" = "grey25"),
-    guide  = "none"
-  ) +
-  scale_x_continuous(
-    labels = ~abs(.x),
-    expand = expansion(add = 2),
-    name   = "Number of FGDs"
-  ) +
-  coord_cartesian(clip = "off") +
-  scale_y_discrete(expand = expansion(add = 0.5)) +
-  scale_fill_manual(
-    values = c("No" = "#E07B54", "Yes" = "#2A9D8F"),
-    guide  = guide_legend(reverse = FALSE)
-  ) +
-  facet_wrap(~ interview_type, scales = "free_x") +
-  labs(y = NULL, fill = NULL) +
-  theme_minimal(base_size = 18) +
-  theme(
-    panel.grid.major.y = element_blank(),
-    panel.grid.minor   = element_blank(),
-    panel.grid.major.x = element_blank(),
-    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
-    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
-    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
-    legend.position    = "bottom",
-    legend.text        = element_text(size = rel(1)),
-    strip.text         = element_text(size = rel(1.14), face = "bold"),
-    plot.margin        = margin(10, 25, 10, 10)
-  )
-```
-
-Below we examine whether differences among FGD groups in their overall assessment of forest resource management are significant.
+As can be seen, while responses vary among FGD groups, most groups agreed that the management of forest resources had improved moderately or significantly under CFM, and only a small number of primarily youth groups considered that it had gotten worse. A very high proportion of community female FDG groups considered that the management of forest resources was significantly better under CFM, a difference that was statistically significant.
 
 ::: {.callout-note collapse="true"}
 ### Forest resources management - FGDs - Model methods
 
-To examine the differences among FGD types in their assessment of whether CFM had improved forest resources management, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+To examine the differences among FGD types in their assessment of whether CFM had improved forest resources management, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
 :::
 
 ```{r}
@@ -2300,6 +2201,54 @@ if (!is.null(M13)) summary(M13) else cat("Model not fitted.")
 #| output-summary: "Pairwise comparisons (click to expand)"
 
 if (!is.null(M13)) summary(pairwise.M13) else cat("Model not fitted.")
+```
+
+We also asked which specific forest resources had improved under CFM (@fig-harvested_resources).
+
+```{r}
+#| label: fig-harvested_resources
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Forest resources reported as improved under CFM, as reported by female and male FGDs. Word size is proportional to the number of FGDs reporting an improvement for each resource."
+#| fig-width: 10
+#| fig-height: 7
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
+  select(
+    "Pupwe"            = impact_on_sfm_harvested_forest_resources_pupwe,
+    "Devil's claw"     = impact_on_sfm_harvested_forest_resources_devils_claw,
+    "Fish"             = impact_on_sfm_harvested_forest_resources_fish,
+    "Lusala"           = impact_on_sfm_harvested_forest_resources_lusala,
+    "Mungongo"         = impact_on_sfm_harvested_forest_resourcesmungongo,
+    "Bamboo"           = impact_on_sfm_harvested_forest_resources_bamboo,
+    "Munkoyo"          = impact_on_sfm_harvested_forest_resources_munkoyo,
+    "Poles"            = impact_on_sfm_harvested_forest_resources_poles,
+    "Bushmeat"         = impact_on_sfm_harvested_forest_resources_bushmeat,
+    "Timber"           = impact_on_sfm_harvested_forest_resources_timber,
+    "Fibres"           = impact_on_sfm_harvested_forest_resources_fibers,
+    "Chikanda"         = impact_on_sfm_harvested_forest_resources_chikanda,
+    "Firewood"         = interview_grp_impact_on_sfm_harvested_forest_resources_firewood,
+    "Thatching grass"  = impact_on_sfm_harvested_forest_resources_thatching_grass,
+    "Medicinal plants" = impact_on_sfm_harvested_forest_resources_medicinal_plants,
+    "Caterpillars"     = impact_on_sfm_harvested_forest_resources_caterpillars,
+    "Honey"            = impact_on_sfm_harvested_forest_resources_honey,
+    "Wild fruits"      = impact_on_sfm_harvested_forest_resources_wild_fruits,
+    "Mushrooms"        = impact_on_sfm_harvested_forest_resources_mushrooms
+  ) |>
+  pivot_longer(everything(), names_to = "word", values_to = "value") |>
+  filter(!is.na(value)) |>
+  group_by(word) |>
+  summarise(freq = sum(as.integer(value) == 1, na.rm = TRUE), .groups = "drop") |>
+  filter(freq > 0) |>
+  ggplot(aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 30)) +
+  scale_colour_gradient(low = "#6ABFB8", high = "#1A6B63") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
 Among the individual interviewees (@tbl-frm_individual), there were also some differences in opinion.
