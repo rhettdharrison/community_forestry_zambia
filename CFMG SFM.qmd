@@ -1623,7 +1623,7 @@ cfmg |>
       .default = NA
     ),
     fire = factor(fire,
-                  levels = c("Increase","No change", "Moderate", "Significant"),
+                  levels = c("Significant", "Moderate", "No change", "Increase"),
                   ordered = TRUE),
     interviewee_role = factor(
       case_match(
@@ -1648,7 +1648,7 @@ cfmg |>
   arrange(interviewee_role) |>
   gt() |>
   cols_label(interviewee_role = "Role") |>
-  fmt_percent(columns = c(Increase, `No change`, Moderate, Significant), decimals = 0) |>
+  fmt_percent(columns = c(Significant, Moderate, `No change`, Increase), decimals = 0) |>
   tab_header(
     title    = "Perceived reduction in fire incidence inside the community forest by interviewee role",
     subtitle = "Values represent the % of respondents in each response category. n = the total number of interview responses."
