@@ -36,6 +36,8 @@ library(patchwork)
 load("cfmg.RData")
 ```
 
+## Summary
+
 ## Introduction
 Here we consider the effect of CFMG management on indicators of economic transformation.
 
@@ -2453,5 +2455,7 @@ ggplot(wc_oc, aes(label = word, size = freq, colour = freq)) +
   theme_minimal(base_size = 14) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
+
+## Discussion
 
 
