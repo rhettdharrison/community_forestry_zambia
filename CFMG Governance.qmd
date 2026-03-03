@@ -1107,3 +1107,7 @@ ggplot(wc_data, aes(label = word, size = freq, colour = freq)) +
 ```
 
 Evidently, people are harvesting a wide variety of products from CFs, although honey and mushrooms appear especially important. It is not clear from the responses, if these user-groups are defined within the CF management plan or whether these are informal groups that are nevertheless recognised by the CFMG.
+
+## Discussion
+
+
