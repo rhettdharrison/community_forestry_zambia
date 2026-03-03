@@ -32,13 +32,17 @@ library(ordinal)
 load("cfmg.RData")
 ```
 
+## Summary
+
+
+
 ## Introduction
 
-Here we consider the effect of CFMG management on indicators of sustainable forest management.
+In this chapter, we consider the effect of community forestry on indicators of sustainable forest management. The information is based only on the responses of interviewees to our survey tool. A separate chapter will analyse satellite derived remote sensed data on fire frequency and deforestation.
 
 ### Deforestation
 
-We asked interviewees whether community forest management has reduced deforestation inside the community forest, and whether it has increased outside the community forest (leakage).
+We asked interviewees whether CFM has reduced deforestation inside their CF and whether or not deforestation has increased outside their CF. An increase in deforestation outside the community forest might represent leakage, whereby activities involving clearing forest that are proscribed in the CF are displaced to areas around the CF.
 
 #### Deforestation inside the community forest
 
@@ -48,7 +52,7 @@ We asked interviewees whether community forest management has reduced deforestat
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Responses to the question, 'Has CFM reduced deforestation inside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+#| fig-cap: " 'Has CFM reduced deforestation inside the community forest?' The length of each bar segment represents the proportion of FGD groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
 
 cfmg |>
   filter(interview_type != "individual_interview") |>
@@ -123,12 +127,12 @@ cfmg |>
   )
 ```
 
-As can be seen, a majority of groups report a moderate or significant reduction in deforestation in the community forest. Below we examine whether these differences among FDG categories are significant. However, the results indicate that the differences in responses among FDG groups were not significant.
+A majority of groups report either a moderate or significant reduction in deforestation inside the CF. Moreover, these answers were consistent across the FGD groups. There were no significant differences in response.
 
 ::: {.callout-note collapse="true"}
 ### Deforestation - FGDs - Model methods
 
-To examine the differences among FGD types in their assessment of whether CFM had reduced forest clearing, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+To examine the differences among FGD types in their assessment of whether CFM had reduced deforestation, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
 :::
 
 ```{r}
@@ -205,8 +209,7 @@ summary(M1)
 summary(pairwise.M1)
 ```
 
-
-Among the individual interviewees (@tbl-deforestation_individual), there were also some differences in opinion, but again these differences were not significant.
+Among the individual interviewees (@tbl-deforestation_individual), again a majority indicated that CFM had reduced deforestation inside the CF. The differences among the interviewee roles were not significant.
 
 ```{r}
 #| label: tbl-deforestation_individual
@@ -275,7 +278,7 @@ cfmg |>
 ::: {.callout-note collapse="true"}
 ### Reduced forest clearing - Individual interviewees - Model methods
 
-To examine differences among individual interviewees in their assessment of whether CFM had reduced forest clearing, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+To examine differences among individual interviewees in their assessment of whether CFM had reduced deforestation, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
 :::
 
 ```{r}
@@ -348,7 +351,7 @@ summary(pairwise.M2)
 
 #### Deforestation outside the community forest
 
-We also asked interviewees whether community forest management has led to an increase in deforestation outside the community forest (i.e. leakage).
+To investigate possible leakage effect, we also asked interviewees whether CFM had led to an increase in deforestation outside their community forest.
 
 ```{r}
 #| label: fig-increased_deforestation_outside
@@ -356,7 +359,7 @@ We also asked interviewees whether community forest management has led to an inc
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Responses to the question, 'Has CFM increased deforestation outside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+#| fig-cap: " 'Has CFM increased deforestation outside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
 
 cfmg |>
   filter(interview_type != "individual_interview") |>
@@ -436,10 +439,12 @@ cfmg |>
   )
 ```
 
+Contrary to the expectations of leakage, a majority of the FGD groups responded that CFM actually reduced deforestation outside their CF. Moreover, the responses were consistent across FGD groups. There were no significant differences in response.
+
 ::: {.callout-note collapse="true"}
 ### Deforestation outside the CF - FGDs - Model methods
 
-To examine the differences among FGD types in their assessment of whether CFM had increased deforestation outside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+To examine the differences among FGD types in their assessment of whether CFM had increased deforestation outside the CF, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
 :::
 
 ```{r}
@@ -518,7 +523,7 @@ summary(M3)
 summary(pairwise.M3)
 ```
 
-Among the individual interviewees (@tbl-deforestation_outside_individual), ...
+Among the individual interviewees (@tbl-deforestation_outside_individual), the individuals from the communities agreed that deforestation outside their CF had decreased. However, NGO representatives and DFOs were less likely to suggest deforestation had decreased outside the CF and more likely to suggest a moderate increase in deforestation.
 
 ```{r}
 #| label: tbl-deforestation_outside_individual
@@ -589,7 +594,7 @@ cfmg |>
 ::: {.callout-note collapse="true"}
 ### Deforestation outside the CF - Individual interviewees - Model methods
 
-To examine differences among individual interviewees in their assessment of whether CFM had increased deforestation outside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+To examine differences among individual interviewees in their assessment of whether CFM had increased deforestation outside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
 :::
 
 ```{r}
@@ -638,6 +643,8 @@ emm.M4     <- emmeans(M4, specs = ~ interviewee_role)
 pairwise.M4 <- pairs(emm.M4, adjust = "Tukey")
 ```
 
+The differences in opinion between the CFMG executive members and NGO representatives and DFOs, and between traditional leaders and NGO representatives and DFOs, were significant.
+
 ```{r}
 #| label: M4_deforestation_outside_individual
 #| echo: false
@@ -664,7 +671,7 @@ summary(pairwise.M4)
 
 ### Charcoal production
 
-We asked interviewees whether community forest management has reduced charcoal production inside the community forest, and whether it has increased outside (leakage).
+We asked interviewees whether CFM has reduced charcoal production inside their CF, and whether it has increased immediately outside their CF.
 
 #### Charcoal production inside the community forest
 
@@ -674,7 +681,7 @@ We asked interviewees whether community forest management has reduced charcoal p
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Responses to the question, 'Has CFM reduced charcoal production inside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+#| fig-cap: " 'Has CFM reduced charcoal production inside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
 
 cfmg |>
   filter(interview_type != "individual_interview") |>
@@ -746,10 +753,12 @@ cfmg |>
   )
 ```
 
+Almost all the FGD groups agreed that charcoal making inside their CF had decreased, with most indicating that charcoal making had decreased significantly. The small differences in responses among FGD groups were not significant.
+
 ::: {.callout-note collapse="true"}
 ### Charcoal production inside the CF - FGDs - Model methods
 
-To examine the differences among FGD types in their assessment of whether CFM had reduced charcoal production inside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+To examine the differences among FGD types in their assessment of whether CFM had reduced charcoal production inside the CF, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
 :::
 
 ```{r}
@@ -833,7 +842,7 @@ if (!is.null(M5)) summary(M5) else cat("Model not fitted.")
 if (!is.null(M5)) summary(pairwise.M5) else cat("Model not fitted.")
 ```
 
-Among the individual interviewees (@tbl-charcoal_inside_individual), ...
+Likewise, among the individual interviewees (@tbl-charcoal_inside_individual), almost all interviewees agreed that there had been a substantial decrease in charcoal making inside their CF. Again, this result was consistent across interviewee roles (there were no significant differences among roles).
 
 ```{r}
 #| label: tbl-charcoal_inside_individual
@@ -902,7 +911,7 @@ cfmg |>
 ::: {.callout-note collapse="true"}
 ### Charcoal production inside the CF - Individual interviewees - Model methods
 
-To examine differences among individual interviewees in their assessment of whether CFM had reduced charcoal production inside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+To examine differences among individual interviewees in their assessment of whether CFM had reduced charcoal production inside the CF, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
 :::
 
 ```{r}
@@ -982,7 +991,7 @@ if (!is.null(M6)) summary(pairwise.M6) else cat("Model not fitted.")
 
 #### Charcoal production outside the community forest
 
-We also asked interviewees whether community forest management has led to an increase in charcoal production outside the community forest (i.e. leakage).
+We also asked interviewees whether CFM has led to an increase in charcoal production outside their CF.
 
 ```{r}
 #| label: fig-increased_charcoal_outside
@@ -990,7 +999,7 @@ We also asked interviewees whether community forest management has led to an inc
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Responses to the question, 'Has CFM increased charcoal production outside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+#| fig-cap: " 'Has CFM increased charcoal production outside the community forest?' The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
 
 cfmg |>
   filter(interview_type != "individual_interview") |>
@@ -1077,10 +1086,12 @@ cfmg |>
   )
 ```
 
+As can be seen, the vast majority of groups indicated that charcoal making had also decreased outside their CF. However, there were a small number that indicated charcoal making had increased, some indicating it had increased significantly. Female FGD groups were significantly more likely to indicate that charcoal making had decreased outside the CF than all other groups (CFMG executive members, male or youth community members). There were no significant differences among these other groups, who most often indicated that there was no change in the amount of charcoal making.  
+
 ::: {.callout-note collapse="true"}
 ### Charcoal production outside the CF - FGDs - Model methods
 
-To examine the differences among FGD types in their assessment of whether CFM had increased charcoal production outside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+To examine the differences among FGD types in their assessment of whether CFM had increased charcoal production outside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
 :::
 
 ```{r}
@@ -1178,7 +1189,7 @@ if (!is.null(M7)) summary(M7) else cat("Model not fitted.")
 if (!is.null(M7)) summary(pairwise.M7) else cat("Model not fitted.")
 ```
 
-Among the individual interviewees (@tbl-charcoal_outside_individual), ...
+Among the individual interviewees (@tbl-charcoal_outside_individual), similar to the results about deforestation, most community interviewees suggested there had been a decrease or no change in charcoal production outside the CF. However, NGO representatives and DFOs were significantly more likely to indicate that there had been an increase in charcoal production outside the CF. 
 
 ```{r}
 #| label: tbl-charcoal_outside_individual
@@ -1261,7 +1272,7 @@ cfmg |>
 ::: {.callout-note collapse="true"}
 ### Charcoal production outside the CF - Individual interviewees - Model methods
 
-To examine differences among individual interviewees in their assessment of whether CFM had increased charcoal production outside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+To examine differences among individual interviewees in their assessment of whether CFM had increased charcoal production outside the community forest, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
 :::
 
 ```{r}
@@ -1355,7 +1366,7 @@ if (!is.null(M8)) summary(pairwise.M8) else cat("Model not fitted.")
 
 ### Fire
 
-We asked interviewees about fire monitoring practices and whether community forest management has reduced fire incidence inside the community forest.
+We asked interviewees about fire monitoring practices and whether CFM had reduced fire incidence inside their CF. We did not ask about changes in fire frequency outside the CF, because clearing fields for agriculture or improving grazing often involves burning.
 
 #### Fire monitoring
 
@@ -1365,7 +1376,7 @@ We asked interviewees about fire monitoring practices and whether community fore
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Whether CFMGs have established fire monitoring in the community forest, by province. The length of the bars represents the number of CFMGs either monitoring fires (Yes) or not (No). The numbers on the bars represent the actual number of CFMGs in each category."
+#| fig-cap: "Whether CFMGs have established fire monitoring in the community forest by province. The length of the bars represents the number of CFMGs either monitoring fires (Yes) or not (No). The numbers on the bars represent the actual number of CFMGs in each category."
 
 cfmg |>
   filter(interview_type == "cfmg_executive") |>
@@ -1419,9 +1430,11 @@ cfmg |>
   )
 ```
 
+As can be seen in the figure, most CFMGs have instigated a system of fire monitoring. However, ten CFMGs across four provinces from our sample of 75 did not have any system of fire monitoring.
+
 #### Fire incidence inside the community forest
 
-We asked interviewees whether community forest management has reduced fire incidence inside the community forest.
+We asked interviewees whether CFM has reduced fire incidence inside their CF.
 
 ```{r}
 #| label: fig-reduced_fire_inside
@@ -1502,12 +1515,12 @@ cfmg |>
   )
 ```
 
-As can be seen, a majority of groups report a moderate or significant reduction in fire incidence in the community forest. Below we examine whether these differences among FGD categories are significant.
+As can be seen, a majority of groups reported a moderate or significant reduction in fire incidence in the CF. Female FDGs reported more significant declines in fire frequency compared to the other groups, who reported more moderate declines. These differences between female FDG groups and the other FDG groups (CFMG Executives, male and youth) were significant.
 
 ::: {.callout-note collapse="true"}
 ### Fire incidence - FGDs - Model methods
 
-To examine the differences among FGD types in their assessment of whether CFM had reduced fire incidence, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+To examine the differences among FGD types in their assessment of whether CFM had reduced fire incidence, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
 :::
 
 ```{r}
@@ -1587,7 +1600,7 @@ if (!is.null(M9)) summary(M9) else cat("Model not fitted.")
 if (!is.null(M9)) summary(pairwise.M9) else cat("Model not fitted.")
 ```
 
-Among the individual interviewees (@tbl-fire_individual), there were also some differences in opinion.
+Among the individual interviewees (@tbl-fire_individual), there were also some differences in opinion. Community members tended to say there had been a significant reduction in fire frequency inside their CF, whereas NGO representatives and DFOs more often suggested a moderate reduction or no change. However, these differences were not significant.
 
 ```{r}
 #| label: tbl-fire_individual
@@ -1653,7 +1666,7 @@ cfmg |>
 ::: {.callout-note collapse="true"}
 ### Fire incidence - Individual interviewees - Model methods
 
-To examine differences among individual interviewees in their assessment of whether CFM had reduced fire incidence, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+To examine differences among individual interviewees in their assessment of whether CFM had reduced fire incidence, we employed a cumulative link mixed model (CLMM) with random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
 :::
 
 ```{r}
