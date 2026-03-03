@@ -2211,7 +2211,7 @@ We also asked which specific forest resources had improved under CFM (@fig-harve
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Forest resources reported as improved under CFM, as reported by female and male FGDs. Word size is proportional to the number of FGDs reporting an improvement for each resource."
+#| fig-cap: "Forest resources that have improved under CFM, as reported by female and male FGDs. Word size is proportional to the number of FGDs reporting an improvement for each resource."
 #| fig-width: 10
 #| fig-height: 7
 
@@ -2296,6 +2296,8 @@ cfmg |>
   select(interviewee_role, n, frm, prop) |>
   pivot_wider(names_from = frm, values_from = prop, values_fill = 0) |>
   arrange(interviewee_role) |>
+  select(interviewee_role, n,
+         `Management worse`, `No change`, `Moderate improvement`, `Significant improvement`) |>
   gt() |>
   cols_label(interviewee_role = "Role") |>
   fmt_percent(columns = c(`Management worse`, `No change`, `Moderate improvement`, `Significant improvement`), decimals = 0) |>
