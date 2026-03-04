@@ -12,7 +12,33 @@ editor: visual
 
 ## Abbreviations
 
-
+| Abbreviation | Definition |
+|:-------------|:-----------|
+| BCP | BioCarbon Partners |
+| CF | Community Forest |
+| CFM | Community Forest Management |
+| CFMA | Community Forest Management Area |
+| CFMG | Community Forest Management Group |
+| CIFOR-ICRAF | Center for International Forestry Research – World Agroforestry |
+| CLMM | Cumulative Link Mixed Model |
+| COMACO | Community Markets for Conservation |
+| CRB | Community Resource Board |
+| DFO | District Forestry Officer |
+| FAO | Food and Agriculture Organization of the United Nations |
+| FGD | Focus Group Discussion |
+| FPIC | Free, Prior and Informed Consent |
+| GIZ | Deutsche Gesellschaft für Internationale Zusammenarbeit |
+| GLMM | Generalised Linear Mixed Model |
+| GRZ | Government of the Republic of Zambia |
+| HFO | Honorary Forest Officer |
+| JFM | Joint Forest Management |
+| NDC | Nationally Determined Contribution |
+| NGO | Non-governmental Organisation |
+| NTFP | Non-timber Forest Product |
+| REDD+ | Reducing Emissions from Deforestation and forest Degradation |
+| SFM | Sustainable Forest Management |
+| SI | Statutory Instrument |
+| ZIFLP | Zambia Integrated Forest Landscape Programme |
 
 ## Introduction
 
