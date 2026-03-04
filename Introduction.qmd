@@ -9,6 +9,7 @@ filters:
 - collapse-output
 editor: visual
 bibliography: references.bib
+suppress-bibliography: true
 ---
 
 ## Abbreviations
@@ -42,7 +43,7 @@ bibliography: references.bib
 
 ## Introduction
 
-### Community forestry globally
+### Community forestry
 
 Community forest management (CFM) has emerged over the past five decades as a dominant paradigm in forest governance, grounded in the recognition that local communities — as the *de facto* managers over large areas of the world's forests — are best placed to sustainably manage the resources on which they depend. At its core, CFM involves the formal transfer of management authority and resource use rights from state institutions to local communities, alongside recognition of their right to benefit from forest resources [@charnley2007; @fao1978]. Although early programmes in the 1970s and 1980s focused narrowly on fuelwood supply and tree planting in South Asia and the Sahel, CFM has since evolved into a broad and diverse set of approaches — including participatory forest management, joint forest management, and community-based forest management — implemented across Asia, Africa, Latin America and Europe [@roberts2003; @baynes2015; @gilmour2016].
 
