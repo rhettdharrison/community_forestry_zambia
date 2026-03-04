@@ -17,7 +17,6 @@ editor: visual
 | BCP | BioCarbon Partners |
 | CF | Community Forest |
 | CFM | Community Forest Management |
-| CFMA | Community Forest Management Area |
 | CFMG | Community Forest Management Group |
 | CIFOR-ICRAF | Center for International Forestry Research – World Agroforestry |
 | CLMM | Cumulative Link Mixed Model |

@@ -115,7 +115,7 @@ Do you consent to participate in this Focus Group Discussion? ☐ Yes  ☐ No
 - ☐ Media Campaigns
 - ☐ Other (Please specify)
 
-#### 1.4 How were the boundaries of your CFMA negotiated? *(Select all that apply)*
+#### 1.4 How were the boundaries of your CF negotiated? *(Select all that apply)*
 
 - ☐ Community consultations and consensus
 - ☐ Traditional or customary boundaries
@@ -128,7 +128,7 @@ Do you consent to participate in this Focus Group Discussion? ☐ Yes  ☐ No
 - ☐ Through legal or policy frameworks
 - ☐ Other (Please specify)
 
-#### 1.5 How were the boundaries of your CFMA mapped? *(Select all that apply)*
+#### 1.5 How were the boundaries of your CF mapped? *(Select all that apply)*
 
 - ☐ Use of GPS and mapping technology
 - ☐ Physical demarcation (e.g., markers, fences)
