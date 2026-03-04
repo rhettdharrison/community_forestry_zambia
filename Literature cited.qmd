@@ -1,0 +1,41 @@
+---
+title: "Literature cited"
+author: "Rhett D Harrison"
+format:
+        html:
+                css: custom.css
+        pdf: default
+filters:
+- collapse-output
+editor: visual
+---
+
+## Literature cited
+
+Baynes, J., Herbohn, J., Smith, C., Fisher, R. and Bray, D., 2015. Key factors which influence the success of community forestry in developing countries. *Global Environmental Change*, 35: 226–238. <https://doi.org/10.1016/j.gloenvcha.2015.09.011>
+
+Blomley, T., 2013. *Lessons Learned from Community Forestry in Africa and their Relevance for REDD+*. USAID-supported Forest Carbon, Markets and Communities (FCMC) Program. Washington, DC, USA.
+
+Charnley, S. and Poe, M.R., 2007. Community forestry in theory and practice: where are we now? *Annual Review of Anthropology*, 36(1): 301–336. <https://doi.org/10.1146/annurev.anthro.35.081705.123143>
+
+FAO, 1978. *Forestry for Local Community Development*. Forestry Paper 7. Food and Agriculture Organization of the United Nations. Rome.
+
+Gilmour, D., 2016. *Forty Years of Community-based Forestry: A Review of its Extent and Effectiveness*. FAO Forestry Paper 176. Food and Agriculture Organization of the United Nations. Rome. <www.cbd.int/financial/doc/fao-communityforestry2016.pdf>
+
+Hajjar, R., Kozak, R.A., El-Lakany, H. and Innes, J.L., 2021. Community forests for forest management: a global synthesis of local-level governance and outcomes. *One Ecosystem*, 6: e60876. <https://doi.org/10.3897/oneeco.6.e60876>
+
+Lundu, C., 2023. *Assessment of Community Forestry Management Groups in North-Western Province*. 2023 UN-REDD Technical Assistance to Zambia. Presentation at the Multi-component Validation Workshop on Community Forest Management Groups, Forest Product Value Chain and Rural Financing Assessments in North-Western Province, 22–23 November 2023. Kansanshi Hotel, Solwezi.
+
+McDermott, M. and Schreckenberg, K., 2009. Equity in community forestry: insights from North and South. *International Forestry Review*, 11(2): 157–170. <https://doi.org/10.1505/ifor.11.2.157>
+
+Moombe, K.B. and Kaumba, M., 2022. *Zambia Country Update: Seeking Synergies, Optimising Opportunities*. COLANDS Review Meeting, 7–9 April 2022. Nairobi, Kenya. CIFOR-ICRAF, Lusaka.
+
+Moombe, K.B., Malesu, M.M. and Harrison, R.D., 2025. *Community Forest Management in Zambia: How is it Working? Literature Review*. CIFOR-ICRAF, Lusaka.
+
+Pagdee, A., Kim, Y. and Daugherty, P.J., 2006. What makes community forest management successful: a meta-study from community forests throughout the world. *Society & Natural Resources*, 19(1): 33–52. <https://doi.org/10.1080/08941920500323260>
+
+Roberts, E.H. and Gautam, M.K., 2003. *Community Forestry Lessons for Australia: A Review of International Case Studies*. School of Resources, Environment & Society, The Australian National University.
+
+Sichone, F., 2008. Land administration in Zambia with particular reference to customary land. Paper presented at a Seminar Organised by the Zambia Land Alliance, University of Zambia Senate Chamber, 28 June 2008.
+
+Wily, L.A., 2004. Can we really own the forest? A critical examination of tenure development in community forestry in Africa. Paper presented at the Tenth Biennial Conference of the International Association for the Study of Common Property (IASCP), Oaxaca, Mexico, 9–13 August 2004.
