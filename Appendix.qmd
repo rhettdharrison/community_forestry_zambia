@@ -10,7 +10,7 @@ filters:
 editor: visual
 ---
 
-## Appendix 1 - Survey tool
+## Appendix I - Survey tool
 
 ### Community Forest Management in Zambia: Is It Working?
 

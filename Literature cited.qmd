@@ -20,7 +20,7 @@ Charnley, S. and Poe, M.R., 2007. Community forestry in theory and practice: whe
 
 FAO, 1978. *Forestry for Local Community Development*. Forestry Paper 7. Food and Agriculture Organization of the United Nations. Rome.
 
-Gilmour, D., 2016. *Forty Years of Community-based Forestry: A Review of its Extent and Effectiveness*. FAO Forestry Paper 176. Food and Agriculture Organization of the United Nations. Rome. <www.cbd.int/financial/doc/fao-communityforestry2016.pdf>
+Gilmour, D., 2016. *Forty Years of Community-based Forestry: A Review of its Extent and Effectiveness*. FAO Forestry Paper 176. Food and Agriculture Organization of the United Nations. Rome. \<www.cbd.int/financial/doc/fao-communityforestry2016.pdf\>
 
 Hajjar, R., Kozak, R.A., El-Lakany, H. and Innes, J.L., 2021. Community forests for forest management: a global synthesis of local-level governance and outcomes. *One Ecosystem*, 6: e60876. <https://doi.org/10.3897/oneeco.6.e60876>
 

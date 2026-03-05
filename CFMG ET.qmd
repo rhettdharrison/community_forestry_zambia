@@ -1,5 +1,5 @@
 ---
-title: "CEconomic Transformation"
+title: "Economic Transformation"
 author: "Rhett D Harrison"
 format:
         html:
@@ -39,7 +39,7 @@ load("cfmg.RData")
 ## Summary
 
 ## Introduction
-Here we consider the effect of CFMG management on indicators of economic transformation.
+In this chapter, we consider the effect of CFMG management on indicators of economic transformation.
 
 ### Access to natural resources
 We asked FGD groups whether CFM had improved access to natural resources for household use or for sale (@fig-et_household_resources, @fig-et_resources_for_sale).
@@ -50,7 +50,7 @@ We asked FGD groups whether CFM had improved access to natural resources for hou
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Responses to whether improved access to natural resources for household use is an economic benefit of CFM. The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+#| fig-cap: "Has CFM improved access to natural resources for household use? The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
 
 cfmg |>
   filter(interview_type != "individual_interview") |>
@@ -115,7 +115,7 @@ cfmg |>
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Responses to whether improved access to natural resources for sale is an economic benefit of CFM. The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+#| fig-cap: "Has CFM improved access to natural resources for sale? The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
 
 cfmg |>
   filter(interview_type != "individual_interview") |>
@@ -174,9 +174,11 @@ cfmg |>
   )
 ```
 
+Responses were similar for both household use and sale. A majority said that there was no increase in access to natural resources for household use or for sale. However, approximately one third of FGD groups indicated that access to natural resources has increased under CFM. Community Youth were significantly more likely to say there had not been any improvement in access to natural resources for household use, as compared to CFMG Executive FGDs. None of the other pairwise comparisons were significant.
+
 ::: {.callout-note collapse="true"}
 ### Access to natural resources - FGDs - Model methods
-To examine differences among FGD types in whether they reported improved access to natural resources as an economic benefit of CFM, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CFMG nested within province. We used FGD type as the factor. We ran separate models for household use and resources for sale. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+To examine differences among FGD types in whether they reported improved access to natural resources as an economic benefit of CFM, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We ran separate models for household use and resources for sale. We examined the significance of pairwise differences among FGD types using Tukey HSD.
 :::
 
 ```{r}
@@ -291,7 +293,7 @@ summary(M2)
 summary(pairwise.M2)
 ```
 
-Individual interviewees were also asked whether CFM had improved access to natural resources for household use or for sale. @tbl-et_individual_access shows the proportion reporting each, broken down by interviewee role.
+Individual interviewees were also asked whether CFM had improved access to natural resources for household use or for sale. @tbl-et_individual_access shows the proportion reporting each by interviewee role. Again a majority of resondents indicated that they did not think that CFM had improved access to natural resources for either household use or sale. DFOs were significantly more likely to suggest that CFM had improved access to natural resources for household use than CFMG executives or traditional leaders. None of the other pairwise comparisons for household use were significant. None of the pairwise comparisons for the sale analysis were significant.
 
 ```{r}
 #| label: tbl-et_individual_access
@@ -299,7 +301,7 @@ Individual interviewees were also asked whether CFM had improved access to natur
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "Percentage of individual interviewees reporting improved access to natural resources as an economic benefit of CFM by interviewee role."
+#| tbl-cap: "Percentage of individual interviewees reporting improved access to natural resources as an economic benefit of CFM."
 
 cfmg |>
   filter(interview_type == "individual_interview") |>
@@ -343,7 +345,7 @@ cfmg |>
   ) |>
   tab_header(
     title    = "Improved access to natural resources from CFM as reported by individual interviewees",
-    subtitle = "Values represent the % of responses agreeing that CFM has improved assess to resources for household use or sale. n = the total number of interview responses. A positive response indicates that CFM has improved access to natural resources for household use or for sale."
+    subtitle = "Values represent the % of responses agreeing that CFM has improved assess to resources for household use or sale. n = the total number of interview responses."
   ) |>
   opt_align_table_header(align = "left") |>
   cols_align(align = "left",   columns = interviewee_role) |>
@@ -357,7 +359,7 @@ cfmg |>
 
 ::: {.callout-note collapse="true"}
 ### Access to natural resources - Individual interviewees - Model methods
-To examine differences among individual interviewee roles in whether they reported improved access to natural resources as an economic benefit of CFM, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. We ran separate models for household use and resources for sale. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+To examine differences among individual interviewee roles in whether they reported improved access to natural resources as an economic benefit of CFM, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. We ran separate models for household use and resources for sale. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
 :::
 
 ```{r}
@@ -459,6 +461,7 @@ summary(pairwise.M5)
 ```
 
 ### Employment
+
 We asked FGD groups whether CFM had generated new employment opportunities (@fig-et_employment).
 
 ```{r}
@@ -526,9 +529,11 @@ cfmg |>
   )
 ```
 
+As can be seen from the figure, approximately half of the FGD groups agreed that CFM had increased employment opportunities. Interestingly, community youth were especially likely to agreed that CFM had created employment opportunities. In contrast, community female FGD groups were much more likely to say that CFM had not increased employment opportunities. All pairwise comparisons were highly significant.
+
 ::: {.callout-note collapse="true"}
 ### Employment - FGDs - Model methods
-To examine differences among FGD types in whether they reported CFM had generated employment opportunities, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+To examine differences among FGD types in whether they reported CFM had generated employment opportunities, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
 :::
 
 ```{r}
@@ -591,7 +596,7 @@ summary(M3)
 summary(pairwise.M3)
 ```
 
-Individual interviewees were also asked whether CFM had generated employment opportunities from difference sources. @tbl-et_individual_employment shows the proportion reporting this, broken down by interviewee role.
+Individual interviewees were also asked whether CFM had generated employment opportunities (@tbl-et_individual_employment). Interestingly, community respondents were much more likely to agree that CFM had created employment opportunities than NGO representatives or DFOs. The differences between DFOs and CFMG executives and traditional leaders were significant, but none of the other pairwise comparisons were significant.
 
 ```{r}
 #| label: tbl-et_individual_employment
@@ -645,7 +650,7 @@ cfmg |>
   ) |>
   tab_header(
     title    = "Employment opportunities reported by individual interviewees",
-    subtitle = "Values represent the % of responses agreeing that CFM has generated employment opportunities. n = the total number of interview responses. A positive response indicates that CFM has resulted in new employment opportunities."
+    subtitle = "Values represent the % of responses agreeing that CFM has generated employment opportunities. n = the total number of interview responses."
   ) |>
   opt_align_table_header(align = "left") |>
   cols_align(align = "left",   columns = interviewee_role) |>
@@ -659,7 +664,7 @@ cfmg |>
 
 ::: {.callout-note collapse="true"}
 ### Employment - Individual interviewees - Model methods
-To examine differences among individual interviewee roles in whether they reported CFM had generated employment opportunities, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+To examine differences among individual interviewee roles in whether they reported CFM had generated employment opportunities, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
 :::
 
 ```{r}
@@ -716,8 +721,8 @@ summary(pairwise.M6)
 ```
 
 
-#### Change in numbers employed
-We asked executive FGDs to estimate the number of people employed before and after CFM (@fig-et_num_employed).
+#### Changes in numbers employed
+We asked executive FGDs to estimate the number of people employed before and after CFM (@fig-et_num_employed). The mean number of people employed per CFMG varied from three in Western Province to 21 in Lusaka Province. The figure also indicates that the numbers of people employed in forest management had substantially increased.
 
 ```{r}
 #| label: fig-et_num_employed
@@ -779,8 +784,8 @@ cfmg |>
   )
 ```
 
-#### Full-time employment by gender and province
-Executive FGDs also reported the number of males and females in full-time employment in the CFMG (@fig-et_fulltime_gender).
+#### Full-time senior employment by gender and province
+Executive FGDs also reported the number of senior males and females in full-time employment in the CFMG (@fig-et_fulltime_gender). Clearly there are many more senior men in full-time employment than women. According to the responsed across the 75 CFMGs surveyed, 278 senior men were employed as compared to 56 women.
 
 ```{r}
 #| label: fig-et_fulltime_gender
@@ -838,7 +843,7 @@ cfmg |>
   )
 ```
 
-Executive FGDs also reported the number of male and female youth in full-time employment in the CFMG (@fig-et_fulltime_youth).
+Executive FGDs also reported the number of male and female youth in full-time employment in the CFMG (@fig-et_fulltime_youth). Across the sample of 75 CFMGs, 207 male youths were employed comapred to 48 female youths.
 
 ```{r}
 #| label: fig-et_fulltime_youth
@@ -898,7 +903,7 @@ cfmg |>
 
 
 #### Types of formal employment opportunities
-Female and male FGDs identified the types of formal employment opportunities generated by CFM (@fig-et_employment_types).
+Female and male FGDs identified the types of formal employment opportunities generated by CFM (@fig-et_employment_types). Clearly, by far the largest type of job created is Honorary Forest Office or Community Scout.
 
 ```{r}
 #| label: fig-et_employment_types
@@ -985,7 +990,7 @@ ggplot(wc_data, aes(label = word, size = freq, colour = freq)) +
 
 ### Income earning opportunities
 #### Carbon finance
-Executive FGDs reported whether their CFMG was involved in carbon finance (@fig-et_carbon_finance).
+We asked the CFMG Executive FGDs whether their CFMG was involved in carbon finance (@fig-et_carbon_finance). According to the responses, around one third of CFs are involved in carbon finance. However, later responses suggest this is an under-representation and reflects those CFMGs that have started to receive income from carbon.
 
 ```{r}
 #| label: fig-et_carbon_finance
@@ -993,7 +998,7 @@ Executive FGDs reported whether their CFMG was involved in carbon finance (@fig-
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "CFMG involvement in carbon finance by province, as reported by executive FGDs."
+#| fig-cap: "CFMG involvement in carbon finance by province, as reported by CFMG executives."
 #| fig-width: 8
 #| fig-height: 6
 
@@ -1050,7 +1055,7 @@ cfmg |>
   )
 ```
 
-FGD groups were also asked whether the community was aware of the carbon credit agreement (@fig-et_carbon_awareness).
+FGD groups were also asked whether the community was aware of the carbon credit agreement (@fig-et_carbon_awareness). While most CFMG Executive groups stated that the community was aware of the carbon finance agreement, interestingly two stated that they were not, which is a little concerning. Most community female and male groups indicated they were aware of the carbon finance agreement, but more than half of the community youth groups stated they were not aware of the carbon finance agreement. Community youth were significantly less likely to know about the carbon finance agreement than CFMG Executives, but other pairwise comparisons were not significant.
 
 ```{r}
 #| label: fig-et_carbon_awareness
@@ -1194,7 +1199,7 @@ summary(M11)
 summary(pairwise.M11)
 ```
 
-Individual interviewees were also asked whether the community was aware of the carbon credit agreement. @tbl-et_individual_carbon_awareness shows the percentage reporting awareness, broken down by interviewee role.
+Individual interviewees were also asked whether the community was aware of the carbon credit agreement (@tbl-et_individual_carbon_awareness). Most respondents indicated that the community was aware, but the percentage of interviewee varied across interviewee roles. Interestingly, the NGO represenatatives (a groups that also included carbon enterprise representatives), overwhelmingly (95%) suggested the community was informed, but the only 70% of DFOs thought the communities were informed, although these differences were not significant.
 
 ```{r}
 #| label: tbl-et_individual_carbon_awareness
@@ -1320,7 +1325,7 @@ summary(pairwise.M12)
 
 
 #### Carbon trader support
-The types of CFM activities supported by the carbon trader are shown in @fig-et_trader_support.
+The types of CFM activities supported by the carbon trader are shown in @fig-et_trader_support. As can be seen support focused on aspects of forest management or agricultural extension. Other potential elements of support, such as NTFPs, infrastructure development or market access, featured less.
 
 ```{r}
 #| label: fig-et_trader_support
@@ -1373,7 +1378,7 @@ ggplot(ts_freq, aes(label = word, size = freq, colour = freq)) +
 ```
 
 #### Other income earning opportunities
-FGD groups also reported whether CFM had generated specific income earning opportunities (@fig-et_income_opportunities).
+FGD groups also reported whether CFM had generated income earning opportunities through specific interventions, including market linkages, alternative livelihood interventions, conservation revenue, forest product processing, and ecotourism (@fig-et_income_opportunities). Although some community FGDs indicated improvement in income earning opportunities under some categories, especially conservation revenue and forest product processing, most indicated that CFM had not generated new income earning opportunities in these areas.
 
 ```{r}
 #| label: fig-et_income_opportunities
@@ -1381,7 +1386,7 @@ FGD groups also reported whether CFM had generated specific income earning oppor
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Income opportunities reported as economic benefits of CFM as reported by female and male FGDs. The length of the bars represents the number of FGDs reporting a benefit (Yes) or no benefit (No) for each income source."
+#| fig-cap: "Income earning opportunities generated by CFM, as reported by female and male FGDs. The length of the bars represents the number of FGDs reporting a benefit (Yes) or no benefit (No) for each income source."
 #| fig-width: 7
 #| fig-height: 5
 
@@ -1470,7 +1475,7 @@ cfmg |>
   )()
 ```
 
-Female and male FGDs also identified additional sources of income generated by CFM (@fig-et_income_sources).
+However, female and male FGDs did identified other additional sources of income generated by CFM (@fig-et_income_sources). Natural resource based value chains featured prominently among these, but interestingly community business was also mentioned.
 
 ```{r}
 #| label: fig-et_income_sources
@@ -1495,7 +1500,7 @@ income_freq <- cfmg |>
       gsub("_", " ", x = _) |>
       str_to_title(),
     word = case_match(word,
-      "Community Business And Enterprise" ~ "Community business",
+      "Community Businesses And Enterprises" ~ "Community business",
       "Wildlife Based And Safari Income"  ~ "Wildlife based",
       .default = word
     )
@@ -1516,7 +1521,7 @@ ggplot(income_freq, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-Female and male FGDs also ranked their top three additional sources of income from CFM (@fig-et_income_ranks).
+To better understand the importance of different income earning opportunities we asked the female and male FGDs to rank their top three additional sources of income from CFM (@fig-et_income_ranks). Interestingly, Among the 14 value chains identified, 12 were mentioned as 1st rank at least once. This immediately points to the diversity of forest products being harvested from CFs across the country, but also to the fact that for most CFs only one product features strongly as an addition source of income. Among these, mushrooms and honey are clearly the most important. 
 
 ```{r}
 #| label: fig-et_income_ranks
@@ -1539,7 +1544,7 @@ cfmg |>
       str_to_title(),
     source = case_match(source,
       "Wildlife Based And Safari Income"  ~ "Wildlife Based",
-      "Community Business And Enterprise" ~ "Community Business",
+      "Community Businesses And Enterprises" ~ "Community Business",
       .default = source
     )
   ) |>
@@ -1584,7 +1589,7 @@ cfmg |>
   )
 ```
 
-Executive FGDs also reported the estimated annual income generated by the CFMG from CFM activities (@fig-et_annual_income).
+Executive FGDs were asked the estimated annual income generated through CFM (@fig-et_annual_income). Unfortunately, there was some inconsistency in the responses to this question. Most FGD groups did not include income from carbon credit sales, but some did. The figure below includes only those that did not include the carbon credit income to enable comparison. However, unfortunately the information is still not very informative with a very wide range of values from given from different CFs. Most likely the CFMGs were unable to estimate incomes from forest products with any reasonable accuracy.
 
 ```{r}
 #| label: fig-et_annual_income
@@ -1636,7 +1641,7 @@ cfmg |>
   )
 ```
 
-Female and male FGDs also reported which forest products were harvested for household use (@fig-et_household_products).
+Female and male FGDs also reported which forest products were harvested for household use (@fig-et_household_products). Mushrooms again featured prominently, but other natural resources are also clearly important, such as wild fruits, medicinal plants, thatching grass and caterpillars.
 
 ```{r}
 #| label: fig-et_household_products
@@ -1676,7 +1681,7 @@ ggplot(hh_freq, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-Executive FGDs were asked whether the CFMG had collaborated with private enterprise (@fig-et_collaboration).
+Executive FGDs were asked whether the CFMG was collaborating with any private enterprises (@fig-et_collaboration). Only a small number of CFMGs were collaborating with a private enterprise.
 
 ```{r}
 #| label: fig-et_collaboration
@@ -1741,7 +1746,7 @@ p1 <- cfmg |>
 p1
 ```
 
-The value chains that CFMGs reported working with through private enterprise partnerships are shown in @fig-et_value_chains.
+The value chains that CFMGs reported working with through private enterprise partnerships are shown in @fig-et_value_chains. Sixteen out of 17 involved partnerships with honey off-takers and just one involved mushrooms.
 
 ```{r}
 #| label: fig-et_value_chains
@@ -1765,7 +1770,7 @@ vc_labels <- c(
   "wild_fruit_processors_traders"  = "Wild fruit",
   "insect_processors_traders"      = "Insects",
   "chikanda_processors_traders"    = "Chikanda",
-  "carbon_credit_traders"          = "Carbon credits",
+ # "carbon_credit_traders"          = "Carbon credits",
   "beekeeping_and_honey_producers" = "Honey",
   "charcoal"                       = "Charcoal",
   "botanicals_harvesting"          = "Botanicals"
@@ -1802,7 +1807,7 @@ ggplot(vc_freq, aes(x = freq, y = reorder(label, freq))) +
   )
 ```
 
-FGD groups also identified economic opportunities that remained unrealised within their CFMGs (@fig-et_unrealised).
+We asked the community female and male FGD groups to identify economic opportunities that remained unrealised within their CFs (@fig-et_unrealised). Interestingly, a wide range of different natural resource related value chains were mentioned, but timber was mention the most often. This is especially noteworthy since none of the CFMGs we surveyed are involved in timber production.
 
 ```{r}
 #| label: fig-et_unrealised
@@ -1870,7 +1875,7 @@ ggplot(ur_freq, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-The ranking of those unrealised opportunities is shown in @fig-et_unrealised_ranks.
+The ranking of these unrealised opportunities is shown in @fig-et_unrealised_ranks. Again a wide range of resources are mentioned, but the top three are timber, honey and mushrooms. It is especially interesting that community groups consider their timber resources to have high unrealised potential for commercial development.
 
 ```{r}
 #| label: fig-et_unrealised_ranks
@@ -1962,7 +1967,7 @@ cfmg |>
   )
 ```
 
-FGD groups also identified potential value-added opportunities from CFM resources (@fig-et_value_added).
+FGD groups also identified potential value-added opportunities from CFM resources (@fig-et_value_added). The overlap with the previous two questions is substantial, but it is interesting that the communities identify honey processing and drying mushrooms, as well as timber processing.
 
 ```{r}
 #| label: fig-et_value_added
@@ -2020,7 +2025,7 @@ ggplot(va_freq, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-Executive FGDs reported which primary markets CFM products are sold into (@fig-et_markets).
+We asked the CFMG Executive FGDs to report which primary markets CFM products are sold into (@fig-et_markets). Evidently, most products are sold only at the local market level, with some also being transported to national markets.
 
 ```{r}
 #| label: fig-et_markets
@@ -2068,7 +2073,8 @@ cfmg |>
 
 ### Opportunity costs
 #### Precluded activities
-FGD groups identified economic activities that are precluded under CFM rules (@fig-et_precluded).
+
+The community female and male FGD groups identified economic activities that are precluded under CFM regulations (@fig-et_precluded). While many of these seem self evident, the fact that NTFP harvesting is listed quite prominently is a little surprising. Whether this reflects a misunderstanding on the part of the communities or indeed that they are being told they cannot collect NTFPs is not clear.
 
 ```{r}
 #| label: fig-et_precluded
@@ -2118,8 +2124,9 @@ ggplot(p_freq, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
+
 #### Other opportunity costs
-FGD groups were asked whether CFM entails opportunity costs for the community (@fig-et_opp_costs).
+FGD groups were asked whether CFM entails opportunity costs for the community (@fig-et_opp_costs). Interestingly, many of the FGDs did not recognise any opportunity costs. However, about a third of the FGDs did. The proportion of FGDs recognising opportunity costs was highest among community male FGDs and lowest among community female FGDs. However, none of the pairwise comparisons were significantly different.
 
 ```{r}
 #| label: fig-et_opp_costs
@@ -2193,7 +2200,7 @@ cfmg |>
 
 ::: {.callout-note collapse="true"}
 ### Opportunity costs – FGDs – Model methods
-To examine differences among FGD types in whether they reported that CFM entails opportunity costs for the community, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+To examine differences among FGD types in whether they reported that CFM entails opportunity costs for the community, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
 :::
 
 ```{r}
@@ -2263,7 +2270,7 @@ summary(M9)
 summary(pairwise.M9)
 ```
 
-Individual interviewees were also asked whether CFM entails opportunity costs. @tbl-et_individual_opp_costs shows the percentage reporting this, broken down by interviewee role.
+Individual interviewees were also asked whether CFM entails opportunity costs. @tbl-et_individual_opp_costs shows the percentage reporting this broken down by interviewee role. Interestingly, the community traditional leaders and community members recognise opportunity costs less of the time than other individual interviewee types. Interestingly NGO representatives recognised opportunity costs more frequently than other individual interviewees. However, these differences were not significant.
 
 ```{r}
 #| label: tbl-et_individual_opp_costs
@@ -2389,7 +2396,7 @@ summary(M10)
 summary(pairwise.M10)
 ```
 
-The types of opportunity costs experienced are shown in @fig-et_opp_cost_types.
+The types of opportunity costs identified are shown in @fig-et_opp_cost_types. Mentions of reduced access, land restrictions and land use conflict are by some margin the most frequently mentioned opportunity costs. However, it is also interesting that time costs and diverting resources are also quite prevalent. CFM requires that community members meet which entails a time cost and community resources are diverted to managing the forest that might otherwise be spent on other activities, such as agriculture.
 
 ```{r}
 #| label: fig-et_opp_cost_types
@@ -2458,4 +2465,8 @@ ggplot(wc_oc, aes(label = word, size = freq, colour = freq)) +
 
 ## Discussion
 
+Through the FGDs and the individual interviews we investigated a diverse set of indicators of economic transformation, although obviously the study is constrained to the types of data that can be obtained from FGDs and individual interviews. We covered access to natural resources for houshold use and sale, employment, income earning opportunities, including carbon finance and other sources of income, and opportunity costs.
 
+Most FGD groups and individual interviewees indicated that CFM had not increased access to natural resources for either household use or sale, but around a third of respondents agreed that access to resources had improved. Given that the communities were involved in harvesting forest products before the instigation of CFM, it is not surprising that most respondents do not recognise any change.
+
+This suggests that the carbon trading companies have failed to conduct a proper FPIC process and also that the CFMG Executives are not communicating properly with their communities, especially the youth.

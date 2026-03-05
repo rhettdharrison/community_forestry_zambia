@@ -11,3 +11,52 @@ editor: visual
 ---
 
 ## Methods
+
+### Selection of CF sample
+
+We used a stratified random approach for selecting CFMAs for the survey. First, we identified eight provinces for sampling, omitting Luapula and Copperbelt provinces which did not have many CFs. Our intention was to select ten CFs per province stratified by size and age (preference for older CFMAs). However, we found that three of the selected provinces had fewer than ten CFs. Hence, to maintain the number of CFs at 80, we selected 12 CFs from provinces that had more than ten. We established a cut off establishment date of 1st Jan 2024, so that all selected CFs were at least 1 yr old. In addition, we were not able to use CF size as a selection criteria, because of the low number CFs in several of the provinces. Within provinces, we selected our sample randomly from among the CFs that were at least 1 yr old. 
+
+### Survey tool
+
+We developed a survey questionnaire tool to assess the quality of CFM implementation and outcomes for SFM and sustainable development. The same tool was used in the FGDs and in the individual interviewees. The structured design enabled comparisons among the responses from different FGDs, individual interviewees and across CFs. However, interviewees were encouraged to discuss the appropriate response, and comments sections throughout the tool enabled free text responses that could capture components not listed among the options in the tool and other information. The complete tool is provided in Appendix 1. The tool was fully pre-tested at M'phansha CF in Rufunsa and feedback from the survey team, the FDG groups and the individual interviewees was incorporated into the final version of the tool.
+
+The tool covered CF (i) governance including business activities, (ii) SFM outcomes, such as impacts on deforestation, fire frequency, and wildlife, (iii) economic transformation including the impact of CFM on access to forest resources, employment opportunities, income earning opportunities and opportunity costs, (iv) equity and inclusion, including benefit sharing arrangements and their impact on vulnerable groups, and (v) opportunities for improving CFM implementation.
+
+In each CF forest, the team conducted four FGDs including (i) CFMG executive, and community (ii) females, (iii) males and (iv) youth. Thus, we are able to compare responses among these stakeholder groups. In addition, the survey team conducted individual interviews with key stakeholders. The aim was to interview (i) a CFMG executive member, usually the secretary or chairperson, (ii) the DFO, (iii) traditional leadership, usually a village headperson, (iv) the chairperson of a forest user-group, and (v) a representative of any external organisation supporting the CFM process, such as a conservation NGO or a carbon trading enterprise. Again, by consistently selecting interviewees from among these different types of key stakeholder, we are able to compare responses within and across CFs. However, it should be noted that during the survey it was often difficult to find and interview representatives from all of these categories.
+
+### Survey of CFs
+
+The surveys were carried out according to the following schedule (Table 1).
+
+*Table 1. CF survey schedule*
+
+| Province | Dates |
+|:-------------|:-----------|
+| Lusaka | 13 March to 17 April 2025 |
+| Southern | 8 May to 28 May 2025 |
+| Central | 8 June to 21 June 2025 |
+| Eastern | 8 July to 31 July 2025 |
+| Northern | 10 Aug to 2 September 2025 |
+| Muchinga | 10 September to 5 October |
+| North-western | 17 October to 11 November 2025 |
+| Western | 26 November to 8 December 2025 |
+|  |  |
+
+During the survey, a five CFs were dropped from the sample. For various reasons the five CFs (Table 2), these CFs existed on paper, but were non-functioning on the ground.
+
+*Table 2. CFs selected but not surveyed*
+
+| Province | CF | Reasons for omission |
+|:---------|:-------|:--------|
+| Lusaka | Chalimbana | The CF was not operational and currently exists only in the database. Only the initial establishment stages were completed. |
+| Central | Kaindu | The Chief had disbanded the executive committee and hence it was not possible to organise the community |
+| Muchinga | Nampando | The CF was not operational and currently exists only in the database. Only the initial establishment stages were completed. |
+| Eastern | Kalumphila | This CF has not been functional since the partner (Land Alliance) withdrew in 2022. The CFMG establishment processes were not concluded. |
+| Eastern | Koloko | This CF has not been functional since 2022 after the partner (Land Alliance) withdrew. |
+|  |  |
+
+The final list of CFs surveyed is given in Appendix II.
+
+### Analysis of the survey results
+
+
