@@ -10,12 +10,11 @@ filters:
 editor: visual
 ---
 
-## Appendix II - Community Forests Surveyed
+## Appendix II - Community forests surveyed
 
 ### Community Forest Management in Zambia: Is It Working?
 
-#### List of Community forests surveyed and the number of interviews conducted
-
+#### List of community forests surveyed and the number of interviews conducted per interview type
 
 ```{r}
 #| label: Load_data_and_libraries
@@ -39,31 +38,29 @@ library(ggwordcloud)
 load("cfmg.RData")
 ```
 
-
-
 ```{r}
 #| label: tbl-support_organisations
 #| code-fold: true
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "CFs surveyed"
+#| tbl-cap: "Community forests surveyed"
 
 cfmg |>
   mutate(interview_type = case_match(
     interview_type,
-    "cfmg_executive"       ~ "Executive FGD",
-    "cfmg_female"          ~ "Female FGD",
-    "cfmg_male"            ~ "Male FGD",
-    "cfmg_youth"           ~ "Youth FGD",
+    "cfmg_executive"       ~ "CFMG Executive",
+    "cfmg_female"          ~ "Community Female",
+    "cfmg_male"            ~ "Community Male",
+    "cfmg_youth"           ~ "Community Youth",
     "individual_interview"  ~ "Individual interviews",
     .default = interview_type
   )) |>
   count(province, cfmg_name, interview_type) |>
   pivot_wider(names_from = interview_type, values_from = n, values_fill = 0) |>
+  relocate(`Individual interviews`, .after = last_col()) |>
   mutate(
-    cfmg_name = str_to_sentence(cfmg_name),
-    Total     = rowSums(across(where(is.numeric)))
+    cfmg_name = str_to_sentence(cfmg_name)
   ) |>
   arrange(province, cfmg_name) |>
   gt(groupname_col = "province") |>
