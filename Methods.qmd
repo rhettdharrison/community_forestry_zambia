@@ -44,9 +44,7 @@ In each CF forest, the team conducted four FGDs including (i) CFMG executive, an
 
 ### Survey of CFs
 
-The surveys were carried out according to the following schedule (Table 1).
-
-*Table 1. CF survey schedule*
+The surveys were carried out according to the following schedule (@tbl-survey-schedule).
 
 | Province | Dates |
 |:-------------|:-----------|
@@ -58,11 +56,10 @@ The surveys were carried out according to the following schedule (Table 1).
 | Muchinga | 10 September to 5 October |
 | North-western | 17 October to 11 November 2025 |
 | Western | 26 November to 8 December 2025 |
-|  |  |
 
-During the survey, a five CFs were dropped from the sample. For various reasons the five CFs (Table 2), these CFs existed on paper, but were non-functioning on the ground.
+: CF survey schedule {#tbl-survey-schedule}
 
-*Table 2. CFs selected but not surveyed*
+During the survey, a five CFs were dropped from the sample. For various reasons the five CFs (@tbl-not-surveyed), these CFs existed on paper, but were non-functioning on the ground.
 
 | Province | CF | Reasons for omission |
 |:---------|:-------|:--------|
@@ -71,7 +68,8 @@ During the survey, a five CFs were dropped from the sample. For various reasons 
 | Muchinga | Nampando | The CF was not operational and currently exists only in the database. Only the initial establishment stages were completed. |
 | Eastern | Kalumphila | This CF has not been functional since the partner (Land Alliance) withdrew in 2022. The CFMG establishment processes were not concluded. |
 | Eastern | Koloko | This CF has not been functional since 2022 after the partner (Land Alliance) withdrew. |
-|  |  |
+
+: CFs selected but not surveyed {#tbl-not-surveyed}
 
 The final list of CFs surveyed is given in Appendix II.
 
@@ -96,7 +94,7 @@ cfmg |>
       "individual_interview" ~ "Individual interviews",
       .default = interview_type
     ),
-    demo_information_interviewer_name = str_to_title(demo_information_interviewer_name)
+    demo_information_interviewer_name = str_to_title(str_replace_all(demo_information_interviewer_name, "_", " "))
   ) |>
   count(demo_information_interviewer_name, interview_type) |>
   pivot_wider(names_from = interview_type, values_from = n, values_fill = 0) |>
@@ -106,12 +104,7 @@ cfmg |>
   gt() |>
   cols_label(demo_information_interviewer_name = "Interviewer") |>
   cols_align(align = "left",   columns = demo_information_interviewer_name) |>
-  cols_align(align = "center", columns = where(is.numeric)) |>
-  grand_summary_rows(
-    columns = where(is.numeric),
-    fns     = list(Total = ~sum(.)),
-    fmt     = ~fmt_integer(.)
-  )
+  cols_align(align = "center", columns = where(is.numeric))
 ```
 
 ### Analysis of the survey results
