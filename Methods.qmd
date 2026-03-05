@@ -10,6 +10,24 @@ filters:
 editor: visual
 ---
 
+
+```{r}
+#| label: Load_data_and_libraries
+#| include: false
+
+library(tidyverse)
+library(grid)
+library(gt)
+library(ggplot2)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(scales)
+
+load("cfmg.RData")
+```
+
+
 ## Methods
 
 ### Selection of CF sample
@@ -56,6 +74,45 @@ During the survey, a five CFs were dropped from the sample. For various reasons 
 |  |  |
 
 The final list of CFs surveyed is given in Appendix II.
+
+The surveys were conducted by the following interviewers (@tbl-interviewers).
+
+```{r}
+#| label: tbl-interviewers
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Number of interviews conducted by each interviewer, by interview type."
+
+cfmg |>
+  mutate(
+    interview_type = case_match(
+      interview_type,
+      "cfmg_executive"      ~ "CFMG Executive",
+      "cfmg_female"         ~ "Community Female",
+      "cfmg_male"           ~ "Community Male",
+      "cfmg_youth"          ~ "Community Youth",
+      "individual_interview" ~ "Individual interviews",
+      .default = interview_type
+    ),
+    demo_information_interviewer_name = str_to_title(demo_information_interviewer_name)
+  ) |>
+  count(demo_information_interviewer_name, interview_type) |>
+  pivot_wider(names_from = interview_type, values_from = n, values_fill = 0) |>
+  relocate(`Individual interviews`, .after = last_col()) |>
+  mutate(Total = rowSums(across(where(is.numeric)))) |>
+  arrange(demo_information_interviewer_name) |>
+  gt() |>
+  cols_label(demo_information_interviewer_name = "Interviewer") |>
+  cols_align(align = "left",   columns = demo_information_interviewer_name) |>
+  cols_align(align = "center", columns = where(is.numeric)) |>
+  grand_summary_rows(
+    columns = where(is.numeric),
+    fns     = list(Total = ~sum(.)),
+    fmt     = ~fmt_integer(.)
+  )
+```
 
 ### Analysis of the survey results
 
