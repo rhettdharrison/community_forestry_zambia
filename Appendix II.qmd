@@ -1,5 +1,5 @@
 ---
-title: "Appendix"
+title: "Appendix II - List of community forests surveyed"
 author: "Rhett D Harrison"
 format:
         html:
@@ -9,8 +9,6 @@ filters:
 - collapse-output
 editor: visual
 ---
-
-## Appendix II - Community forests surveyed
 
 ### Community Forest Management in Zambia: Is It Working?
 

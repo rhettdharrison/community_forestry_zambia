@@ -1,5 +1,5 @@
 ---
-title: "Appendix"
+title: "Appendix I - Survey tool"
 author: "Rhett D Harrison"
 format:
         html:
@@ -9,8 +9,6 @@ filters:
 - collapse-output
 editor: visual
 ---
-
-## Appendix I - Survey tool
 
 ### Community Forest Management in Zambia: Is It Working?
 

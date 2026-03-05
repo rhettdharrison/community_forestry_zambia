@@ -1,6 +1,6 @@
 ---
 title: "Introduction"
-author: "Rhett D Harrison"
+author: ""
 format:
         html:
                 css: custom.css
@@ -41,7 +41,6 @@ suppress-bibliography: true
 | SI | Statutory Instrument |
 | ZIFLP | Zambia Integrated Forest Landscape Programme |
 
-## Introduction
 
 ### Community forestry
 

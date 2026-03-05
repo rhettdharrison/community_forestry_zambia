@@ -1,6 +1,6 @@
 ---
 title: "Literature cited"
-author: "Rhett D Harrison"
+author: ""
 format:
         html:
                 css: custom.css
@@ -9,8 +9,6 @@ filters:
 - collapse-output
 editor: visual
 ---
-
-## Literature cited
 
 Baynes, J., Herbohn, J., Smith, C., Fisher, R. and Bray, D., 2015. Key factors which influence the success of community forestry in developing countries. *Global Environmental Change*, 35: 226–238. <https://doi.org/10.1016/j.gloenvcha.2015.09.011>
 
