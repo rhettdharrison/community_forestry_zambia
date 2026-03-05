@@ -1,0 +1,72 @@
+---
+title: "Appendix"
+author: "Rhett D Harrison"
+format:
+        html:
+                css: custom.css
+        pdf: default
+filters:
+- collapse-output
+editor: visual
+---
+
+## Appendix II - Community Forests Surveyed
+
+### Community Forest Management in Zambia: Is It Working?
+
+#### List of Community forests surveyed and the number of interviews conducted
+
+
+```{r}
+#| label: Load_data_and_libraries
+#| include: false
+#| #| warning: false
+#| message: false
+#| error:   false
+
+library(tidyverse)
+library(grid)
+library(gt)
+library(ggplot2)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(scales)
+library(broom.mixed)
+library(modelsummary)
+library(ggwordcloud)
+
+load("cfmg.RData")
+```
+
+
+
+```{r}
+#| label: tbl-support_organisations
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "CFs surveyed"
+
+cfmg |>
+  group_by(province, cfmg_name) |>
+  summarise(n_interviews = n(), .groups = "drop") |>
+  mutate(cfmg_name = str_to_sentence(cfmg_name)) |>
+  arrange(province, cfmg_name) |>
+  gt(groupname_col = "province") |>
+  cols_label(
+    cfmg_name    = "Community forest",
+    n_interviews = "Interviews"
+  ) |>
+  cols_align(align = "left",   columns = cfmg_name) |>
+  cols_align(align = "center", columns = n_interviews) |>
+  summary_rows(
+    groups  = everything(),
+    columns = n_interviews,
+    fns     = list(Total = ~sum(.)),
+    fmt     = ~fmt_integer(.)
+  )
+
+
+```
