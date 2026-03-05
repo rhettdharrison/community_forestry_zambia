@@ -1,5 +1,5 @@
 ---
-title: "Survey synopsis"
+title: "Survey overview"
 author: "Rhett D Harrison"
 format:
         html:
@@ -23,8 +23,6 @@ library(scales)
 
 load("cfmg.RData")
 ```
-
-# Overview of survey data
 
 ## Summary
 

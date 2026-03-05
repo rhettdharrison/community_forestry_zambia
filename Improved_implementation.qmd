@@ -11,5 +11,4 @@ editor: visual
 ---
 
 
-## Opportunities for improved implementation
 
