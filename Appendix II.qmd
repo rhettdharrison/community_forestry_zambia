@@ -50,21 +50,35 @@ load("cfmg.RData")
 #| tbl-cap: "CFs surveyed"
 
 cfmg |>
-  group_by(province, cfmg_name) |>
-  summarise(n_interviews = n(), .groups = "drop") |>
-  mutate(cfmg_name = str_to_sentence(cfmg_name)) |>
+  mutate(interview_type = case_match(
+    interview_type,
+    "cfmg_executive"       ~ "Executive FGD",
+    "cfmg_female"          ~ "Female FGD",
+    "cfmg_male"            ~ "Male FGD",
+    "cfmg_youth"           ~ "Youth FGD",
+    "individual_interview"  ~ "Individual interviews",
+    .default = interview_type
+  )) |>
+  count(province, cfmg_name, interview_type) |>
+  pivot_wider(names_from = interview_type, values_from = n, values_fill = 0) |>
+  mutate(
+    cfmg_name = str_to_sentence(cfmg_name),
+    Total     = rowSums(across(where(is.numeric)))
+  ) |>
   arrange(province, cfmg_name) |>
   gt(groupname_col = "province") |>
-  cols_label(
-    cfmg_name    = "Community forest",
-    n_interviews = "Interviews"
-  ) |>
+  cols_label(cfmg_name = "Community forest") |>
   cols_align(align = "left",   columns = cfmg_name) |>
-  cols_align(align = "center", columns = n_interviews) |>
+  cols_align(align = "center", columns = where(is.numeric)) |>
   summary_rows(
     groups  = everything(),
-    columns = n_interviews,
+    columns = where(is.numeric),
     fns     = list(Total = ~sum(.)),
+    fmt     = ~fmt_integer(.)
+  ) |>
+  grand_summary_rows(
+    columns = where(is.numeric),
+    fns     = list(`Grand total` = ~sum(.)),
     fmt     = ~fmt_integer(.)
   )
 
