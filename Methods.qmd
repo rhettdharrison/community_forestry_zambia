@@ -27,22 +27,19 @@ library(scales)
 load("cfmg.RData")
 ```
 
+### Selection of community forest sample
 
-## Methods
-
-### Selection of CF sample
-
-We used a stratified random approach for selecting CFMAs for the survey. First, we identified eight provinces for sampling, omitting Luapula and Copperbelt provinces which did not have many CFs. Our intention was to select ten CFs per province stratified by size and age (preference for older CFMAs). However, we found that three of the selected provinces had fewer than ten CFs. Hence, to maintain the number of CFs at 80, we selected 12 CFs from provinces that had more than ten. We established a cut off establishment date of 1st Jan 2024, so that all selected CFs were at least 1 yr old. In addition, we were not able to use CF size as a selection criteria, because of the low number CFs in several of the provinces. Within provinces, we selected our sample randomly from among the CFs that were at least 1 yr old. 
+We used a stratified random approach for selecting CFs for the survey. First, we identified eight provinces for sampling, omitting Luapula and Copperbelt provinces which did not have many CFs. Our intention was to select ten CFs per province stratified by size and age (preference for older CFMAs). However, we found that three of the selected provinces had fewer than ten CFs. Hence, to maintain the number of CFs at 80, we selected 12 CFs from provinces that had more than ten. We established a cut off establishment date of 1st Jan 2024, so that all selected CFs were at least 1 yr old. In addition, we were not able to use CF size as a selection criteria, because of the low number CFs in several of the provinces. Within provinces, we selected our sample randomly from among the CFs that were at least 1 yr old. 
 
 ### Survey tool
 
-We developed a survey questionnaire tool to assess the quality of CFM implementation and outcomes for SFM and sustainable development. The same tool was used in the FGDs and in the individual interviewees. The structured design enabled comparisons among the responses from different FGDs, individual interviewees and across CFs. However, interviewees were encouraged to discuss the appropriate response, and comments sections throughout the tool enabled free text responses that could capture components not listed among the options in the tool and other information. The complete tool is provided in Appendix 1. The tool was fully pre-tested at M'phansha CF in Rufunsa and feedback from the survey team, the FDG groups and the individual interviewees was incorporated into the final version of the tool.
+We developed a survey questionnaire tool to assess the quality of CFM implementation and outcomes for SFM and sustainable development. The same tool was used in the FGDs and in the individual interviewees. The structured design enabled comparisons among the responses from different FGDs, individual interviewees and across CFs. However, interviewees were encouraged to discuss the appropriate response, and comments sections throughout the tool enabled free text responses that could capture information not listed among the options in the tool. The complete tool is provided in Appendix I. The tool was fully pre-tested at M'phansha CF in Rufunsa and feedback from the survey team, the FDG groups and the individual interviewees was incorporated into the final version of the tool.
 
 The tool covered CF (i) governance including business activities, (ii) SFM outcomes, such as impacts on deforestation, fire frequency, and wildlife, (iii) economic transformation including the impact of CFM on access to forest resources, employment opportunities, income earning opportunities and opportunity costs, (iv) equity and inclusion, including benefit sharing arrangements and their impact on vulnerable groups, and (v) opportunities for improving CFM implementation.
 
-In each CF forest, the team conducted four FGDs including (i) CFMG executive, and community (ii) females, (iii) males and (iv) youth. Thus, we are able to compare responses among these stakeholder groups. In addition, the survey team conducted individual interviews with key stakeholders. The aim was to interview (i) a CFMG executive member, usually the secretary or chairperson, (ii) the DFO, (iii) traditional leadership, usually a village headperson, (iv) the chairperson of a forest user-group, and (v) a representative of any external organisation supporting the CFM process, such as a conservation NGO or a carbon trading enterprise. Again, by consistently selecting interviewees from among these different types of key stakeholder, we are able to compare responses within and across CFs. However, it should be noted that during the survey it was often difficult to find and interview representatives from all of these categories.
+In each CF forest, the team conducted four FGDs including (i) CFMG executive, and community (ii) females, (iii) males and (iv) youth. Thus, we are able to compare responses among these stakeholder groups. In addition, the survey team conducted individual interviews with key stakeholders. The aim was to interview (i) a CFMG executive member, usually the secretary or chairperson, (ii) the DFO, (iii) traditional leadership, usually a village headperson, (iv) the chairperson of a forest user-group, and (v) a representative of any external organisation supporting the CFM process, such as a conservation NGO or a carbon trading enterprise. Again, by consistently selecting interviewees from among these different types of key stakeholder, we are able to compare responses within and across CFs. However, the number of FGDs and individual interviews were were able to conduct varied according to the availability of the stakeholders when were were conducting the survey (Appendix I).
 
-### Survey of CFs
+### Survey of community forests
 
 The surveys were carried out according to the following schedule (@tbl-survey-schedule).
 
@@ -73,7 +70,7 @@ During the survey, a five CFs were dropped from the sample. For various reasons 
 
 The final list of CFs surveyed is given in Appendix II.
 
-The surveys were conducted by the following interviewers (@tbl-interviewers).
+The surveys were conducted by the following interviewers (@tbl-interviewers). Chipo Chisonga (CIFOR-ICRAF), Edward Banda (CIFOR-ICRAF) and Thecla Masuku (Forestry Department) comprised the principle survey team with others supporting them as required. Thecla Masuku, supported by Hope Chame (Forestry Department), were responsible for conducting the community female FGDs and female individual interviewees. Given the gender norms in local communities, it was felt that female interviewees might feel inhibited to answer honestly with male interviewers.
 
 ```{r}
 #| label: tbl-interviewers
@@ -109,4 +106,17 @@ cfmg |>
 
 ### Analysis of the survey results
 
+Data from the survey tool were summarised and displayed using tables, bar charts or word clouds for informative interpretation. To examine hypotheses concerning differences in responses among FGD types or interviewee roles for the individual interviews, we used Generalised Linear Mixed Models (GLMM). For binary responses (e.g. yes/no), we used binomial models and for ordered categories (e.g. decrease, no change, moderate increase, significant increase), we used Cumulative Link Mixed Models (CLMM). Reflecting the nested structure of the data with interviews nested within CFs nested within provinces, we implemented random intercepts for province and CF name nested within province (i.e. province:CF name interaction). For the FGD responses, FGD types was included in the model as a factor and we examined the pairwise differences among FGD types using Tukey Honest Significant Differences (HSDs). For the models investigating interview roles for the individual interviews, we inserted interviewee gender, interviewee age and interviewee role as factors in the models and the pairwise differences among interviewee roles were examined using Tukey HSDs.
 
+## Remote sensing anaysis
+### Fire dataset
+
+*_To_Do_*
+
+### Deforestation dataset
+
+*_To_Do_*
+
+### Analysis of remote sensed data
+
+*_To_Do_*
