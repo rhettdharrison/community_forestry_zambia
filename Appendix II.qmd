@@ -12,8 +12,6 @@ editor: visual
 
 ### Community Forest Management in Zambia: Is It Working?
 
-#### List of community forests surveyed and the number of interviews conducted per interview type
-
 ```{r}
 #| label: Load_data_and_libraries
 #| include: false
@@ -42,7 +40,7 @@ load("cfmg.RData")
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "Community forests surveyed"
+#| tbl-cap: "Community forests surveyed by province and the number of FGD interviews (CFMG Executive, Community Female, Community Male and Community Youth) and individual interviews conducted."
 
 cfmg |>
   mutate(interview_type = case_match(
