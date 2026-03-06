@@ -37,10 +37,10 @@ load("cfmg.RData")
 
 ## Introduction
 
-Here we consider the equitable sharing of benefits arising from community forest management (CFM) among CFMG members.
+In this chapter, we consider the equitable sharing of benefits arising from community forest management (CFM) and what the impacts of CFM are on vulnerable groups.
 
 ## Benefit sharing
-We asked FGD groups whether the benefits of CFM were equitably distributed (@fig-bs_equity).
+We asked FGD groups whether the benefits of CFM were equitably distributed (@fig-bs_equity). On the one hand, a substantial majority of responses across the FGD groups asserted that benefits were being shared equitably. The proportion of community female and community youth groups that felt that benefits were not being shared equitably was significantly high than for the CFMG executive and community male FGD groups. Moreover, even among the CFMG executive and community male groups, there were some that agreed that benefits were not being shared equitably.
 
 ```{r}
 #| label: fig-bs_equity
@@ -48,7 +48,7 @@ We asked FGD groups whether the benefits of CFM were equitably distributed (@fig
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Responses to whether the benefits of CFM are equitably shared. The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+#| fig-cap: "Are the benefits of CFM are equitably shared? The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
 
 cfmg |>
   filter(interview_type != "individual_interview") |>
@@ -109,7 +109,7 @@ cfmg |>
 
 ::: {.callout-note collapse="true"}
 ### Equity - FGDs - Model methods
-To examine differences among FGD types in whether they agreed the benefits of CFM were equitably shared, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CFMG nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+To examine differences among FGD types in whether they agreed the benefits of CFM were equitably shared, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
 :::
 
 ```{r}
@@ -172,7 +172,7 @@ summary(M1)
 summary(pairwise.M1)
 ```
 
-Individual interviewees were also asked whether the benefits of CFM were equitably shared. @tbl-bs_individual_equity shows the percentage reporting this, broken down by interviewee role.
+Individual interviewees were also asked whether the benefits of CFM were equitably shared. @tbl-bs_individual_equity shows the percentage reporting this broken down by interviewee role. Again a substantial majority of respondents (83% - 92%) thought that benefits were being shared equitably, and the differences among respondents were not significant. However, there was still minority of respondents that did not think benefits were being equitably shared. This suggests that there are some CFs where the benefit sharing arrangements are not optimal or appropriate arrangements are not being followed. 
 
 ```{r}
 #| label: tbl-bs_individual_equity
@@ -180,7 +180,7 @@ Individual interviewees were also asked whether the benefits of CFM were equitab
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "Percentage of individual interviewees reporting that the benefits of CFM are equitably shared, by interviewee role."
+#| tbl-cap: "Percentage of individual interviewees reporting that the benefits of CFM are equitably shared by interviewee role."
 
 cfmg |>
   filter(interview_type == "individual_interview") |>
@@ -240,7 +240,7 @@ cfmg |>
 
 ::: {.callout-note collapse="true"}
 ### Equity - Individual interviewees - Model methods
-To examine differences among individual interviewee roles in whether they agreed the benefits of CFM were equitably shared, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CFMG nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+To examine differences among individual interviewee roles in whether they agreed the benefits of CFM were equitably shared, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
 :::
 
 ```{r}
@@ -279,7 +279,7 @@ pairwise.M2 <- pairs(emm.M2, adjust = "Tukey")
 #| message: false
 #| error:   false
 #| output-fold: true
-#| output-summary: "Equity – Individual model results (click to expand)"
+#| output-summary: "Equitable benefit sharing – Individual model results (click to expand)"
 
 summary(M2)
 ```
@@ -291,14 +291,14 @@ summary(M2)
 #| message: false
 #| error:   false
 #| output-fold: true
-#| output-summary: "Equity – Individual pairwise comparisons (click to expand)"
+#| output-summary: "Equitable benefit sharing – Individual pairwise comparisons (click to expand)"
 
 summary(pairwise.M2)
 ```
 
 ## Carbon income benefit sharing
 ### Company-community arrangements
-Executive FGDs reported which elements were included in their carbon finance benefit-sharing arrangement (@fig-bs_benefit_sharing).
+CFMG executive FGDs reported on the components were included in their carbon finance benefit-sharing arrangement with the carbon trading enterprise (@fig-bs_benefit_sharing). Clearly the agreements are dominated by revenue sharing, with relatively few also containing agreements on employment, infrastructure development and livelihood support.
 
 ```{r}
 #| label: fig-bs_benefit_sharing
@@ -306,7 +306,7 @@ Executive FGDs reported which elements were included in their carbon finance ben
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Elements included in the carbon finance benefit-sharing arrangement between company and community, as reported by executive FGDs."
+#| fig-cap: "Components included in the carbon finance benefit-sharing arrangement between the carbon company and the community as reported by CFMG executive FGDs. The sample includes only those CFMGs that stated they had an agreement with a carbon trading company."
 #| fig-width: 9
 #| fig-height: 4
 
@@ -349,7 +349,7 @@ cfmg |>
 ```
 
 ### Within-community sharing
-FGD groups reported how carbon income is shared within the community (@fig-bs_benefit_sharing_community).
+We also asked the FGD groups about how carbon income was shared within the community (@fig-bs_benefit_sharing_community). 
 
 ```{r}
 #| label: fig-bs_benefit_sharing_community
@@ -357,7 +357,7 @@ FGD groups reported how carbon income is shared within the community (@fig-bs_be
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Benefit-sharing arrangements for carbon income within the community, by FGD group. Note: for 12 executive FGDs, the benefit-sharing arrangement is enshrined in the CFMG constitution; this is not shown in the figure."
+#| fig-cap: "Benefit-sharing arrangements for carbon income within the community by FGD group. The length of the segments is equal to the number of times that aspect was mentioned by the FDG group. Note: for 12 executive FGDs, the benefit-sharing arrangement is enshrined in the CFMG constitution; this is not shown in the figure."
 #| fig-width: 10
 #| fig-height: 5
 
