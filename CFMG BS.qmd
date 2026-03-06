@@ -349,7 +349,7 @@ cfmg |>
 ```
 
 ### Within-community sharing
-We also asked FGD groups how decisions about carbon income sharing are made within the community (@fig-bs_benefit_sharing_decision) and the principles on which the sharing is based (@fig-bs_benefit_sharing_principles).
+We also asked FGD groups about the carbon income sharing arrangements within the community. We first asked who is responsible for the decision-making (@fig-bs_benefit_sharing_decision) and then we asked on what principles the benefit sharing was based (@fig-bs_benefit_sharing_principles). As can be seen there is broad agreement among the FGD groups on who makes the decision about the caron benefit sharing arrangements. In approximately half the CFs the CFMG executive is responsible for the decision, while in the other half the entire CFMG is responsible.
 
 ```{r}
 #| label: fig-bs_benefit_sharing_decision
@@ -357,7 +357,7 @@ We also asked FGD groups how decisions about carbon income sharing are made with
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Who decides how carbon income is shared within the community, by FGD group. The length of the segments is equal to the number of times that option was mentioned by the FGD group. Note: for 12 executive FGDs, the benefit-sharing arrangement is enshrined in the CFMG constitution; this is not shown in the figure."
+#| fig-cap: "Who decides how carbon income is shared within the community by FGD group. The length of the segments is equal to the number of times that option was mentioned by the FGD group. Note: for 12 CFs the benefit-sharing arrangement is defined in the CFMG constitution."
 #| fig-width: 10
 #| fig-height: 5
 
@@ -430,7 +430,7 @@ cfmg |>
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Principles governing carbon income sharing within the community, by FGD group. The length of the segments is equal to the number of times that option was mentioned by the FGD group."
+#| fig-cap: "Principles governing carbon income sharing within the community by FGD group. The length of the segments is equal to the number of times that option was mentioned by the FGD group. Note: for 12 CFs the benefit-sharing arrangement is defined in the CFMG constitution."
 #| fig-width: 10
 #| fig-height: 5
 
@@ -499,8 +499,10 @@ cfmg |>
   )
 ```
 
+According to the responses of the CFMG executives, seven CFs shared benefits acccording to members contribution to CFM while six shared them equally among the community households. Only two said that consideration of marginalised or vulnerable groups was a consideration. The other FGD groups were broadly similar in their responses and differences may be due to their knowledge of the arrangements, rather than actual differences in the arrangements.
+
 ### External determination of benefit sharing
-FGD groups also reported who determines the benefit-sharing arrangement outside the community (@fig-bs_benefit_sharing_external).
+We also asked FGD groups whether stakeholders outside the community were also involved in determining the benefit-sharing arrangement (@fig-bs_benefit_sharing_external).
 
 ```{r}
 #| label: fig-bs_benefit_sharing_external
@@ -515,7 +517,6 @@ FGD groups also reported who determines the benefit-sharing arrangement outside 
 prefix_bse <- "economic_transformation_benefit_sharing_mechanism_determined_by_"
 
 bse_labels <- c(
-  "the_community"                        = "Community",
   "carbon_trader"                        = "Carbon trader",
   "the_forestry_department_fd"           = "Forestry Dept",
   "an_ngo_or_external_organization"      = "NGO",
@@ -555,7 +556,6 @@ cfmg |>
   ) +
   scale_fill_manual(
     values = c(
-      "Community"          = "#264653",
       "Carbon trader"      = "#2A9D8F",
       "Forestry Dept"      = "#57B8B0",
       "NGO"                = "#E9C46A",
