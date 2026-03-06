@@ -349,29 +349,26 @@ cfmg |>
 ```
 
 ### Within-community sharing
-We also asked the FGD groups about how carbon income was shared within the community (@fig-bs_benefit_sharing_community). 
+We also asked FGD groups how decisions about carbon income sharing are made within the community (@fig-bs_benefit_sharing_decision) and the principles on which the sharing is based (@fig-bs_benefit_sharing_principles).
 
 ```{r}
-#| label: fig-bs_benefit_sharing_community
+#| label: fig-bs_benefit_sharing_decision
 #| code-fold: true
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Benefit-sharing arrangements for carbon income within the community by FGD group. The length of the segments is equal to the number of times that aspect was mentioned by the FDG group. Note: for 12 executive FGDs, the benefit-sharing arrangement is enshrined in the CFMG constitution; this is not shown in the figure."
+#| fig-cap: "Who decides how carbon income is shared within the community, by FGD group. The length of the segments is equal to the number of times that option was mentioned by the FGD group. Note: for 12 executive FGDs, the benefit-sharing arrangement is enshrined in the CFMG constitution; this is not shown in the figure."
 #| fig-width: 10
 #| fig-height: 5
 
 prefix_bsc <- "economic_transformation_benefit_sharing_arrangement_carbon_income_"
 
-bsc_labels <- c(
-  "equally_among_all_members_regardless_of_gender_or_group"                                = "Equal shares",
-  "based_on_contributions_or_roles_in_cfmg_activities"                                     = "By contribution",
-  "prioritized_for_marginalized_groups_e_g_women_youth_aged_persons_with_disabilities"     = "Marginalised groups",
-  "decided_by_the_cfmg_executive"                                                           = "Executive decision",
-  "decided_by_the_whole_cfmg"                                                               = "Whole CFMG"
+decision_labels <- c(
+  "decided_by_the_whole_cfmg"     = "Whole CFMG",
+  "decided_by_the_cfmg_executive" = "Executive decision"
 )
 
-full_bsc_vars <- paste0(prefix_bsc, names(bsc_labels))
+full_decision_vars <- paste0(prefix_bsc, names(decision_labels))
 
 cfmg |>
   filter(interview_type %in% c("cfmg_executive", "cfmg_female",
@@ -386,12 +383,12 @@ cfmg |>
     ),
     levels = c("Youth", "Male", "Female", "Executive")
   )) |>
-  select(group, all_of(full_bsc_vars)) |>
-  pivot_longer(all_of(full_bsc_vars), names_to = "variable", values_to = "val") |>
+  select(group, all_of(full_decision_vars)) |>
+  pivot_longer(all_of(full_decision_vars), names_to = "variable", values_to = "val") |>
   filter(val == 1) |>
   mutate(mechanism = factor(
-    bsc_labels[sub(prefix_bsc, "", variable, fixed = TRUE)],
-    levels = bsc_labels
+    decision_labels[sub(prefix_bsc, "", variable, fixed = TRUE)],
+    levels = decision_labels
   )) |>
   count(group, mechanism) |>
   ggplot(aes(y = group, x = n, fill = mechanism)) +
@@ -403,13 +400,85 @@ cfmg |>
   ) +
   scale_fill_manual(
     values = c(
-      "Equal shares"       = "#2A9D8F",
-      "By contribution"    = "#57B8B0",
-      "Marginalised groups"= "#E9C46A",
-      "Executive decision" = "#F4A261",
-      "Whole CFMG"         = "#E07B54"
+      "Whole CFMG"         = "#2A9D8F",
+      "Executive decision" = "#E07B54"
     ),
-    guide = guide_legend(reverse = TRUE, nrow = 2, byrow = TRUE)
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.05)),
+    name   = "Number of FGDs"
+  ) +
+  scale_y_discrete(expand = expansion(add = 0.5)) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 18) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text          = element_text(colour = "grey20"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(0.85)),
+    plot.margin        = margin(10, 15, 10, 10)
+  )
+```
+
+```{r}
+#| label: fig-bs_benefit_sharing_principles
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Principles governing carbon income sharing within the community, by FGD group. The length of the segments is equal to the number of times that option was mentioned by the FGD group."
+#| fig-width: 10
+#| fig-height: 5
+
+prefix_bsc <- "economic_transformation_benefit_sharing_arrangement_carbon_income_"
+
+principle_labels <- c(
+  "equally_among_all_members_regardless_of_gender_or_group"                            = "Equal shares",
+  "based_on_contributions_or_roles_in_cfmg_activities"                                 = "By contribution",
+  "prioritized_for_marginalized_groups_e_g_women_youth_aged_persons_with_disabilities" = "Marginalised groups"
+)
+
+full_principle_vars <- paste0(prefix_bsc, names(principle_labels))
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_executive", "cfmg_female",
+                                "cfmg_male", "cfmg_youth")) |>
+  mutate(group = factor(
+    case_match(
+      interview_type,
+      "cfmg_executive" ~ "Executive",
+      "cfmg_female"    ~ "Female",
+      "cfmg_male"      ~ "Male",
+      "cfmg_youth"     ~ "Youth"
+    ),
+    levels = c("Youth", "Male", "Female", "Executive")
+  )) |>
+  select(group, all_of(full_principle_vars)) |>
+  pivot_longer(all_of(full_principle_vars), names_to = "variable", values_to = "val") |>
+  filter(val == 1) |>
+  mutate(mechanism = factor(
+    principle_labels[sub(prefix_bsc, "", variable, fixed = TRUE)],
+    levels = principle_labels
+  )) |>
+  count(group, mechanism) |>
+  ggplot(aes(y = group, x = n, fill = mechanism)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.3) +
+  geom_text(
+    aes(label = n),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, colour = "white", fontface = "bold"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Equal shares"        = "#2A9D8F",
+      "By contribution"     = "#57B8B0",
+      "Marginalised groups" = "#E9C46A"
+    ),
+    guide = guide_legend(reverse = TRUE)
   ) +
   scale_x_continuous(
     expand = expansion(mult = c(0, 0.05)),
