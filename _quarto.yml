@@ -1,0 +1,48 @@
+project:
+  type: website
+  output-dir: docs
+
+execute:
+  freeze: auto
+
+website:
+  title: "CFM in Zambia"
+  navbar:
+    left:
+      - text: "Summary"
+        href: Summary.qmd
+      - text: "Introduction"
+        href: Introduction.qmd
+      - text: "Methods"
+        href: Methods.qmd
+      - text: "CFMG Survey"
+        href: "CFMG Survey.qmd"
+      - text: "Governance"
+        href: "CFMG Governance.qmd"
+      - text: "SFM"
+        href: "CFMG SFM.qmd"
+      - text: "Econ. Trans."
+        href: "CFMG ET.qmd"
+      - text: "Benefit Sharing"
+        href: "CFMG BS.qmd"
+      - text: "Conclusions"
+        href: Conclusions.qmd
+      - text: "Literature"
+        href: "Literature cited.qmd"
+      - text: "Appendices"
+        menu:
+          - text: "Appendix I"
+            href: Appendix.qmd
+          - text: "Appendix II"
+            href: "Appendix II.qmd"
+
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-depth: 3
+    theme: cosmo
+    css: custom.css
+
+filters:
+  - mcanouil/collapse-output
