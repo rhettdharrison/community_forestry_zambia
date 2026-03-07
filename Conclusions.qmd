@@ -187,7 +187,7 @@ We asked the FGD groups to identify the external challenges facing CFM in their 
 #| error:   false
 #| fig-cap: "External challenges facing CFM, as identified by community female, male, and youth FGDs. Word size is proportional to the number of FGDs reporting each challenge."
 #| fig-width: 10
-#| fig-height: 7
+#| fig-height: 10
 
 prefix_ec <- "opportunitiesb_for_improved_cfm_implementation_cfm_external_challenges_"
 
@@ -237,8 +237,8 @@ external_challenge_all <- external_challenge_freq |>
 
 set.seed(42)
 ggplot(external_challenge_all, aes(label = word, size = freq, colour = freq)) +
-  geom_text_wordcloud(eccentricity = 0.65, seed = 42, area_corr = TRUE) +
-  scale_size_area(max_size = 20) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 22)) +
   scale_colour_gradient(low = "#F4A582", high = "#8B0000") +
   theme_minimal(base_size = 14) +
   theme(plot.margin = margin(0, 0, 0, 0))
