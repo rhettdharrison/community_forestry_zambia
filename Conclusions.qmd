@@ -422,9 +422,9 @@ We asked FGD groups to identify the types of training most needed to improve CFM
 prefix_tr <- "opportunitiesb_for_improved_cfm_implementation_cfmg_training_type_"
 
 training_labels <- c(
-  "forest_conservation_and_biodiversity"                                    = "Forest conservation & biodiversity",
+  "forest_conservation_and_biodiversity"                                    = "Conservation",
   "agroforestry"                                                            = "Agroforestry",
-  "tree_planting_and_nursery_management"                                    = "Tree planting & nursery management",
+  "tree_planting_and_nursery_management"                                    = "Nursery management",
   "forest_law_and_policy"                                                   = "Forest law & policy",
   "governance_and_leadership"                                               = "Governance & leadership",
   "conflict_resolution_and_community_engagement"                            = "Conflict resolution",
@@ -454,6 +454,46 @@ set.seed(42)
 ggplot(training_freq, aes(label = word, size = freq, colour = freq)) +
   geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
   scale_size(range = c(3, 22)) +
+  scale_colour_gradient(low = "#74ADCB", high = "#1B618C") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
+### Training comments
+
+Additional training needs described by FGD groups in their own words (@fig-conc_training_comments).
+
+```{r}
+#| label: fig-conc_training_comments
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Additional training needs as described by community female, male, and youth FGDs. Phrase size is proportional to frequency of mention."
+#| fig-width: 10
+#| fig-height: 7
+
+training_comment_phrases <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  select(comment = opportunitiesb_for_improved_cfm_implementation_cfmg_training_type_comment) |>
+  drop_na(comment) |>
+  mutate(phrase = str_split(comment, "[.;,\\n]+")) |>
+  unnest(phrase) |>
+  mutate(
+    phrase  = str_squish(str_to_sentence(phrase)),
+    n_words = str_count(phrase, "\\S+")
+  ) |>
+  filter(
+    n_words >= 2, n_words <= 7,
+    !str_detect(phrase, regex("^(and|or|the|a|an|to|of|in|on|for|cfm|cfmg)\\b", ignore_case = TRUE))
+  ) |>
+  count(phrase, name = "freq") |>
+  rename(word = phrase)
+
+set.seed(42)
+ggplot(training_comment_phrases, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 14)) +
   scale_colour_gradient(low = "#74ADCB", high = "#1B618C") +
   theme_minimal(base_size = 14) +
   theme(plot.margin = margin(0, 0, 0, 0))
