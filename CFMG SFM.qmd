@@ -2211,12 +2211,12 @@ We also asked which specific forest resources had improved under CFM (@fig-harve
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Forest resources that have improved under CFM, as reported by female and male FGDs. Word size is proportional to the number of FGDs reporting an improvement for each resource."
+#| fig-cap: "Forest resources that have improved under CFM, as reported by female, male, and youth FGDs. Word size is proportional to the number of FGDs reporting an improvement for each resource."
 #| fig-width: 10
 #| fig-height: 7
 
 cfmg |>
-  filter(interview_type %in% c("cfmg_female", "cfmg_male")) |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
   select(
     "Pupwe"            = impact_on_sfm_harvested_forest_resources_pupwe,
     "Devil's claw"     = impact_on_sfm_harvested_forest_resources_devils_claw,

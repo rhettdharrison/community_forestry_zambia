@@ -40,6 +40,7 @@ load("cfmg.RData")
 In this chapter, we consider the equitable sharing of benefits arising from community forest management (CFM) and what the impacts of CFM are on vulnerable groups.
 
 ## Benefit sharing
+
 We asked FGD groups whether the benefits of CFM were equitably distributed (@fig-bs_equity). On the one hand, a substantial majority of responses across the FGD groups asserted that benefits were being shared equitably. The proportion of community female and community youth groups that felt that benefits were not being shared equitably was significantly high than for the CFMG executive and community male FGD groups. Moreover, even among the CFMG executive and community male groups, there were some that agreed that benefits were not being shared equitably.
 
 ```{r}
@@ -109,6 +110,7 @@ cfmg |>
 
 ::: {.callout-note collapse="true"}
 ### Equity - FGDs - Model methods
+
 To examine differences among FGD types in whether they agreed the benefits of CFM were equitably shared, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
 :::
 
@@ -172,7 +174,7 @@ summary(M1)
 summary(pairwise.M1)
 ```
 
-Individual interviewees were also asked whether the benefits of CFM were equitably shared. @tbl-bs_individual_equity shows the percentage reporting this broken down by interviewee role. Again a substantial majority of respondents (83% - 92%) thought that benefits were being shared equitably, and the differences among respondents were not significant. However, there was still minority of respondents that did not think benefits were being equitably shared. This suggests that there are some CFs where the benefit sharing arrangements are not optimal or appropriate arrangements are not being followed. 
+Individual interviewees were also asked whether the benefits of CFM were equitably shared. @tbl-bs_individual_equity shows the percentage reporting this broken down by interviewee role. Again a substantial majority of respondents (83% - 92%) thought that benefits were being shared equitably, and the differences among respondents were not significant. However, there was still minority of respondents that did not think benefits were being equitably shared. This suggests that there are some CFs where the benefit sharing arrangements are not optimal or appropriate arrangements are not being followed.
 
 ```{r}
 #| label: tbl-bs_individual_equity
@@ -240,6 +242,7 @@ cfmg |>
 
 ::: {.callout-note collapse="true"}
 ### Equity - Individual interviewees - Model methods
+
 To examine differences among individual interviewee roles in whether they agreed the benefits of CFM were equitably shared, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
 :::
 
@@ -297,7 +300,9 @@ summary(pairwise.M2)
 ```
 
 ## Carbon income benefit sharing
+
 ### Company-community arrangements
+
 CFMG executive FGDs reported on the components were included in their carbon finance benefit-sharing arrangement with the carbon trading enterprise (@fig-bs_benefit_sharing). Clearly the agreements are dominated by revenue sharing, with relatively few also containing agreements on employment, infrastructure development and livelihood support.
 
 ```{r}
@@ -343,12 +348,14 @@ cfmg |>
     panel.grid.minor   = element_blank(),
     panel.grid.major.x = element_blank(),
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text          = element_text(colour = "grey20"),
+    axis.text.x        = element_text(colour = "grey20"),
+    axis.text.y        = element_text(size = 14, colour = "grey20"),
     plot.margin        = margin(10, 25, 10, 10)
   )
 ```
 
 ### Within-community sharing
+
 We also asked FGD groups about the carbon income sharing arrangements within the community. We first asked who is responsible for the decision-making (@fig-bs_benefit_sharing_decision) and then we asked on what principles the benefit sharing was based (@fig-bs_benefit_sharing_principles). As can be seen there is broad agreement among the FGD groups on who makes the decision about the caron benefit sharing arrangements. In approximately half the CFs the CFMG executive is responsible for the decision, while in the other half the entire CFMG is responsible.
 
 ```{r}
@@ -417,7 +424,8 @@ cfmg |>
     panel.grid.minor   = element_blank(),
     panel.grid.major.x = element_blank(),
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text          = element_text(colour = "grey20"),
+    axis.text.x        = element_text(colour = "grey20"),
+    axis.text.y        = element_text(size = 14, colour = "grey20"),
     legend.position    = "bottom",
     legend.text        = element_text(size = rel(0.85)),
     plot.margin        = margin(10, 15, 10, 10)
@@ -492,7 +500,8 @@ cfmg |>
     panel.grid.minor   = element_blank(),
     panel.grid.major.x = element_blank(),
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text          = element_text(colour = "grey20"),
+    axis.text.x        = element_text(colour = "grey20"),
+    axis.text.y        = element_text(size = 14, colour = "grey20"),
     legend.position    = "bottom",
     legend.text        = element_text(size = rel(0.85)),
     plot.margin        = margin(10, 15, 10, 10)
@@ -502,6 +511,7 @@ cfmg |>
 According to the responses of the CFMG executives, seven CFs shared benefits acccording to members contribution to CFM while six shared them equally among the community households. Only two said that consideration of marginalised or vulnerable groups was a consideration. The other FGD groups were broadly similar in their responses and differences may be due to their knowledge of the arrangements, rather than actual differences in the arrangements.
 
 ### External determination of benefit sharing
+
 We also asked FGD groups whether stakeholders outside the community were also involved in determining the benefit-sharing arrangement (@fig-bs_benefit_sharing_external).
 
 ```{r}
@@ -576,10 +586,1708 @@ cfmg |>
     panel.grid.minor   = element_blank(),
     panel.grid.major.x = element_blank(),
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text          = element_text(colour = "grey20"),
+    axis.text.x        = element_text(colour = "grey20"),
+    axis.text.y        = element_text(size = 14, colour = "grey20"),
     legend.position    = "bottom",
     legend.text        = element_text(size = rel(0.85)),
     plot.margin        = margin(10, 15, 10, 10)
   )
 ```
 
+## Gender equity
+
+We asked FGD groups whether women benefit from CFM (@fig-bs_equity_women_benefit).
+
+```{r}
+#| label: fig-bs_equity_women_benefit
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Do women benefit from CFM? The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+
+cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    response = equity_and_inclusion_women_benefit_from_cfm,
+    response = case_match(response,
+                          "yes" ~ "Yes",
+                          "no" ~ "No",
+                          .default = NA),
+    response = factor(response, levels = c("Yes", "No")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    )
+  ) |>
+  drop_na(response) |>
+  count(interview_type, response) |>
+  group_by(interview_type) |>
+  mutate(prop = n / sum(n)) |>
+  ungroup() |>
+  ggplot(aes(y = interview_type, x = prop, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.05, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of groups"
+  ) +
+  scale_fill_manual(
+    values = c("Yes" = "#2A9D8F", "No" = "#E07B54"),
+    guide  = guide_legend(reverse = TRUE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+::: {.callout-note collapse="true"}
+### Women benefit from CFM - FGDs - Model methods
+
+To examine differences among FGD types in whether they agreed that women benefit from CFM, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_bs_fgd_women_benefit
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data <- cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    empl = equity_and_inclusion_women_benefit_from_cfm,
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    )
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M3 <- glmer(empl ~ interview_type + (1 | province) + (1 | province_cfmg),
+            data = test.data, family = binomial)
+
+emm.M3      <- emmeans(M3, specs = ~ interview_type, type = "response")
+pairwise.M3 <- pairs(emm.M3, adjust = "Tukey")
+```
+
+```{r}
+#| label: M3_bs_fgd_women_benefit
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Women benefit from CFM – FGD model results (click to expand)"
+
+summary(M3)
+```
+
+```{r}
+#| label: pairwise_bs_fgd_women_benefit
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Women benefit from CFM – FGD pairwise comparisons (click to expand)"
+
+summary(pairwise.M3)
+```
+
+Individual interviewees were also asked whether women benefit from CFM. @tbl-bs_individual_women_benefit shows the percentage reporting this broken down by interviewee role.
+
+```{r}
+#| label: tbl-bs_individual_women_benefit
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Percentage of individual interviewees reporting that women benefit from CFM by interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  select(
+    interviewee_role,
+    empl = equity_and_inclusion_women_benefit_from_cfm
+  ) |>
+  mutate(
+    interviewee_role = case_match(
+      as.character(interviewee_role),
+      "cfmg_member"      ~ "Community member",
+      "cfmg_exec_member" ~ "CFMG executive member",
+      "trad_leader"      ~ "Traditional leader",
+      "dfo"              ~ "District Forestry Officer",
+      "NGO_rep"          ~ "NGO representative"
+    ),
+    interviewee_role = factor(interviewee_role, levels = c(
+      "Community member", "CFMG executive member", "Traditional leader",
+      "District Forestry Officer", "NGO representative"
+    )),
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA)
+  ) |>
+  group_by(interviewee_role) |>
+  summarise(
+    n             = n(),
+    Women_benefit = mean(empl, na.rm = TRUE),
+    .groups       = "drop"
+  ) |>
+  arrange(interviewee_role) |>
+  gt() |>
+  cols_label(
+    interviewee_role = "Role",
+    n                = "n",
+    Women_benefit    = "Agree women benefit from CFM"
+  ) |>
+  fmt_percent(
+    columns  = Women_benefit,
+    decimals = 0
+  ) |>
+  tab_header(
+    title    = "Women benefit from CFM, as reported by individual interviewees",
+    subtitle = "Values represent the % of positive responses. n = the total number of interview responses. A positive response indicates that women benefit from CFM."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "left",   columns = interviewee_role) |>
+  cols_align(align = "center", columns = c(n, Women_benefit)) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
+  ) |>
+  sub_missing()
+```
+
+::: {.callout-note collapse="true"}
+### Women benefit from CFM - Individual interviewees - Model methods
+
+To examine differences among individual interviewee roles in whether they agreed that women benefit from CFM, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: model_bs_individual_women_benefit
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    empl               = equity_and_inclusion_women_benefit_from_cfm,
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M4 <- glmer(empl ~ interviewee_role + interviewee_gender + interviewee_age +
+              (1 | province) + (1 | province_cfmg),
+            data = test.data, family = binomial)
+
+emm.M4      <- emmeans(M4, specs = ~ interviewee_role, type = "response")
+pairwise.M4 <- pairs(emm.M4, adjust = "Tukey")
+```
+
+```{r}
+#| label: M4_bs_individual_women_benefit
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Women benefit from CFM – Individual model results (click to expand)"
+
+summary(M4)
+```
+
+```{r}
+#| label: pairwise_bs_individual_women_benefit
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Women benefit from CFM – Individual pairwise comparisons (click to expand)"
+
+summary(pairwise.M4)
+```
+
+### Women disproportionately suffer opportunity costs
+
+We asked FGD groups whether women disproportionately suffer the opportunity costs of CFM (@fig-bs_opp_costs).
+
+```{r}
+#| label: fig-bs_opp_costs
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Do women disproportionately suffer the opportunity costs of CFM? The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+
+cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    response = equity_and_inclusion_women_disproportionally_suffer_opportunity_costs,
+    response = case_match(response,
+                          "yes" ~ "Yes",
+                          "no" ~ "No",
+                          .default = NA),
+    response = factor(response, levels = c("Yes", "No")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    )
+  ) |>
+  drop_na(response) |>
+  count(interview_type, response) |>
+  group_by(interview_type) |>
+  mutate(prop = n / sum(n)) |>
+  ungroup() |>
+  ggplot(aes(y = interview_type, x = prop, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.05, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of groups"
+  ) +
+  scale_fill_manual(
+    values = c("Yes" = "#2A9D8F", "No" = "#E07B54"),
+    guide  = guide_legend(reverse = TRUE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+::: {.callout-note collapse="true"}
+### Women opportunity costs - FGDs - Model methods
+
+To examine differences among FGD types in whether they agreed that women disproportionately suffer the opportunity costs of CFM, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_bs_fgd_opp_costs
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data <- cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    empl = equity_and_inclusion_women_disproportionally_suffer_opportunity_costs,
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    )
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M5 <- glmer(empl ~ interview_type + (1 | province) + (1 | province_cfmg),
+            data = test.data, family = binomial)
+
+emm.M5      <- emmeans(M5, specs = ~ interview_type, type = "response")
+pairwise.M5 <- pairs(emm.M5, adjust = "Tukey")
+```
+
+```{r}
+#| label: M5_bs_fgd_opp_costs
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Women opportunity costs – FGD model results (click to expand)"
+
+summary(M5)
+```
+
+```{r}
+#| label: pairwise_bs_fgd_opp_costs
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Women opportunity costs – FGD pairwise comparisons (click to expand)"
+
+summary(pairwise.M5)
+```
+
+Individual interviewees were also asked whether women disproportionately suffer the opportunity costs of CFM. @tbl-bs_individual_opp_costs shows the percentage reporting this broken down by interviewee role.
+
+```{r}
+#| label: tbl-bs_individual_opp_costs
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Percentage of individual interviewees reporting that women disproportionately suffer the opportunity costs of CFM by interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  select(
+    interviewee_role,
+    empl = equity_and_inclusion_women_disproportionally_suffer_opportunity_costs
+  ) |>
+  mutate(
+    interviewee_role = case_match(
+      as.character(interviewee_role),
+      "cfmg_member"      ~ "Community member",
+      "cfmg_exec_member" ~ "CFMG executive member",
+      "trad_leader"      ~ "Traditional leader",
+      "dfo"              ~ "District Forestry Officer",
+      "NGO_rep"          ~ "NGO representative"
+    ),
+    interviewee_role = factor(interviewee_role, levels = c(
+      "Community member", "CFMG executive member", "Traditional leader",
+      "District Forestry Officer", "NGO representative"
+    )),
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA)
+  ) |>
+  group_by(interviewee_role) |>
+  summarise(
+    n         = n(),
+    Opp_costs = mean(empl, na.rm = TRUE),
+    .groups   = "drop"
+  ) |>
+  arrange(interviewee_role) |>
+  gt() |>
+  cols_label(
+    interviewee_role = "Role",
+    n                = "n",
+    Opp_costs        = "Agree women disproportionately suffer opportunity costs"
+  ) |>
+  fmt_percent(
+    columns  = Opp_costs,
+    decimals = 0
+  ) |>
+  tab_header(
+    title    = "Women disproportionately suffer opportunity costs, as reported by individual interviewees",
+    subtitle = "Values represent the % of positive responses. n = the total number of interview responses."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "left",   columns = interviewee_role) |>
+  cols_align(align = "center", columns = c(n, Opp_costs)) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
+  ) |>
+  sub_missing()
+```
+
+::: {.callout-note collapse="true"}
+### Women opportunity costs - Individual interviewees - Model methods
+
+To examine differences among individual interviewee roles in whether they agreed that women disproportionately suffer the opportunity costs of CFM, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: model_bs_individual_opp_costs
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    empl               = equity_and_inclusion_women_disproportionally_suffer_opportunity_costs,
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M6 <- glmer(empl ~ interviewee_role + interviewee_gender + interviewee_age +
+              (1 | province) + (1 | province_cfmg),
+            data = test.data, family = binomial)
+
+emm.M6      <- emmeans(M6, specs = ~ interviewee_role, type = "response")
+pairwise.M6 <- pairs(emm.M6, adjust = "Tukey")
+```
+
+```{r}
+#| label: M6_bs_individual_opp_costs
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Women opportunity costs – Individual model results (click to expand)"
+
+summary(M6)
+```
+
+```{r}
+#| label: pairwise_bs_individual_opp_costs
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Women opportunity costs – Individual pairwise comparisons (click to expand)"
+
+summary(pairwise.M6)
+```
+
+### Women participate in decision making
+
+We asked FGD groups whether women participate in CFM decision making (@fig-bs_decision_making).
+
+```{r}
+#| label: fig-bs_decision_making
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Do women participate in CFM decision making? The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+
+cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    response = equity_and_inclusion_women_participate_in_decision_making,
+    response = case_match(response,
+                          "yes" ~ "Yes",
+                          "no" ~ "No",
+                          .default = NA),
+    response = factor(response, levels = c("Yes", "No")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    )
+  ) |>
+  drop_na(response) |>
+  count(interview_type, response) |>
+  group_by(interview_type) |>
+  mutate(prop = n / sum(n)) |>
+  ungroup() |>
+  ggplot(aes(y = interview_type, x = prop, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.05, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of groups"
+  ) +
+  scale_fill_manual(
+    values = c("Yes" = "#2A9D8F", "No" = "#E07B54"),
+    guide  = guide_legend(reverse = TRUE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+::: {.callout-note collapse="true"}
+### Women decision making - FGDs - Model methods
+
+To examine differences among FGD types in whether they agreed that women participate in CFM decision making, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_bs_fgd_decision_making
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data <- cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    empl = equity_and_inclusion_women_participate_in_decision_making,
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    )
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M7 <- glmer(empl ~ interview_type + (1 | province) + (1 | province_cfmg),
+            data = test.data, family = binomial)
+
+emm.M7      <- emmeans(M7, specs = ~ interview_type, type = "response")
+pairwise.M7 <- pairs(emm.M7, adjust = "Tukey")
+```
+
+```{r}
+#| label: M7_bs_fgd_decision_making
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Women decision making – FGD model results (click to expand)"
+
+summary(M7)
+```
+
+```{r}
+#| label: pairwise_bs_fgd_decision_making
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Women decision making – FGD pairwise comparisons (click to expand)"
+
+summary(pairwise.M7)
+```
+
+Individual interviewees were also asked whether women participate in CFM decision making. @tbl-bs_individual_decision_making shows the percentage reporting this broken down by interviewee role.
+
+```{r}
+#| label: tbl-bs_individual_decision_making
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Percentage of individual interviewees reporting that women participate in CFM decision making by interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  select(
+    interviewee_role,
+    empl = equity_and_inclusion_women_participate_in_decision_making
+  ) |>
+  mutate(
+    interviewee_role = case_match(
+      as.character(interviewee_role),
+      "cfmg_member"      ~ "Community member",
+      "cfmg_exec_member" ~ "CFMG executive member",
+      "trad_leader"      ~ "Traditional leader",
+      "dfo"              ~ "District Forestry Officer",
+      "NGO_rep"          ~ "NGO representative"
+    ),
+    interviewee_role = factor(interviewee_role, levels = c(
+      "Community member", "CFMG executive member", "Traditional leader",
+      "District Forestry Officer", "NGO representative"
+    )),
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA)
+  ) |>
+  group_by(interviewee_role) |>
+  summarise(
+    n               = n(),
+    Decision_making = mean(empl, na.rm = TRUE),
+    .groups         = "drop"
+  ) |>
+  arrange(interviewee_role) |>
+  gt() |>
+  cols_label(
+    interviewee_role = "Role",
+    n                = "n",
+    Decision_making  = "Agree women participate in decision making"
+  ) |>
+  fmt_percent(
+    columns  = Decision_making,
+    decimals = 0
+  ) |>
+  tab_header(
+    title    = "Women participate in CFM decision making, as reported by individual interviewees",
+    subtitle = "Values represent the % of positive responses. n = the total number of interview responses."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "left",   columns = interviewee_role) |>
+  cols_align(align = "center", columns = c(n, Decision_making)) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
+  ) |>
+  sub_missing()
+```
+
+::: {.callout-note collapse="true"}
+### Women decision making - Individual interviewees - Model methods
+
+To examine differences among individual interviewee roles in whether they agreed that women participate in CFM decision making, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: model_bs_individual_decision_making
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    empl               = equity_and_inclusion_women_participate_in_decision_making,
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M8 <- glmer(empl ~ interviewee_role + interviewee_gender + interviewee_age +
+              (1 | province) + (1 | province_cfmg),
+            data = test.data, family = binomial)
+
+emm.M8      <- emmeans(M8, specs = ~ interviewee_role, type = "response")
+pairwise.M8 <- pairs(emm.M8, adjust = "Tukey")
+```
+
+```{r}
+#| label: M8_bs_individual_decision_making
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Women decision making – Individual model results (click to expand)"
+
+summary(M8)
+```
+
+```{r}
+#| label: pairwise_bs_individual_decision_making
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Women decision making – Individual pairwise comparisons (click to expand)"
+
+summary(pairwise.M8)
+```
+
+### Transparency in benefit sharing
+
+We asked FGD groups whether there is transparency in CFM benefit sharing (@fig-bs_transparency).
+
+```{r}
+#| label: fig-bs_transparency
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Is there transparency in CFM benefit sharing? The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+
+cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    response = equity_and_inclusion_transparency_in_benefit_sharing,
+    response = case_match(response,
+                          "yes" ~ "Yes",
+                          "no" ~ "No",
+                          .default = NA),
+    response = factor(response, levels = c("Yes", "No")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    )
+  ) |>
+  drop_na(response) |>
+  count(interview_type, response) |>
+  group_by(interview_type) |>
+  mutate(prop = n / sum(n)) |>
+  ungroup() |>
+  ggplot(aes(y = interview_type, x = prop, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.05, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of groups"
+  ) +
+  scale_fill_manual(
+    values = c("Yes" = "#2A9D8F", "No" = "#E07B54"),
+    guide  = guide_legend(reverse = TRUE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+::: {.callout-note collapse="true"}
+### Transparency in benefit sharing - FGDs - Model methods
+
+To examine differences among FGD types in whether they agreed there is transparency in CFM benefit sharing, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_bs_fgd_transparency
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data <- cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    empl = equity_and_inclusion_transparency_in_benefit_sharing,
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    )
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M9 <- glmer(empl ~ interview_type + (1 | province) + (1 | province_cfmg),
+            data = test.data, family = binomial)
+
+emm.M9      <- emmeans(M9, specs = ~ interview_type, type = "response")
+pairwise.M9 <- pairs(emm.M9, adjust = "Tukey")
+```
+
+```{r}
+#| label: M9_bs_fgd_transparency
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Transparency in benefit sharing – FGD model results (click to expand)"
+
+summary(M9)
+```
+
+```{r}
+#| label: pairwise_bs_fgd_transparency
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Transparency in benefit sharing – FGD pairwise comparisons (click to expand)"
+
+summary(pairwise.M9)
+```
+
+Individual interviewees were also asked whether there is transparency in CFM benefit sharing. @tbl-bs_individual_transparency shows the percentage reporting this broken down by interviewee role.
+
+```{r}
+#| label: tbl-bs_individual_transparency
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Percentage of individual interviewees reporting that there is transparency in CFM benefit sharing by interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  select(
+    interviewee_role,
+    empl = equity_and_inclusion_transparency_in_benefit_sharing
+  ) |>
+  mutate(
+    interviewee_role = case_match(
+      as.character(interviewee_role),
+      "cfmg_member"      ~ "Community member",
+      "cfmg_exec_member" ~ "CFMG executive member",
+      "trad_leader"      ~ "Traditional leader",
+      "dfo"              ~ "District Forestry Officer",
+      "NGO_rep"          ~ "NGO representative"
+    ),
+    interviewee_role = factor(interviewee_role, levels = c(
+      "Community member", "CFMG executive member", "Traditional leader",
+      "District Forestry Officer", "NGO representative"
+    )),
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA)
+  ) |>
+  group_by(interviewee_role) |>
+  summarise(
+    n            = n(),
+    Transparency = mean(empl, na.rm = TRUE),
+    .groups      = "drop"
+  ) |>
+  arrange(interviewee_role) |>
+  gt() |>
+  cols_label(
+    interviewee_role = "Role",
+    n                = "n",
+    Transparency     = "Agree there is transparency in benefit sharing"
+  ) |>
+  fmt_percent(
+    columns  = Transparency,
+    decimals = 0
+  ) |>
+  tab_header(
+    title    = "Transparency in CFM benefit sharing, as reported by individual interviewees",
+    subtitle = "Values represent the % of positive responses. n = the total number of interview responses."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "left",   columns = interviewee_role) |>
+  cols_align(align = "center", columns = c(n, Transparency)) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
+  ) |>
+  sub_missing()
+```
+
+::: {.callout-note collapse="true"}
+### Transparency in benefit sharing - Individual interviewees - Model methods
+
+To examine differences among individual interviewee roles in whether they agreed there is transparency in CFM benefit sharing, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: model_bs_individual_transparency
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    empl               = equity_and_inclusion_transparency_in_benefit_sharing,
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M10 <- glmer(empl ~ interviewee_role + interviewee_gender + interviewee_age +
+               (1 | province) + (1 | province_cfmg),
+             data = test.data, family = binomial)
+
+emm.M10      <- emmeans(M10, specs = ~ interviewee_role, type = "response")
+pairwise.M10 <- pairs(emm.M10, adjust = "Tukey")
+```
+
+```{r}
+#| label: M10_bs_individual_transparency
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Transparency in benefit sharing – Individual model results (click to expand)"
+
+summary(M10)
+```
+
+```{r}
+#| label: pairwise_bs_individual_transparency
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Transparency in benefit sharing – Individual pairwise comparisons (click to expand)"
+
+summary(pairwise.M10)
+```
+
+
+We also examined which mechanisms are being used to achieve transparency in benefit sharing among the community female, male, and youth FGDs (@fig-bs_transparency_mechanisms).
+
+```{r}
+#| label: fig-bs_transparency_mechanisms
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Mechanisms used to achieve transparency in CFM benefit sharing, as reported by community female, male, and youth FGDs. Bars show the number of FGDs reporting each mechanism."
+#| fig-width: 10
+#| fig-height: 8
+
+prefix_trans <- "equity_and_inclusion_mechanisms_for_transparency_fairness_"
+
+trans_labels <- c(
+  "community_meetings_to_discuss_benefit_sharing_decisions"                                                    = "Community meetings",
+  "written_agreements_or_guidelines_outlining_benefit_distribution_rules"                                     = "Written agreements",
+  "memos"                                                                                                      = "Memos",
+  "financial_reports_or_audits_shared_with_community_members"                                                 = "Financial reports/audits",
+  "inclusive_representation_of_women_youth_and_marginalized_groups_in_decision_making"                        = "Inclusive representation",
+  "external_oversight_by_government_agencies_ngos_or_independent_bodies"                                     = "External oversight",
+  "grievance_and_dispute_resolution_mechanisms_for_complaints_or_conflicts"                                   = "Grievance mechanisms",
+  "needs_assessment"                                                                                           = "Needs assessment"
+)
+
+full_trans_vars <- paste0(prefix_trans, names(trans_labels))
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  mutate(group = factor(
+    case_match(
+      interview_type,
+      "cfmg_female" ~ "Female",
+      "cfmg_male"   ~ "Male",
+      "cfmg_youth"  ~ "Youth"
+    ),
+    levels = c("Youth", "Male", "Female")
+  )) |>
+  select(group, all_of(full_trans_vars)) |>
+  pivot_longer(all_of(full_trans_vars), names_to = "variable", values_to = "val") |>
+  filter(val == 1) |>
+  mutate(mechanism = factor(
+    trans_labels[sub(prefix_trans, "", variable, fixed = TRUE)],
+    levels = rev(trans_labels)
+  )) |>
+  count(group, mechanism) |>
+  complete(group, mechanism, fill = list(n = 0)) |>
+  ggplot(aes(y = mechanism, x = n, fill = group)) +
+  geom_col(position = position_dodge(width = 0.75), width = 0.65, colour = "white") +
+  geom_text(
+    aes(label = ifelse(n > 0, n, "")),
+    position = position_dodge(width = 0.75),
+    hjust = -0.3, size = 3.5, colour = "grey30"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Female" = "#2A9D8F",
+      "Male"   = "#57B8B0",
+      "Youth"  = "#E9C46A"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.15)),
+    name   = "Number of FGDs"
+  ) +
+  scale_y_discrete(labels = \(x) str_wrap(x, width = 25), expand = expansion(add = 0.6)) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.x        = element_text(colour = "grey20"),
+    axis.text.y        = element_text(size = 14, colour = "grey20"),
+    legend.position    = "bottom",
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+### Grievance and Redress
+
+We asked FGD groups whether their CFMG has a grievance and redress mechanism (@fig-bs_grievance).
+
+```{r}
+#| label: fig-bs_grievance
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Does the CFMG have a grievance and redress mechanism? The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
+
+cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    response = equity_and_inclusion_grievance_redress_mechanism,
+    response = case_match(response,
+                          "yes" ~ "Yes",
+                          "no" ~ "No",
+                          .default = NA),
+    response = factor(response, levels = c("Yes", "No")),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Youth", "Male", "Female", "Executive")
+    )
+  ) |>
+  drop_na(response) |>
+  count(interview_type, response) |>
+  group_by(interview_type) |>
+  mutate(prop = n / sum(n)) |>
+  ungroup() |>
+  ggplot(aes(y = interview_type, x = prop, fill = response)) +
+  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
+  geom_text(
+    aes(label = ifelse(prop >= 0.05, n, "")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5, fontface = "bold", colour = "white"
+  ) +
+  scale_x_continuous(
+    labels = percent_format(accuracy = 1),
+    expand = expansion(mult = 0.01),
+    name   = "Proportion of groups"
+  ) +
+  scale_fill_manual(
+    values = c("Yes" = "#2A9D8F", "No" = "#E07B54"),
+    guide  = guide_legend(reverse = TRUE)
+  ) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
+    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
+    legend.position    = "bottom",
+    legend.text        = element_text(size = rel(1)),
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+::: {.callout-note collapse="true"}
+### Grievance and redress - FGDs - Model methods
+
+To examine differences among FGD types in whether they reported having a grievance and redress mechanism, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
+:::
+
+```{r}
+#| label: model_bs_fgd_grievance
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data <- cfmg |>
+  filter(interview_type != "individual_interview") |>
+  mutate(
+    empl = equity_and_inclusion_grievance_redress_mechanism,
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    )
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M11 <- glmer(empl ~ interview_type + (1 | province) + (1 | province_cfmg),
+             data = test.data, family = binomial)
+
+emm.M11      <- emmeans(M11, specs = ~ interview_type, type = "response")
+pairwise.M11 <- pairs(emm.M11, adjust = "Tukey")
+```
+
+```{r}
+#| label: M11_bs_fgd_grievance
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Grievance and redress – FGD model results (click to expand)"
+
+summary(M11)
+```
+
+```{r}
+#| label: pairwise_bs_fgd_grievance
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Grievance and redress – FGD pairwise comparisons (click to expand)"
+
+summary(pairwise.M11)
+```
+
+Individual interviewees were also asked whether their CFMG has a grievance and redress mechanism. @tbl-bs_individual_grievance shows the percentage reporting this broken down by interviewee role.
+
+```{r}
+#| label: tbl-bs_individual_grievance
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Percentage of individual interviewees reporting that the CFMG has a grievance and redress mechanism by interviewee role."
+
+cfmg |>
+  filter(interview_type == "individual_interview") |>
+  select(
+    interviewee_role,
+    empl = equity_and_inclusion_grievance_redress_mechanism
+  ) |>
+  mutate(
+    interviewee_role = case_match(
+      as.character(interviewee_role),
+      "cfmg_member"      ~ "Community member",
+      "cfmg_exec_member" ~ "CFMG executive member",
+      "trad_leader"      ~ "Traditional leader",
+      "dfo"              ~ "District Forestry Officer",
+      "NGO_rep"          ~ "NGO representative"
+    ),
+    interviewee_role = factor(interviewee_role, levels = c(
+      "Community member", "CFMG executive member", "Traditional leader",
+      "District Forestry Officer", "NGO representative"
+    )),
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA)
+  ) |>
+  group_by(interviewee_role) |>
+  summarise(
+    n         = n(),
+    Grievance = mean(empl, na.rm = TRUE),
+    .groups   = "drop"
+  ) |>
+  arrange(interviewee_role) |>
+  gt() |>
+  cols_label(
+    interviewee_role = "Role",
+    n                = "n",
+    Grievance        = "Grievance and redress mechanism"
+  ) |>
+  fmt_percent(
+    columns  = Grievance,
+    decimals = 0
+  ) |>
+  tab_header(
+    title    = "Grievance and redress mechanism, as reported by individual interviewees",
+    subtitle = "Values represent the % of positive responses. n = the total number of interview responses."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "left",   columns = interviewee_role) |>
+  cols_align(align = "center", columns = c(n, Grievance)) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = interviewee_role)
+  ) |>
+  sub_missing()
+```
+
+::: {.callout-note collapse="true"}
+### Grievance and redress - Individual interviewees - Model methods
+
+To examine differences among individual interviewee roles in whether they reported the CFMG has a grievance and redress mechanism, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
+:::
+
+```{r}
+#| label: model_bs_individual_grievance
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+
+test.data <- cfmg |>
+  filter(interview_type == "individual_interview") |>
+  mutate(
+    empl               = equity_and_inclusion_grievance_redress_mechanism,
+    empl = case_match(empl,
+                      "yes" ~ 1,
+                      "no" ~ 0,
+                      .default = NA),
+    interviewee_gender = demo_information_interviewee_gender,
+    interviewee_age    = demo_information_interviewee_age
+  ) |>
+  drop_na(empl) |>
+  mutate(province_cfmg = interaction(province, cfmg_name))
+
+M12 <- glmer(empl ~ interviewee_role + interviewee_gender + interviewee_age +
+               (1 | province) + (1 | province_cfmg),
+             data = test.data, family = binomial)
+
+emm.M12      <- emmeans(M12, specs = ~ interviewee_role, type = "response")
+pairwise.M12 <- pairs(emm.M12, adjust = "Tukey")
+```
+
+```{r}
+#| label: M12_bs_individual_grievance
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Grievance and redress – Individual model results (click to expand)"
+
+summary(M12)
+```
+
+```{r}
+#| label: pairwise_bs_individual_grievance
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| output-fold: true
+#| output-summary: "Grievance and redress – Individual pairwise comparisons (click to expand)"
+
+summary(pairwise.M12)
+```
+
+We also examined which mechanisms are being used to achieve grievance and redress among the community female, male, and youth FGDs (@fig-bs_grievance_mechanisms).
+
+```{r}
+#| label: fig-bs_grievance_mechanisms
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Mechanisms used for grievance and redress in CFMGs, as reported by community female, male, and youth FGDs. Bars show the number of FGDs reporting each mechanism."
+#| fig-width: 10
+#| fig-height: 8
+
+prefix_griev <- "equity_and_inclusion_grievance_redress_mechanisms_"
+
+
+griev_labels <- c(
+  "community_meetings_or_forums_for_conflict_resolution"  = "Community meetings/forums",
+  "mediation_by_traditional_leaders"                      = "Mediation by traditional leaders",
+  "formal_grievance_committees_within_the_cfm_group"      = "Formal grievance committees",
+  "legal_channels_local_courts_government_agencies"       = "Legal channels",
+  "external_mediation_by_ngos_or_third_parties"           = "External mediation (NGOs)",
+  "anonymous_reporting_mechanisms_suggestion_boxes"        = "Anonymous reporting",
+  "stipulated_in_constitution"                            = "Stipulated in constitution",
+  "stipulated_in_redress_document"                        = "Stipulated in redress document"
+)
+
+full_griev_vars <- paste0(prefix_griev, names(griev_labels))
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  mutate(group = factor(
+    case_match(
+      interview_type,
+      "cfmg_female" ~ "Female",
+      "cfmg_male"   ~ "Male",
+      "cfmg_youth"  ~ "Youth"
+    ),
+    levels = c("Youth", "Male", "Female")
+  )) |>
+  select(group, all_of(full_griev_vars)) |>
+  pivot_longer(all_of(full_griev_vars), names_to = "variable", values_to = "val") |>
+  filter(val == 1) |>
+  mutate(mechanism = factor(
+    griev_labels[sub(prefix_griev, "", variable, fixed = TRUE)],
+    levels = rev(griev_labels)
+  )) |>
+  count(group, mechanism) |>
+  complete(group, mechanism, fill = list(n = 0)) |>
+  ggplot(aes(y = mechanism, x = n, fill = group)) +
+  geom_col(position = position_dodge(width = 0.75), width = 0.65, colour = "white") +
+  geom_text(
+    aes(label = ifelse(n > 0, n, "")),
+    position = position_dodge(width = 0.75),
+    hjust = -0.3, size = 3.5, colour = "grey30"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Female" = "#2A9D8F",
+      "Male"   = "#57B8B0",
+      "Youth"  = "#E9C46A"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.15)),
+    name   = "Number of FGDs"
+  ) +
+  scale_y_discrete(labels = \(x) str_wrap(x, width = 25), expand = expansion(add = 0.6)) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.x        = element_text(colour = "grey20"),
+    axis.text.y        = element_text(size = 14, colour = "grey20"),
+    legend.position    = "bottom",
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+### Impact on poverty
+
+We asked the community female, male, and youth FGDs to identify the ways in which CFM has had an impact on poverty in their communities (@fig-bs_poverty_impact).
+
+```{r}
+#| label: fig-bs_poverty_impact
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Reported impacts of CFM on poverty, as identified by community female, male, and youth FGDs. Bars show the number of FGDs reporting each impact."
+#| fig-width: 10
+#| fig-height: 8
+
+prefix_pov <- "equity_and_inclusion_impact_on_poverty_"
+
+pov_labels <- c(
+  "increase_in_household_incomes"                                                    = "Increase in household incomes",
+  "improved_nutrition_and_food_security"                                             = "Improved nutrition and food security",
+  "improved_water_security"                                                          = "Improved water security",
+  "higher_school_attendance_rates"                                                   = "Higher school attendance rates",
+  "improved_access_to_healthcare"                                                    = "Improved access to healthcare",
+  "increase_in_household_assets_livestock_tools_housing_improvements"               = "Increase in household assets",
+  "creation_of_new_income_generating_activities_eco_tourism_handicrafts_ntfp_trade" = "New income-generating activities",
+  "reduction_in_economic_inequality_within_the_community"                           = "Reduction in economic inequality"
+)
+
+full_pov_vars <- paste0(prefix_pov, names(pov_labels))
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  mutate(group = factor(
+    case_match(
+      interview_type,
+      "cfmg_female" ~ "Female",
+      "cfmg_male"   ~ "Male",
+      "cfmg_youth"  ~ "Youth"
+    ),
+    levels = c("Youth", "Male", "Female")
+  )) |>
+  select(group, all_of(full_pov_vars)) |>
+  pivot_longer(all_of(full_pov_vars), names_to = "variable", values_to = "val") |>
+  filter(val == 1) |>
+  mutate(impact = factor(
+    pov_labels[sub(prefix_pov, "", variable, fixed = TRUE)],
+    levels = rev(pov_labels)
+  )) |>
+  count(group, impact) |>
+  complete(group, impact, fill = list(n = 0)) |>
+  ggplot(aes(y = impact, x = n, fill = group)) +
+  geom_col(position = position_dodge(width = 0.75), width = 0.65, colour = "white") +
+  geom_text(
+    aes(label = ifelse(n > 0, n, "")),
+    position = position_dodge(width = 0.75),
+    hjust = -0.3, size = 3.5, colour = "grey30"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Female" = "#2A9D8F",
+      "Male"   = "#57B8B0",
+      "Youth"  = "#E9C46A"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.15)),
+    name   = "Number of FGDs"
+  ) +
+  scale_y_discrete(labels = \(x) str_wrap(x, width = 25), expand = expansion(add = 0.6)) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.x        = element_text(colour = "grey20"),
+    axis.text.y        = element_text(size = 14, colour = "grey20"),
+    legend.position    = "bottom",
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+### Barriers to poorer community members
+
+We asked the community female, male, and youth FGDs to identify the barriers that prevent poorer community members from benefiting from CFM (@fig-bs_poverty_barriers).
+
+```{r}
+#| label: fig-bs_poverty_barriers
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Barriers preventing poorer community members from benefiting from CFM, as reported by community female, male, and youth FGDs. Word size is proportional to the number of FGDs reporting each barrier."
+#| fig-width: 10
+#| fig-height: 7
+
+prefix_b <- "equity_and_inclusion_challenges_for_poorer_community_members_"
+
+barrier_labels <- c(
+  "lack_or_limited_cfm_benefits"                                                         = "Limited CFM benefits",
+  "limited_access_to_information_about_cfm_opportunities_and_benefits"                   = "Limited information",
+  "lack_of_financial_and_other_resources_to_participate_in_cfm_activities"              = "Lack of resources",
+  "exclusion_from_decision_making_processes_within_the_cfm_group"                       = "Excluded from decisions",
+  "unequal_distribution_of_benefits_among_community_members"                             = "Unequal benefit distribution",
+  "limited_access_to_training_or_capacity_building_opportunities"                       = "Limited training",
+  "high_opportunity_costs_time_labor_or_resources_lost_by_participating_in_cfm"        = "High opportunity costs",
+  "social_or_cultural_barriers_discrimination_based_on_gender_age_or_status"          = "Social/cultural barriers",
+  "physical_distance_from_cfm_activities_or_resources"                                  = "Physical distance",
+  "lack_of_trust_in_cfm_leadership_management_or_benefit_sharing_mechanisms"          = "No trust in leadership",
+  "lack_of_interest_in_cfm_activities"                                                  = "Lack of interest",
+  "cfma_access_restrictions"                                                             = "CFMA access restrictions",
+  "influence_by_stronger_indiv"                                                          = "Stronger individual influence",
+  "human_wildlife_conflicts"                                                             = "Human-wildlife conflicts",
+  "selfishness"                                                                          = "Selfishness",
+  "interference_from_govt_and_traditional_leadership"                                   = "Govt/traditional leader interference"
+)
+
+full_b_vars <- paste0(prefix_b, names(barrier_labels))
+
+# Frequency counts from binary checkbox variables
+barrier_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  select(all_of(full_b_vars)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(word = barrier_labels[sub(prefix_b, "", variable, fixed = TRUE)]) |>
+  filter(freq > 0) |>
+  select(word, freq)
+
+# Word frequencies from open-ended comments
+comment_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  select(comment = equity_and_inclusion_challenges_for_poorer_community_members_comment) |>
+  drop_na(comment) |>
+  unnest_tokens(word, comment) |>
+  anti_join(stop_words, by = "word") |>
+  filter(nchar(word) > 2, !word %in% c(
+    "cfm", "cfmg", "forest", "limited", "lack",
+    "youths", "visible", "accessing", "people", "poorer", "community", "coming"
+  )) |>
+  count(word, name = "freq") |>
+  filter(freq > 1)
+
+# Combine checkbox labels and comment words
+barriers_all <- bind_rows(barrier_freq, comment_freq) |>
+  group_by(word) |>
+  summarise(freq = sum(freq), .groups = "drop")
+
+set.seed(42)
+ggplot(barriers_all, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 22)) +
+  scale_colour_gradient(low = "#F4A582", high = "#8B0000") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
+### Addressing challenges
+
+We asked the community female, male, and youth FGDs to suggest solutions to address the barriers facing poorer community members in benefiting from CFM (@fig-bs_solutions).
+
+```{r}
+#| label: fig-bs_solutions
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Suggested solutions to address barriers preventing poorer community members from benefiting from CFM, as reported by community female, male, and youth FGDs. Bars show the number of FGDs reporting each solution."
+#| fig-width: 10
+#| fig-height: 6
+
+prefix_sol <- "equity_and_inclusioNAddressing_challenges_"
+
+sol_labels <- c(
+  "provision_of_financial_support_or_subsidies_to_poorer_households"      = "Financial support/subsidies",
+  "creation_of_targeted_programs_for_marginalized_groups"                  = "Targeted programs for marginalised groups",
+  "community_meetings_or_forums_to_discuss_and_resolve_issues"             = "Community meetings/forums",
+  "adjustments_to_benefit_sharing_arrangements_to_ensure_fairness"         = "Adjustments to benefit sharing",
+  "training_and_capacity_building_for_disadvantaged_groups"                = "Training and capacity building",
+  "leadership_and_governance"                                               = "Leadership and governance"
+)
+
+full_sol_vars <- paste0(prefix_sol, names(sol_labels))
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  mutate(group = factor(
+    case_match(
+      interview_type,
+      "cfmg_female" ~ "Female",
+      "cfmg_male"   ~ "Male",
+      "cfmg_youth"  ~ "Youth"
+    ),
+    levels = c("Youth", "Male", "Female")
+  )) |>
+  select(group, all_of(full_sol_vars)) |>
+  pivot_longer(all_of(full_sol_vars), names_to = "variable", values_to = "val") |>
+  filter(val == 1) |>
+  mutate(solution = factor(
+    sol_labels[sub(prefix_sol, "", variable, fixed = TRUE)],
+    levels = rev(sol_labels)
+  )) |>
+  count(group, solution) |>
+  complete(group, solution, fill = list(n = 0)) |>
+  ggplot(aes(y = solution, x = n, fill = group)) +
+  geom_col(position = position_dodge(width = 0.75), width = 0.65, colour = "white") +
+  geom_text(
+    aes(label = ifelse(n > 0, n, "")),
+    position = position_dodge(width = 0.75),
+    hjust = -0.3, size = 3.5, colour = "grey30"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Female" = "#2A9D8F",
+      "Male"   = "#57B8B0",
+      "Youth"  = "#E9C46A"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.15)),
+    name   = "Number of FGDs"
+  ) +
+  scale_y_discrete(labels = \(x) str_wrap(x, width = 25), expand = expansion(add = 0.6)) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.x        = element_text(colour = "grey20"),
+    axis.text.y        = element_text(size = 14, colour = "grey20"),
+    legend.position    = "bottom",
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```

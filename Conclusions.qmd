@@ -1,0 +1,143 @@
+---
+title: "Conclusions & Recommentations"
+author: "Rhett D Harrison"
+format:
+        html:
+                css: custom.css
+        pdf: default
+filters:
+- collapse-output
+editor: visual
+---
+
+```{r}
+#| label: load_data_and_libraries
+#| include: false
+#| warning: false
+#| message: false
+#| error:   false
+
+library(tidyverse)
+library(tidytext)
+library(ggwordcloud)
+
+load("cfmg.RData")
+```
+
+## Conclusions
+
+### What is working in CFM
+
+We asked FGD groups to identify aspects of CFM that are working well in their communities (@fig-conc_working).
+
+```{r}
+#| label: fig-conc_working
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Aspects of CFM that are working well, as identified by community female, male, and youth FGDs. Word size is proportional to the number of FGDs reporting each aspect."
+#| fig-width: 10
+#| fig-height: 7
+
+prefix_w <- "opportunitiesb_for_improved_cfm_implementation_cfm_working_aspects_"
+
+working_labels <- c(
+  "effective_management_of_forest_resources_e_g_sustainable_harvesting_restoration" = "Effective forest management",
+  "reduction_in_deforestation_and_forest_degradation"                               = "Reduced deforestation",
+  "increased_wildlife_conservation_and_biodiversity"                                = "Wildlife conservation",
+  "equitable_benefit_sharing_among_community_members"                               = "Equitable benefit sharing",
+  "active_participation_of_women_youth_and_marginalized_groups_in_cfm_activities"  = "Inclusive participation",
+  "improved_livelihoods_and_income_generating_opportunities_through_cfm_activities" = "Improved livelihoods",
+  "successful_partnerships_with_private_enterprises_or_external_institutions"       = "Private sector partnerships",
+  "successful_partnerships_with_traditional_leaders"                                = "Traditional leader partnerships",
+  "improved_infrastructure"                                                          = "Improved infrastructure",
+  "effective_monitoring_and_reporting_of_cfm_outcomes_and_impacts"                 = "Effective monitoring",
+  "transparent_and_fair_decision_making_processes_within_the_community"            = "Transparent decision making",
+  "strong_community_awareness_and_involvement_in_cfm_activities"                   = "Community awareness"
+)
+
+full_w_vars <- paste0(prefix_w, names(working_labels))
+
+# Frequency counts from binary checkbox variables
+working_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  select(all_of(full_w_vars)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(word = working_labels[sub(prefix_w, "", variable, fixed = TRUE)]) |>
+  filter(freq > 0) |>
+  select(word, freq)
+
+# Word frequencies from open-ended comments
+comment_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  select(comment = opportunitiesb_for_improved_cfm_implementation_cfm_working_aspects_comment) |>
+  drop_na(comment) |>
+  unnest_tokens(word, comment) |>
+  anti_join(stop_words, by = "word") |>
+  filter(nchar(word) > 2, !word %in% c("cfm", "cfmg", "forest", "community", "people")) |>
+  count(word, name = "freq") |>
+  filter(freq > 1)
+
+# Combine checkbox labels and comment words
+working_all <- bind_rows(working_freq, comment_freq) |>
+  group_by(word) |>
+  summarise(freq = sum(freq), .groups = "drop")
+
+set.seed(42)
+ggplot(working_all, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 22)) +
+  scale_colour_gradient(low = "#6ABFB8", high = "#1A6B63") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
+
+
+## Recommendations
+
+### Governance
+
+- Make it FD policy that DFOs should visit and attend a meeting of every CFMG at least once per quarter. The DFO should use these visits to push and assist the CFMG to complete CFM processes, including all legal and administrative processes.
+
+- To enable regular DFO visits, organisations supporting CFMGs, such as NGOs or carbon trading companies, should be required to provide transport and travel allowance for at least 4 visits per year.
+
+- Standardise important CFMG processes including; (i) elections of CFMG and executive positions; (ii) tenure of CFMG members and executive position; (iii) term limits; (iv) bank accounts, receipt books, HFO payments and gratuities for CFMG activities; (v) reporting requirements, including presentation of reports to community members (also require online submission to FD database);  (vi) Grievance & Redress mechanisms; (vii) carbon benefit sharing mechanisms; (viii) other benefit sharing mechanisms.
+
+- Require marking of CF boundary
+
+- Require annual implementation plans and budgets
+
+- Require registration of forest user-groups and permitting
+
+- Consider supporting Forest Stewardship Certification (FSC) for CFs. FSC certification can improve carbon credit values by up to 100% and open international markets for NTFPs.
+
+### Sustainble forest management
+
+- Define restoration areas within the CF in forest management plans and assess area of (i) natural regeneration, (ii) planting with indigenous species, and (iii) planting with exotic species (agroforestry plantings should not be within the CF). Any areas that are severely degraded that are being protected should be considered potential restoration sites and if only protection is being applied this should be considered natural regeneration. This information can be used to 
+
+- Establish community based monitoring systems for NTFPs. These systems should be developed centrally and standardised, so that data can be entered into a FD managed database but with dashboard for community viewing.
+
+- Consider a small plantation programme for CFs for timber or sustainable charcoal production
+
+### Economic transformation
+
+- Require the production of CF business plans
+
+- Establish independent trade association for forest product producers (note: could be Wildlife Producers Association, if they were willing to branch out from game meat and represent small producers)
+
+- Establish national knowledge hub on forest product management, value addition, and marketing
+
+- Require / encourage carbon traders and NGOs working with CFMGs to engage in a minimum of three forest product value chains in each CF
+
+- Develop programme for community-based eco-tourism through CFs and based on national heritage sites
+
+### Equity and inclusion
+
+- Require identification of opportunity costs of CF and the community groups most affected
+
+- Encourage development of women's forest product enterprises
+
+- Require consideration of vulnerable groups in benefit sharing arrangements
