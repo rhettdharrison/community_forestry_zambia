@@ -459,42 +459,63 @@ ggplot(training_freq, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-### Training comments
+### The last word
 
-Additional training needs described by FGD groups in their own words (@fig-conc_training_comments).
+After each FGD session, enumerators recorded general observations in an open-ended comment field. Comments that were location names only were excluded, and the substantive comments were coded thematically. Key themes are shown in @fig-conc_comments, with size proportional to the number of FGD sessions for which that theme was noted.
 
 ```{r}
-#| label: fig-conc_training_comments
+#| label: fig-conc_comments
 #| code-fold: true
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Additional training needs as described by community female, male, and youth FGDs. Phrase size is proportional to frequency of mention."
+#| fig-cap: "Key themes from enumerator observations recorded after each FGD session. Word size is proportional to the number of FGD sessions for which that theme was noted."
 #| fig-width: 10
-#| fig-height: 7
+#| fig-height: 8
 
-training_comment_phrases <- cfmg |>
+cfmg_comments <- cfmg |>
   filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
-  select(comment = opportunitiesb_for_improved_cfm_implementation_cfmg_training_type_comment) |>
+  select(comment) |>
   drop_na(comment) |>
-  mutate(phrase = str_split(comment, "[.;,\\n]+")) |>
-  unnest(phrase) |>
-  mutate(
-    phrase  = str_squish(str_to_sentence(phrase)),
-    n_words = str_count(phrase, "\\S+")
-  ) |>
-  filter(
-    n_words >= 2, n_words <= 7,
-    !str_detect(phrase, regex("^(and|or|the|a|an|to|of|in|on|for|cfm|cfmg)\\b", ignore_case = TRUE))
-  ) |>
-  count(phrase, name = "freq") |>
-  rename(word = phrase)
+  filter(!str_detect(comment, regex(
+    "^(none|nil|no comment|no comments|replacement|mixed|nil\\.?)$|^[A-Z][a-z]+(\\s[A-Z]?[a-z]*){0,4}\\s?(VAG|CFMG)$|^(mutimba|from the district)",
+    ignore_case = TRUE
+  )))
+
+theme_patterns <- c(
+  "Youth marginalization"           = "youth.{0,30}sidelin|sidelin.{0,30}youth|youth.{0,20}not.{0,20}includ|youth.{0,20}not.{0,20}involv|youth.{0,20}not.{0,20}aware|youth.{0,10}no voice|youth.{0,15}intimidat|youth.{0,20}left out|youth.{0,20}not engaged|youth.{0,20}no information|youth.{0,30}not fully|youth.{0,20}feel.*sidelin",
+  "Information gaps"                = "information gap|not aware of|lack.{0,15}information|information.{0,20}only.{0,15}leader|information.{0,20}only.{0,15}executive|information.{0,20}with.{0,15}leader|information.{0,20}with.{0,15}executive|not previewed|information.{0,15}not avail|not availed.{0,20}information|know what.{0,15}happening|huge information",
+  "Capacity building"               = "capacity build",
+  "Enterprise development"          = "enterprise develop|develop.{0,15}enterprise|no.{0,10}enterprise.{0,10}running|enterprises.{0,10}running|no forest enterprise|enterprise.{0,10}not.{0,10}running",
+  "Re-engagement needed"            = "re.engag|reengag|rengag|reorientation",
+  "Benefits not realized"           = "not.{0,10}benefit|yet to.{0,20}benefit|not reaping|not seen.{0,15}benefit|yet to produce.*benefit|not.*started.*benefit|lack.*benefit|no.*benefit",
+  "CFMG dormant"                    = "dormant|not been functioning|not been active|not been working|not function since|not.{0,5}started|not fully function|not working.{0,10}since|not working.{0,10}past|not functional since|has not been.{0,10}function|not.{0,10}active since|less active|not.*active.*begin",
+  "Women marginalized"              = "women.{0,20}unfairly|women.{0,20}not allowed|women.{0,30}low.{0,15}participat|participat.{0,20}women.{0,20}low|women.{0,15}lay.{0,10}off|women.{0,20}not.{0,20}participat|level.{0,20}involv.{0,20}women.{0,20}low|women.{0,10}sidelin|women.{0,15}not.{0,10}includ|women.{0,15}not.{0,10}aware",
+  "Elite capture"                   = "headman.{0,20}benefit|monopol|presiding.{0,10}everything|executive.{0,10}families|one person.{0,10}community|scared.{0,10}executive|intimidat.{0,10}executive",
+  "Lack of transparency"            = "not transparent|information.{0,15}only.{0,10}executive|cfmg.{0,10}not transparent|lack.{0,10}transparency|mistrust",
+  "Leadership challenges"           = "change.{0,10}leadership|review.{0,10}constitution|constitution.{0,10}review|leadership.{0,10}change|leadership.{0,10}not.{0,10}driv|not.{0,15}engage.{0,15}community.{0,15}update|change.{0,10}executive|leadership.{0,10}affects|change.*in.*leadership",
+  "Partner challenges"              = "partner.{0,20}pulled out|partner.{0,20}not fulfil|not fulfilling.{0,10}promise|pulled out|partners.{0,20}not.{0,20}fulfill|partner.{0,20}left|partner.{0,20}promise",
+  "User groups non-functional"      = "user group.{0,5}non functional|user group.{0,5}not functional|non functional|user groups.{0,5}non|user groups.{0,5}none",
+  "Carbon credit delays"            = "carbon.{0,20}not.{0,15}receiv|not.{0,15}receiv.{0,20}carbon|waiting.{0,10}carbon|carbon.{0,10}credit.{0,5}yet|yet.{0,10}carbon|carbon.{0,10}payment|waiting.{0,10}bcp|waiting.{0,10}kabompo",
+  "Traditional leader interference" = "traditional leader.{0,10}interfere|chiefdom.{0,10}succession|traditional.{0,10}leader.{0,10}wrangl|high influence.{0,10}traditional",
+  "HFO challenges"                  = "hfo.{0,10}not.{0,10}equip|hfo.{0,10}no.{0,10}protective|hfo.{0,10}stop.{0,5}patrol|hfos.{0,10}protective|hfo.{0,8}not.{0,8}uniform|hfo.{0,5}not.{0,5}train|dissolved.{0,5}hfo",
+  "High illiteracy"                 = "illiteracy|illiterate",
+  "Market access"                   = "lack.{0,5}market|market.{0,5}challenge|no market|lack of market",
+  "CRB/CFMG overlap"               = "crb.{0,5}cfmg|cfmg.{0,5}crb|operating.{0,5}crb"
+)
+
+theme_counts <- map_dfr(names(theme_patterns), function(theme) {
+  n <- sum(str_detect(cfmg_comments$comment, regex(theme_patterns[[theme]], ignore_case = TRUE)))
+  tibble(word = theme, freq = n)
+}) |>
+  filter(freq > 0) |>
+  arrange(desc(freq))
 
 set.seed(42)
-ggplot(training_comment_phrases, aes(label = word, size = freq, colour = freq)) +
+ggplot(theme_counts, aes(label = word, size = freq, colour = freq)) +
   geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
-  scale_size(range = c(3, 14)) +
-  scale_colour_gradient(low = "#74ADCB", high = "#1B618C") +
+  scale_size(range = c(3, 18)) +
+  scale_colour_gradient(low = "#6ABFB8", high = "#1A6B63") +
   theme_minimal(base_size = 14) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
