@@ -192,8 +192,8 @@ We asked the FGD groups to identify the external challenges facing CFM in their 
 prefix_ec <- "opportunitiesb_for_improved_cfm_implementation_cfm_external_challenges_"
 
 external_challenge_labels <- c(
-  "government_policies_and_regulations"                      = "Government policies/regulations",
-  "lack_of_external_funding"                                 = "Lack of funding",
+  "government_policies_and_regulations"                      = "Policy/regulatory barriers",
+  "lack_of_external_funding"                                 = "Financial constraints",
   "limited_market_access_for_forest_products"                = "Limited market access",
   "conflicts_with_neighboring_communities"                   = "Conflicts with neighbours",
   "conflicts_within_community"                               = "Internal conflicts",
@@ -204,19 +204,19 @@ external_challenge_labels <- c(
   "poor_infrastructure"                                      = "Poor infrastructure",
   "natural_disasters"                                        = "Natural disasters",
   "limited_support_from_govt"                                = "Limited government support",
-  "limited_support_from_tradtional_leaders"                  = "Limited traditional leader support",
-  "water_social_services_and_basic_needs"                    = "Water/social services",
+  "limited_support_from_tradtional_leaders"                  = "Traditional leader challenges",
+  "water_social_services_and_basic_needs"                    = "Limited government support",
   "human_wildlife_conflicts"                                 = "Human-wildlife conflict",
   "transport_and_communication"                              = "Transport/communication",
   "chiefdom_succession_disputes"                             = "Chiefdom succession disputes",
   "awareness_information_and_capacity_gaps"                  = "Awareness/capacity gaps",
   "cultural_or_social_resistance_to_cfm_initiatives"        = "Cultural/social resistance",
-  "traditional_leadership_and_governance_interference"       = "Traditional leadership interference",
+  "traditional_leadership_and_governance_interference"       = "Traditional leader challenges",
   "social_economic_and_environmnetal_stressors"              = "Socioeconomic stressors",
   "policy_and_regulatory_barriers"                           = "Policy/regulatory barriers",
   "enchroachment_illegal_activities_and_extternal_pressure"  = "Encroachment/illegal activities",
   "partner_related_challenges_and_carbon_market_issues"      = "Partner/carbon market issues",
-  "financial_material_and_logistical_constraints"            = "Financial/logistical constraints"
+  "financial_material_and_logistical_constraints"            = "Financial constraints"
 )
 
 full_ec_vars <- paste0(prefix_ec, names(external_challenge_labels))
@@ -231,7 +231,9 @@ external_challenge_freq <- cfmg |>
   filter(freq > 0) |>
   select(word, freq)
 
-external_challenge_all <- external_challenge_freq
+external_challenge_all <- external_challenge_freq |>
+  group_by(word) |>
+  summarise(freq = sum(freq), .groups = "drop")
 
 set.seed(42)
 ggplot(external_challenge_all, aes(label = word, size = freq, colour = freq)) +
