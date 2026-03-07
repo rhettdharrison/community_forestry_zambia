@@ -405,6 +405,60 @@ ggplot(monitoring_imp_all, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
+### Training needs
+
+We asked FGD groups to identify the types of training most needed to improve CFM in their communities (@fig-conc_training).
+
+```{r}
+#| label: fig-conc_training
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Training needs identified by community female, male, and youth FGDs. Word size is proportional to the number of FGDs reporting each training type."
+#| fig-width: 10
+#| fig-height: 7
+
+prefix_tr <- "opportunitiesb_for_improved_cfm_implementation_cfmg_training_type_"
+
+training_labels <- c(
+  "forest_conservation_and_biodiversity"                                    = "Forest conservation & biodiversity",
+  "agroforestry"                                                            = "Agroforestry",
+  "tree_planting_and_nursery_management"                                    = "Tree planting & nursery management",
+  "forest_law_and_policy"                                                   = "Forest law & policy",
+  "governance_and_leadership"                                               = "Governance & leadership",
+  "conflict_resolution_and_community_engagement"                            = "Conflict resolution",
+  "climate_smart_agriculture"                                               = "Climate-smart agriculture",
+  "livestock_management"                                                    = "Livestock management",
+  "aquaculture"                                                             = "Aquaculture",
+  "climate_change_adaptation_and_mitigation"                               = "Climate change adaptation",
+  "sustainable_forest_product_harvesting_e_g_honey_mushrooms_firewood"     = "Sustainable harvesting",
+  "financial_management_and_record_keeping"                                 = "Financial management",
+  "business_development_and_entrepreneurship"                               = "Business development",
+  "marketing_and_value_addition_of_forest_products"                        = "Marketing & value addition",
+  "fire_management_and_prevention"                                          = "Fire management"
+)
+
+full_tr_vars <- paste0(prefix_tr, names(training_labels))
+
+training_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  select(all_of(full_tr_vars)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(word = training_labels[sub(prefix_tr, "", variable, fixed = TRUE)]) |>
+  filter(freq > 0) |>
+  select(word, freq)
+
+set.seed(42)
+ggplot(training_freq, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 22)) +
+  scale_colour_gradient(low = "#74ADCB", high = "#1B618C") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
 ## Recommendations
 
 ### Governance
