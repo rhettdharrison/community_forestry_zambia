@@ -1,7 +1,7 @@
 ---
 title: "Community Forest Management in Zambia: Is It Working?"
 author: "Rhett D Harrison"
-date: "2026"
+date: today
 ---
 
 This report presents findings from a survey of Community Forest Management Groups (CFMGs) across Zambia, assessing the effectiveness of community-based forest management and identifying opportunities for improved implementation.
