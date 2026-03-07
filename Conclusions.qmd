@@ -231,23 +231,7 @@ external_challenge_freq <- cfmg |>
   filter(freq > 0) |>
   select(word, freq)
 
-# Word frequencies from open-ended comments
-external_challenge_comment_freq <- cfmg |>
-  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
-  select(comment = opportunitiesb_for_improved_cfm_implementation_cfm_external_challenges_comment) |>
-  drop_na(comment) |>
-  unnest_tokens(word, comment) |>
-  anti_join(stop_words, by = "word") |>
-  filter(nchar(word) > 2,
-         !word %in% c("cfm", "cfmg", "forest", "community", "people",
-                      "challenges", "external", "activities")) |>
-  count(word, name = "freq") |>
-  filter(freq > 1)
-
-# Combine checkbox labels and comment words
-external_challenge_all <- bind_rows(external_challenge_freq, external_challenge_comment_freq) |>
-  group_by(word) |>
-  summarise(freq = sum(freq), .groups = "drop")
+external_challenge_all <- external_challenge_freq
 
 set.seed(42)
 ggplot(external_challenge_all, aes(label = word, size = freq, colour = freq)) +
