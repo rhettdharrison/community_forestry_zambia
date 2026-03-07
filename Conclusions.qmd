@@ -1,5 +1,5 @@
 ---
-title: "Conclusions & Recommentations"
+title: "Discussion & Recommentations"
 author: "Rhett D Harrison"
 format:
         html:
@@ -24,11 +24,11 @@ library(ggwordcloud)
 load("cfmg.RData")
 ```
 
-## Conclusions
+## Discussion
 
 ### What is working in CFM
 
-We asked FGD groups to identify aspects of CFM that are working well in their communities (@fig-conc_working).
+We asked the FGD groups to identify aspects of CFM that they feel are working well in their communities (@fig-conc_working).
 
 ```{r}
 #| label: fig-conc_working
@@ -43,14 +43,14 @@ We asked FGD groups to identify aspects of CFM that are working well in their co
 prefix_w <- "opportunitiesb_for_improved_cfm_implementation_cfm_working_aspects_"
 
 working_labels <- c(
-  "effective_management_of_forest_resources_e_g_sustainable_harvesting_restoration" = "Effective forest management",
+  "effective_management_of_forest_resources_e_g_sustainable_harvesting_restoration" = "Forest management",
   "reduction_in_deforestation_and_forest_degradation"                               = "Reduced deforestation",
   "increased_wildlife_conservation_and_biodiversity"                                = "Wildlife conservation",
-  "equitable_benefit_sharing_among_community_members"                               = "Equitable benefit sharing",
+  "equitable_benefit_sharing_among_community_members"                               = "Equitable benefits",
   "active_participation_of_women_youth_and_marginalized_groups_in_cfm_activities"  = "Inclusive participation",
   "improved_livelihoods_and_income_generating_opportunities_through_cfm_activities" = "Improved livelihoods",
-  "successful_partnerships_with_private_enterprises_or_external_institutions"       = "Private sector partnerships",
-  "successful_partnerships_with_traditional_leaders"                                = "Traditional leader partnerships",
+  "successful_partnerships_with_private_enterprises_or_external_institutions"       = "Partnerships",
+  "successful_partnerships_with_traditional_leaders"                                = "Traditional leaders",
   "improved_infrastructure"                                                          = "Improved infrastructure",
   "effective_monitoring_and_reporting_of_cfm_outcomes_and_impacts"                 = "Effective monitoring",
   "transparent_and_fair_decision_making_processes_within_the_community"            = "Transparent decision making",
@@ -95,6 +95,246 @@ ggplot(working_all, aes(label = word, size = freq, colour = freq)) +
 ```
 
 
+
+### Areas for improvement
+
+We also asked the FGD groups to identify aspects of CFM that they feel need improvement in their communities (@fig-conc_improvement).
+
+```{r}
+#| label: fig-conc_improvement
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Aspects of CFM identified as needing improvement, as identified by community female, male, and youth FGDs. Word size is proportional to the number of FGDs reporting each aspect."
+#| fig-width: 10
+#| fig-height: 7
+
+prefix_i <- "opportunitiesb_for_improved_cfm_implementation_cfm_areas_for_improvement_"
+
+improvement_labels <- c(
+  "effective_management_of_forest_resources"                       = "Forest management",
+  "reduction_in_deforestation_and_forest_degradation"             = "Reduced deforestation",
+  "increased_wildlife_conservation_and_biodiversity"              = "Wildlife conservation",
+  "equitable_benefit_sharing_among_community_members"             = "Equitable benefits",
+  "active_participation_of_women_youth_and_marginalized_groups"   = "Inclusive participation",
+  "improved_livelihoods_and_income_generating_opportunities"      = "Improved livelihoods",
+  "partnerships_with_private_enterprises_or_external_institutions" = "Partnerships",
+  "effective_monitoring_and_reporting_of_cfm_outcomes"            = "Effective monitoring",
+  "transparent_and_fair_decision_making_processes"                = "Transparent decision making",
+  "community_awareness_and_involvement_in_cfm_activities"         = "Community awareness",
+  "capacity_building"                                             = "Capacity building",
+  "infrastructure"                                                = "Infrastructure",
+  "alternative_livelihoods"                                       = "Alternative livelihoods",
+  "transport"                                                     = "Transport",
+  "governanace_leadership_institutional_strengthening"            = "Governance & leadership",
+  "external_funding"                                              = "External funding",
+  "improved_water_security"                                       = "Water security",
+  "human_wildlife_conflict"                                       = "Human-wildlife conflict"
+)
+
+full_i_vars <- paste0(prefix_i, names(improvement_labels))
+
+# Frequency counts from binary checkbox variables
+improvement_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  select(all_of(full_i_vars)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(word = improvement_labels[sub(prefix_i, "", variable, fixed = TRUE)]) |>
+  filter(freq > 0) |>
+  select(word, freq)
+
+# Word frequencies from open-ended comments
+improvement_comment_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  select(comment = opportunitiesb_for_improved_cfm_implementation_cfm_areas_for_improvement_comment) |>
+  drop_na(comment) |>
+  unnest_tokens(word, comment) |>
+  anti_join(stop_words, by = "word") |>
+  mutate(word = case_match(word, "hfos" ~ "HFOs", .default = word)) |>
+  filter(nchar(word) > 2,
+         !word %in% c("cfm", "cfmg", "forest", "community", "people",
+                      "products", "visits", "water", "activities", "provide",
+                      "visitation", "production", "increase", "improved",
+                      "regular", "change", "continue")) |>
+  count(word, name = "freq") |>
+  filter(freq > 1)
+
+# Combine checkbox labels and comment words
+improvement_all <- bind_rows(improvement_freq, improvement_comment_freq) |>
+  group_by(word) |>
+  summarise(freq = sum(freq), .groups = "drop")
+
+set.seed(42)
+ggplot(improvement_all, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 22)) +
+  scale_colour_gradient(low = "#F4A582", high = "#8B0000") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
+
+### Monitoring methods
+
+We asked the FGD groups to identify the methods used to monitor CFM progress and outcomes in their communities (@fig-conc_monitoring).
+
+```{r}
+#| label: fig-conc_monitoring
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Methods used to monitor CFM progress and outcomes, as reported by community female, male, and youth FGDs. Bars show the number of FGDs reporting each method."
+#| fig-width: 10
+#| fig-height: 7
+
+prefix_m <- "opportunitiesb_for_improved_cfm_implementation_cfm_monitoring_methods_"
+
+monitoring_labels <- c(
+  "community_meetings_to_review_progress_and_challenges"                                  = "Community meetings",
+  "field_visits_or_patrols_to_assess_forest_conditions_and_resource_use"                 = "Field visits/patrols",
+  "data_collection_and_surveys_on_forest_health_biodiversity_livelihoods"                = "Data collection/surveys",
+  "financial_reporting_and_audits_to_track_resource_allocation_and_benefits"             = "Financial reporting/audits",
+  "independent_evaluations_by_external_bodies_ngo_s_government_agencies"                 = "Independent evaluations",
+  "participatory_monitoring_involving_community_members_in_data_collection_and_analysis" = "Participatory monitoring",
+  "use_of_technology_or_tools_satellite_images_gis_mobile_apps"                          = "Technology/tools",
+  "feedback_or_grievance_mechanisms_to_capture_community_concerns"                       = "Feedback/grievance mechanisms"
+)
+
+full_m_vars <- paste0(prefix_m, names(monitoring_labels))
+
+cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  mutate(group = factor(
+    case_match(
+      interview_type,
+      "cfmg_female" ~ "Female",
+      "cfmg_male"   ~ "Male",
+      "cfmg_youth"  ~ "Youth"
+    ),
+    levels = c("Youth", "Male", "Female")
+  )) |>
+  select(group, all_of(full_m_vars)) |>
+  pivot_longer(all_of(full_m_vars), names_to = "variable", values_to = "val") |>
+  filter(val == 1) |>
+  mutate(method = factor(
+    monitoring_labels[sub(prefix_m, "", variable, fixed = TRUE)],
+    levels = rev(monitoring_labels)
+  )) |>
+  count(group, method) |>
+  complete(group, method, fill = list(n = 0)) |>
+  ggplot(aes(y = method, x = n, fill = group)) +
+  geom_col(position = position_dodge(width = 0.75), width = 0.65, colour = "white") +
+  geom_text(
+    aes(label = ifelse(n > 0, n, "")),
+    position = position_dodge(width = 0.75),
+    hjust = -0.3, size = 3.5, colour = "grey30"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Female" = "#2A9D8F",
+      "Male"   = "#57B8B0",
+      "Youth"  = "#E9C46A"
+    ),
+    guide = guide_legend(reverse = TRUE)
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, 0.15)),
+    name   = "Number of FGDs"
+  ) +
+  scale_y_discrete(labels = \(x) str_wrap(x, width = 25), expand = expansion(add = 0.6)) +
+  labs(y = NULL, fill = NULL) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
+    axis.text.x        = element_text(colour = "grey20"),
+    axis.text.y        = element_text(size = 14, colour = "grey20"),
+    legend.position    = "bottom",
+    plot.margin        = margin(10, 25, 10, 10)
+  )
+```
+
+We also asked FGD groups how monitoring could be improved (@fig-conc_monitoring_improvement).
+
+```{r}
+#| label: fig-conc_monitoring_improvement
+#| code-fold: true
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Suggested improvements to CFM monitoring, as identified by community female, male, and youth FGDs. Word size is proportional to the number of FGDs reporting each suggestion."
+#| fig-width: 10
+#| fig-height: 7
+
+prefix_mi <- "opportunitiesb_for_improved_cfm_implementation_cfm_monitoring_improvement_"
+
+monitoring_imp_labels <- c(
+  "provide_more_training_for_cfm_group_members_on_monitoring_techniques"                   = "More training",
+  "introduce_digital_tools_for_real_time_data_collection_and_reporting"                    = "Digital tools",
+  "increase_funding_for_monitoring_activities"                                              = "Increased funding",
+  "establish_regular_community_feedback_sessions_to_discuss_monitoring_results"            = "Community feedback sessions",
+  "develop_standardized_reporting_templates_for_consistent_data_collection"                = "Standardised reporting",
+  "improve_transparency_by_sharing_monitoring_reports_with_the_community"                  = "Improved transparency",
+  "increase_participation_of_women_youth_and_marginalized_groups_in_monitoring_activities" = "Inclusive participation",
+  "increase_hfos_scouts_guards"                                                             = "More HFOs/scouts/guards",
+  "improve_transport_communication"                                                         = "Better transport/communication",
+  "ppe"                                                                                     = "PPE",
+  "increase_patrols"                                                                        = "More patrols",
+  "improve_security_for_hfos"                                                               = "HFO security",
+  "collaboration"                                                                           = "Collaboration"
+)
+
+full_mi_vars <- paste0(prefix_mi, names(monitoring_imp_labels))
+
+# Frequency counts from binary checkbox variables
+monitoring_imp_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  select(all_of(full_mi_vars)) |>
+  summarise(across(everything(), ~ sum(. == 1, na.rm = TRUE))) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "freq") |>
+  mutate(word = monitoring_imp_labels[sub(prefix_mi, "", variable, fixed = TRUE)]) |>
+  filter(freq > 0) |>
+  select(word, freq)
+
+# Word frequencies from open-ended comments
+monitoring_imp_comment_freq <- cfmg |>
+  filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
+  select(comment = opportunitiesb_for_improved_cfm_implementation_cfm_monitoring_improvement_comment) |>
+  drop_na(comment) |>
+  unnest_tokens(word, comment) |>
+  anti_join(stop_words, by = "word") |>
+  mutate(word = case_match(word,
+    "hfos"      ~ "More HFOs/scouts/guards",
+    "hfo"       ~ "More HFOs/scouts/guards",
+    "scouts"    ~ "More HFOs/scouts/guards",
+    "guards"    ~ "More HFOs/scouts/guards",
+    "employ"    ~ "more employment",
+    "employing" ~ "more employment",
+    "ppe"       ~ "PPE",
+    .default = word
+  )) |>
+  filter(nchar(word) > 2, !word %in% c("cfm", "cfmg", "forest", "community", "people",
+                                        "monitoring", "improve", "improvement")) |>
+  count(word, name = "freq") |>
+  filter(freq > 1)
+
+# Combine checkbox labels and comment words
+monitoring_imp_all <- bind_rows(monitoring_imp_freq, monitoring_imp_comment_freq) |>
+  group_by(word) |>
+  summarise(freq = sum(freq), .groups = "drop")
+
+set.seed(42)
+ggplot(monitoring_imp_all, aes(label = word, size = freq, colour = freq)) +
+  geom_text_wordcloud(eccentricity = 0.65, seed = 42) +
+  scale_size(range = c(3, 22)) +
+  scale_colour_gradient(low = "#74ADCB", high = "#1B618C") +
+  theme_minimal(base_size = 14) +
+  theme(plot.margin = margin(0, 0, 0, 0))
+```
 
 ## Recommendations
 
