@@ -9,31 +9,27 @@ website:
   title: "CFM in Zambia"
   navbar:
     left:
-      - text: "Summary"
-        href: Summary.qmd
-      - text: "Introduction"
-        href: Introduction.qmd
-      - text: "Methods"
-        href: Methods.qmd
-      - text: "Survey details"
+      - text: "Survey overview"
         href: "CFMG Survey.qmd"
       - text: "Governance"
         href: "CFMG Governance.qmd"
-      - text: "SFM"
+      - text: "Sustainable Forest Management"
         href: "CFMG SFM.qmd"
-      - text: "Econ. Trans."
+      - text: "Economic Transformation"
         href: "CFMG ET.qmd"
-      - text: "Benefit Sharing"
+      - text: "Equity and Inclusion"
         href: "CFMG BS.qmd"
-      - text: "Discussion"
+      - text: "Discussion & Recommendations"
         href: Conclusions.qmd
-      - text: "Literature"
+      - text: "Literature cited"
         href: "Literature cited.qmd"
       - text: "Appendices"
         menu:
-          - text: "Appendix I"
+          - text: "Appendix I - Methods"
+            href: Methods.qmd
+          - text: "Appendix II - Survey tool"
             href: Appendix.qmd
-          - text: "Appendix II"
+          - text: "Appendix III - List of CFs surveyed"
             href: "Appendix II.qmd"
 
 format:
