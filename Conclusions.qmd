@@ -26,9 +26,10 @@ load("cfmg.RData")
 
 ## Discussion
 
-### What is working in CFM
+### Feedback from the communities
+#### What is working in CFM
 
-We asked the FGD groups to identify aspects of CFM that they feel are working well in their communities (@fig-conc_working).
+We asked the community FGD groups to identify aspects of CFM that they feel are working well in their communities (@fig-conc_working). The most frequently mentioned reflect different aspects of sustainable forest management. Clearly, most communities do feel that CFM has led to improvements in forest management, reducing deforestation and enhancing wildlife conservation. Also mentioned, but less frequently, were indicators of good governance and improved livelihoods. Evidently, CFM is working well for some communities.
 
 ```{r}
 #| label: fig-conc_working
@@ -94,11 +95,9 @@ ggplot(working_all, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
+#### Areas for improvement
 
-
-### Areas for improvement
-
-We also asked the FGD groups to identify aspects of CFM that they feel need improvement in their communities (@fig-conc_improvement).
+We also asked the community FGD groups to identify the aspects of CFM that they feel need improvement in their communities (@fig-conc_improvement). The diversity of responses was greater and most can be taken as indicators of poor govenance, such as 'community awareness', 'transparent decision-making' and 'inclusive participation'. Economic indictors also featured prominently, such as 'improved livelihoods' and 'partnerships'. Indicators of SFM were also mentioned indicating that the communities in some CFs feel there is scope for improvement there too. Clearly, there is scope for improvement in CFM, especially in governance aspects.
 
 ```{r}
 #| label: fig-conc_improvement
@@ -175,9 +174,9 @@ ggplot(improvement_all, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-### External challenges
+#### External challenges
 
-We asked the FGD groups to identify the external challenges facing CFM in their communities (@fig-conc_external_challenges).
+We asked the community FGD groups to identify the external challenges facing CFM in their communities (@fig-conc_external_challenges). Perhaps unsurprisingly, here the respsonses focus on development issues, such as 'financial constraints', 'poor infrastructure', 'limited market access' and 'insufficient technical expertise'. 
 
 ```{r}
 #| label: fig-conc_external_challenges
@@ -244,9 +243,9 @@ ggplot(external_challenge_all, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-### Monitoring methods
+#### Monitoring methods
 
-We asked the FGD groups to identify the methods used to monitor CFM progress and outcomes in their communities (@fig-conc_monitoring).
+We asked the FGD groups to identify the methods they recommend are used monitor CFM progress and outcomes in their communities (@fig-conc_monitoring). While a large number of approaches were mentioned, the community groups overwhelmingly identified community meetings and field visits/patrols as being the preferred approach for monitoring CFM outcomes. However, it is interesting to note that female groups were far more likely to mention community meetings and much less likely to mention field visits/patrols, than the male and youth groups. This likely reflects the gender biases in participation in field visits and patrolling, which from earlier data are almost exclusively a male prerogative.
 
 ```{r}
 #| label: fig-conc_monitoring
@@ -327,7 +326,7 @@ cfmg |>
   )
 ```
 
-We also asked FGD groups how monitoring could be improved (@fig-conc_monitoring_improvement).
+We also asked the community FGD groups how monitoring could be improved (@fig-conc_monitoring_improvement). Unsurpristingly, increased funding and more training featured prominently. However, it was interesting to note that digital tools and community feedback sessions were also mentioned frequently.
 
 ```{r}
 #| label: fig-conc_monitoring_improvement
@@ -405,9 +404,9 @@ ggplot(monitoring_imp_all, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-### Training needs
+#### Training needs
 
-We asked FGD groups to identify the types of training most needed to improve CFM in their communities (@fig-conc_training).
+We asked community FGD groups to identify the types of training most needed to improve CFM in their communities (@fig-conc_training). The responses appear to reflect the activities they are most involved with, such as fire management and conservation. However, it was interesting to see others also mentioned frequently, such as forest law and policy, agroforestry, nursery management, climate-smart agriculture and sustainable harvesting. These training needs reflect the interests of the communities and so provide a valuable insight.
 
 ```{r}
 #| label: fig-conc_training
@@ -459,9 +458,9 @@ ggplot(training_freq, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-### The last word
+### Comments from the enumerators
 
-After each FGD session, enumerators recorded general observations in an open-ended comment field. Comments that were location names only were excluded, and the substantive comments were coded thematically. Key themes are shown in @fig-conc_comments, with size proportional to the number of FGD sessions for which that theme was noted.
+Throughout the survey the responses are those of the interviewees. However, after each FGD session, enumerators recorded their general observations in an open-ended comment field. We coded the substantive comments thematically and these are shown in @fig-conc_comments, with size proportional to the number of FGD sessions for which that theme was noted. This is a very informative figure as a general take-home of the issues arising from the implementation of CFM in Zambia. Most prominently featured is 'capacity building', recognising that many communities have limited capacity and are struggling to implement CFM currently. Also, prominent were 're-engagement needed', 'CFMG dormant' and 'partner challenges', reflecting inadequate support from the forest department and other supporting organisations, 'youth marginalisation' potentially reflecting elite capture (which was also mentioned directly) and indicating that benefits may not be being shared equitably, and 'leadership challenges' suggesting the CFMG executive may not be functioning properly.
 
 ```{r}
 #| label: fig-conc_comments
@@ -520,23 +519,27 @@ ggplot(theme_counts, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
+### Synopsis of the main findings
+
+*_to_do_*
+
 ## Recommendations
+
+Derived from our experiences with this project we make the following recommendations. This is not an exhaustitave list. Moreover, we recognise that many of these this may be in hand to some degree (other to a lesser extent). So this list to be seen as affirming and support these ongoing efforts.
 
 ### Governance
 
-- Make it FD policy that DFOs should visit and attend a meeting of every CFMG at least once per quarter. The DFO should use these visits to push and assist the CFMG to complete CFM processes, including all legal and administrative processes.
+- DFOs should visit each CFMG once per quarter and support the CFMGs in developing and implementing their workplans. The should be applying the "Checklists – CFM Step 7: Joint Monitoring, Evaluaon and Lesson Learning". KPIs for DFOs should reflect the delivery of CFM support.
 
-- To enable regular DFO visits, organisations supporting CFMGs, such as NGOs or carbon trading companies, should be required to provide transport and travel allowance for at least 4 visits per year.
+- Budgets need to be mage available for regular DFO visits to CFMGs. These could come from the government carbon funds raised, if a proportion of these are ear-marked to support CFM.
 
-- Standardise important CFMG processes including; (i) elections of CFMG and executive positions; (ii) tenure of CFMG members and executive position; (iii) term limits; (iv) bank accounts, receipt books, HFO payments and gratuities for CFMG activities; (v) reporting requirements, including presentation of reports to community members (also require online submission to FD database);  (vi) Grievance & Redress mechanisms; (vii) carbon benefit sharing mechanisms; (viii) other benefit sharing mechanisms.
+- Increase standardisation of important CFMG processes including; (i) elections of CFMG and executive positions; (ii) tenure of CFMG members and executive position; (iii) term limits; (iv) bank accounts, receipt books, HFO payments and gratuities for CFMG activities; (v) reporting requirements, including presentation of reports to community members;  (vi) grievance and redress mechanisms; (vii) carbon benefit sharing mechanisms; and (viii) other benefit sharing mechanisms. Many of these are already in the CFM agreement and any that are not should probably be added. Guidelines could be added for others, such as different permitting arrangements and benefit sharing arrangements, which always require some local tailoring.
 
-- Require marking of CF boundary
+- Require annual implementation plans and budgets and require that the DFOs and CFMG executives sign off on these and submit them to the FD database.
 
-- Require annual implementation plans and budgets
+- Require registration and permitting of all forest user-groups, even if these are community groups and there is not intention to charge a permit fee. Formalising the forest use and agreeing on management protocols, such as start dates and off-take levels, is essential for SFM.
 
-- Require registration of forest user-groups and permitting
-
-- Consider supporting Forest Stewardship Certification (FSC) for CFs. FSC certification can improve carbon credit values by up to 100% and open international markets for NTFPs.
+- Transition the current CFM database into a digital management dashboard for CFM monitoring that can be integrated with digital data collection tools and file uploads. Ideally, it would have an associated App that would facilitate integrated recording of data on common processes, such as CFMG meetings and elections, permits, workplans, budgets, annual reports, and so on.
 
 ### Sustainble forest management
 
@@ -557,6 +560,8 @@ ggplot(theme_counts, aes(label = word, size = freq, colour = freq)) +
 - Require / encourage carbon traders and NGOs working with CFMGs to engage in a minimum of three forest product value chains in each CF
 
 - Develop programme for community-based eco-tourism through CFs and based on national heritage sites
+
+-- Consider promoting Forest Stewardship Certification (FSC) for CFMGs or groups of CFMGs. FSC certification can improve carbon credit values by up to 100% and open international markets for NTFPs.
 
 ### Equity and inclusion
 
