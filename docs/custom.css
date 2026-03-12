@@ -1,0 +1,18 @@
+/* Allow navbar items to wrap to multiple lines instead of using abbreviations */
+.navbar-nav .nav-link {
+  white-space: normal !important;
+  text-align: center;
+  max-width: 130px;
+  line-height: 1.3;
+}
+
+/* Caption styling: same size as body text and italic */
+figcaption.quarto-float-caption {
+  font-size: 1rem !important;
+  font-style: italic !important;
+}
+
+/* Table captions: left-justified (override Bootstrap's text-align: center) */
+figcaption.quarto-float-tbl {
+  text-align: left !important;
+}
