@@ -1404,9 +1404,9 @@ cfmg |>
   filter(interview_type %in% c("cfmg_female", "cfmg_male", "cfmg_youth")) |>
   mutate(interview_type = case_match(
     interview_type,
-    "cfmg_female" ~ "Female FGD",
-    "cfmg_male"   ~ "Male FGD",
-    "cfmg_youth"  ~ "Youth FGD"
+    "cfmg_female" ~ "Female",
+    "cfmg_male"   ~ "Male",
+    "cfmg_youth"  ~ "Youth"
   )) |>
   select(
     interview_type,
@@ -1425,15 +1425,15 @@ cfmg |>
       "Ecotourism income", "Forest product processing", "Conservation revenue",
       "Alternative livelihoods", "Market linkages"
     )),
-    interview_type = factor(interview_type, levels = c("Female FGD", "Male FGD", "Youth FGD"))
+    interview_type = factor(interview_type, levels = c("Female", "Male", "Youth"))
   ) |>
   count(interview_type, income_source, response) |>
   mutate(n_signed = if_else(response == "No", -n, n)) |>
   (\(d) ggplot(d, aes(y = income_source, x = n_signed, fill = response)) +
     geom_blank(data = tibble(
       interview_type = factor(
-        c("Female FGD", "Female FGD", "Male FGD", "Male FGD", "Youth FGD", "Youth FGD"),
-        levels = c("Female FGD", "Male FGD", "Youth FGD")
+        c("Female", "Female", "Male", "Male", "Youth", "Youth"),
+        levels = c("Female", "Male", "Youth")
       ),
       income_source = factor(
         rep("Ecotourism income", 6),
