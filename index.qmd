@@ -15,9 +15,7 @@ Use the navigation tabs above to move between chapters.
 
 *_To_do_*
 
-## Introduction
-
-### Abbreviations
+## Abbreviations
 
 | Abbreviation | Definition |
 |:-------------|:-----------|
