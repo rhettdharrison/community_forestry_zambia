@@ -2,8 +2,11 @@
 .navbar-nav .nav-link {
   white-space: normal !important;
   text-align: center;
-  max-width: 130px;
-  line-height: 1.3;
+  max-width: 110px;
+  line-height: 1.2;
+  font-size: 0.82rem;
+  padding-left: 0.4rem !important;
+  padding-right: 0.4rem !important;
 }
 
 /* Caption styling: same size as body text and italic */
