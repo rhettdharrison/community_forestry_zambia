@@ -35,6 +35,10 @@ library(patchwork)
 load("cfmg.RData")
 ```
 
+## Summary
+
+*_to_do_*
+
 ## Introduction
 
 In this chapter, we consider the equitable sharing of benefits arising from community forest management (CFM) and what the impacts of CFM are on vulnerable groups.

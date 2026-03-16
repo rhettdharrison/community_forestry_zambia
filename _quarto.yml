@@ -19,10 +19,10 @@ website:
         href: "CFMG ET.qmd"
       - text: "Equity and Inclusion"
         href: "CFMG BS.qmd"
-      - text: "Discussion & Recommendations"
+      - text: "Discussion"
         href: Conclusions.qmd
-      - text: "Literature cited"
-        href: "Literature cited.qmd"
+      - text: "Recommendations"
+        href: Recommendations.qmd
       - text: "Appendices"
         menu:
           - text: "Appendix I - Methods"

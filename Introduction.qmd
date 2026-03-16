@@ -9,7 +9,6 @@ filters:
 - collapse-output
 editor: visual
 bibliography: references.bib
-suppress-bibliography: true
 ---
 
 ## Abbreviations

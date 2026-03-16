@@ -1,0 +1,65 @@
+---
+title: "Recommendations"
+author: "Rhett D Harrison"
+format:
+        html:
+                css: custom.css
+        pdf: default
+filters:
+- collapse-output
+editor: visual
+---
+
+Derived from our experiences with this project, we make the following recommendations. This is not an exhaustive list. Moreover, we recognise that many of these actions may be in hand to some degree or other.
+
+## Governance
+
+- DFOs should visit each CFMG once per quarter and support the CFMGs in developing and implementing their workplans. They should be applying the "Checklists – CFM Step 7: Joint Monitoring, Evaluation and Lesson Learning". Key Performance Indicators for DFOs should be adjusted to reflect their role in the delivery of CFM support.
+
+- The FD should establish a key unit at HQ to support CFM implementation nationally. This unit should focus on programmes to support CFM including capacity development for forestry staff.
+
+- Budgets need to be made available for regular DFO visits to CFMGs. If it is not possible to assign sufficient budget from the allocation to the Forestry Department, the necessary funds could come from the government funds raised from carbon, if a proportion of these were ear-marked to support CFM. The justification for this would be that it is a necessary part of the government's carbon business plan to support CFMG governance.
+
+- In line with the "Checklists – CFM Step 7: Joint Monitoring, Evaluation and Lesson Learning" implementation, increased standardisation of important CFMG processes would expedite CFMG processes, simplify monitoring and reduced the risk of poor outcomes. Standardisation should cover: (i) election processes, tenure and term limits for CFMG members and executive positions; (ii) financial processes, including opening bank accounts, maintaining receipt books, payments to employees including HFOs, and gratuities to CFMG members and executives for participating in activities; (iii) reporting requirements, including presentation of annual financial and activity reports to community members; (iv) grievance and redress mechanisms; and (v) benefit sharing arrangements for both carbon and other CFMG income. Several of these are already in the standard CFM agreement, but implementation is patchy, and many could be standardised to a greater degree. Where more flexibility is required, the FD should publish guidelines, such as for different permitting arrangements and user-group management, which always require some local tailoring.
+
+- To improve transparency, require publishing of decisions made at CFMG meetings and posting of these around the community.
+
+- Require annual implementation plans and budgets and require that the DFOs and CFMG executives sign off on these by a specified date and submit them to the FD database.
+
+- Require registration and permitting of all forest user-groups, even if these are community groups and there is no intention to charge a permit fee. Formalising the forest use and agreeing on management protocols, such as start dates and off-take levels, is essential for SFM.
+
+- Transition the current CFM database into a digital management dashboard for CFM monitoring that can be integrated with digital data collection tools and file uploads. Ideally, it would have an associated App that would facilitate recording of data on common processes, such as CFMG meetings and elections, permits, workplans, budgets, annual reports, and so on.
+
+## Sustainable forest management
+
+- DFOs and CFMGs should identify key SFM activities within the management plan, such a boundary marking, fire monitoring and patrolling, and develop workplans - with completion dates for key milestones - for each within the overall CFMG workplan.
+
+- All CFMGs should identify restoration sites within the CF in forest management plans. CFM is a key mechanism for the government to deliver on restoration commitments but currently this is not being adequately assessed. Any area that is / was substantially degraded when the CF was established may be considered a restoration site. Within restoration sites, the management plan should identify areas for (i) natural regeneration (protection only), (ii) planting with indigenous species, and (iii) planting with exotic species.
+
+- Establish community based monitoring systems for NTFPs. These systems should be developed centrally and standardised. As above, data can be entered into a FD managed digital management tool, with a dashboard for community viewing.
+
+- Consider a small plantation programme or outgrowers schemes for CFs for timber or sustainable charcoal production. These could be established on deforested land within the CF and would contribute to Zambia's plantation and timber production targets.
+
+## Economic transformation
+
+- Require the production and submission to FD of business plans for CFs. The format should be standardised to facilitate the maintenance of quality and so that comparable data can be extracted from them.
+
+- Require the monitoring of harvested quantities of forest products for household use and for sale.
+
+- Require recording of employment statistics, such as types of jobs and hours worked per month
+
+- Support the National Forest Commodities Association and help establish them as a national knowledge hub on forest product management, value addition, and marketing. Help promote forest product innovation and connect producers with buyers by organising forest product fairs / exhibitions at the annual agricultural shows at provincial and national levels.
+
+- To address the lack of diversity in forest product economic activities, require / encourage carbon traders and NGOs working with CFMGs to engage in a minimum of three forest product value chains in each CF
+
+- Develop programme for community-based eco-tourism through CFs and their intersection with national heritage sites. This should build on experiences at existing sites, such as M'panshya Campsite, Rufunsa and others like the community campsites run by Frankfurt Zoological Society.
+
+- Consider promoting Forest Stewardship Certification (FSC) for CFMGs or groups of CFMGs. FSC certification can improve carbon credit values by up to 100% and open international markets for NTFPs. In addition, the external auditing that is required for FSC certification imposes a high quality of SMF which will help FD reach its goals for SFM and enhance the reputation of Zambia forest management.
+
+## Equity and inclusion
+
+- Require identification of opportunity costs of CF and the community members most affected in the forest management plan
+
+- Require consideration of vulnerable groups in the designation of forest user-groups and in the benefit sharing arrangements
+
+- Encourage development of women's forest product enterprises through the NGOs and carbon trader support, as well as through the National Forest Commodities Association
