@@ -37,7 +37,11 @@ load("cfmg.RData")
 
 ## Summary
 
-*_to_do_*
+The overall picture for equity and inclusion is broadly positive, though with important caveats. A substantial majority of FGD groups reported that the benefits of CFM are being shared equitably and that women benefit from CFM without disproportionately suffering opportunity costs. Notably, most female FGD groups themselves agreed that women benefit from CFM — an encouraging finding given that women are the most likely to report inequitable outcomes when problems do occur. Carbon benefit-sharing agreements between carbon companies and communities are dominated by revenue sharing; employment and livelihood support components are less commonly included. Within communities, responsibility for carbon income sharing decisions is roughly equally split between the CFMG executive and the whole CFMG.
+
+However, female and youth FGD groups were consistently and significantly more likely than executive and male FGD groups to report inequitable benefit sharing, inadequate participation of women in decision making, and a lack of transparency in benefit sharing. In some CFMGs, community youth groups also identified issues with elite capture and marginalisation of youth. This systematic divergence in perspective between community members and CFMG executives — most pronounced for female and youth groups — is a concerning pattern suggesting that a minority of CFMGs have real equity problems that are not visible from the executive's perspective.
+
+Transparency in benefit sharing and the existence of grievance and redress mechanisms remain underdeveloped across many CFMGs. Without functioning formal channels through which equity concerns can be raised and addressed, inequitable outcomes risk going undetected and uncorrected. Strengthening these governance mechanisms is essential if CFM is to deliver equitable outcomes for all community members, including women, youth and other vulnerable groups.
 
 ## Introduction
 
