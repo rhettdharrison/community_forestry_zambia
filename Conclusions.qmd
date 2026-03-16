@@ -97,7 +97,7 @@ ggplot(working_all, aes(label = word, size = freq, colour = freq)) +
 
 #### Areas for improvement
 
-We also asked the community FGD groups to identify the aspects of CFM that they feel need improvement in their communities (@fig-conc_improvement). The diversity of responses was greater and most can be taken as indicators of poor govenance, such as 'community awareness', 'transparent decision-making' and 'inclusive participation'. Economic indictors also featured prominently, such as 'improved livelihoods' and 'partnerships'. Indicators of SFM were also mentioned indicating that the communities in some CFs feel there is scope for improvement there too. Clearly, there is scope for improvement in CFM, especially in governance aspects.
+We also asked the community FGD groups to identify the aspects of CFM that they feel need improvement in their communities (@fig-conc_improvement). The diversity of responses was greater and most can be taken as indicators of poor governance, such as 'community awareness', 'transparent decision-making' and 'inclusive participation'. Economic indicators also featured prominently, such as 'improved livelihoods' and 'partnerships'. Indicators of SFM were also mentioned indicating that some communities feel there is scope for improvement there too. Clearly, there is room for improvement in CFM, especially in governance aspects.
 
 ```{r}
 #| label: fig-conc_improvement
@@ -176,7 +176,7 @@ ggplot(improvement_all, aes(label = word, size = freq, colour = freq)) +
 
 #### External challenges
 
-We asked the community FGD groups to identify the external challenges facing CFM in their communities (@fig-conc_external_challenges). Perhaps unsurprisingly, here the respsonses focus on development issues, such as 'financial constraints', 'poor infrastructure', 'limited market access' and 'insufficient technical expertise'. 
+We asked the community FGD groups to identify the external challenges facing CFM in their communities (@fig-conc_external_challenges). Perhaps unsurprisingly, the responses focus on development issues, such as 'financial constraints', 'poor infrastructure', 'limited market access' and 'insufficient technical expertise'. 
 
 ```{r}
 #| label: fig-conc_external_challenges
@@ -245,7 +245,7 @@ ggplot(external_challenge_all, aes(label = word, size = freq, colour = freq)) +
 
 #### Monitoring methods
 
-We asked the FGD groups to identify the methods they recommend are used monitor CFM progress and outcomes in their communities (@fig-conc_monitoring). While a large number of approaches were mentioned, the community groups overwhelmingly identified community meetings and field visits/patrols as being the preferred approach for monitoring CFM outcomes. However, it is interesting to note that female groups were far more likely to mention community meetings and much less likely to mention field visits/patrols, than the male and youth groups. This likely reflects the gender biases in participation in field visits and patrolling, which from earlier data are almost exclusively a male prerogative.
+We asked the FGD groups to identify the methods they recommend are used to monitor CFM progress and outcomes in their communities (@fig-conc_monitoring). While a large number of approaches were mentioned, the community groups overwhelmingly identified community meetings and field visits/patrols as being the preferred approaches for monitoring CFM outcomes. However, it is interesting to note that female groups were far more likely to mention community meetings and much less likely to mention field visits/patrols, than the male and youth groups. This likely reflects the gender biases in participation in field visits and patrolling, which from earlier data are almost exclusively a male prerogative.
 
 ```{r}
 #| label: fig-conc_monitoring
@@ -326,7 +326,7 @@ cfmg |>
   )
 ```
 
-We also asked the community FGD groups how monitoring could be improved (@fig-conc_monitoring_improvement). Unsurpristingly, increased funding and more training featured prominently. However, it was interesting to note that digital tools and community feedback sessions were also mentioned frequently.
+We also asked the community FGD groups how monitoring could be improved (@fig-conc_monitoring_improvement). Unsurprisingly, increased funding and more training featured prominently. However, it was interesting to note that digital tools and community feedback sessions were also mentioned frequently.
 
 ```{r}
 #| label: fig-conc_monitoring_improvement
@@ -406,7 +406,7 @@ ggplot(monitoring_imp_all, aes(label = word, size = freq, colour = freq)) +
 
 #### Training needs
 
-We asked community FGD groups to identify the types of training most needed to improve CFM in their communities (@fig-conc_training). The responses appear to reflect the activities they are most involved with, such as fire management and conservation. However, it was interesting to see others also mentioned frequently, such as forest law and policy, agroforestry, nursery management, climate-smart agriculture and sustainable harvesting. These training needs reflect the interests of the communities and so provide a valuable insight.
+We asked community FGD groups to identify the types of training most needed to improve CFM in their communities (@fig-conc_training). The responses appear to reflect the activities they are most involved with, such as fire management and conservation. However, it was interesting to see others also mentioned frequently, such as forest law and policy, agroforestry, nursery management, climate-smart agriculture and sustainable harvesting. These training needs reflect the interests of the communities and so provide a valuable insight and guidance for FD and the organisations supporting CFM in Zambia.
 
 ```{r}
 #| label: fig-conc_training
@@ -460,7 +460,7 @@ ggplot(training_freq, aes(label = word, size = freq, colour = freq)) +
 
 ### Comments from the enumerators
 
-Throughout the survey the responses are those of the interviewees. However, after each FGD session, enumerators recorded their general observations in an open-ended comment field. We coded the substantive comments thematically and these are shown in @fig-conc_comments, with size proportional to the number of FGD sessions for which that theme was noted. This is a very informative figure as a general take-home of the issues arising from the implementation of CFM in Zambia. Most prominently featured is 'capacity building', recognising that many communities have limited capacity and are struggling to implement CFM currently. Also, prominent were 're-engagement needed', 'CFMG dormant' and 'partner challenges', reflecting inadequate support from the forest department and other supporting organisations, 'youth marginalisation' potentially reflecting elite capture (which was also mentioned directly) and indicating that benefits may not be being shared equitably, and 'leadership challenges' suggesting the CFMG executive may not be functioning properly.
+So far, throughout the survey the responses have been those of the interviewees. However, after each FGD session, the enumerators recorded their general observations in an open-ended comment field. We coded the substantive comments thematically and these are shown in @fig-conc_comments, with size proportional to the number of FGD sessions for which that theme was noted. This is a very informative figure as a general take-home of the issues arising from the implementation of CFM in Zambia. Most prominently featured is 'capacity building', recognising that many communities have limited capacity and are currently struggling to implement CFM. Also, prominent were 're-engagement needed', 'CFMG dormant' and 'partner challenges', reflecting inadequate support from the forest department and other supporting organisations, 'youth marginalisation' potentially reflecting elite capture (which was also mentioned directly) and indicating that benefits may not be being shared equitably, and 'leadership challenges' suggesting the CFMG executive may not be functioning appropriately.
 
 ```{r}
 #| label: fig-conc_comments
@@ -519,54 +519,74 @@ ggplot(theme_counts, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-### Synopsis of the main findings
+### Discussion of the main findings
 
-*_to_do_*
+One the one hand, CFM has clearly been a positive development in the management of Zambia's forests. Over 9 Mha have been designated as CFs and the majority view across the sampled CFMGs is that CFM has had a positive effect on forest management and for livelihoods. A majority of communities reported that CFM was reducing deforestation, reducing fire frequency and increasing wildlife populations -- all key indicators of SFM. Furthermore, a majority of communities recognise that CFM has brought some economic benefits though increased employment and income.
 
+On the other hand, a proportion of CFs are clearly not doing as well. Out of the sample of 80 CFMGs five (6.25%) were defunct to the point that they could not even be included in the sample. For a number of others the CFMG exists, but is dormant and re-engagement is urgently needed. The review of governance aspects highlighted that many CFs have yet to complete all the basic legal processes and only a minority have opened bank accounts, operate receipt books, have formalised user-groups and issue permits. Similarly, few CFMGs have annual workplans and budgets, and annual reporting is rare despite being a requirement under the license. Feedback to the community from the CFMG is also clearly inadequate in many cases. As many of the benefits of CFM stem from improved governance, these issues are a serious concern and if not rectified will jeopardise the implementation of CFM across Zambia. 
+
+The FD has a statutory responsibility to support community forestry and provide oversight of CF licenses. Yet for most CFs visits from DFOs are a rarity. Furthermore, the CFMG database maintained by the FD is clearly not up to task. For example, only 40 out of the 80 sampled CFs had boundary information. Documentation of CFMG processes is often hopelessly out of date or non-existent. It may be possible for a competent DFO to maintain records for a small number of CFMGs, but at a national level it is essential that the FD makes proper use of digital tools to maintain a high quality database and dashboard. Properly implemented, this would become a tool not only for managing CFM but also for reporting on national targets. In addition, it is essential that DFOs are well trained and adequately funded to visit CFMGs and support CFM on the ground.
+
+Overall, the feedback from communities of the impacts of CFM on SFM were quite positive. This likely reflects the devolution of the control of forests to communities, who have an interest in improving the management of their forests, and the injection of capital into forest management that has occurred mainly through the proliferation of voluntary carbon schemes. Through investment in HFOs and patrolling, fire management and alternative livelihoods, such as climate smart agriculture, the conservation NGOs and carbon enterprises supporting CFM have funded a substantial upgrade in local forest management. This makes it all the more essential that the governance aspects of CFM are improved. There is a risk that these gains may be undone unless the legal and local governance frameworks are made to function properly.
+
+With respect to economic transformation, the picture is more mixed. About one third of CFMGs in the sample had received payouts from voluntary carbon schemes and local communities recognised the livelihood improvements brought about via increased employment, capacity development for climate smart agriculture and investment in NTFP value chains, especially honey. However, it is also evident that the employment opportunities have been somewhat limited and focused on low paying jobs, such as HFOs. Furthermore, opportunities to develop other forest product value chains have not been realised. CFM should be a form of multi-use forest management that exploits a wide variety of forest products sustainably, layering different income streams on top of one another. Zambian forests are traditionally exploited for a large number of products. For example, harvesting of food from forest in Zambia is worth between US$281-US$450 per rural household (2019 data). As this survey has shown, forest are also harvested for fuelwood, local construction timber, thatching grass, medicines, bamboo and so on. However, most of these products are harvested for household use or local markets with minimal value-addition. Many of these products have the potential to be developed into community enterprises, increasing upstream value-addition and supplying urban areas, regional and sometimes international markets. Through collaboration amoung ministries, the government of Zambia should leverage CFM for the economic development of local communities through promoting forest product enterprises.
+
+One of the concerns of CFM is that opportunity costs for some vulnerable households may be significant, but that most of the benefits may accrue more to local elites. Interestingly, women were more supportive of CFM than other community FGD groups. Most female FGD groups also stated that women did not suffer opportunity costs disproportionally. These positive outcomes may arise because the formalisation of local forest management actually gives women a voice that they might not previously have had. In Zambia, natural resource management decisions are traditionally the purview of male community members, so CFM through formalising CFMGs, with elections and female representation, may have improved their voice in forest management. Notwithstanding these positive outcomes across most CFMGs, a minority of female FGD groups felt that opportunity costs disproportionately affected women, that women were not involved in decision making and that there were issues surrounding the transparency of benefit sharing. In some cases, community youth groups identified similar problems and community youth FGD groups tended to have a more negative perspective on CFM than the male or CFMG executive groups. It is essential that these problems are identified where they occur and addressed to ensure that CFM does not negatively affect women and youth. Much of this comes back to ensuring that the governance processes are properly implemented, but in addition it may help to enhance standardisation of benefit sharing arrangements and increase representation of women and youth on CFMGs. CFMG workplans, budgets and annual reports could also have sections dedicated to activities supporting women, youth and other vulnerable groups.
+
+In conclusion, CFM has clearly led to a number of positive outcomes for SFM and livelihoods. Through formalising local management it has enabled investment in forest management from conservation NGOs and carbon enterprises. However, there is a substantial concern around the FD's capacity to provide the necessary oversight and support for CFM. The FD should invest in digital support tools for management of CMF, support DFOs to visit CFs regularly and provide training on CFM to forestry staff. Furthermore, the government of Zambia and private entities supporting CFM should support CFMGs to diversify forest product enterprises, increase value addition and enhance market linkages. CFM represents a significant opportunity for both improving SFM and realising economic transformation of rural communities, but it is likely to fall well short of its potential if these governance and economic development issues are not addressed.
+ 
 ## Recommendations
 
-Derived from our experiences with this project we make the following recommendations. This is not an exhaustitave list. Moreover, we recognise that many of these this may be in hand to some degree (other to a lesser extent). So this list to be seen as affirming and support these ongoing efforts.
+Derived from our experiences with this project, we make the following recommendations. This is not an exhaustive list. Moreover, we recognise that many of these actions may be in hand to some degree or other.
 
 ### Governance
 
-- DFOs should visit each CFMG once per quarter and support the CFMGs in developing and implementing their workplans. The should be applying the "Checklists – CFM Step 7: Joint Monitoring, Evaluaon and Lesson Learning". KPIs for DFOs should reflect the delivery of CFM support.
+- DFOs should visit each CFMG once per quarter and support the CFMGs in developing and implementing their workplans. They should be applying the "Checklists – CFM Step 7: Joint Monitoring, Evaluation and Lesson Learning". Key Performance Indicators for DFOs should be adjusted to reflect their role in the delivery of CFM support.
 
-- Budgets need to be mage available for regular DFO visits to CFMGs. These could come from the government carbon funds raised, if a proportion of these are ear-marked to support CFM.
+- The FD should establish a key unit at HQ to support CFM implementation nationally. This unit should focus on programmes to support CFM including capacity development for forestry staff.
 
-- Increase standardisation of important CFMG processes including; (i) elections of CFMG and executive positions; (ii) tenure of CFMG members and executive position; (iii) term limits; (iv) bank accounts, receipt books, HFO payments and gratuities for CFMG activities; (v) reporting requirements, including presentation of reports to community members;  (vi) grievance and redress mechanisms; (vii) carbon benefit sharing mechanisms; and (viii) other benefit sharing mechanisms. Many of these are already in the CFM agreement and any that are not should probably be added. Guidelines could be added for others, such as different permitting arrangements and benefit sharing arrangements, which always require some local tailoring.
+- Budgets need to be made available for regular DFO visits to CFMGs. If it is not possible to assign sufficient budget from the allocation to the Forestry Department, the necessary funds could come from the government funds raised from carbon, if a proportion of these were ear-marked to support CFM. The justification for this would be that it is a necessary part of the government's carbon business plan to support CFMG governance.
 
-- Require annual implementation plans and budgets and require that the DFOs and CFMG executives sign off on these and submit them to the FD database.
+- In line with the "Checklists – CFM Step 7: Joint Monitoring, Evaluation and Lesson Learning" implementation, increased standardisation of important CFMG processes would expedite CFMG processes, simplify monitoring and reduced the risk of poor outcomes. Standardisation should cover: (i) election processes, tenure and term limits for CFMG members and executive positions; (ii) financial processes, including opening bank accounts, maintaining receipt books, payments to employees including HFOs, and gratuities to CFMG members and executives for participating in activities; (iii) reporting requirements, including presentation of annual financial and activity reports to community members; (iv) grievance and redress mechanisms; and (v) benefit sharing arrangements for both carbon and other CFMG income. Several of these are already in the standard CFM agreement, but implementation is patchy, and many could be standardised to a greater degree. Where more flexibility is required, the FD should publish guidelines, such as for different permitting arrangements and user-group management, which always require some local tailoring.
 
-- Require registration and permitting of all forest user-groups, even if these are community groups and there is not intention to charge a permit fee. Formalising the forest use and agreeing on management protocols, such as start dates and off-take levels, is essential for SFM.
+- To improve transparency, require publishing of decisions made at CFMG meetings and posting of these around the community.
 
-- Transition the current CFM database into a digital management dashboard for CFM monitoring that can be integrated with digital data collection tools and file uploads. Ideally, it would have an associated App that would facilitate integrated recording of data on common processes, such as CFMG meetings and elections, permits, workplans, budgets, annual reports, and so on.
+- Require annual implementation plans and budgets and require that the DFOs and CFMG executives sign off on these by a specified date and submit them to the FD database.
+
+- Require registration and permitting of all forest user-groups, even if these are community groups and there is no intention to charge a permit fee. Formalising the forest use and agreeing on management protocols, such as start dates and off-take levels, is essential for SFM.
+
+- Transition the current CFM database into a digital management dashboard for CFM monitoring that can be integrated with digital data collection tools and file uploads. Ideally, it would have an associated App that would facilitate recording of data on common processes, such as CFMG meetings and elections, permits, workplans, budgets, annual reports, and so on.
 
 ### Sustainble forest management
 
-- Define restoration areas within the CF in forest management plans and assess area of (i) natural regeneration, (ii) planting with indigenous species, and (iii) planting with exotic species (agroforestry plantings should not be within the CF). Any areas that are severely degraded that are being protected should be considered potential restoration sites and if only protection is being applied this should be considered natural regeneration. This information can be used to 
+- DFOs and CFMGs should identify key SFM activities within the management plan, such a boundary marking, fire monitoring and patrolling, and develop workplans - with completion dates for key milestones - for each within the overall CFMG workplan.
 
-- Establish community based monitoring systems for NTFPs. These systems should be developed centrally and standardised, so that data can be entered into a FD managed database but with dashboard for community viewing.
+- All CFMGs should identify restoration sites within the CF in forest management plans. CFM is a key mechanism for the government to deliver on restoration commitments but currently this is not being adequately assessed. Any area that is / was substantially degraded when the CF was established may be considered a restoration site. Within restoration sites, the management plan should identify areas for (i) natural regeneration (protection only), (ii) planting with indigenous species, and (iii) planting with exotic species. 
 
-- Consider a small plantation programme for CFs for timber or sustainable charcoal production
+- Establish community based monitoring systems for NTFPs. These systems should be developed centrally and standardised. As above, data can be entered into a FD managed digital management tool, with a dashboard for community viewing.
+
+- Consider a small plantation programme or outgrowers schemes for CFs for timber or sustainable charcoal production. These could be established on deforested land within the CF and would contribute to Zambia's plantation and timber production targets.
 
 ### Economic transformation
 
-- Require the production of CF business plans
+- Require the production and submission to FD of business plans for CFs. The format should be standardised to facilitate the maintenance of quality and so that comparable data can be extracted from them.
 
-- Establish independent trade association for forest product producers (note: could be Wildlife Producers Association, if they were willing to branch out from game meat and represent small producers)
+- Require the monitoring of harvested quantities of forest products for household use and for sale.
 
-- Establish national knowledge hub on forest product management, value addition, and marketing
+- Require recording of employment statistics, such as types of jobs and hours worked per month
 
-- Require / encourage carbon traders and NGOs working with CFMGs to engage in a minimum of three forest product value chains in each CF
+- Support the National Forest Commodities Association and help establish them as a national knowledge hub on forest product management, value addition, and marketing. Help promote forest product innovation and connect producers with buyers by organising forest product fairs / exhibitions at the annual agricultural shows at provincial and national levels. 
 
-- Develop programme for community-based eco-tourism through CFs and based on national heritage sites
+- To address the lack of diversity in forest product economic activities, require / encourage carbon traders and NGOs working with CFMGs to engage in a minimum of three forest product value chains in each CF
 
--- Consider promoting Forest Stewardship Certification (FSC) for CFMGs or groups of CFMGs. FSC certification can improve carbon credit values by up to 100% and open international markets for NTFPs.
+- Develop programme for community-based eco-tourism through CFs and their intersection with national heritage sites. This should build on experiences at existing sites, such as M'panshya Campsite, Rufunsa and others like the community campsites run by Frankfurt Zoological Society.
+
+- Consider promoting Forest Stewardship Certification (FSC) for CFMGs or groups of CFMGs. FSC certification can improve carbon credit values by up to 100% and open international markets for NTFPs. In addition, the external auditing that is required for FSC certification imposes a high quality of SMF which will help FD reach its goals for SFM and enhance the reputation of Zambia forest management.
 
 ### Equity and inclusion
 
-- Require identification of opportunity costs of CF and the community groups most affected
+- Require identification of opportunity costs of CF and the community members most affected in the forest management plan
 
-- Encourage development of women's forest product enterprises
+- Require consideration of vulnerable groups in the designation of forest user-groups and in the benefit sharing arrangements
 
-- Require consideration of vulnerable groups in benefit sharing arrangements
+- Encourage development of women's forest product enterprises through the NGOs and carbon trader support, as well as through the National Forest Commodities Association
