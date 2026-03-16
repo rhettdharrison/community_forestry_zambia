@@ -26,7 +26,7 @@ load("cfmg.RData")
 
 ## Summary
 
-CFM in Zambia is broadly working but there is significant room for improvement. On the positive side, a clear majority of communities report that CFM has reduced deforestation, lowered fire frequency, and increased wildlife populations — the core indicators of sustainable forest management. Most communities also recognise livelihood gains from increased employment and income, and enumerator observations confirm that many CFMGs are actively engaged and functioning.
+CFM in Zambia is broadly working but there is significant room for improvement. On the positive side, a clear majority of communities report that CFM has reduced deforestation, lowered fire frequency, and increased wildlife populations — the core indicators of SFM. Most communities also recognise livelihood gains from increased employment and income, and enumerator observations confirm that many CFMGs are actively engaged and functioning.
 
 However, governance remains a critical weakness. Many CFMGs have not completed basic legal and administrative processes, financial management processes are often absent, and DFO oversight is infrequent despite the statutory role of the FD. A number of CFMGs are dormant or struggling, and community feedback is highlights many failings, especially around transparency and benefit sharing. The enumerator observations, which flagged capacity gaps, re-engagement needs, dormant CFMGs, leadership challenges, and elite capture, paint a picture of CFM implementation that is on the verge of failing in a significant minority of cases.
 
@@ -40,7 +40,7 @@ Communities themselves have a clear understanding of what is and is not working,
 
 ### What is working in CFM
 
-We asked the community FGD groups to identify aspects of CFM that they feel are working well in their communities (@fig-conc_working). The most frequently mentioned reflect different aspects of sustainable forest management. Clearly, most communities do feel that CFM has led to improvements in forest management, reducing deforestation and enhancing wildlife conservation. Also mentioned, but less frequently, were indicators of good governance and improved livelihoods. Evidently, CFM is working well for some communities.
+We asked the community FGD groups to identify aspects of CFM that they feel are working well in their communities (@fig-conc_working). The most frequently mentioned reflect different aspects of SFM. Clearly, most communities do feel that CFM has led to improvements in forest management, reducing deforestation and enhancing wildlife conservation. Also mentioned, but less frequently, were indicators of good governance and improved livelihoods. Evidently, CFM is working well for some communities.
 
 ```{r}
 #| label: fig-conc_working

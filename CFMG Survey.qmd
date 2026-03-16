@@ -26,7 +26,7 @@ load("cfmg.RData")
 
 ## Summary
 
-We surveyed 75 community forests across eight provinces and conducted `{r} with(cfmg, sum(table(cfmg_name)))` interviews in total. The sample included CFs from ~20 ha to >80,000 ha and that varied in years since establishment from one to 7 yrs. In each community forest, we conducted four Focal Group Discussions with (i) CFMG Executive, (ii) Community men, (iii) Community women, and (iv) Community youths. This enables us to examine differences in perspectives towards community forest management across these stakeholder groups. In addition, we surveyed individual key stakeholders, including District Forest Officers, CFMG Executive members (usually the Secretary), NGO or private sector partners, and traditional leaders. Overall, the sample was male biased, reflecting gender biases in roles at the community level, but our information is balanced through specifically including a female Focal Group Discussion in each community. The sample included a wide range of ages from ~20 to >80 years. Although most interviewees had lived all their lives in the community, the sample include some who had moved into the community recently. Our sampling approach ensured an unbiased selection and these data demonstrate that we have covered a wide range of CFs, in terms of geography, size and age, and interviewees, in terms of gender, age and roles. Hence, our results should be generalisable at the national level.
+We surveyed 75 community forests across eight provinces and conducted `{r} with(cfmg, sum(table(cfmg_name)))` interviews in total. The sample included CFs from ~20 ha to >80,000 ha and that varied in years since establishment from one to 7 yrs. In each community forest, we conducted four FGDs with (i) CFMG Executive, (ii) Community men, (iii) Community women, and (iv) Community youths. This enables us to examine differences in perspectives towards community forest management across these stakeholder groups. In addition, we surveyed individual key stakeholders, including DFOs, CFMG Executive members (usually the Secretary), NGO or private sector partners, and traditional leaders. Overall, the sample was male biased, reflecting gender biases in roles at the community level, but our information is balanced through specifically including a female FGD in each community. The sample included a wide range of ages from ~20 to >80 years. Although most interviewees had lived all their lives in the community, the sample include some who had moved into the community recently. Our sampling approach ensured an unbiased selection and these data demonstrate that we have covered a wide range of CFs, in terms of geography, size and age, and interviewees, in terms of gender, age and roles. Hence, our results should be generalisable at the national level.
 
 ## Community Forests surveyed
 
@@ -146,7 +146,7 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
 
 ```
 
-While most answers lie along the line, indicating perfect agreement between the Forestry Department database and the responses, several are off - some by very large amounts (note that the axes are log-scale). In some cases, these differences may reflect errors in the Forestry Department database. However, the other possibility is that the communities are misinformed as to the size of their CF, which in turn suggests FPIC may not have been properly conducted.
+While most answers lie along the line, indicating perfect agreement between the Forestry Department database and the responses, several are off - some by very large amounts (note that the axes are log-scale). In some cases, these differences may reflect errors in the Forestry Department database. However, the other possibility is that the communities are misinformed as to the size of their CF, which in turn suggests Free, Prior and Informed Consent (FPIC) may not have been properly conducted.
 
 ### Age of community forests
 
@@ -236,7 +236,7 @@ cfmg |> group_by(province,cfmg_name) |>
 
 ```
 
-In every CFMG, we aimed to hold four Focal Group Discussions (FDGs) including, (i) CFMG Executive, (ii) Community members - male, (iii) Community members - female, and (iv) Community members - youth. Below (@tbl-Breakdown_FGD_by_type) are the total numbers of the different categories of FDG we were able to conduct. As can be seen, we were unable to arrange FGDs for community males and youths in some CFMGs. Meanwhile, we have an extra FGD for female community members, because in one CF two groups were surveyed.
+In every CFMG, we aimed to hold four FGDs including, (i) CFMG Executive, (ii) Community members - male, (iii) Community members - female, and (iv) Community members - youth. Below (@tbl-Breakdown_FGD_by_type) are the total numbers of the different categories of FDG we were able to conduct. As can be seen, we were unable to arrange FGDs for community males and youths in some CFMGs. Meanwhile, we have an extra FGD for female community members, because in one CF two groups were surveyed.
 
 ```{r}
 #| label: tbl-Breakdown_FGD_by_type
@@ -275,7 +275,7 @@ cfmg |> filter(interview_type != "individual_interview") |>
         sub_missing()
 ```
 
-The number of individual interviews with key stakeholders also varied among the CFs. However, we attempted to hold interviews with a CFMG Executive member (usually the secretary), the District Forest Officer and the community headmen or headwoman in every CF (@tbl-Breakdown_interviews_by_interviewee_role).
+The number of individual interviews with key stakeholders also varied among the CFs. However, we attempted to hold interviews with a CFMG Executive member (usually the secretary), the DFO and the community headmen or headwoman in every CF (@tbl-Breakdown_interviews_by_interviewee_role).
 
 ```{r}
 #| label: tbl-Breakdown_interviews_by_interviewee_role
@@ -563,7 +563,7 @@ cfmg |> filter(interviewee_role == "cfmg_member" |
 
 ### Duration of involvement with CFMG
 
-We asked the interviewees how many years they had been involved in the CFMG (@fig-interviewee_years_involved_cfmg). The answers ranged from zero to ten years with the median among provinces ranging from around 3 yrs to 4.5 yrs. As the regulations for community forest management were only approved in 2018, claims of over 7 yrs seem unlikely but they may have been involved in a Community Resource Board (CRM) or Joint Forest Management, which preceded CFM in some areas. As most CFMGs have only held one election as part of their establishment process, we can expect that most people have been involved since the formation of their CFMG. 
+We asked the interviewees how many years they had been involved in the CFMG (@fig-interviewee_years_involved_cfmg). The answers ranged from zero to ten years with the median among provinces ranging from around 3 yrs to 4.5 yrs. As the regulations for community forest management were only approved in 2018, claims of over 7 yrs seem unlikely but they may have been involved in a Community Resource Board (CRB) or Joint Forest Management (JFM), which preceded CFM in some areas. As most CFMGs have only held one election as part of their establishment process, we can expect that most people have been involved since the formation of their CFMG. 
 
 ```{r}
 #| label: fig-interviewee_years_involved_cfmg

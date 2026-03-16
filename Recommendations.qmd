@@ -30,7 +30,7 @@ Derived from our experiences with this project, we make the following recommenda
 
 -   Transition the current CFM database into a digital management dashboard for CFM monitoring that can be integrated with digital data collection tools and file uploads. Ideally, it would have an associated App that would facilitate recording of data on common processes, such as CFMG meetings and elections, permits, workplans, budgets, annual reports, and so on.
 
-## Sustainable forest management
+## SFM
 
 -   DFOs and CFMGs should identify key SFM activities within the management plan, such a boundary marking, fire monitoring and patrolling, and develop workplans - with completion dates for key milestones - for each within the overall CFMG workplan.
 

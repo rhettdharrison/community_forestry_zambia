@@ -34,7 +34,7 @@ load("cfmg.RData")
 
 ## Summary
 
-The implementation of community forest management processes is patchy. The legal processes required for establishment of a CF are mostly complete across our sample, but later processes such as the registration certificate, forest-use permits and benefit-sharing agreement have not been completed for a substantial number of CFs. While most CFMGs have held elections, have term-limits for executive officers and hold meetings with reasonable frequency, a large proportion have not opened a bank account, do not have a receipt book and have not completed annual financial and technical reports. Most CFMGs are overdue elections and hence are not compliant with their Bylaws & Constitutions. Business processes are even less well implemented. Many do not have a business plan, annual budgets or workplans. Many also do not have defined user groups. Most CFMGs are only rarely visited by the District Forest Officers, but most are supported by conservation NGOs or carbon trading enterprises, who do visit more frequently. Interest in expanding the CF, an indicator of satisfaction with CFM, was highest among CFMG executives and lowest among community youth, a difference that was significant. Among individual interview respondents, NGO representatives indicated they would like to expand the CF significantly more often than traditional leaders (usually headmen or headwomen) and community members. For those CFMGs that recognised forest user groups, these user-groups harvested a very wide variety of resources, but honey and mushrooms were particularly frequently mentioned.
+The implementation of community forest management processes is patchy. The legal processes required for establishment of a CF are mostly complete across our sample, but later processes such as the registration certificate, forest-use permits and benefit-sharing agreement have not been completed for a substantial number of CFs. While most CFMGs have held elections, have term-limits for executive officers and hold meetings with reasonable frequency, a large proportion have not opened a bank account, do not have a receipt book and have not completed annual financial and technical reports. Most CFMGs are overdue elections and hence are not compliant with their Bylaws & Constitutions. Business processes are even less well implemented. Many do not have a business plan, annual budgets or workplans. Many also do not have defined user groups. Most CFMGs are only rarely visited by DFOs, but most are supported by conservation NGOs or carbon trading enterprises, who do visit more frequently. Interest in expanding the CF, an indicator of satisfaction with CFM, was highest among CFMG executives and lowest among community youth, a difference that was significant. Among individual interview respondents, NGO representatives indicated they would like to expand the CF significantly more often than traditional leaders (usually headmen or headwomen) and community members. For those CFMGs that recognised forest user groups, these user-groups harvested a very wide variety of resources, but honey and mushrooms were particularly frequently mentioned.
 
 ## Introduction
 
@@ -501,7 +501,7 @@ As is evident from the table, these business management processes were even more
 
 ## External support
 
-All CFMGs are supported by the Forestry Deparment, which has a statutory duty to implement the community forest policy and regulations. Nonetheless, the frequency of visits by District Forest Officers (DFOs) varied widely and in many cases they rarely or never visited.
+All CFMGs are supported by the Forestry Deparment, which has a statutory duty to implement the community forest policy and regulations. Nonetheless, the frequency of visits by DFOs varied widely and in many cases they rarely or never visited.
 
 ```{r}
 #| label: fig-dfo_visits
@@ -853,7 +853,7 @@ The difference in attitudes between CFMG Executive and Youth FGD groups was sign
 ::: {.callout-note collapse="true"}
 ### Interest in expanding community forest - FGDs - Model methods
 
-To examine the differences among FGD types, we employed a binomial GLMM (i.e. yes = want to expand, no = do not want to expand), with random intercepts for province and CFMG nested within province. We used FDG type as the factor. We examined the significance of pairwise differences among FDG types using Tukey HSD.
+To examine the differences among FGD types, we employed a binomial generalised linear mixed model (GLMM) (i.e. yes = want to expand, no = do not want to expand), with random intercepts for province and CFMG nested within province. We used FDG type as the factor. We examined the significance of pairwise differences among FDG types using Tukey HSD.
 :::
 
 ```{r}
