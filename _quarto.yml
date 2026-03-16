@@ -9,6 +9,8 @@ website:
   title: "CFM in Zambia"
   navbar:
     left:
+      - text: "Introduction"
+        href: Introduction.qmd
       - text: "Survey overview"
         href: "CFMG Survey.qmd"
       - text: "Governance"
