@@ -11,36 +11,6 @@ editor: visual
 bibliography: references.bib
 ---
 
-## Abbreviations
-
-| Abbreviation | Definition |
-|:-------------|:-----------|
-| BCP | BioCarbon Partners |
-| CF | Community Forest |
-| CFM | Community Forest Management |
-| CFMG | Community Forest Management Group |
-| CIFOR-ICRAF | Center for International Forestry Research – World Agroforestry |
-| CLMM | Cumulative Link Mixed Model |
-| COMACO | Community Markets for Conservation |
-| CRB | Community Resource Board |
-| DFO | District Forestry Officer |
-| FAO | Food and Agriculture Organization of the United Nations |
-| FGD | Focus Group Discussion |
-| FPIC | Free, Prior and Informed Consent |
-| GIZ | Deutsche Gesellschaft für Internationale Zusammenarbeit |
-| GLMM | Generalised Linear Mixed Model |
-| GRZ | Government of the Republic of Zambia |
-| HFO | Honorary Forest Officer |
-| JFM | Joint Forest Management |
-| NDC | Nationally Determined Contribution |
-| NGO | Non-governmental Organisation |
-| NTFP | Non-timber Forest Product |
-| REDD+ | Reducing Emissions from Deforestation and forest Degradation |
-| SFM | Sustainable Forest Management |
-| SI | Statutory Instrument |
-| ZIFLP | Zambia Integrated Forest Landscape Programme |
-
-
 ### Community forestry
 
 Community forest management (CFM) has emerged over the past five decades as a dominant paradigm in forest governance, grounded in the recognition that local communities — as the *de facto* managers over large areas of the world's forests — are best placed to sustainably manage the resources on which they depend. At its core, CFM involves the formal transfer of management authority and resource use rights from state institutions to local communities, alongside recognition of their right to benefit from forest resources [@charnley2007; @fao1978]. Although early programmes in the 1970s and 1980s focused narrowly on fuelwood supply and tree planting in South Asia and the Sahel, CFM has since evolved into a broad and diverse set of approaches — including participatory forest management, joint forest management, and community-based forest management — implemented across Asia, Africa, Latin America and Europe [@roberts2003; @baynes2015; @gilmour2016].
