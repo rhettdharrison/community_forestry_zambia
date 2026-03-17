@@ -243,6 +243,44 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var sidebar = document.getElementById("quarto-sidebar");
+    if (!sidebar) return;
+
+    // Determine path prefix based on current page depth
+    var depth = (window.location.pathname.match(/\//g) || []).length - 1;
+    var prefix = "../".repeat(Math.max(0, depth - 1));
+
+    var footer = document.createElement("div");
+    footer.id = "sidebar-footer";
+    footer.innerHTML =
+      '<div class="sidebar-footer-logos">' +
+        '<img src="' + prefix + 'images/CIFOR-ICRAF-logo.png" alt="CIFOR-ICRAF logo">' +
+        '<img src="' + prefix + 'images/SAFE_logos.png" alt="SAFE project logos">' +
+      '</div>' +
+      '<h6 class="sidebar-footer-heading">Acknowledgements</h6>' +
+      '<p class="sidebar-footer-disclaimer">' +
+        'This activity is a partnership between CIFOR-ICRAF and the SAFE (Sustainable Agriculture for Forest Ecosystems) project, ' +
+        'financed by the European Union (EU), the Ministry of Foreign Affairs of Netherlands and the German Federal Ministry for ' +
+        'Economic Cooperation and Development (BMZ). SAFE is part of the Fund for the Promotion of Innovation in Agriculture (i4Ag) ' +
+        'and implemented by Deutsche Gesellschaft f\u00FCr Internationale Zusammenarbeit (GIZ). The aim of this collaboration is to ' +
+        'understand whether community forestry in Zambia is delivering the desired outcomes in terms of sustainable forest management ' +
+        'and economic development.' +
+      '</p>' +
+      '<p class="sidebar-footer-disclaimer">' +
+        'The activity is also a collaboration between CIFOR-ICRAF and the Government of the Republic of Zambia through the Ministry ' +
+        'of Green Economy and Environment and the Department of Forestry.' +
+      '</p>' +
+      '<p class="sidebar-footer-disclaimer">' +
+        'The contents of this report are the sole responsibility of CIFOR-ICRAF and do not necessarily reflect the views of the EU, ' +
+        'the Federal Ministry for Economic Cooperation and Development (BMZ), the Ministry of Foreign Affairs of the Netherlands, ' +
+        'or the Government of the Republic of Zambia.' +
+      '</p>';
+
+    sidebar.appendChild(footer);
+  });
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

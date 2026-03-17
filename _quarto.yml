@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - images/
 
 execute:
   freeze: auto
@@ -41,6 +43,7 @@ format:
     toc-depth: 3
     theme: cosmo
     css: custom.css
+    include-after-body: sidebar-footer.html
 
 filters:
   - mcanouil/collapse-output
