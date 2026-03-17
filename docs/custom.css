@@ -20,6 +20,27 @@ figcaption.quarto-float-tbl {
   text-align: left !important;
 }
 
+/* Widen sidebar and shift main content right by ~2.5cm (95px) */
+@media (min-width: 992px) {
+  body.floating .page-columns {
+    grid-template-columns:
+      [screen-start] 1.5em
+      [screen-start-inset] 5fr
+      [page-start] minmax(25px, 50px)
+      [page-start-inset] minmax(145px, 245px)
+      [body-start-outset] minmax(25px, 50px)
+      [body-start] 1.5em
+      [body-content-start] minmax(500px, calc(800px - 3em))
+      [body-content-end] 1.5em
+      [body-end] minmax(25px, 50px)
+      [body-end-outset] minmax(50px, 150px)
+      [page-end-inset] minmax(25px, 50px)
+      [page-end] 5fr
+      [screen-end-inset] 1.5em
+      [screen-end] !important;
+  }
+}
+
 /* Sidebar footer: disclaimer and logos */
 #sidebar-footer {
   margin-top: auto;
