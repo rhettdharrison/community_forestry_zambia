@@ -43,15 +43,15 @@ figcaption.quarto-float-tbl {
 }
 
 .sidebar-footer-logos img[alt="CIFOR-ICRAF logo"] {
-  max-width: 87px;
+  max-width: 130px;
 }
 
 .sidebar-footer-logos img[alt="SAFE project logos"] {
-  max-width: 145px;
+  max-width: 218px;
 }
 
 .sidebar-footer-heading {
-  font-size: 0.38rem;
+  font-size: 0.57rem;
   font-weight: 700;
   color: #495057;
   margin-bottom: 0.2rem;
@@ -60,7 +60,7 @@ figcaption.quarto-float-tbl {
 }
 
 .sidebar-footer-disclaimer {
-  font-size: 0.34rem;
+  font-size: 0.51rem;
   color: #6c757d;
   line-height: 1.4;
   margin-bottom: 0.3rem;
