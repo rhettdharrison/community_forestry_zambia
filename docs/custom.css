@@ -68,7 +68,8 @@ figcaption.quarto-float-tbl {
 }
 
 .sidebar-footer-logos img[alt="SAFE project logos"] {
-  max-width: 218px;
+  max-width: 100%;
+  width: 100%;
 }
 
 .sidebar-footer-heading {
