@@ -43,6 +43,7 @@ format:
     toc-depth: 3
     theme: cosmo
     css: custom.css
+    append-hash: true
     include-after-body: sidebar-footer.html
 
 filters:
