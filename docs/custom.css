@@ -42,18 +42,26 @@ figcaption.quarto-float-tbl {
   height: auto;
 }
 
+.sidebar-footer-logos img[alt="CIFOR-ICRAF logo"] {
+  max-width: 87px;
+}
+
+.sidebar-footer-logos img[alt="SAFE project logos"] {
+  max-width: 145px;
+}
+
 .sidebar-footer-heading {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.38rem;
+  font-weight: 700;
   color: #495057;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.2rem;
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
 
 .sidebar-footer-disclaimer {
-  font-size: 0.68rem;
+  font-size: 0.34rem;
   color: #6c757d;
   line-height: 1.4;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
 }
