@@ -8,3 +8,8 @@
 
 # Claude worktrees
 .claude/worktrees/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.tex

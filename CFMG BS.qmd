@@ -45,7 +45,7 @@ In this chapter, we consider the equitable sharing of benefits arising from comm
 
 ## Benefit sharing
 
-We asked FGD groups whether the benefits of CFM were equitably distributed (@fig-bs_equity). On the one hand, a substantial majority of responses across the FGD groups asserted that benefits were being shared equitably. The proportion of community female and community youth groups that felt that benefits were not being shared equitably was significantly high than for the CFMG executive and community male FGD groups. Moreover, even among the CFMG executive and community male groups, there were some that agreed that benefits were not being shared equitably.
+We asked FGD groups whether the benefits of CFM were equitably distributed (@fig-bs_equity). On the one hand, a substantial majority of responses across the FGD groups asserted that benefits were being shared equitably. However, the proportion of community female and community youth groups that felt that benefits were not being shared equitably was significantly higher than for the CFMG executive and community male FGD groups. Moreover, even among the CFMG executive and community male groups, there were some that agreeded that benefits were not being shared equitably.
 
 ```{r}
 #| label: fig-bs_equity
@@ -178,7 +178,7 @@ summary(M1)
 summary(pairwise.M1)
 ```
 
-Individual interviewees were also asked whether the benefits of CFM were equitably shared. @tbl-bs_individual_equity shows the percentage reporting this broken down by interviewee role. Again a substantial majority of respondents (83% - 92%) thought that benefits were being shared equitably, and the differences among respondents were not significant. However, there was still minority of respondents that did not think benefits were being equitably shared. This suggests that there are some CFs where the benefit sharing arrangements are not optimal or appropriate arrangements are not being followed.
+Individual interviewees were also asked whether the benefits of CFM were equitably shared. @tbl-bs_individual_equity shows the percentage reporting this broken down by interviewee role. Again a substantial majority of respondents (83% - 92%) thought that benefits were being shared equitably, and the differences among respondents were not significant. However, there was still minority of respondents that did not think benefits were being equitably shared. This suggests that there are some CFs where the benefit sharing arrangements are not optimal or appropriate arrangements are in place but not being followed.
 
 ```{r}
 #| label: tbl-bs_individual_equity
@@ -360,7 +360,7 @@ cfmg |>
 
 ### Within-community sharing
 
-We also asked FGD groups about the carbon income sharing arrangements within the community. We first asked who is responsible for the decision-making (@fig-bs_benefit_sharing_decision) and then we asked on what principles the benefit sharing was based (@fig-bs_benefit_sharing_principles). As can be seen there is broad agreement among the FGD groups on who makes the decision about the caron benefit sharing arrangements. In approximately half the CFs the CFMG executive is responsible for the decision, while in the other half the entire CFMG is responsible.
+We also asked FGD groups about the carbon income sharing arrangements within the community. We first asked who is responsible for the decision-making (@fig-bs_benefit_sharing_decision) and then we asked on what principles the benefit sharing was based (@fig-bs_benefit_sharing_principles). As can be seen there is broad agreement among the FGD groups on who makes the decision about the carbon benefit sharing arrangements. In approximately half the CFs the CFMG executive is responsible for the decision, while in the other half the entire CFMG is responsible.
 
 ```{r}
 #| label: fig-bs_benefit_sharing_decision
@@ -512,7 +512,7 @@ cfmg |>
   )
 ```
 
-According to the responses of the CFMG executives, seven CFs shared benefits acccording to members contribution to CFM while six shared them equally among the community households. Only two said that consideration of marginalised or vulnerable groups was a consideration. The other FGD groups were broadly similar in their responses and differences may be due to their knowledge of the arrangements, rather than actual differences in the arrangements.
+According to the responses of the CFMG executives, seven CFs shared benefits according to members contribution to CFM while six shared them equally among the community households. Only two said that consideration of marginalised or vulnerable groups was a consideration. The other FGD groups were broadly similar in their responses and differences may be due to their knowledge of the arrangements, rather than actual differences in the arrangements.
 
 ### External determination of benefit sharing
 
@@ -1635,7 +1635,7 @@ summary(pairwise.M10)
 ```
 
 
-We also examined which mechanisms are being used to achieve transparency in benefit sharing among the community female, male, and youth FGDs (@fig-bs_transparency_mechanisms).
+We examined which mechanisms are being used to achieve transparency in benefit sharing among the community female, male, and youth FGDs (@fig-bs_transparency_mechanisms).
 
 ```{r}
 #| label: fig-bs_transparency_mechanisms
@@ -1718,7 +1718,7 @@ cfmg |>
 
 ### Grievance and Redress
 
-We asked FGD groups whether their CFMG has a grievance and redress mechanism (@fig-bs_grievance).
+We asked FGD groups whether their CFMG has a grievance and redress mechanism in place (@fig-bs_grievance).
 
 ```{r}
 #| label: fig-bs_grievance
@@ -2300,12 +2300,12 @@ cfmg |>
 
 Through the FGDs and individual interviews, we investigated a wide range of equity and inclusion indicators, covering benefit sharing, gender equity, transparency, grievance and redress, and poverty impacts.
 
-The most striking and consistent finding is a divergence in perspective by FGD group. Across virtually every indicator — equitable benefit sharing, women benefiting from CFM, women suffering disproportionate opportunity costs, women's participation in decision making, and transparency in benefit sharing — community female and youth groups were significantly more likely than CFMG executive and male groups to report negative outcomes. Given that CFMG executives and community males may typically be better informed about formal governance arrangements, it is possible that this divergence reflects an information asymmetry rather than disagreement about conditions. However, it may also reflect that the benefits and costs of CFM are being distributed unevenly, in ways that are visible to female and youth community members but not acknowledged — or perhaps not noticed — by those in the CFMG executives. It is also possible that these differences in perspective reflect elite capture.
+The most striking and consistent finding is a divergence in perspective by FGD group. Across virtually every indicator — equitable benefit sharing, women benefiting from CFM, women suffering disproportionate opportunity costs, women's participation in decision making, and transparency in benefit sharing — community female and youth groups were significantly more likely than CFMG executive and male groups to report negative outcomes. Given that CFMG executives and community males may typically be better informed about formal governance arrangements, it is possible that this divergence reflects an information asymmetry rather than disagreement about conditions. However, it may also reflect that the benefits and costs of CFM are being distributed unevenly, in ways that are visible to female and youth community members but not acknowledged — or perhaps not noticed — by those in the CFMG executives. It is also possible that these differences in perspective reflect elite capture or corruption.
 
-Notwithstanding these these issues, the overall picture is more positive than might have been expected. A clear majority of all FGD groups — including community female groups — reported that benefits are being shared equitably and that women benefit from CFM. Most female groups also stated that women do not disproportionately suffer opportunity costs and that women participate in CFM decision making. This is somewhat surprising, given that natural resource management decisions in Zambia are traditionally the purview of male community members. It may be that the formal governance structures mandated by CFM — CFMG elections, executive positions with female representation, and documented benefit-sharing arrangements — are providing women with a degree of recognition and voice that they would not otherwise have had.
+Notwithstanding these these issues, the overall picture is more positive than might have been expected. A clear majority of all FGD groups — including community female groups — reported that benefits are being shared equitably and that women benefit from CFM. Most female groups also stated that women do not disproportionately suffer opportunity costs and that women participate in CFM decision making. This is somewhat surprising, given that natural resource management decisions in Zambia are traditionally the purview of male community members. It may be that the formal governance structures mandated by CFM — elections, executive positions with female representation, and documented benefit-sharing arrangements — are providing women with a degree of recognition and voice that they would not otherwise have had.
 
 Carbon benefit-sharing agreements between companies and communities are almost entirely structured around revenue sharing. Employment, infrastructure investment and livelihood support are less commonly included in these agreements. While revenue sharing provides a direct financial return, it means communities that have not yet received a carbon payment have little to show for CFM. Diversifying the components of company-community agreements could broaden both the distribution of benefits and community buy-in.
 
 The reported poverty impacts of CFM — primarily increased household incomes and new income-generating activities — are broadly consistent with the economic transformation chapter findings. However, barriers to poorer community members benefiting remain, including limited access to resources, capital and markets. The solutions communities themselves proposed — financial support, targeted programmes for marginalised groups, and better governance — align closely with the governance and economic transformation recommendations identified elsewhere in this report.
 
-In conclusion, the equity and inclusion outcomes of CFM in Zambia are broadly positive but uneven. The divergence between female and youth perspectives and those of CFMG executives is the most important finding of this chapter. It signals that equity problems in a subset of CFMGs are likely more widespread than executive-level data alone would suggest, and that strengthening transparency, grievance mechanisms and community-wide engagement is essential to ensuring CFM benefits reach all community members equitably.
+In conclusion, the equity and inclusion outcomes of CFM in Zambia are broadly positive but uneven. The divergence between female and youth perspectives and those of CFMG executives is the most important finding of this chapter. It signals that equity problems in a subset of CFMGs are likely more widespread than executive-level data alone would suggest, and that strengthening transparency, grievance and redress mechanisms and community-wide engagement is essential to ensuring CFM benefits reach all community members equitably.

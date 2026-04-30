@@ -34,11 +34,11 @@ load("cfmg.RData")
 
 ## Summary
 
-The implementation of community forest management processes is patchy. The legal processes required for establishment of a CF are mostly complete across our sample, but later processes such as the registration certificate, forest-use permits and benefit-sharing agreement have not been completed for a substantial number of CFs. While most CFMGs have held elections, have term-limits for executive officers and hold meetings with reasonable frequency, a large proportion have not opened a bank account, do not have a receipt book and have not completed annual financial and technical reports. Most CFMGs are overdue elections and hence are not compliant with their Bylaws & Constitutions. Business processes are even less well implemented. Many do not have a business plan, annual budgets or workplans. Many also do not have defined user groups. Most CFMGs are only rarely visited by DFOs, but most are supported by conservation NGOs or carbon trading enterprises, who do visit more frequently. Interest in expanding the CF, an indicator of satisfaction with CFM, was highest among CFMG executives and lowest among community youth, a difference that was significant. Among individual interview respondents, NGO representatives indicated they would like to expand the CF significantly more often than traditional leaders (usually headmen or headwomen) and community members. For those CFMGs that recognised forest user groups, these user-groups harvested a very wide variety of resources, but honey and mushrooms were particularly frequently mentioned.
+The implementation of CFM processes is patchy. The legal processes required for establishment of a CF are mostly complete across our sample, but later processes such as the registration certificate, forest-use permits and benefit-sharing agreement have not been completed for a substantial number of CFs. While most CFMGs have held elections, have term-limits for executive officers and hold meetings with reasonable frequency, a large proportion have not opened a bank account, do not have a receipt book and have not completed annual financial and technical reports. Most CFMGs are overdue elections and hence are not compliant with their Bylaws & Constitutions. This is worrying as, in some cases, it may reflect an attempt by CFMG executives to retain control for personal benefit. Business processes are even less well implemented. Many do not have a business plan, annual budgets or workplans. Many also do not have defined user groups or issue permits. Most CFMGs are only rarely visited by DFOs or other district forestry staff, but most are supported by conservation NGOs or carbon trading enterprises, who do visit more frequently. Interest in expanding the CF, an indicator of satisfaction with CFM, was highest among CFMG executives and lowest among community youth, a difference that was significant. Among individual interview respondents, NGO representatives indicated they would like to expand the CF significantly more often than traditional leaders (usually headmen or headwomen) and community members. For those CFMGs that recognised forest user groups, these user-groups harvested a very wide variety of resources, but honey and mushrooms were particularly frequently mentioned.
 
 ## Introduction
 
-In this chapter, we consider questions concerning the governance and management of CFMGs. As our questions pertain to the running of the CFMGs, our analysis focuses on the responses of the CFMG Executives. However, the responses from other FGDs and from the individual interviews are included for comparison where appropriate.
+In this chapter, we consider questions concerning the governance and management of CFMGs. As our questions pertain to the running of the CFMGs, our analysis focuses on the responses of the CFMG executives. However, the responses from other FGDs and from the individual interviews are included for comparison where appropriate.
 
 ## CFMG legal processes
 
@@ -93,7 +93,7 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
 
 ```
 
-Lusaka Province was the only province in which all processes had been completed across all CFMGs, while Eastern Province had the highest proportion of incomplete legal processes. Overall, completion of legal processes was quite patchy. Some processes, such as the Recognition letter, CF Agreement, Management Plan and Bylaws & Constitution seem to have been completed for most CFMGs, but the Registration Certificate, User-rights Permit and Benefit-sharing Agreement were less often completed. This assessment is based on the responses of the CFMG Executives, who should be informed. Nevertheless, it may be that more processes have been completed, especially where the CFMG is being supported by external agencies such as NGOs or carbon trading agencies.
+Lusaka Province was the only province in which all processes had been completed across all CFMGs, while Eastern Province had the highest proportion of incomplete legal processes. Overall, completion of legal processes was quite patchy. Some processes, such as the Recognition letter, CF Agreement, Management Plan and Bylaws & Constitution, seem to have been completed for most CFMGs, but the Registration Certificate, User-rights Permit and Benefit-sharing Agreement were less often completed. This assessment is based on the responses of the CFMG executives, who should be well informed. Nevertheless, it may be that more processes have been completed, especially where the CFMG is being supported by external partners, such as NGOs or carbon trading agencies.
 
 ## CFMG governance processes
 
@@ -194,7 +194,7 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
 
 ```
 
-While most CFMGs have held elections, have term limits for executive officers and employ honorary forest officers (HFOs), other governance processes were not as consistently implemented. Most CFMGs have not opened bank accounts, do not maintain a receipt book, or issue permits. Financial and annual reporting to community members was also apparently irregularly implemented.
+While most CFMGs have held elections, have term limits for executive officers and employ honorary forest officers (HFOs), other governance processes were not as consistently implemented. Most CFMGs have not opened bank accounts, do not maintain a receipt book, or issue forest-use permits. Financial and annual reporting to community members was also apparently rarely implemented.
 
 It appears that most CFMGs have not held elections since they were formed, up to five years ago (@fig-last_election).
 
@@ -272,7 +272,7 @@ cfmg |>
   )
 ```
 
-Forty-three out of 75 CFMGs have not held elections for over 3 yrs, although term limits for executive officers are typically 2-3 years (@fig-tenure). This would suggest that most CFMGs are not complying with their Bylaws & Constitutions.
+Forty-three out of 75 CFMGs have not held elections for over 3 yrs, although term limits for executive officers are typically 2-3 years (@fig-tenure). This indicates that most CFMGs are not complying with their Bylaws & Constitutions.
 
 ```{r}
 #| label: fig-tenure
@@ -429,7 +429,7 @@ cfmg |>
 
 ## CFMG business processes
 
-As with the legal processes, we asked CFMG Executives about the state of their business processes. Specifically, we asked if they had developed annual workplans and budgets, and whether these plans were being implemented. We also asked if they had developed a business plan and if any forest user groups had been established (@tbl-business_processes).
+As with the legal processes, we asked CFMG executives about the state of their business processes. Specifically, we asked if they had developed annual workplans and budgets, and whether these plans were being implemented. We also asked if they had developed a business plan and if any forest user groups had been established (@tbl-business_processes).
 
 ```{r}
 #| label: tbl-business_processes
@@ -501,7 +501,7 @@ As is evident from the table, these business management processes were even more
 
 ## External support
 
-All CFMGs are supported by the Forestry Deparment, which has a statutory duty to implement the community forest policy and regulations. Nonetheless, the frequency of visits by DFOs varied widely and in many cases they rarely or never visited.
+All CFMGs are supported by FD, which has a statutory duty to implement the CFM policy and regulations. Nonetheless, the frequency of visits by DFOs or other district forestry staff varied widely and in many cases they rarely or never visited.
 
 ```{r}
 #| label: fig-dfo_visits
@@ -509,7 +509,7 @@ All CFMGs are supported by the Forestry Deparment, which has a statutory duty to
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Frequency of visits by District Forest Officers (DFO) by province. The length of the bars represents the proportion of CFMGs with a specified frequency of visits. The numbers superimposed on the bars represent the actual number of CFMGs in each category."
+#| fig-cap: "Frequency of visits by District Forest Officers (DFO) or other district forestry staff by province. The length of the bars represents the proportion of CFMGs with a specified frequency of visits. The numbers superimposed on the bars represent the actual number of CFMGs in each category."
 
 cfmg |>
   filter(interview_type == "cfmg_executive") |>
@@ -635,7 +635,7 @@ cfmg |>
   )
 ```
 
-The table below (@tbl-support_organisations) lists the partners organisations and the number of CFMGs they support. It is important to note that this list does not cover all organisations supporting CFMGs or all the CFMGs that are supported by a named organisation, but only those in our sample of 75 CFMGs
+The table below (@tbl-support_organisations) lists the partners organisations and the number of CFMGs they support. It is important to note that this list does not cover all organisations supporting CFMGs or all the CFMGs that are supported by a named organisation, but only those in our sample of 75 CFMGs. The FD is named as a partner in situations where the district FD office was responsible for setting up the CFMG and other partners are not involved.
 
 ```{r}
 #| label: tbl-support_organisations
@@ -669,7 +669,7 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
         sub_missing()
 ```
 
-The figure below (@fig-partner_visits) indicates the frequence of visits to CFMGs by partner organiastions. The respondents did not state a specified number of visits per year, but from the context we assume the frequently indicates monthly or every other month, 1-4 times a year, while never means that they had not visited in over a year.
+The figure below (@fig-partner_visits) indicates the frequency of visits to CFMGs by partner organisations. The respondents did not state a specified number of visits per year, but from the context we assume the frequently indicates monthly or every other month, occasionally indicates 1-4 times a year, while never means that they had not visited in over a year.
 
 ```{r}
 #| label: fig-partner_visits
@@ -770,7 +770,7 @@ cfmg |>
 
 ## Interest in expanding the community forest
 
-Next we asked interviewees whether they were interested in expanding the area of their community forest. A "yes" answer can be taken as an endorsement of community forest management (CFM). On the other hand, a negative response might reflect dissatisfaction with the CFMG management or the benefits CFM has brought. However, a negative response could also reflect other reasons, such as a lack of sufficient addition forest area in the community. We compare the responses from different FGD groups.
+Next we asked interviewees whether they were interested in expanding the area of their CF. A "yes" answer can be taken as an endorsement of CFM. On the other hand, a negative response might reflect dissatisfaction with the CFMG management or the benefits CFM has brought. However, a negative response could also reflect other reasons, such as a lack of sufficient additional forest area in the community. We compare the responses from different FGD groups.
 
 ```{r}
 #| label: fig-interest_in_expanding_FGDs
@@ -848,7 +848,7 @@ cfmg |>
 
 As can be seen in @fig-interest_in_expanding_FGDs, the CFMG executives were enthusiastic to expand the CF in most cases. However, among the community this number dropped to 41 for female groups, 37 for male groups and to just 23 for youth groups.
 
-The difference in attitudes between CFMG Executive and Youth FGD groups was significant, but the pairwise comparisons among other FGD groups were not significant. These results might suggest that community forest management is not benefiting youth to the same degree as other groups, or perhaps that they bear higher opportunity costs. Our analyses in other sections will help elucidate the reasons.
+The difference in attitudes between CFMG executive and youth FGD groups was significant, but the pairwise comparisons among other FGD groups were not significant. These results might suggest that CFM is not benefiting youth to the same degree as other groups, or perhaps that they bear higher opportunity costs. Our analyses in other sections will help elucidate the reasons.
 
 ::: {.callout-note collapse="true"}
 ### Interest in expanding community forest - FGDs - Model methods
@@ -1110,14 +1110,14 @@ Evidently, people are harvesting a wide variety of products from CFs, although h
 
 ## Discussion
 
-In this chapter we assessed CFMG governance across five domains: legal processes, governance processes, business processes, external support, and community buy-in as reflected by interest in expanding the CF.
+In this chapter we assessed CFMG governance across five domains: legal processes, governance processes, business processes, external support, and community buy-in as reflected by interest in expanding the CF and the activities of user-groups.
 
 The most consistent pattern across all three process domains — legal, governance, and business — is that foundational steps have been taken by most CFMGs, but the more demanding, ongoing requirements are often incomplete. Early legal steps, such as obtaining a recognition letter and signing a forest management agreement, have been completed by the large majority of CFMGs, but later and more involved documents — the registration certificate, forest-use permit, and benefit-sharing agreement — are absent in a substantial proportion. Similarly with respect to governance processes, most CFMGs have held elections and have term limits in place, but basic management actions — opening bank accounts, operating receipt books, and financial and annual reporting — are frequently missing. Business processes are the weakest area of all. Annual workplans, budgets and business plans are rarely in place. Without these planning and financial management tools, CFMGs cannot sustainably manage their resources, are poorly positioned to account for and redistribute income — including carbon payments — and will struggle to demonstrate compliance with the forest management license or to agreements with external partners.
 
-The fact that most CFMGs are overdue for elections is particularly concerning. Timely elections are a basic requirement of the Bylaws & Constitution, and overdue elections undermine the democratic legitimacy of the CFMG executives and could contribute to the perception of elite capture noted elsewhere in this report. Ensuring that CFMGs run elections on schedule should be a priority for the Forestry Department and for supporting NGOs.
+The fact that most CFMGs are overdue for elections is particularly concerning. Timely elections are a basic requirement of the CFMG Bylaws & Constitution, and overdue elections undermine the democratic legitimacy of the CFMG executives and could contribute to the perception of elite capture noted elsewhere in this report. These perceptions may be very valid in some cases. The enumerators noted that while some CFMGs had not held elections because they were no longer active, the CFMG executives of others stated that the CFMG had yet to receive carbon income and they were unwilling to hold elections, because they anticipated personal benefits from being a CFMG executive member once the carbon income started to flow. Still others had received carbon income and were unwilling to give up their positions because they do receive some kind of personal benefit. It is essential that this kind of corruption is stamped out, as it may threaten the legitimacy of CFM in the eyes of the community and potentially undo gains made in SFM and sustainable development. Ensuring that CFMGs run elections on schedule and fairly should be a priority for the FD and for supporting partners.
 
-External support from the Forestry Department is insufficient. Most CFMGs are rarely or never visited by DFOs, despite the statutory duty of the Forestry Department to implement the community forest policy. This gap is partly compensated by conservation NGOs and carbon trading enterprises, many of which visit their partner CFMGs more frequently. However, this support is not universal: a significant proportion of CFMGs in our sample had no external partner. Given the governance deficits identified above, regular external support from CFMG partners for capacity building and oversight is clearly a necessity. The current model, in which CFM is effectively co-governed by the community and the private sector rather than the state, may be adequate for CFMGs with active and capable partners but leaves others without meaningful support.
+External support from the FD is insufficient. Most CFMGs are rarely or never visited by DFOs or other district forestry staff, despite the statutory duty of the FD to implement the CFM policy. This gap is partly compensated by conservation NGOs and carbon trading enterprises, many of which visit their partner CFMGs more frequently. However, this support is not universal: a significant proportion of CFMGs in our sample had no external partner. Given the governance deficits identified above, regular external support from CFMG partners for capacity building and oversight is clearly a necessity. The current model, in which CFM is effectively co-governed by the community and the private sector rather than the state, may be adequate for CFMGs with active and capable partners but leaves others without meaningful support.
 
-Interest in expanding the CF is highest among CFMG executives and drops markedly among community members, particularly youth. Among individual interviewees, NGO representatives are significantly more enthusiastic about expansion than traditional leaders or community members. This divergence — consistent with the equity chapter findings — suggests that the leadership and external partner stakeholders have a more optimistic view of CFM outcomes than the broader community. Although possibly not widespread a the moment, poor governance could lead to increased levels of community dissatisfaction with CFM and, if not addressed, could pose a long-term risk to the legitimacy and sustainability of CFM.
+Interest in expanding the CF is highest among CFMG executives and drops markedly among community members, particularly youth. Among individual interviewees, NGO representatives are significantly more enthusiastic about expansion than traditional leaders or community members. This divergence — consistent with the equity chapter findings — suggests that the CFMG leadership and external partner stakeholders have a more optimistic view of CFM outcomes than the broader community. Although possibly not widespread a the moment, poor governance could lead to increased levels of community dissatisfaction with CFM and, if not addressed, could pose a long-term risk to the legitimacy and sustainability of CFM.
 
-In conclusion, CFMG governance is still maturing. The legal framework for CFM is largely in place, but institutional and business management processes lag behind. Strengthening financial management, ensuring timely elections, expanding DFO engagement, and closing the gap between executive and community perspectives on CFM will be essential for CFM to fulfil its potential in Zambia.
+In conclusion, CFMG governance is still maturing. The legal framework for CFM is largely in place, but institutional and business management processes lag behind. Strengthening financial management, ensuring timely elections, expanding DFO and district forestry staff engagement, and closing the gap between executive and community perspectives on CFM will be essential for CFM to fulfil its potential in Zambia.

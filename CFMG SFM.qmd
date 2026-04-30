@@ -35,11 +35,11 @@ load("cfmg.RData")
 
 ## Summary
 
-Most respondents indicated that deforestation, charcoal production, and fire frequency were decreasing, wildlife populations were increasing, and natural resource management was improving within CFs. Most FDG groups also indicated that both deforestation and charcoal production were decreasing outside their CF, suggesting there is no leakage effect. Community female FDGs tended to have a more positive view of the impact of CFM compared to the other groups. However, it is important to note that a small number of FDG groups and individual interviewees suggested the situation was worsening in their CFs. It will be important to identify CFs that are doing less well and address the problems. Few CFMGs were practising natural forest restoration or establishing plantations. Hence, there is a considerable opportunity to expand the contribution of CFM to meeting national restoration and plantation targets.
+Most respondents indicated that deforestation, charcoal production and fire frequency were decreasing, wildlife populations were increasing and natural resource management was improving within CFs. Most FDG groups also indicated that both deforestation and charcoal production were also decreasing outside their CF, suggesting there is no leakage effect. Community female FDGs tended to have a more positive view of the impact of CFM compared to the other groups, which is noteworthy given it is primarily the women who harvest forest products, but who often do not have voice in traditional natural resource management. However, it is also important to note that a small number of FDG groups and individual interviewees suggested the situation was worsening in their CFs. It will be important to identify CFs that are doing less well and address the problems. Not many CFMGs were practising natural forest restoration or establishing plantations. Existing CFs should be expanded and new one designed, so that they incorporate degraded areas that can become the focus of restoration and plantation activities. There is a considerable opportunity for CFM to contribute to national restoration and plantation targets, but currently this is not being realised. 
 
 ## Introduction
 
-In this chapter, we consider the effect of community forestry on indicators of SFM. The information is based only on the responses of interviewees to our survey tool. A separate chapter will analyse satellite derived remote sensed data on fire frequency and deforestation.
+In this chapter, we consider the effect of community forestry on indicators of SFM. The information analysed in this draft report is based only on the responses of interviewees to our survey tool. For the final report we will include analyses of satellite derived remote sensed data on fire frequency and deforestation.
 
 ### Deforestation
 
@@ -440,7 +440,7 @@ cfmg |>
   )
 ```
 
-Contrary to the expectations of leakage, a majority of the FGD groups responded that CFM actually reduced deforestation outside their CF. Moreover, the responses were consistent across FGD groups. There were no significant differences in response.
+Contrary to the expectations of leakage, a majority of the FGD groups responded that CFM had actually reduced deforestation outside their CF. Moreover, the responses were consistent across FGD groups. There were no significant differences in responses.
 
 ::: {.callout-note collapse="true"}
 ### Deforestation outside the CF - FGDs - Model methods
@@ -1087,7 +1087,7 @@ cfmg |>
   )
 ```
 
-As can be seen, the vast majority of groups indicated that charcoal making had also decreased outside their CF. However, there were a small number that indicated charcoal making had increased, some indicating it had increased significantly. Female FGD groups were significantly more likely to indicate that charcoal making had decreased outside the CF than all other groups (CFMG executive members, male or youth community members). There were no significant differences among these other groups, who most often indicated that there was no change in the amount of charcoal making.  
+As can be seen, the vast majority of groups indicated that charcoal making had also decreased outside their CF. However, there were a small number that indicated charcoal making had increased, some indicating it had increased significantly. Female FGD groups were significantly more likely to indicate that charcoal making had decreased outside the CF than all other groups (CFMG executive members, male or youth community members). There were no significant differences among these other groups, who most often indicated that there was no change in the amount of charcoal making outside the CF.  
 
 ::: {.callout-note collapse="true"}
 ### Charcoal production outside the CF - FGDs - Model methods
@@ -2394,7 +2394,7 @@ if (!is.null(M14)) summary(pairwise.M14) else cat("Model not fitted.")
 
 ### Restoration
 
-We asked CFMG executives whether natural forest restoration is practiced inside the community forest. We restrict the responses for this question to CFMG Executives, because this is the groups that should be best informed about the activities of the CFMG (and the differences in responses among groups to this question are no of substantive interest).
+We asked CFMG executives whether natural forest restoration is practiced inside the community forest. We restrict the responses for this question to CFMG executives, because this is the group that should be best informed about the activities of the CFMG (and the differences in responses among groups to this question are no of substantive interest).
 
 ```{r}
 #| label: fig-natural_forest_restoration
@@ -2456,7 +2456,7 @@ cfmg |>
   )
 ```
 
-Natural forest restoration is being practiced across approximately half of the CFs in our sample, mostly in Muchinga, Central and Northern provinces. We also asked CFMG executives about the specific restoration methods applied inside their CF. The majority were conserving natural regeneration. Only one CFMG was involved in planting native species and removal of invasives was not practiced.
+Natural forest restoration is being practiced across approximately half of the CFs in our sample, mostly in Muchinga, Central and Northern provinces. We also asked CFMG executives about the specific restoration methods applied inside their CF. The majority were protecting natural regeneration. Only one CFMG was involved in planting native species and removal of invasives was not practised.
 
 ```{r}
 #| label: fig-restoration_methods
@@ -2811,7 +2811,7 @@ Among the individual interviewees, NGO representatives and DFOs tended to have a
 
 Overall, CFM appears to be engendering a change towards improved SFM. However, it is important to note that a small number of FDG groups and individual interviewees suggested the situation was worsening in their CFs. For the success of CFM in Zambia, it will be important to identify CFs that are doing less well, diagnose the causes and implement changes.
 
-Some CFMGs were practicing forest restoration, mostly through protecting natural regeneration, and a few were establishing plantations. However, these activities were not widespread among CFMGs. Restoration - especially through protection of natural regeneration - should integral to CFM and is probably occurring widely simply through improvements in forest protection. As this is an important indicator of SFM and there are government targets to restore 2,000,000 ha by 2030, the FD should integrate restoration targets into forest management plans for CFMGs and monitor outcomes. Agroforestry was also not widely practiced by CFMGs, but is recognised tool for restoration of degraded agricultural land, and can reduce pressure on forests. Plantations are also an important opportunity for CFM. Plantations can supply local building and fuelwood needs, thereby reducing pressure on natural forests. Through sustainable charcoal programmes, they can also supply energy for urban dwellers and again reduce pressure on natural forests. Last, Zambia has an acute shortage of high quality timber for telegraph poles and construction and imports large amounts of wood. A focus on developing plantations through CFM would go some way to meeting these needs, as well as generating a valuable additional source of income for poor rural communities.
+Some CFMGs were practicing forest restoration, mostly through protecting natural regeneration, and a few were establishing plantations. However, these activities were not widespread among CFMGs. Restoration - especially through protection of natural regeneration - should integral to CFM and could be implement across all CFs in Zambia. As this is an important indicator of SFM and there are government targets to restore 2,000,000 ha by 2030, the FD should integrate restoration targets into forest management plans for CFMGs and monitor outcomes. A problem is that the boundaries of many existing CFs were drawn around areas containing on relatively good forest. The FD and communities should consider expand CF boundaries to incorporate areas for restoration activities, and for new CFs such areas should be incorporated from the outset. Agroforestry was also not widely practised by CFMGs, but is recognised tool for restoration of degraded agricultural land and can reduce pressure on forests. Plantations are also an important opportunity for CFM. Plantations can supply local building and fuelwood needs, thereby reducing pressure on natural forests. Through sustainable charcoal programmes, they can also supply energy for urban dwellers and again reduce pressure on natural forests. Last, Zambia has an acute shortage of high quality timber for uses such as telegraph poles and construction and imports large amounts of wood. A focus on developing plantations through CFM would go some way to meeting these needs, as well as generating a valuable additional source of income for rural communities.
 
-In conclusion, our data suggest that CFM in Zambia is driving substantial improvements in SFM, reducing deforestation, charcoal production, and fire frequency, increasing wildlife populations, and improving natural resource management. However, it is important to note that these changes were not ubiquitous across all CFs. While some CFMGs are practising restoration and establishing plantations, there is a substantial opportunity to expand the role of CFM in meeting national restoration and plantation targets.  
+In conclusion, our data suggest that CFM in Zambia is driving substantial improvements in SFM, reducing deforestation, charcoal production, and fire frequency, increasing wildlife populations, and improving natural resource management. However, it is important to note that these changes were not ubiquitous across all CFs. While some CFMGs are practising restoration and establishing plantations, there is a substantial opportunity to expand the role of CFM in meeting national restoration and plantation targets.
 
