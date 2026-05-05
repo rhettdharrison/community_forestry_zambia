@@ -158,4 +158,140 @@ cfmg <- cfmg |>
         )
 
 
+# Governance index (out of 10) from executive responses; joined to all rows
+gov_index_data <- cfmg |>
+        filter(interview_type == "cfmg_executive") |>
+        mutate(
+                gi_receipt_book  = case_match(cfmg_governance_receipt_book_maintained,
+                                              "yes" ~ 1, "no" ~ 0, .default = NA_real_),
+                gi_bank_acc      = case_match(cfmg_governance_bank_account,
+                                              "yes" ~ 1, "no" ~ 0, .default = NA_real_),
+                gi_financial_rep = case_match(cfmg_governance_financial_reports_to_community,
+                                              "yes" ~ 1, "no" ~ 0, .default = NA_real_),
+                gi_annual_rep    = case_match(cfmg_governance_annual_report_to_community,
+                                              "yes" ~ 1, "no" ~ 0, .default = NA_real_),
+                gi_permits       = case_match(cfmg_governance_issue_licenses_permits,
+                                              "yes" ~ 1, "no" ~ 0, .default = NA_real_),
+                gi_hfo           = case_match(cfmg_governance_yn_employ_honorary_forest_officers,
+                                              "yes" ~ 1, "no" ~ 0, .default = NA_real_),
+                gi_workplan      = case_match(cfmg_governance_cfmg_workplan,
+                                              "yes" ~ 1, "no" ~ 0, "don't_know" ~ NA_real_,
+                                              .default = NA_real_),
+                gi_budget        = case_match(cfmg_governance_cfmg_budget,
+                                              "yes" ~ 1, "no" ~ 0, "don't_know" ~ NA_real_,
+                                              .default = NA_real_),
+                gi_business_plan = case_match(cfmg_governance_cfma_business_plan,
+                                              "yes" ~ 1, "no" ~ 0, "don't_know" ~ NA_real_,
+                                              .default = NA_real_),
+                gi_term_limits   = case_match(cfmg_governance_term_limits_exist,
+                                              "yes" ~ 1, "no" ~ 0, .default = NA_real_)
+        ) |>
+        mutate(
+                gov_index = rowSums(
+                        cbind(gi_receipt_book, gi_bank_acc, gi_financial_rep,
+                              gi_annual_rep, gi_permits, gi_hfo,
+                              gi_workplan, gi_budget, gi_business_plan,
+                              gi_term_limits),
+                        na.rm = TRUE
+                )
+        ) |>
+        select(cfmg_name, gov_index,
+               gi_receipt_book, gi_bank_acc, gi_financial_rep, gi_annual_rep,
+               gi_permits, gi_hfo, gi_workplan, gi_budget, gi_business_plan,
+               gi_term_limits) |>
+        group_by(cfmg_name) |>
+        summarise(across(everything(), ~ mean(.x, na.rm = TRUE)), .groups = "drop") |>
+        mutate(across(where(is.numeric), ~ ifelse(is.nan(.x), NA_real_, .x)))
+
+cfmg <- cfmg |>
+        left_join(gov_index_data, by = "cfmg_name", relationship = "many-to-one")
+
+# SFM index (out of 5) averaged across all FGD types (executive, male, female, youth); joined to all rows
+sfm_index_data <- cfmg |>
+        filter(interview_type %in% c("cfmg_executive", "cfmg_male", "cfmg_female", "cfmg_youth")) |>
+        mutate(
+                si_deforest = case_match(
+                        impact_on_sfm_cfm_reduced_forest_clearing_cfma,
+                        "yes_significant" ~ 1,
+                        "yes_moderate"    ~ 1,
+                        "Yes there no more fields_  it's all forests"                          ~ 1,
+                        "Yes_ significant reduction. There was chitemene system before CFM"    ~ 1,
+                        "no_increase"                                     ~ 0,
+                        "no_change"                                       ~ 0,
+                        "no_there_has_never_been_clearing_for_agriculture" ~ 0,
+                        "Agricultural practices ceased way before CFM"    ~ 0,
+                        "One field for cassava"                           ~ 0,
+                        "dont_know"                                       ~ NA_real_,
+                        .default = NA_real_
+                ),
+                si_charcoal = case_match(
+                        impact_on_sfm_charcoal_production_in_cfma,
+                        "yes_high"    ~ 1,
+                        "no"          ~ 1,
+                        "no_stopped"  ~ 1,
+                        "yes_reduced" ~ 1,
+                        "No_ charcoal production is not a common practice for community members" ~ 0,
+                        "There has never been  charcoal  production"                             ~ 0,
+                        "dont_know"                                                              ~ NA_real_,
+                        .default = NA_real_
+                ),
+                si_fire = case_match(
+                        impact_on_sfm_fire_incidence_reduction_cfma,
+                        "yes_significant_reduction" ~ 1,
+                        "yes_moderate_reduction"    ~ 1,
+                        "no_change"                                          ~ 0,
+                        "no_incidents_have_increased"                        ~ 0,
+                        "No change observed as at now"                       ~ 0,
+                        "CFMG activities just starting. To be observed this year." ~ 0,
+                        "Fire management team only recently received training"     ~ 0,
+                        "Fire monitoring just started this year"                   ~ 0,
+                        "dont_know"                                                ~ NA_real_,
+                        .default = NA_real_
+                ),
+                si_wildlife = case_match(
+                        impact_on_sfm_wildlife_increase,
+                        "yes_significant_increase"  ~ 1,
+                        "yes_moderate_increase"     ~ 1,
+                        "Yes_ moderate increase for some species such as bush pig and antelope"                             ~ 1,
+                        "Yes_ moderate increase. Impala_ waterbuck_ wild pigs_ guinea fowls can now ge seen in the community forest" ~ 1,
+                        "Yes_ moderate increase. Not one goes to the forest because of distancing thus animals are freely multiplying" ~ 1,
+                        "Yes_ significant increase. Leading to an increase in human an wildlife conflicts"  ~ 1,
+                        "Yes_ significant increase. The CFMA is in the GMA"                                 ~ 1,
+                        "Yes_ significant increase. Wild animals now coming closer to households"            ~ 1,
+                        "no_change"                                          ~ 0,
+                        "no_reduced"                                         ~ 0,
+                        "No wild animals recorded"                           ~ 0,
+                        "Other wildlife has decreased_ only the hyna population is on the increase" ~ 0,
+                        "There  are no wildlife animals"                     ~ 0,
+                        "There has never been  any wildlife recorded"        ~ 0,
+                        "There has never been wild animals in this community" ~ 0,
+                        "There is no wildlife in this community"             ~ 0,
+                        "dont_know"                                          ~ NA_real_,
+                        .default = NA_real_
+                ),
+                si_nrm = case_match(
+                        impact_on_sfm_forest_resources_management,
+                        "yes_significant_improvement" ~ 1,
+                        "yes_moderate_improvement"    ~ 1,
+                        "no_change"                   ~ 0,
+                        "no_management_has_worsened"  ~ 0,
+                        "dont_know"                   ~ NA_real_,
+                        .default = NA_real_
+                )
+        ) |>
+        mutate(
+                sfm_index = rowSums(
+                        cbind(si_deforest, si_charcoal, si_fire, si_wildlife, si_nrm),
+                        na.rm = TRUE
+                )
+        ) |>
+        select(cfmg_name, sfm_index,
+               si_deforest, si_charcoal, si_fire, si_wildlife, si_nrm) |>
+        group_by(cfmg_name) |>
+        summarise(across(everything(), ~ mean(.x, na.rm = TRUE)), .groups = "drop") |>
+        mutate(across(where(is.numeric), ~ ifelse(is.nan(.x), NA_real_, .x)))
+
+cfmg <- cfmg |>
+        left_join(sfm_index_data, by = "cfmg_name", relationship = "many-to-one")
+
 save(cfmg, file = "cfmg.RData")

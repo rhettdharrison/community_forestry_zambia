@@ -185,7 +185,7 @@ To examine differences among FGD types in whether they reported improved access 
 
 ```{r}
 #| label: model_et_fgd_household
-#| code-fold: true
+#| include: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -205,43 +205,88 @@ test.data <- cfmg |>
       levels = c("Executive", "Female", "Male", "Youth")
     )
   ) |>
-  drop_na(hh) |>
+  drop_na(hh, gov_index) |>
   mutate(province_cfmg = interaction(province, cfmg_name))
 
-M1 <- glmer(hh ~ interview_type + (1 | province) + (1 | province_cfmg),
+M1 <- glmer(hh ~ interview_type + gov_index + (1 | province) + (1 | province_cfmg),
             data = test.data, family = binomial)
 
-emm.M1      <- emmeans(M1, specs = ~ interview_type, type = "response")
+emm.M1      <- emmeans(M1, specs = ~ interview_type)
 pairwise.M1 <- pairs(emm.M1, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M1_et_fgd_household
+#| label: tbl-M1_et_fgd_household
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Household resources – FGD model results (click to expand)"
+#| tbl-cap: "Results of the model examining the effect of FGD type and governance index on whether communities report improved access to natural resources for household use."
 
-summary(M1)
+re_M1    <- as.data.frame(VarCorr(M1))
+prov_M1  <- round(re_M1$vcov[re_M1$grp == "province"], 3)
+cfmg_M1  <- round(re_M1$vcov[re_M1$grp == "province_cfmg"], 3)
+r2_M1    <- performance::r2_nakagawa(M1)
+
+tidy(M1, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"          ~ "Intercept (Executive FGD)",
+    "interview_typeFemale" ~ "Female FGD",
+    "interview_typeMale"   ~ "Male FGD",
+    "interview_typeYouth"  ~ "Youth FGD",
+    "gov_index"            ~ "Governance index"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for improved access to natural resources for household use — FGD type and governance index",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference = Executive FGD. ",
+      "Province variance = {prov_M1}; CF-within-province variance = {cfmg_M1}. ",
+      "Marginal R² = {round(r2_M1$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M1$R2_conditional, 3)}. ",
+      "n = {nobs(M1)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_et_fgd_household
+#| label: tbl-pairwise_et_fgd_household
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Household resources – FGD pairwise comparisons (click to expand)"
+#| include: true
+#| tbl-cap: "Pairwise comparisons among FGD types for improved access to natural resources for household use."
 
-summary(pairwise.M1)
+as.data.frame(pairwise.M1) |>
+  select(contrast, estimate, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(contrast="Contrast", estimate="Estimate", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, SE, z.ratio), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Pairwise comparisons — FGD type",
+    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-contrast) |>
+  cols_align(align="left", columns=contrast) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
+  sub_missing()
 ```
 
 ```{r}
 #| label: model_et_fgd_sale
-#| code-fold: true
+#| include: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -261,38 +306,83 @@ test.data <- cfmg |>
       levels = c("Executive", "Female", "Male", "Youth")
     )
   ) |>
-  drop_na(sale) |>
+  drop_na(sale, gov_index) |>
   mutate(province_cfmg = interaction(province, cfmg_name))
 
-M2 <- glmer(sale ~ interview_type + (1 | province) + (1 | province_cfmg),
+M2 <- glmer(sale ~ interview_type + gov_index + (1 | province) + (1 | province_cfmg),
             data = test.data, family = binomial)
 
-emm.M2      <- emmeans(M2, specs = ~ interview_type, type = "response")
+emm.M2      <- emmeans(M2, specs = ~ interview_type)
 pairwise.M2 <- pairs(emm.M2, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M2_et_fgd_sale
+#| label: tbl-M2_et_fgd_sale
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Resources for sale – FGD model results (click to expand)"
+#| tbl-cap: "Results of the model examining the effect of FGD type and governance index on whether communities report improved access to natural resources for sale."
 
-summary(M2)
+re_M2    <- as.data.frame(VarCorr(M2))
+prov_M2  <- round(re_M2$vcov[re_M2$grp == "province"], 3)
+cfmg_M2  <- round(re_M2$vcov[re_M2$grp == "province_cfmg"], 3)
+r2_M2    <- performance::r2_nakagawa(M2)
+
+tidy(M2, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"          ~ "Intercept (Executive FGD)",
+    "interview_typeFemale" ~ "Female FGD",
+    "interview_typeMale"   ~ "Male FGD",
+    "interview_typeYouth"  ~ "Youth FGD",
+    "gov_index"            ~ "Governance index"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for improved access to natural resources for sale — FGD type and governance index",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference = Executive FGD. ",
+      "Province variance = {prov_M2}; CF-within-province variance = {cfmg_M2}. ",
+      "Marginal R² = {round(r2_M2$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M2$R2_conditional, 3)}. ",
+      "n = {nobs(M2)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_et_fgd_sale
+#| label: tbl-pairwise_et_fgd_sale
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Resources for sale – FGD pairwise comparisons (click to expand)"
+#| include: false
+#| tbl-cap: "Pairwise comparisons among FGD types for improved access to natural resources for sale."
 
-summary(pairwise.M2)
+as.data.frame(pairwise.M2) |>
+  select(contrast, estimate, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(contrast="Contrast", estimate="Estimate", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, SE, z.ratio), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Pairwise comparisons — FGD type",
+    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-contrast) |>
+  cols_align(align="left", columns=contrast) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
+  sub_missing()
 ```
 
 Individual interviewees were also asked whether CFM had improved access to natural resources for household use or for sale. @tbl-et_individual_access shows the percentage reporting each by interviewee role. Again a majority of respondents indicated that they did not think that CFM had improved access to natural resources for either household use or sale. DFOs were significantly more likely to suggest that CFM had improved access to natural resources for household use than CFMG executives or traditional leaders. None of the other pairwise comparisons were significant.
@@ -366,7 +456,7 @@ To examine differences among individual interviewee roles in whether they report
 
 ```{r}
 #| label: model_et_individual_household
-#| code-fold: true
+#| include: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -385,37 +475,84 @@ M4 <- glmer(hh ~ interviewee_role + interviewee_gender + interviewee_age +
               (1 | province) + (1 | province_cfmg),
             data = test.data, family = binomial)
 
-emm.M4      <- emmeans(M4, specs = ~ interviewee_role, type = "response")
+emm.M4      <- emmeans(M4, specs = ~ interviewee_role)
 pairwise.M4 <- pairs(emm.M4, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M4_et_individual_household
+#| label: tbl-M4_et_individual_household
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Household resources – Individual model results (click to expand)"
+#| tbl-cap: "Results of the model examining the effect of interviewee role, gender and age on whether individuals report improved access to natural resources for household use."
 
-summary(M4)
+re_M4    <- as.data.frame(VarCorr(M4))
+prov_M4  <- round(re_M4$vcov[re_M4$grp == "province"], 3)
+cfmg_M4  <- round(re_M4$vcov[re_M4$grp == "province_cfmg"], 3)
+r2_M4    <- performance::r2_nakagawa(M4)
+
+tidy(M4, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"                        ~ "Intercept (Community member)",
+    "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
+    "interviewee_roletrad_leader"        ~ "Traditional leader",
+    "interviewee_roledfo"                ~ "District Forestry Officer",
+    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_gendermale"             ~ "Male",
+    "interviewee_age"                    ~ "Age"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for improved access to natural resources for household use — individual interviewees",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference = Community member. ",
+      "Province variance = {prov_M4}; CF-within-province variance = {cfmg_M4}. ",
+      "Marginal R² = {round(r2_M4$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M4$R2_conditional, 3)}. ",
+      "n = {nobs(M4)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_et_individual_household
+#| label: tbl-pairwise_et_individual_household
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Household resources – Individual pairwise comparisons (click to expand)"
+#| include: true
+#| tbl-cap: "Pairwise comparisons among interviewee roles for improved access to natural resources for household use."
 
-summary(pairwise.M4)
+as.data.frame(pairwise.M4) |>
+  select(contrast, estimate, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(contrast="Contrast", estimate="Estimate", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, SE, z.ratio), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Pairwise comparisons — interviewee role",
+    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-contrast) |>
+  cols_align(align="left", columns=contrast) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
+  sub_missing()
 ```
 
 ```{r}
 #| label: model_et_individual_sale
-#| code-fold: true
+#| include: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -434,32 +571,79 @@ M5 <- glmer(sale ~ interviewee_role + interviewee_gender + interviewee_age +
               (1 | province) + (1 | province_cfmg),
             data = test.data, family = binomial)
 
-emm.M5      <- emmeans(M5, specs = ~ interviewee_role, type = "response")
+emm.M5      <- emmeans(M5, specs = ~ interviewee_role)
 pairwise.M5 <- pairs(emm.M5, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M5_et_individual_sale
+#| label: tbl-M5_et_individual_sale
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Resources for sale – Individual model results (click to expand)"
+#| tbl-cap: "Results of the model examining the effect of interviewee role, gender and age on whether individuals report improved access to natural resources for sale."
 
-summary(M5)
+re_M5    <- as.data.frame(VarCorr(M5))
+prov_M5  <- round(re_M5$vcov[re_M5$grp == "province"], 3)
+cfmg_M5  <- round(re_M5$vcov[re_M5$grp == "province_cfmg"], 3)
+r2_M5    <- performance::r2_nakagawa(M5)
+
+tidy(M5, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"                        ~ "Intercept (Community member)",
+    "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
+    "interviewee_roletrad_leader"        ~ "Traditional leader",
+    "interviewee_roledfo"                ~ "District Forestry Officer",
+    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_gendermale"             ~ "Male",
+    "interviewee_age"                    ~ "Age"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for improved access to natural resources for sale — individual interviewees",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference = Community member. ",
+      "Province variance = {prov_M5}; CF-within-province variance = {cfmg_M5}. ",
+      "Marginal R² = {round(r2_M5$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M5$R2_conditional, 3)}. ",
+      "n = {nobs(M5)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_et_individual_sale
+#| label: tbl-pairwise_et_individual_sale
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Resources for sale – Individual pairwise comparisons (click to expand)"
+#| include: true
+#| tbl-cap: "Pairwise comparisons among interviewee roles for improved access to natural resources for sale."
 
-summary(pairwise.M5)
+as.data.frame(pairwise.M5) |>
+  select(contrast, estimate, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(contrast="Contrast", estimate="Estimate", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, SE, z.ratio), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Pairwise comparisons — interviewee role",
+    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-contrast) |>
+  cols_align(align="left", columns=contrast) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
+  sub_missing()
 ```
 
 ### Employment
@@ -540,7 +724,7 @@ To examine differences among FGD types in whether they reported CFM had generate
 
 ```{r}
 #| label: model_et_fgd_employment
-#| code-fold: true
+#| include: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -564,38 +748,83 @@ test.data <- cfmg |>
       levels = c("Executive", "Female", "Male", "Youth")
     )
   ) |>
-  drop_na(empl) |>
+  drop_na(empl, gov_index) |>
   mutate(province_cfmg = interaction(province, cfmg_name))
 
-M3 <- glmer(empl ~ interview_type + (1 | province) + (1 | province_cfmg),
+M3 <- glmer(empl ~ interview_type + gov_index + (1 | province) + (1 | province_cfmg),
             data = test.data, family = binomial)
 
-emm.M3      <- emmeans(M3, specs = ~ interview_type, type = "response")
+emm.M3      <- emmeans(M3, specs = ~ interview_type)
 pairwise.M3 <- pairs(emm.M3, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M3_et_fgd_employment
+#| label: tbl-M3_et_fgd_employment
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Employment – FGD model results (click to expand)"
+#| tbl-cap: "Results of the model examining the effect of FGD type and governance index on whether communities report that CFM has generated employment opportunities."
 
-summary(M3)
+re_M3    <- as.data.frame(VarCorr(M3))
+prov_M3  <- round(re_M3$vcov[re_M3$grp == "province"], 3)
+cfmg_M3  <- round(re_M3$vcov[re_M3$grp == "province_cfmg"], 3)
+r2_M3    <- performance::r2_nakagawa(M3)
+
+tidy(M3, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"          ~ "Intercept (Executive FGD)",
+    "interview_typeFemale" ~ "Female FGD",
+    "interview_typeMale"   ~ "Male FGD",
+    "interview_typeYouth"  ~ "Youth FGD",
+    "gov_index"            ~ "Governance index"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for employment opportunities generated by CFM — FGD type and governance index",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference = Executive FGD. ",
+      "Province variance = {prov_M3}; CF-within-province variance = {cfmg_M3}. ",
+      "Marginal R² = {round(r2_M3$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M3$R2_conditional, 3)}. ",
+      "n = {nobs(M3)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_et_fgd_employment
+#| label: tbl-pairwise_et_fgd_employment
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Employment – FGD pairwise comparisons (click to expand)"
+#| include: true
+#| tbl-cap: "Pairwise comparisons among FGD types for whether CFM has generated employment opportunities."
 
-summary(pairwise.M3)
+as.data.frame(pairwise.M3) |>
+  select(contrast, estimate, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(contrast="Contrast", estimate="Estimate", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, SE, z.ratio), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Pairwise comparisons — FGD type",
+    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-contrast) |>
+  cols_align(align="left", columns=contrast) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
+  sub_missing()
 ```
 
 Individual interviewees were also asked whether CFM had generated employment opportunities (@tbl-et_individual_employment). Interestingly, community respondents were much more likely to agree that CFM had created employment opportunities than NGO representatives or DFOs. The differences between DFOs and CFMG executives and traditional leaders were significant, but none of the other pairwise comparisons were significant.
@@ -671,7 +900,7 @@ To examine differences among individual interviewee roles in whether they report
 
 ```{r}
 #| label: model_et_individual_employment
-#| code-fold: true
+#| include: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -694,32 +923,79 @@ M6 <- glmer(empl ~ interviewee_role + interviewee_gender + interviewee_age +
               (1 | province) + (1 | province_cfmg),
             data = test.data, family = binomial)
 
-emm.M6      <- emmeans(M6, specs = ~ interviewee_role, type = "response")
+emm.M6      <- emmeans(M6, specs = ~ interviewee_role)
 pairwise.M6 <- pairs(emm.M6, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M6_et_individual_employment
+#| label: tbl-M6_et_individual_employment
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Employment – Individual model results (click to expand)"
+#| tbl-cap: "Results of the model examining the effect of interviewee role, gender and age on whether individuals report that CFM has generated employment opportunities."
 
-summary(M6)
+re_M6    <- as.data.frame(VarCorr(M6))
+prov_M6  <- round(re_M6$vcov[re_M6$grp == "province"], 3)
+cfmg_M6  <- round(re_M6$vcov[re_M6$grp == "province_cfmg"], 3)
+r2_M6    <- performance::r2_nakagawa(M6)
+
+tidy(M6, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"                        ~ "Intercept (Community member)",
+    "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
+    "interviewee_roletrad_leader"        ~ "Traditional leader",
+    "interviewee_roledfo"                ~ "District Forestry Officer",
+    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_gendermale"             ~ "Male",
+    "interviewee_age"                    ~ "Age"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for employment opportunities generated by CFM — individual interviewees",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference = Community member. ",
+      "Province variance = {prov_M6}; CF-within-province variance = {cfmg_M6}. ",
+      "Marginal R² = {round(r2_M6$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M6$R2_conditional, 3)}. ",
+      "n = {nobs(M6)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_et_individual_employment
+#| label: tbl-pairwise_et_individual_employment
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Employment – Individual pairwise comparisons (click to expand)"
+#| include: true
+#| tbl-cap: "Pairwise comparisons among interviewee roles for whether CFM has generated employment opportunities."
 
-summary(pairwise.M6)
+as.data.frame(pairwise.M6) |>
+  select(contrast, estimate, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(contrast="Contrast", estimate="Estimate", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, SE, z.ratio), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Pairwise comparisons — interviewee role",
+    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-contrast) |>
+  cols_align(align="left", columns=contrast) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
+  sub_missing()
 ```
 
 
@@ -1136,7 +1412,7 @@ To examine differences among FGD types in whether they reported community awaren
 
 ```{r}
 #| label: model_et_fgd_carbon_awareness
-#| code-fold: true
+#| include: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1145,7 +1421,7 @@ test.data.ca <- cfmg |>
   filter(interview_type %in% c("cfmg_executive", "cfmg_female",
                                 "cfmg_male", "cfmg_youth")) |>
   transmute(
-    province, cfmg_name,
+    province, cfmg_name, gov_index,
     interview_type = factor(
       case_match(
         interview_type,
@@ -1167,38 +1443,83 @@ test.data.ca <- cfmg |>
       TRUE ~ NA_integer_
     )
   ) |>
-  drop_na(empl) |>
+  drop_na(empl, gov_index) |>
   mutate(province_cfmg = interaction(province, cfmg_name))
 
-M11 <- glmer(empl ~ interview_type + (1 | province) + (1 | province_cfmg),
+M11 <- glmer(empl ~ interview_type + gov_index + (1 | province) + (1 | province_cfmg),
             data = test.data.ca, family = binomial)
 
-emm.M11      <- emmeans(M11, specs = ~ interview_type, type = "response")
+emm.M11      <- emmeans(M11, specs = ~ interview_type)
 pairwise.M11 <- pairs(emm.M11, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M11_et_fgd_carbon_awareness
+#| label: tbl-M11_et_fgd_carbon_awareness
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Carbon finance awareness – FGD model results (click to expand)"
+#| tbl-cap: "Results of the model examining the effect of FGD type and governance index on community awareness of the carbon credit agreement."
 
-summary(M11)
+re_M11    <- as.data.frame(VarCorr(M11))
+prov_M11  <- round(re_M11$vcov[re_M11$grp == "province"], 3)
+cfmg_M11  <- round(re_M11$vcov[re_M11$grp == "province_cfmg"], 3)
+r2_M11    <- performance::r2_nakagawa(M11)
+
+tidy(M11, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"          ~ "Intercept (Executive FGD)",
+    "interview_typeFemale" ~ "Female FGD",
+    "interview_typeMale"   ~ "Male FGD",
+    "interview_typeYouth"  ~ "Youth FGD",
+    "gov_index"            ~ "Governance index"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for community awareness of carbon credit agreement — FGD type and governance index",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference = Executive FGD. ",
+      "Province variance = {prov_M11}; CF-within-province variance = {cfmg_M11}. ",
+      "Marginal R² = {round(r2_M11$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M11$R2_conditional, 3)}. ",
+      "n = {nobs(M11)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_et_fgd_carbon_awareness
+#| label: tbl-pairwise_et_fgd_carbon_awareness
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Carbon finance awareness – FGD pairwise comparisons (click to expand)"
+#| include: true
+#| tbl-cap: "Pairwise comparisons among FGD types for community awareness of the carbon credit agreement."
 
-summary(pairwise.M11)
+as.data.frame(pairwise.M11) |>
+  select(contrast, estimate, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(contrast="Contrast", estimate="Estimate", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, SE, z.ratio), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Pairwise comparisons — FGD type",
+    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-contrast) |>
+  cols_align(align="left", columns=contrast) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
+  sub_missing()
 ```
 
 Individual interviewees were also asked whether the community was aware of the carbon credit agreement (@tbl-et_individual_carbon_awareness). Most respondents indicated that the community was aware, but the percentage of positive responses varied across interviewee roles. Interestingly, the NGO represenatatives (a groups that also included carbon enterprise representatives), overwhelmingly (~95%) suggested the community was informed, but the only 70% of DFOs thought the communities were informed. However, none of these differences were significant.
@@ -1273,7 +1594,7 @@ To examine differences among individual interviewee roles in whether they report
 
 ```{r}
 #| label: model_et_individual_carbon_awareness
-#| code-fold: true
+#| include: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1297,32 +1618,79 @@ M12 <- glmer(empl ~ interviewee_role + interviewee_gender + interviewee_age +
               (1 | province) + (1 | province_cfmg),
             data = test.data.ca.ind, family = binomial)
 
-emm.M12      <- emmeans(M12, specs = ~ interviewee_role, type = "response")
+emm.M12      <- emmeans(M12, specs = ~ interviewee_role)
 pairwise.M12 <- pairs(emm.M12, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M12_et_individual_carbon_awareness
+#| label: tbl-M12_et_individual_carbon_awareness
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Carbon finance awareness – Individual model results (click to expand)"
+#| tbl-cap: "Results of the model examining the effect of interviewee role, gender and age on community awareness of the carbon credit agreement."
 
-summary(M12)
+re_M12    <- as.data.frame(VarCorr(M12))
+prov_M12  <- round(re_M12$vcov[re_M12$grp == "province"], 3)
+cfmg_M12  <- round(re_M12$vcov[re_M12$grp == "province_cfmg"], 3)
+r2_M12    <- performance::r2_nakagawa(M12)
+
+tidy(M12, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"                        ~ "Intercept (Community member)",
+    "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
+    "interviewee_roletrad_leader"        ~ "Traditional leader",
+    "interviewee_roledfo"                ~ "District Forestry Officer",
+    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_gendermale"             ~ "Male",
+    "interviewee_age"                    ~ "Age"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for community awareness of carbon credit agreement — individual interviewees",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference = Community member. ",
+      "Province variance = {prov_M12}; CF-within-province variance = {cfmg_M12}. ",
+      "Marginal R² = {round(r2_M12$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M12$R2_conditional, 3)}. ",
+      "n = {nobs(M12)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_et_individual_carbon_awareness
+#| label: tbl-pairwise_et_individual_carbon_awareness
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Carbon finance awareness – Individual pairwise comparisons (click to expand)"
+#| include: false
+#| tbl-cap: "Pairwise comparisons among interviewee roles for community awareness of the carbon credit agreement."
 
-summary(pairwise.M12)
+as.data.frame(pairwise.M12) |>
+  select(contrast, estimate, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(contrast="Contrast", estimate="Estimate", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, SE, z.ratio), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Pairwise comparisons — interviewee role",
+    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-contrast) |>
+  cols_align(align="left", columns=contrast) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
+  sub_missing()
 ```
 
 
@@ -2208,7 +2576,7 @@ To examine differences among FGD types in whether they reported that CFM entails
 
 ```{r}
 #| label: model_et_fgd_opp_costs
-#| code-fold: true
+#| include: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2217,7 +2585,7 @@ test.data.opp <- cfmg |>
   filter(interview_type %in% c("cfmg_executive", "cfmg_female",
                                 "cfmg_male", "cfmg_youth")) |>
   transmute(
-    province, cfmg_name,
+    province, cfmg_name, gov_index,
     interview_type = factor(
       case_match(
         interview_type,
@@ -2239,38 +2607,83 @@ test.data.opp <- cfmg |>
       TRUE ~ NA_integer_
     )
   ) |>
-  drop_na(empl) |>
+  drop_na(empl, gov_index) |>
   mutate(province_cfmg = interaction(province, cfmg_name))
 
-M9 <- glmer(empl ~ interview_type + (1 | province) + (1 | province_cfmg),
+M9 <- glmer(empl ~ interview_type + gov_index + (1 | province) + (1 | province_cfmg),
             data = test.data.opp, family = binomial)
 
-emm.M9      <- emmeans(M9, specs = ~ interview_type, type = "response")
+emm.M9      <- emmeans(M9, specs = ~ interview_type)
 pairwise.M9 <- pairs(emm.M9, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M9_et_fgd_opp_costs
+#| label: tbl-M9_et_fgd_opp_costs
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Opportunity costs – FGD model results (click to expand)"
+#| tbl-cap: "Results of the model examining the effect of FGD type and governance index on whether communities report opportunity costs of CFM."
 
-summary(M9)
+re_M9    <- as.data.frame(VarCorr(M9))
+prov_M9  <- round(re_M9$vcov[re_M9$grp == "province"], 3)
+cfmg_M9  <- round(re_M9$vcov[re_M9$grp == "province_cfmg"], 3)
+r2_M9    <- performance::r2_nakagawa(M9)
+
+tidy(M9, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"          ~ "Intercept (Executive FGD)",
+    "interview_typeFemale" ~ "Female FGD",
+    "interview_typeMale"   ~ "Male FGD",
+    "interview_typeYouth"  ~ "Youth FGD",
+    "gov_index"            ~ "Governance index"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for opportunity costs of CFM — FGD type and governance index",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference = Executive FGD. ",
+      "Province variance = {prov_M9}; CF-within-province variance = {cfmg_M9}. ",
+      "Marginal R² = {round(r2_M9$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M9$R2_conditional, 3)}. ",
+      "n = {nobs(M9)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_et_fgd_opp_costs
+#| label: tbl-pairwise_et_fgd_opp_costs
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Opportunity costs – FGD pairwise comparisons (click to expand)"
+#| include: false
+#| tbl-cap: "Pairwise comparisons among FGD types for whether communities report opportunity costs of CFM."
 
-summary(pairwise.M9)
+as.data.frame(pairwise.M9) |>
+  select(contrast, estimate, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(contrast="Contrast", estimate="Estimate", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, SE, z.ratio), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Pairwise comparisons — FGD type",
+    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-contrast) |>
+  cols_align(align="left", columns=contrast) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
+  sub_missing()
 ```
 
 Individual interviewees were also asked whether CFM entails opportunity costs. @tbl-et_individual_opp_costs shows the percentage reporting this broken down by interviewee role. Interestingly, the community traditional leaders and community members recognise opportunity costs less of the time than other individual interviewee types, although these differences were not significant.
@@ -2347,7 +2760,7 @@ To examine differences among individual interviewee roles in whether they report
 
 ```{r}
 #| label: model_et_individual_opp_costs
-#| code-fold: true
+#| include: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2371,32 +2784,79 @@ M10 <- glmer(empl ~ interviewee_role + interviewee_gender + interviewee_age +
                (1 | province) + (1 | province_cfmg),
              data = test.data.opp.ind, family = binomial)
 
-emm.M10      <- emmeans(M10, specs = ~ interviewee_role, type = "response")
+emm.M10      <- emmeans(M10, specs = ~ interviewee_role)
 pairwise.M10 <- pairs(emm.M10, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M10_et_individual_opp_costs
+#| label: tbl-M10_et_individual_opp_costs
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Opportunity costs – Individual model results (click to expand)"
+#| tbl-cap: "Results of the model examining the effect of interviewee role, gender and age on whether individuals report opportunity costs of CFM."
 
-summary(M10)
+re_M10    <- as.data.frame(VarCorr(M10))
+prov_M10  <- round(re_M10$vcov[re_M10$grp == "province"], 3)
+cfmg_M10  <- round(re_M10$vcov[re_M10$grp == "province_cfmg"], 3)
+r2_M10    <- performance::r2_nakagawa(M10)
+
+tidy(M10, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"                        ~ "Intercept (Community member)",
+    "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
+    "interviewee_roletrad_leader"        ~ "Traditional leader",
+    "interviewee_roledfo"                ~ "District Forestry Officer",
+    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_gendermale"             ~ "Male",
+    "interviewee_age"                    ~ "Age"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for opportunity costs of CFM — individual interviewees",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference = Community member. ",
+      "Province variance = {prov_M10}; CF-within-province variance = {cfmg_M10}. ",
+      "Marginal R² = {round(r2_M10$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M10$R2_conditional, 3)}. ",
+      "n = {nobs(M10)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_et_individual_opp_costs
+#| label: tbl-pairwise_et_individual_opp_costs
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Opportunity costs – Individual pairwise comparisons (click to expand)"
+#| include: false
+#| tbl-cap: "Pairwise comparisons among interviewee roles for whether individuals report opportunity costs of CFM."
 
-summary(pairwise.M10)
+as.data.frame(pairwise.M10) |>
+  select(contrast, estimate, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(contrast="Contrast", estimate="Estimate", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, SE, z.ratio), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Pairwise comparisons — interviewee role",
+    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-contrast) |>
+  cols_align(align="left", columns=contrast) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
+  sub_missing()
 ```
 
 The types of opportunity costs identified are shown in @fig-et_opp_cost_types. Mentions of reduced access, land restrictions and land use conflict are by some margin the most frequently identified opportunity costs. However, it is also interesting that time costs and diverting community resources are also quite prevalent. CFM requires that community members meet which entails a time cost and community resources are diverted to managing the forest that might otherwise be spent on other activities, such as agriculture.
@@ -2464,6 +2924,142 @@ ggplot(wc_oc, aes(label = word, size = freq, colour = freq)) +
   scale_colour_gradient(low = "#F4A582", high = "#8B0000") +
   theme_minimal(base_size = 14) +
   theme(plot.margin = margin(0, 0, 0, 0))
+```
+
+## Economic transformation index
+
+To summarise the overall economic transformation performance of each CFMG, we constructed an economic transformation score (0–4) by summing four binary indicators reported by FGD groups — improved access to natural resources for household use, improved access to natural resources for sale, new employment opportunities created, and community awareness of carbon credit agreements — scored as 1 (positive outcome reported) or 0 (no positive outcome or worsening). We then modelled this score using a linear mixed model with FGD type and the governance index as predictors, and random intercepts for province and CF within province, to test whether governance and FGD type were significant predictors of overall economic transformation performance (@tbl-et_index_model, @fig-et_index).
+
+```{r}
+#| label: data_et_index
+#| include: false
+#| warning: false
+#| message: false
+#| error:   false
+
+et_data <- cfmg |>
+  filter(interview_type %in% c("cfmg_executive", "cfmg_male", "cfmg_female", "cfmg_youth")) |>
+  mutate(
+    si_hh = case_when(
+      as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_household_use_e_g_firewood_building_materials) == "1" ~ 1,
+      as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_household_use_e_g_firewood_building_materials) == "0" ~ 0,
+      TRUE ~ NA_real_
+    ),
+    si_sale = case_when(
+      as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_sale_e_g_timber_honey_mushrooms) == "1" ~ 1,
+      as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_sale_e_g_timber_honey_mushrooms) == "0" ~ 0,
+      TRUE ~ NA_real_
+    ),
+    si_empl = case_when(
+      economic_transformation_yn_formal_employment_opportunities_created_cfm == "yes" ~ 1,
+      economic_transformation_yn_formal_employment_opportunities_created_cfm == "no"  ~ 0,
+      TRUE ~ NA_real_
+    ),
+    si_carbon = case_when(
+      economic_transformation_community_awareness_carbon_credit_agreement == "yes" ~ 1,
+      economic_transformation_community_awareness_carbon_credit_agreement == "no"  ~ 0,
+      economic_transformation_community_awareness_carbon_credit_agreement %in%
+        c("Not aware of the agreement of the Juristiction project we just know what's involved",
+          "The agreement is not clear we don't know where they sale the carbon and we don't know how much they get from the money",
+          "So far we have just heard the chief signed") ~ 0,
+      TRUE ~ NA_real_
+    ),
+    et_score = ifelse(
+      rowSums(!is.na(cbind(si_hh, si_sale, si_empl, si_carbon))) == 0,
+      NA_real_,
+      rowSums(cbind(si_hh, si_sale, si_empl, si_carbon), na.rm = TRUE)
+    ),
+    interview_type = factor(
+      case_match(
+        interview_type,
+        "cfmg_executive" ~ "Executive",
+        "cfmg_female"    ~ "Female",
+        "cfmg_male"      ~ "Male",
+        "cfmg_youth"     ~ "Youth"
+      ),
+      levels = c("Executive", "Female", "Male", "Youth")
+    ),
+    province_cfmg = interaction(province, cfmg_name)
+  ) |>
+  drop_na(et_score, gov_index)
+
+M_et <- lmer(
+  et_score ~ interview_type + gov_index + (1 | province) + (1 | province_cfmg),
+  data = et_data,
+  REML = TRUE
+)
+```
+
+```{r}
+#| label: tbl-et_index_model
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Results of the model examining the effect of FGD type and governance index on economic transformation performance."
+
+re_et    <- as.data.frame(VarCorr(M_et))
+prov_et  <- round(re_et$vcov[re_et$grp == "province"], 3)
+cfmg_et  <- round(re_et$vcov[re_et$grp == "province_cfmg"], 3)
+resid_et <- round(re_et$vcov[re_et$grp == "Residual"], 3)
+r2_et    <- performance::r2_nakagawa(M_et)
+
+tidy(M_et, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"          ~ "Intercept",
+    "interview_typeFemale" ~ "Female",
+    "interview_typeMale"   ~ "Male",
+    "interview_typeYouth"  ~ "Youth",
+    "gov_index"            ~ "Governance index"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for economic transformation performance — FGD type and governance index",
+    subtitle = glue::glue(
+      "Linear mixed model with random intercepts for province and CF within province. ",
+      "Reference = Executive. ",
+      "Province variance = {prov_et}; CF-within-province variance = {cfmg_et}; ",
+      "residual variance = {resid_et}. ",
+      "Marginal R² = {round(r2_et$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_et$R2_conditional, 3)}. ",
+      "n = {nobs(M_et)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
+```
+
+```{r}
+#| label: fig-et_index
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Relationship between the CFMG governance index and economic transformation score. Each point represents one FGD session. The line shows the fitted relationship from the linear mixed model, with the shaded band representing ± 1 SE."
+#| fig-height: 4.5
+#| fig-width: 6
+
+et_data |>
+  ggplot(aes(x = gov_index, y = et_score)) +
+  geom_jitter(width = 0.15, height = 0.1, colour = "#2A9D8F", alpha = 0.6, size = 2) +
+  geom_smooth(method = "lm", colour = "#1A6B63", fill = "#76B7A0", alpha = 0.25,
+              linewidth = 0.8) +
+  scale_x_continuous(name = "Governance index (out of 10)", breaks = 0:10) +
+  scale_y_continuous(name = "Economic transformation score (out of 4)", breaks = 0:4,
+                     limits = c(-0.2, 4.2)) +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5)
+  )
 ```
 
 ## Discussion

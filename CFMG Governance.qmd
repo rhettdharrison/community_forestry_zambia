@@ -499,6 +499,80 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
 
 As is evident from the table, these business management processes were even more erratically completed than the legal and governance processes. As substantial proportion of CFMGs did not have workplans, budgets or a business plan. More surprising, many did not have any recognised user groups, which is critical to managing forest resources.
 
+## Governance index
+
+To summarise CFMG governance performance, we constructed a governance index (0–10) based on the presence or absence of ten features reported by CFMG executives: receipt book, bank account, financial reporting, annual reporting, issuing permits, HFOs appointed, workplan, budget, business plan, and term limits. We then tested whether two aspects of external support — the frequency of DFO visits and the presence of a partner organisation — were associated with higher governance scores (@fig-gov_index).
+
+```{r}
+#| label: fig-gov_index
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Distribution of CFMG governance index scores (0–10). Each point represents one CFMG. The index counts the number of ten governance features reported as present by the CFMG executive FGD."
+#| fig-height: 3
+
+load("cfmg.RData")
+
+cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  distinct(cfmg_name, .keep_all = TRUE) |>
+  drop_na(gov_index) |>
+  ggplot(aes(x = gov_index)) +
+  geom_histogram(binwidth = 1, fill = "#2A9D8F", colour = "white", linewidth = 0.4) +
+  scale_x_continuous(breaks = 0:10, name = "Governance index (out of 10)") +
+  scale_y_continuous(name = "Number of CFMGs") +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5)
+  )
+```
+
+```{r}
+#| label: data_gov_index_model
+#| include: false
+#| warning: false
+#| message: false
+#| error:   false
+
+exec_cfmg <- cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  distinct(cfmg_name, .keep_all = TRUE) |>
+  mutate(
+    dfo_visits_num = case_match(
+      dfo_visits,
+      "never"        ~ 1,
+      "rarely"       ~ 2,
+      "occasionally" ~ 3,
+      "often"        ~ 4,
+      "very_often"   ~ 5,
+      .default       = NA_real_
+    ),
+    external_partner = case_match(
+      cfmg_governance_yn_institutions_support_cfmg,
+      "yes" ~ 1,
+      "no"  ~ 0,
+      .default = NA_real_
+    )
+  )
+```
+
+```{r}
+#| label: model_gov_index
+#| include: false
+#| warning: false
+#| message: false
+#| error:   false
+
+M_gov <- lmer(
+  gov_index ~ dfo_visits_num + external_partner + (1 | province),
+  data = exec_cfmg,
+  REML = TRUE
+)
+```
+
 ## External support
 
 All CFMGs are supported by FD, which has a statutory duty to implement the CFM policy and regulations. Nonetheless, the frequency of visits by DFOs or other district forestry staff varied widely and in many cases they rarely or never visited.
@@ -768,13 +842,116 @@ cfmg |>
   )
 ```
 
+We modelled the governance index against DFO visit frequency and presence of an external partner to determine which aspects of external support are associated with higher governance scores (@tbl-gov_index_model, @fig-gov_index_predictors).
+
+```{r}
+#| label: tbl-gov_index_model
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Linear mixed model of the CFMG governance index."
+
+re_var <- as.data.frame(VarCorr(M_gov))
+prov_var  <- round(re_var$vcov[re_var$grp == "province"], 3)
+resid_var <- round(re_var$vcov[re_var$grp == "Residual"], 3)
+r2 <- performance::r2_nakagawa(M_gov)
+
+tidy(M_gov, effects = "fixed") |>
+  mutate(
+    term = case_match(term,
+      "(Intercept)"      ~ "Intercept",
+      "dfo_visits_num"   ~ "DFO visit frequency (1–5)",
+      "external_partner" ~ "External partner (yes)"
+    )
+  ) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(
+    term      = "Factor",
+    estimate  = "Estimate",
+    std.error = "SE",
+    p.value   = md("*P* value")
+  ) |>
+  fmt_number(columns = c(estimate, std.error), decimals = 3) |>
+  fmt_number(columns = p.value, decimals = 4) |>
+  tab_header(
+    title    = "Predictors of CFMG governance index",
+    subtitle = glue::glue(
+      "Province random intercept variance = {prov_var}; ",
+      "residual variance = {resid_var}. ",
+      "Marginal R² = {round(r2$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2$R2_conditional, 3)}. ",
+      "n = {nobs(M_gov)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "center", columns = -term) |>
+  cols_align(align = "left", columns = term) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = term)
+  ) |>
+  sub_missing()
+```
+
+```{r}
+#| label: fig-gov_index_predictors
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "CFMG governance index in relation to (a) DFO visit frequency and (b) presence of an external partner organisation. Points are individual CFMGs, jittered slightly. Boxes show median and interquartile range."
+#| fig-height: 4
+#| fig-width: 9
+
+p_dfo <- exec_cfmg |>
+  drop_na(dfo_visits_num, gov_index) |>
+  mutate(dfo_label = case_match(
+    dfo_visits_num,
+    1 ~ "Never", 2 ~ "Rarely", 3 ~ "Occasionally", 4 ~ "Often", 5 ~ "Very often"
+  ),
+  dfo_label = factor(dfo_label,
+    levels = c("Never", "Rarely", "Occasionally", "Often", "Very often"))) |>
+  ggplot(aes(x = dfo_label, y = gov_index)) +
+  geom_boxplot(fill = "#76B7A0", colour = "grey30", outlier.shape = NA, width = 0.5) +
+  geom_jitter(width = 0.15, height = 0.2, colour = "#1A6B63", alpha = 0.6, size = 1.8) +
+  scale_y_continuous(name = "Governance index", limits = c(0, 10), breaks = seq(0, 10, 2)) +
+  scale_x_discrete(name = "DFO visit frequency") +
+  labs(tag = "(a)") +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor   = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5)
+  )
+
+p_partner <- exec_cfmg |>
+  drop_na(external_partner, gov_index) |>
+  mutate(partner_label = if_else(external_partner == 1, "Yes", "No")) |>
+  ggplot(aes(x = partner_label, y = gov_index)) +
+  geom_boxplot(fill = "#76B7A0", colour = "grey30", outlier.shape = NA, width = 0.4) +
+  geom_jitter(width = 0.12, height = 0.2, colour = "#1A6B63", alpha = 0.6, size = 1.8) +
+  scale_y_continuous(name = NULL, limits = c(0, 10), breaks = seq(0, 10, 2)) +
+  scale_x_discrete(name = "External partner organisation") +
+  labs(tag = "(b)") +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor   = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5)
+  )
+
+gridExtra::grid.arrange(p_dfo, p_partner, ncol = 2, widths = c(2, 1))
+```
+
 ## Interest in expanding the community forest
 
 Next we asked interviewees whether they were interested in expanding the area of their CF. A "yes" answer can be taken as an endorsement of CFM. On the other hand, a negative response might reflect dissatisfaction with the CFMG management or the benefits CFM has brought. However, a negative response could also reflect other reasons, such as a lack of sufficient additional forest area in the community. We compare the responses from different FGD groups.
 
 ```{r}
 #| label: fig-interest_in_expanding_FGDs
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -850,19 +1027,12 @@ As can be seen in @fig-interest_in_expanding_FGDs, the CFMG executives were enth
 
 The difference in attitudes between CFMG executive and youth FGD groups was significant, but the pairwise comparisons among other FGD groups were not significant. These results might suggest that CFM is not benefiting youth to the same degree as other groups, or perhaps that they bear higher opportunity costs. Our analyses in other sections will help elucidate the reasons.
 
-::: {.callout-note collapse="true"}
-### Interest in expanding community forest - FGDs - Model methods
-
-To examine the differences among FGD types, we employed a binomial generalised linear mixed model (GLMM) (i.e. yes = want to expand, no = do not want to expand), with random intercepts for province and CFMG nested within province. We used FDG type as the factor. We examined the significance of pairwise differences among FDG types using Tukey HSD.
-:::
-
 ```{r}
 #| label: model_expand_cfma_fgd
-#| include: true
+#| include: false
 #| warning: false
 #| message: false
 #| error:   false
-#| code-fold: true
 
 test.data <- cfmg |> filter(interview_type != "individual_interview") |>
         mutate(
@@ -884,7 +1054,8 @@ test.data <- cfmg |> filter(interview_type != "individual_interview") |>
 
 M1 <- glmer(expand_cfma ~
                     interview_type +
-                    (1 | province/cfmg_name),
+                    gov_index +
+                    (1 | cfmg_name),
             family = binomial(link = "logit"),
             data = test.data
 )
@@ -894,36 +1065,94 @@ pairwise.M1 <- pairs(emm.M1, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M1_expand_cfma_FDG
+#| label: tbl-M1_expand_cfma_FDG
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Model results (click to expand)"
+#| tbl-cap: "Binomial GLMM of interest in expanding the community forest — FGD groups."
 
-summary(M1)
+re_M1     <- as.data.frame(VarCorr(M1))
+cfmg_var  <- round(re_M1$vcov[re_M1$grp == "cfmg_name"], 3)
+r2_M1     <- performance::r2_nakagawa(M1)
 
+tidy(M1, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"               ~ "Intercept (Executive FGD)",
+    "interview_typecfmg_female" ~ "Female FGD",
+    "interview_typecfmg_male"   ~ "Male FGD",
+    "interview_typecfmg_youth"  ~ "Youth FGD",
+    "gov_index"                 ~ "Governance index"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(
+    term      = "Factor",
+    estimate  = "Estimate",
+    std.error = "SE",
+    p.value   = md("*P* value")
+  ) |>
+  fmt_number(columns = c(estimate, std.error), decimals = 3) |>
+  fmt_number(columns = p.value, decimals = 4) |>
+  tab_header(
+    title    = "Interest in expanding the community forest — FGD groups",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference level = Executive FGD. ",
+      "CFMG random intercept variance = {cfmg_var}. ",
+      "Marginal R² = {round(r2_M1$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M1$R2_conditional, 3)}. ",
+      "n = {nobs(M1)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "center", columns = -term) |>
+  cols_align(align = "left", columns = term) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = term)
+  ) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_expand_cfma_FDG
+#| label: tbl-pairwise_expand_cfma_FDG
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Pairwise comparisons (click to expand)"
+#| tbl-cap: "Tukey-adjusted pairwise comparisons for FGD type — interest in expanding the community forest."
 
-summary(pairwise.M1)
-
+as.data.frame(pairwise.M1) |>
+  select(contrast, estimate, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(
+    contrast  = "Contrast",
+    estimate  = "Estimate",
+    SE        = "SE",
+    z.ratio   = "z ratio",
+    p.value   = md("*P* value")
+  ) |>
+  fmt_number(columns = c(estimate, SE, z.ratio), decimals = 3) |>
+  fmt_number(columns = p.value, decimals = 4) |>
+  tab_header(
+    title    = "Pairwise comparisons — FGD type",
+    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "center", columns = -contrast) |>
+  cols_align(align = "left", columns = contrast) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = contrast)
+  ) |>
+  sub_missing()
 ```
 
 We also compared the responses from the individual interviewees (@tbl-interest_in_expanding_individual). The traditional leaders and community members more often reported that they did not want to expand the CF than other groups. However, the only pairwise comparisons that were significant were NGO representative with traditional leader and NGO representative with community member.
 
 ```{r}
 #| label: tbl-interest_in_expanding_individual
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -971,19 +1200,12 @@ cfmg |> filter(interview_type == "individual_interview") |>
 
 ```
 
-::: {.callout-note collapse="true"}
-### Interest in expanding community forest - Individual interviewees - Model methods
-
-To examine differences among individual interviewees in their stated interest in expanding their community forest, we employed a binomial GLMM (i.e. yes = want to expand, no = do not want to expand) and included interviewee role, interviewee gender and interviewee age as factors. We specified random intercepts for province and cfmg nested within province. To examine the pairwise differences among interviewee roles, we employed Tukey HSD.
-:::
-
 ```{r}
 #| label: test_data_expand_cfma_individual
-#| echo: true
+#| include: false
 #| warning: false
 #| message: false
 #| error:   false
-#| code-fold: true
 
 test.data <- cfmg |> filter(interview_type == "individual_interview") |>
         mutate(
@@ -1020,29 +1242,90 @@ pairwise.M2 <- pairs(emm.M2, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M2_expand_cfma_individual
+#| label: tbl-M2_expand_cfma_individual
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Model results (click to expand)"
+#| tbl-cap: "Binomial GLMM of interest in expanding the community forest — individual interviewees."
 
-summary(M2)
+re_M2     <- as.data.frame(VarCorr(M2))
+cfmg_var2 <- round(re_M2$vcov[re_M2$grp == "cfmg_name:province"], 3)
+prov_var2 <- round(re_M2$vcov[re_M2$grp == "province"], 3)
+r2_M2     <- suppressWarnings(suppressMessages(performance::r2_nakagawa(M2)))
 
+tidy(M2, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"                         ~ "Intercept (Community member)",
+    "interviewee_rolecfmg_exec_member"    ~ "CFMG executive member",
+    "interviewee_roletrad_leader"         ~ "Traditional leader",
+    "interviewee_roledfo"                 ~ "District Forestry Officer",
+    "interviewee_roleNGO_rep"             ~ "NGO representative",
+    "interviewee_gendermale"              ~ "Gender (male)",
+    "interviewee_age"                     ~ "Age"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(
+    term      = "Factor",
+    estimate  = "Estimate",
+    std.error = "SE",
+    p.value   = md("*P* value")
+  ) |>
+  fmt_number(columns = c(estimate, std.error), decimals = 3) |>
+  fmt_number(columns = p.value, decimals = 4) |>
+  tab_header(
+    title    = "Interest in expanding the community forest — individual interviewees",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference level = Community member. ",
+      "Province variance = {prov_var2}; CFMG:province variance = {cfmg_var2}. ",
+      "Marginal R² = {round(r2_M2$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M2$R2_conditional, 3)}. ",
+      "n = {nobs(M2)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "center", columns = -term) |>
+  cols_align(align = "left", columns = term) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = term)
+  ) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_expand_cfma_individual
+#| label: tbl-pairwise_expand_cfma_individual
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Pairwise comparisons (click to expand)"
+#| tbl-cap: "Tukey-adjusted pairwise comparisons for interviewee role — interest in expanding the community forest."
 
-summary(pairwise.M2)
-
+as.data.frame(pairwise.M2) |>
+  select(contrast, estimate, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(
+    contrast  = "Contrast",
+    estimate  = "Estimate",
+    SE        = "SE",
+    z.ratio   = "z ratio",
+    p.value   = md("*P* value")
+  ) |>
+  fmt_number(columns = c(estimate, SE, z.ratio), decimals = 3) |>
+  fmt_number(columns = p.value, decimals = 4) |>
+  tab_header(
+    title    = "Pairwise comparisons — interviewee role",
+    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "center", columns = -contrast) |>
+  cols_align(align = "left", columns = contrast) |>
+  tab_style(
+    style     = cell_text(align = "center"),
+    locations = cells_column_labels(columns = contrast)
+  ) |>
+  sub_missing()
 ```
 
 ## Defined user groups
