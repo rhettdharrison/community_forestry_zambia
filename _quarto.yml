@@ -35,6 +35,8 @@ website:
             href: Appendix.qmd
           - text: "Appendix III - List of CFs surveyed"
             href: "Appendix II.qmd"
+          - text: "Appendix IV - CFMG performance index scores"
+            href: "Appendix III.qmd"
 
 format:
   html:

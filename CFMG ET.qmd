@@ -48,7 +48,7 @@ We asked FGD groups whether CFM had improved access to natural resources for hou
 
 ```{r}
 #| label: fig-et_household_resources
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -113,7 +113,7 @@ cfmg |>
 
 ```{r}
 #| label: fig-et_resources_for_sale
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -178,11 +178,6 @@ cfmg |>
 
 Responses were similar for both household use and sale. Most FGD groups said that there was no increase in access to natural resources for household use or for sale. However, approximately one third of the groups indicated that access to natural resources has increased under CFM. Community youth were significantly more likely to say there had not been any improvement in access to natural resources for household use, as compared to CFMG executive FGDs. None of the other pairwise comparisons were significant.
 
-::: {.callout-note collapse="true"}
-### Access to natural resources - FGDs - Model methods
-To examine differences among FGD types in whether they reported improved access to natural resources as an economic benefit of CFM, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We ran separate models for household use and resources for sale. We examined the significance of pairwise differences among FGD types using Tukey HSD.
-:::
-
 ```{r}
 #| label: model_et_fgd_household
 #| include: false
@@ -226,7 +221,7 @@ pairwise.M1 <- pairs(emm.M1, adjust = "Tukey")
 re_M1    <- as.data.frame(VarCorr(M1))
 prov_M1  <- round(re_M1$vcov[re_M1$grp == "province"], 3)
 cfmg_M1  <- round(re_M1$vcov[re_M1$grp == "province_cfmg"], 3)
-r2_M1    <- performance::r2_nakagawa(M1)
+r2_M1    <- suppressWarnings(performance::r2_nakagawa(M1))
 
 tidy(M1, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -327,7 +322,7 @@ pairwise.M2 <- pairs(emm.M2, adjust = "Tukey")
 re_M2    <- as.data.frame(VarCorr(M2))
 prov_M2  <- round(re_M2$vcov[re_M2$grp == "province"], 3)
 cfmg_M2  <- round(re_M2$vcov[re_M2$grp == "province_cfmg"], 3)
-r2_M2    <- performance::r2_nakagawa(M2)
+r2_M2    <- suppressWarnings(performance::r2_nakagawa(M2))
 
 tidy(M2, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -389,7 +384,7 @@ Individual interviewees were also asked whether CFM had improved access to natur
 
 ```{r}
 #| label: tbl-et_individual_access
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -449,11 +444,6 @@ cfmg |>
   sub_missing()
 ```
 
-::: {.callout-note collapse="true"}
-### Access to natural resources - Individual interviewees - Model methods
-To examine differences among individual interviewee roles in whether they reported improved access to natural resources as an economic benefit of CFM, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. We ran separate models for household use and resources for sale. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
-:::
-
 ```{r}
 #| label: model_et_individual_household
 #| include: false
@@ -490,7 +480,7 @@ pairwise.M4 <- pairs(emm.M4, adjust = "Tukey")
 re_M4    <- as.data.frame(VarCorr(M4))
 prov_M4  <- round(re_M4$vcov[re_M4$grp == "province"], 3)
 cfmg_M4  <- round(re_M4$vcov[re_M4$grp == "province_cfmg"], 3)
-r2_M4    <- performance::r2_nakagawa(M4)
+r2_M4    <- suppressWarnings(performance::r2_nakagawa(M4))
 
 tidy(M4, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -586,7 +576,7 @@ pairwise.M5 <- pairs(emm.M5, adjust = "Tukey")
 re_M5    <- as.data.frame(VarCorr(M5))
 prov_M5  <- round(re_M5$vcov[re_M5$grp == "province"], 3)
 cfmg_M5  <- round(re_M5$vcov[re_M5$grp == "province_cfmg"], 3)
-r2_M5    <- performance::r2_nakagawa(M5)
+r2_M5    <- suppressWarnings(performance::r2_nakagawa(M5))
 
 tidy(M5, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -626,7 +616,7 @@ tidy(M5, effects = "fixed") |>
 #| warning: false
 #| message: false
 #| error:   false
-#| include: true
+#| include: false
 #| tbl-cap: "Pairwise comparisons among interviewee roles for improved access to natural resources for sale."
 
 as.data.frame(pairwise.M5) |>
@@ -652,7 +642,7 @@ We asked FGD groups whether CFM had generated new employment opportunities (@fig
 
 ```{r}
 #| label: fig-et_employment
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -717,11 +707,6 @@ cfmg |>
 
 As can be seen from the figure, approximately half of the FGD groups agreed that CFM had increased employment opportunities. Interestingly, community youth were especially likely to agreed that CFM had created employment opportunities. In contrast, community female FGD groups were much more likely to say that CFM had not increased employment opportunities. All pairwise comparisons were highly significant.
 
-::: {.callout-note collapse="true"}
-### Employment - FGDs - Model methods
-To examine differences among FGD types in whether they reported CFM had generated employment opportunities, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
-:::
-
 ```{r}
 #| label: model_et_fgd_employment
 #| include: false
@@ -769,7 +754,7 @@ pairwise.M3 <- pairs(emm.M3, adjust = "Tukey")
 re_M3    <- as.data.frame(VarCorr(M3))
 prov_M3  <- round(re_M3$vcov[re_M3$grp == "province"], 3)
 cfmg_M3  <- round(re_M3$vcov[re_M3$grp == "province_cfmg"], 3)
-r2_M3    <- performance::r2_nakagawa(M3)
+r2_M3    <- suppressWarnings(performance::r2_nakagawa(M3))
 
 tidy(M3, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -831,7 +816,7 @@ Individual interviewees were also asked whether CFM had generated employment opp
 
 ```{r}
 #| label: tbl-et_individual_employment
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -893,11 +878,6 @@ cfmg |>
   sub_missing()
 ```
 
-::: {.callout-note collapse="true"}
-### Employment - Individual interviewees - Model methods
-To examine differences among individual interviewee roles in whether they reported CFM had generated employment opportunities, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
-:::
-
 ```{r}
 #| label: model_et_individual_employment
 #| include: false
@@ -938,7 +918,7 @@ pairwise.M6 <- pairs(emm.M6, adjust = "Tukey")
 re_M6    <- as.data.frame(VarCorr(M6))
 prov_M6  <- round(re_M6$vcov[re_M6$grp == "province"], 3)
 cfmg_M6  <- round(re_M6$vcov[re_M6$grp == "province_cfmg"], 3)
-r2_M6    <- performance::r2_nakagawa(M6)
+r2_M6    <- suppressWarnings(performance::r2_nakagawa(M6))
 
 tidy(M6, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -1004,7 +984,7 @@ We asked CFMG Executive FGDs to estimate the number of people employed before an
 
 ```{r}
 #| label: fig-et_num_employed
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1067,7 +1047,7 @@ CFMG Executive FGDs also reported on the number of senior males and females in f
 
 ```{r}
 #| label: fig-et_fulltime_gender
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1125,7 +1105,7 @@ CFMG Executive FGDs also reported the number of male and female youth in full-ti
 
 ```{r}
 #| label: fig-et_fulltime_youth
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1185,7 +1165,7 @@ Community female, male, and youth FGDs identified the types of formal employment
 
 ```{r}
 #| label: fig-et_employment_types
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1272,7 +1252,7 @@ We asked the CFMG executive FGDs whether their CFMG had received income from car
 
 ```{r}
 #| label: fig-et_carbon_finance
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1337,7 +1317,7 @@ FGD groups were also asked whether the community was aware of the carbon credit 
 
 ```{r}
 #| label: fig-et_carbon_awareness
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1405,11 +1385,6 @@ cfmg |>
   )
 ```
 
-::: {.callout-note collapse="true"}
-### Carbon finance awareness – FGDs – Model methods
-To examine differences among FGD types in whether they reported community awareness of the carbon credit agreement, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
-:::
-
 ```{r}
 #| label: model_et_fgd_carbon_awareness
 #| include: false
@@ -1464,7 +1439,7 @@ pairwise.M11 <- pairs(emm.M11, adjust = "Tukey")
 re_M11    <- as.data.frame(VarCorr(M11))
 prov_M11  <- round(re_M11$vcov[re_M11$grp == "province"], 3)
 cfmg_M11  <- round(re_M11$vcov[re_M11$grp == "province_cfmg"], 3)
-r2_M11    <- performance::r2_nakagawa(M11)
+r2_M11    <- suppressWarnings(performance::r2_nakagawa(M11))
 
 tidy(M11, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -1526,7 +1501,7 @@ Individual interviewees were also asked whether the community was aware of the c
 
 ```{r}
 #| label: tbl-et_individual_carbon_awareness
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1587,11 +1562,6 @@ cfmg |>
   sub_missing()
 ```
 
-::: {.callout-note collapse="true"}
-### Carbon finance awareness – Individual interviewees – Model methods
-To examine differences among individual interviewee roles in whether they reported community awareness of the carbon credit agreement, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
-:::
-
 ```{r}
 #| label: model_et_individual_carbon_awareness
 #| include: false
@@ -1633,7 +1603,7 @@ pairwise.M12 <- pairs(emm.M12, adjust = "Tukey")
 re_M12    <- as.data.frame(VarCorr(M12))
 prov_M12  <- round(re_M12$vcov[re_M12$grp == "province"], 3)
 cfmg_M12  <- round(re_M12$vcov[re_M12$grp == "province_cfmg"], 3)
-r2_M12    <- performance::r2_nakagawa(M12)
+r2_M12    <- suppressWarnings(performance::r2_nakagawa(M12))
 
 tidy(M12, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -1699,7 +1669,7 @@ The types of CFM activities supported by the carbon trader are shown in @fig-et_
 
 ```{r}
 #| label: fig-et_trader_support
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1752,7 +1722,7 @@ FGD groups also reported whether CFM had generated income earning opportunities 
 
 ```{r}
 #| label: fig-et_income_opportunities
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1850,7 +1820,7 @@ However, community female, male, and youth FGD groups did identified other addit
 
 ```{r}
 #| label: fig-et_income_sources
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1896,7 +1866,7 @@ To better understand the importance of different income earning opportunities we
 
 ```{r}
 #| label: fig-et_income_ranks
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1964,7 +1934,7 @@ CFMG executive FGDs were asked the estimated annual income generated through CFM
 
 ```{r}
 #| label: fig-et_annual_income
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2016,7 +1986,7 @@ Female, male, and youth FGDs also reported which forest products were harvested 
 
 ```{r}
 #| label: fig-et_household_products
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2056,7 +2026,7 @@ CFMG executive FGDs were asked whether the CFMG was collaborating with any priva
 
 ```{r}
 #| label: fig-et_collaboration
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2121,7 +2091,7 @@ The value chains that CFMGs reported working with through private enterprise par
 
 ```{r}
 #| label: fig-et_value_chains
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2182,7 +2152,7 @@ We asked the community female, male, and youth FGD groups to identify economic o
 
 ```{r}
 #| label: fig-et_unrealised
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2250,7 +2220,7 @@ The ranking of these unrealised opportunities is shown in @fig-et_unrealised_ran
 
 ```{r}
 #| label: fig-et_unrealised_ranks
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2342,7 +2312,7 @@ FGD groups also identified potential value-added opportunities from CFM resource
 
 ```{r}
 #| label: fig-et_value_added
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2400,7 +2370,7 @@ We asked the CFMG Executive FGDs to report which primary markets CFM products ar
 
 ```{r}
 #| label: fig-et_markets
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2449,7 +2419,7 @@ The community female, male, and youth FGD groups identified economic activities 
 
 ```{r}
 #| label: fig-et_precluded
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2501,7 +2471,7 @@ FGD groups were asked whether CFM entails opportunity costs for the community (@
 
 ```{r}
 #| label: fig-et_opp_costs
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2569,11 +2539,6 @@ cfmg |>
   )
 ```
 
-::: {.callout-note collapse="true"}
-### Opportunity costs – FGDs – Model methods
-To examine differences among FGD types in whether they reported that CFM entails opportunity costs for the community, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We used FGD type as the factor. We examined the significance of pairwise differences among FGD types using Tukey HSD.
-:::
-
 ```{r}
 #| label: model_et_fgd_opp_costs
 #| include: false
@@ -2628,7 +2593,7 @@ pairwise.M9 <- pairs(emm.M9, adjust = "Tukey")
 re_M9    <- as.data.frame(VarCorr(M9))
 prov_M9  <- round(re_M9$vcov[re_M9$grp == "province"], 3)
 cfmg_M9  <- round(re_M9$vcov[re_M9$grp == "province_cfmg"], 3)
-r2_M9    <- performance::r2_nakagawa(M9)
+r2_M9    <- suppressWarnings(performance::r2_nakagawa(M9))
 
 tidy(M9, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -2690,7 +2655,7 @@ Individual interviewees were also asked whether CFM entails opportunity costs. @
 
 ```{r}
 #| label: tbl-et_individual_opp_costs
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2753,11 +2718,6 @@ cfmg |>
   sub_missing()
 ```
 
-::: {.callout-note collapse="true"}
-### Opportunity costs – Individual interviewees – Model methods
-To examine differences among individual interviewee roles in whether they reported that CFM entails opportunity costs for the community, we employed a generalised linear mixed model (GLMM) with a binomial response and random intercepts for province and CF nested within province. We included interviewee role, interviewee gender and interviewee age as factors. To examine pairwise differences among interviewee roles, we employed Tukey HSD.
-:::
-
 ```{r}
 #| label: model_et_individual_opp_costs
 #| include: false
@@ -2799,7 +2759,7 @@ pairwise.M10 <- pairs(emm.M10, adjust = "Tukey")
 re_M10    <- as.data.frame(VarCorr(M10))
 prov_M10  <- round(re_M10$vcov[re_M10$grp == "province"], 3)
 cfmg_M10  <- round(re_M10$vcov[re_M10$grp == "province_cfmg"], 3)
-r2_M10    <- performance::r2_nakagawa(M10)
+r2_M10    <- suppressWarnings(performance::r2_nakagawa(M10))
 
 tidy(M10, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -2863,7 +2823,7 @@ The types of opportunity costs identified are shown in @fig-et_opp_cost_types. M
 
 ```{r}
 #| label: fig-et_opp_cost_types
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -2928,7 +2888,7 @@ ggplot(wc_oc, aes(label = word, size = freq, colour = freq)) +
 
 ## Economic transformation index
 
-To summarise the overall economic transformation performance of each CFMG, we constructed an economic transformation score (0–4) by summing four binary indicators reported by FGD groups — improved access to natural resources for household use, improved access to natural resources for sale, new employment opportunities created, and community awareness of carbon credit agreements — scored as 1 (positive outcome reported) or 0 (no positive outcome or worsening). We then modelled this score using a linear mixed model with FGD type and the governance index as predictors, and random intercepts for province and CF within province, to test whether governance and FGD type were significant predictors of overall economic transformation performance (@tbl-et_index_model, @fig-et_index).
+To summarise the overall economic transformation performance of each CFMG, we constructed an economic transformation score (0–5) by summing five binary indicators reported by FGD groups — improved access to natural resources for household use, improved access to natural resources for sale, new employment opportunities created, collaboration with a private enterprise (executive FGDs only), and absence of opportunity costs (No = 1, Yes = 0) — scored as 1 (positive outcome reported) or 0 (no positive outcome or worsening). The distribution of economic transformation scores across CFMGs is shown in @fig-et_index_dist. We then modelled this score using a linear mixed model with FGD type and the governance index as predictors, and random intercepts for province and CF within province, to test whether governance and FGD type were significant predictors of overall economic transformation performance (@tbl-et_index_model, @fig-et_index).
 
 ```{r}
 #| label: data_et_index
@@ -2955,19 +2915,26 @@ et_data <- cfmg |>
       economic_transformation_yn_formal_employment_opportunities_created_cfm == "no"  ~ 0,
       TRUE ~ NA_real_
     ),
-    si_carbon = case_when(
-      economic_transformation_community_awareness_carbon_credit_agreement == "yes" ~ 1,
-      economic_transformation_community_awareness_carbon_credit_agreement == "no"  ~ 0,
-      economic_transformation_community_awareness_carbon_credit_agreement %in%
-        c("Not aware of the agreement of the Juristiction project we just know what's involved",
-          "The agreement is not clear we don't know where they sale the carbon and we don't know how much they get from the money",
-          "So far we have just heard the chief signed") ~ 0,
+    si_enterprise = case_match(
+      economic_transformation_cfmg_private_enterprise_collaboration,
+      "yes" ~ 1,
+      "no"  ~ 0,
+      .default = NA_real_
+    ),
+    si_opp_costs = case_when(
+      economic_transformation_opportunity_costs_of_cfm == "yes"           ~ 0,
+      economic_transformation_opportunity_costs_of_cfm == "no"            ~ 1,
+      str_starts(economic_transformation_opportunity_costs_of_cfm, "No_") ~ 1,
+      economic_transformation_opportunity_costs_of_cfm %in% c(
+        "Community forest situated very far from community",
+        "The Major livelihood for this community is fishing. They don't depend so much on the forest. They can still get materials for construction in the open areas"
+      ) ~ 1,
       TRUE ~ NA_real_
     ),
     et_score = ifelse(
-      rowSums(!is.na(cbind(si_hh, si_sale, si_empl, si_carbon))) == 0,
+      rowSums(!is.na(cbind(si_hh, si_sale, si_empl, si_enterprise, si_opp_costs))) == 0,
       NA_real_,
-      rowSums(cbind(si_hh, si_sale, si_empl, si_carbon), na.rm = TRUE)
+      rowSums(cbind(si_hh, si_sale, si_empl, si_enterprise, si_opp_costs), na.rm = TRUE)
     ),
     interview_type = factor(
       case_match(
@@ -2991,6 +2958,30 @@ M_et <- lmer(
 ```
 
 ```{r}
+#| label: fig-et_index_dist
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Distribution of mean economic transformation scores across CFMGs (0–5). Each bar represents the number of CFMGs with that mean score, averaged across all FGD types. The score sums five binary indicators: improved household resource access, improved resource access for sale, new employment opportunities, collaboration with a private enterprise, and absence of opportunity costs."
+#| fig-height: 3
+
+et_data |>
+  group_by(cfmg_name) |>
+  summarise(et_score = mean(et_score, na.rm = TRUE), .groups = "drop") |>
+  ggplot(aes(x = et_score)) +
+  geom_histogram(binwidth = 0.5, fill = "#2A9D8F", colour = "white", linewidth = 0.4) +
+  scale_x_continuous(breaks = 0:5, name = "Economic transformation score (out of 5)") +
+  scale_y_continuous(name = "Number of CFMGs") +
+  theme_minimal(base_size = 14) +
+  theme(
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5)
+  )
+```
+
+```{r}
 #| label: tbl-et_index_model
 #| echo: false
 #| warning: false
@@ -3002,7 +2993,7 @@ re_et    <- as.data.frame(VarCorr(M_et))
 prov_et  <- round(re_et$vcov[re_et$grp == "province"], 3)
 cfmg_et  <- round(re_et$vcov[re_et$grp == "province_cfmg"], 3)
 resid_et <- round(re_et$vcov[re_et$grp == "Residual"], 3)
-r2_et    <- performance::r2_nakagawa(M_et)
+r2_et    <- suppressWarnings(performance::r2_nakagawa(M_et))
 
 tidy(M_et, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -3052,8 +3043,8 @@ et_data |>
   geom_smooth(method = "lm", colour = "#1A6B63", fill = "#76B7A0", alpha = 0.25,
               linewidth = 0.8) +
   scale_x_continuous(name = "Governance index (out of 10)", breaks = 0:10) +
-  scale_y_continuous(name = "Economic transformation score (out of 4)", breaks = 0:4,
-                     limits = c(-0.2, 4.2)) +
+  scale_y_continuous(name = "Economic transformation score (out of 5)", breaks = 0:5,
+                     limits = c(-0.2, 5.2)) +
   theme_minimal(base_size = 14) +
   theme(
     panel.grid.minor   = element_blank(),

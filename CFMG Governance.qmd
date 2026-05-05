@@ -46,7 +46,7 @@ We asked CFMG executives what required legal processes had been completed, inclu
 
 ```{r}
 #| label: tbl-legal_processes
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -101,7 +101,7 @@ Through the survey, we asked CFMG executives what governance processes were bein
 
 ```{r}
 #| label: tbl-governance_processes
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -200,7 +200,7 @@ It appears that most CFMGs have not held elections since they were formed, up to
 
 ```{r}
 #| label: fig-last_election
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -276,7 +276,7 @@ Forty-three out of 75 CFMGs have not held elections for over 3 yrs, although ter
 
 ```{r}
 #| label: fig-tenure
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -348,7 +348,7 @@ In contrast, most CFMGs do appear to be holding meetings regularly (@fig-meeting
 
 ```{r}
 #| label: fig-meetings
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -433,7 +433,7 @@ As with the legal processes, we asked CFMG executives about the state of their b
 
 ```{r}
 #| label: tbl-business_processes
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -579,7 +579,7 @@ All CFMGs are supported by FD, which has a statutory duty to implement the CFM p
 
 ```{r}
 #| label: fig-dfo_visits
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -651,7 +651,7 @@ Many CFMGs also operate in partnership with an NGO, such as a conservation organ
 
 ```{r}
 #| label: fig-support
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -713,7 +713,7 @@ The table below (@tbl-support_organisations) lists the partners organisations an
 
 ```{r}
 #| label: tbl-support_organisations
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -747,7 +747,7 @@ The figure below (@fig-partner_visits) indicates the frequency of visits to CFMG
 
 ```{r}
 #| label: fig-partner_visits
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false
@@ -1334,7 +1334,7 @@ Among those CFMGs that had recognised user groups, they were involved in managin
 
 ```{r}
 #| label: fig-gov_user_groups
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false

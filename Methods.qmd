@@ -10,7 +10,6 @@ filters:
 editor: visual
 ---
 
-
 ```{r}
 #| label: Load_data_and_libraries
 #| include: false
@@ -29,7 +28,7 @@ load("cfmg.RData")
 
 ### Selection of community forest sample
 
-We used a stratified random approach for selecting CFs for the survey. First, we identified eight provinces for sampling, omitting Luapula and Copperbelt provinces which did not have many CFs. Our intention was to select ten CFs per province stratified by size and age (preference for older CFMAs). However, we found that three of the selected provinces had fewer than ten CFs. Hence, to maintain the number of CFs at 80, we selected 12 CFs from provinces that had more than ten. We established a cut off establishment date of 1st Jan 2024, so that all selected CFs were at least 1 yr old. In addition, we were not able to use CF size as a selection criteria, because of the low number CFs in several of the provinces. Within provinces, we selected our sample randomly from among the CFs that were at least 1 yr old. 
+We used a stratified random approach for selecting CFs for the survey. First, we identified eight provinces for sampling, omitting Luapula and Copperbelt provinces which did not have many CFs. Our intention was to select ten CFs per province stratified by size and age (preference for older CFMAs). However, we found that three of the selected provinces had fewer than ten CFs. Hence, to maintain the number of CFs at 80, we selected 12 CFs from provinces that had more than ten. We established a cut off establishment date of 1st Jan 2024, so that all selected CFs were at least 1 yr old. In addition, we were not able to use CF size as a selection criteria, because of the low number CFs in several of the provinces. Within provinces, we selected our sample randomly from among the CFs that were at least 1 yr old.
 
 ### Survey tool
 
@@ -43,23 +42,23 @@ In each CF forest, the team conducted four FGDs including (i) CFMG executive, an
 
 The surveys were carried out according to the following schedule (@tbl-survey-schedule).
 
-| Province | Dates |
-|:-------------|:-----------|
-| Lusaka | 13 March to 17 April 2025 |
-| Southern | 8 May to 28 May 2025 |
-| Central | 8 June to 21 June 2025 |
-| Eastern | 8 July to 31 July 2025 |
-| Northern | 10 Aug to 2 September 2025 |
-| Muchinga | 10 September to 5 October |
+| Province      | Dates                          |
+|:--------------|:-------------------------------|
+| Lusaka        | 13 March to 17 April 2025      |
+| Southern      | 8 May to 28 May 2025           |
+| Central       | 8 June to 21 June 2025         |
+| Eastern       | 8 July to 31 July 2025         |
+| Northern      | 10 Aug to 2 September 2025     |
+| Muchinga      | 10 September to 5 October      |
 | North-western | 17 October to 11 November 2025 |
-| Western | 26 November to 8 December 2025 |
+| Western       | 26 November to 8 December 2025 |
 
 : CF survey schedule {#tbl-survey-schedule}
 
 During the survey, a five CFs were dropped from the sample. For various reasons the five CFs (@tbl-not-surveyed), these CFs existed on paper, but were non-functioning on the ground.
 
 | Province | CF | Reasons for omission |
-|:---------|:-------|:--------|
+|:--------------------------|:---------------------|:-----------------------|
 | Lusaka | Chalimbana | The CF was not operational and currently exists only in the database. Only the initial establishment stages were completed. |
 | Central | Kaindu | The Chief had disbanded the executive committee and hence it was not possible to organise the community |
 | Muchinga | Nampando | The CF was not operational and currently exists only in the database. Only the initial establishment stages were completed. |
@@ -108,15 +107,18 @@ cfmg |>
 
 Data from the survey tool were summarised and displayed using tables, bar charts or word clouds for informative interpretation. To examine hypotheses concerning differences in responses among FGD types or interviewee roles for the individual interviews, we used Generalised Linear Mixed Models (GLMM). For binary responses (e.g. yes/no), we used binomial models and for ordered categories (e.g. decrease, no change, moderate increase, significant increase), we used Cumulative Link Mixed Models (CLMM). Reflecting the nested structure of the data with interviews nested within CFs nested within provinces, we implemented random intercepts for province and CF name nested within province (i.e. province:CF name interaction). For the FGD responses, FGD types was included in the model as a factor and we examined the pairwise differences among FGD types using Tukey Honest Significant Differences (HSDs). For the models investigating interview roles for the individual interviews, we inserted interviewee gender, interviewee age and interviewee role as factors in the models and the pairwise differences among interviewee roles were examined using Tukey HSDs.
 
+To provide an overall summary of CFMG performance across the four thematic areas, we constructed four composite indexes. The **governance index** (0–10) counts the number of ten governance features reported as present by the CFMG executive FGD: receipt book, bank account, financial reporting, annual reporting, issuing permits, HFOs appointed, workplan, budget, business plan, and term limits. The **SFM index** (0–5) sums five binary indicators averaged across all four FGD types: reduced forest clearing, reduced or absent charcoal production, reduced fire incidence, increased wildlife, and improved forest resource management. The **economic transformation index** (0–5) sums five binary indicators averaged across all four FGD types: improved household access to natural resources, improved access to natural resources for sale, new formal employment opportunities, collaboration with a private enterprise, and absence of opportunity costs (scored 0 if opportunity costs were reported, 1 if not). The **equity and inclusion index** (0–5) sums five binary indicators averaged across all four FGD types: equitable benefit sharing, women benefiting from CFM, women participating in decision making, transparency in benefit sharing, and existence of a grievance and redress mechanism. For each index, linear mixed models with FGD type and the governance index as predictors and random intercepts for province and CF within province were used to test whether governance and FGD type were significant predictors of performance. Mean scores for all four indexes by CFMG are provided in Appendix IV.
+
 ## Remote sensing anaysis
+
 ### Fire dataset
 
-*_To_Do_*
+*To_Do*
 
 ### Deforestation dataset
 
-*_To_Do_*
+*To_Do*
 
 ### Analysis of remote sensed data
 
-*_To_Do_*
+*To_Do*
