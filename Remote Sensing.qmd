@@ -1,0 +1,325 @@
+---
+title: "Remote Sensing"
+author: "Rhett D Harrison"
+format:
+        html:
+                css: custom.css
+        pdf: default
+filters:
+- collapse-output
+editor: visual
+---
+
+```{r}
+#| label: load_libraries_rs
+#| include: false
+#| warning: false
+#| message: false
+#| error:   false
+
+library(tidyverse)
+library(gt)
+library(ggplot2)
+library(lme4)
+library(lmerTest)
+library(broom.mixed)
+library(performance)
+library(glue)
+```
+
+```{r}
+#| label: load_fire_data
+#| include: false
+#| warning: false
+#| message: false
+#| error:   false
+
+load("cfmg.RData")
+
+# CFMG areas from GIS shapefile (hectares → km²) and governance index
+normalise_name <- function(x) {
+  x |> str_to_lower() |> str_replace_all("[_()]+", " ") |> str_squish()
+}
+
+cfmg_attrs <- cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  group_by(cfmg_name) |>
+  summarise(
+    area_km2  = mean(`Size (Hectares)`, na.rm = TRUE) / 100,
+    gov_index = mean(gov_index,         na.rm = TRUE),
+    .groups   = "drop"
+  ) |>
+  mutate(join_key = normalise_name(as.character(cfmg_name)))
+
+fire_raw <- read_csv("../data/fire_with_zones.csv", show_col_types = FALSE) |>
+  mutate(
+    acq_date  = dmy(acq_date),
+    date_est  = ymd(DATEEST),
+    month     = month(acq_date),
+    NAME      = str_to_sentence(NAME),
+    # fix known spelling variant
+    NAME      = if_else(NAME == "Kaluzya", "Kalunzyu", NAME),
+    join_key  = normalise_name(NAME),
+    period    = factor(
+      if_else(acq_date < date_est, "Before", "After"),
+      levels = c("Before", "After")
+    )
+  ) |>
+  left_join(cfmg_attrs |> select(join_key, area_km2, gov_index), by = "join_key")
+```
+
+## Introduction
+
+*To do*
+
+```{r}
+#| label: data_fire
+#| include: false
+#| warning: false
+#| message: false
+#| error:   false
+
+fire_annual <- fire_raw |>
+  mutate(det_area = scan * track) |>
+  group_by(NAME, PROVINCE, Year, period, area_km2, gov_index) |>
+  summarise(
+    fire_count  = n(),
+    burned_area = sum(det_area, na.rm = TRUE),
+    total_frp   = sum(frp,      na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  filter(!is.na(area_km2), !is.na(gov_index)) |>
+  mutate(
+    fire_density  = fire_count  / area_km2,
+    burn_fraction = burned_area / area_km2,
+    frp_density   = total_frp   / area_km2,
+    log_density   = log1p(fire_density),
+    log_burn      = log1p(burn_fraction),    # kept for reference; model uses raw burn_fraction
+    log_frp_dens  = log1p(frp_density)
+  )
+
+M_count <- lmer(log_density  ~ period + gov_index + (1 | NAME), data = fire_annual, REML = TRUE)
+M_area  <- glmer(burn_fraction ~ period + gov_index + (1 | NAME),
+                 family = Gamma(link = "log"), data = fire_annual)
+M_frp   <- lmer(log_frp_dens ~ period + gov_index + (1 | NAME), data = fire_annual, REML = TRUE)
+```
+
+## Fire incidence
+
+```{r}
+#| label: fig-fire_count
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Annual fire detection density (detections per km²) per CFMG before and after establishment. Each point represents one CFMG-year. Boxes show median and interquartile range; y-axis is on a log scale."
+#| fig-height: 4
+
+fire_annual |>
+  ggplot(aes(x = period, y = fire_density, fill = period)) +
+  geom_boxplot(width = 0.5, alpha = 0.7, outlier.shape = NA) +
+  geom_jitter(width = 0.15, alpha = 0.4, size = 1.5, colour = "grey30") +
+  scale_y_log10(name = expression("Fire detections per km"^2*" per year (log scale)")) +
+  scale_x_discrete(name = NULL) +
+  scale_fill_manual(values = c("Before" = "#E9C46A", "After" = "#2A9D8F")) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position    = "none",
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5)
+  )
+```
+
+```{r}
+#| label: tbl-fire_count_model
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Linear mixed model results for log-transformed annual fire count before and after CF establishment."
+
+re_count    <- as.data.frame(VarCorr(M_count))
+cfmg_count  <- round(re_count$vcov[re_count$grp == "NAME"],     3)
+resid_count <- round(re_count$vcov[re_count$grp == "Residual"], 3)
+r2_count    <- suppressWarnings(performance::r2_nakagawa(M_count))
+
+tidy(M_count, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"  ~ "Intercept (Before)",
+    "periodAfter"  ~ "After",
+    "gov_index"    ~ "Governance index"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term = "Factor", estimate = "Estimate", std.error = "SE",
+             p.value = md("*P* value")) |>
+  fmt_number(columns = c(estimate, std.error), decimals = 3) |>
+  fmt_number(columns = p.value, decimals = 4) |>
+  tab_header(
+    title    = "Model results for fire detection density (log-transformed) — before vs after establishment",
+    subtitle = glue(
+      "Linear mixed model with random intercept for CFMG. ",
+      "Response = log(detections per km² + 1). Fixed effects: period (ref = Before) and governance index. ",
+      "CFMG variance = {cfmg_count}; residual variance = {resid_count}. ",
+      "Marginal R² = {round(r2_count$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_count$R2_conditional, 3)}. ",
+      "n = {nobs(M_count)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "center", columns = -term) |>
+  cols_align(align = "left",   columns = term) |>
+  tab_style(style = cell_text(align = "center"),
+            locations = cells_column_labels(columns = term)) |>
+  sub_missing()
+```
+
+## Burned area
+
+```{r}
+#| label: fig-burned_area
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Annual fire footprint as a fraction of CFMG area before and after establishment. Fire footprint estimated as the sum of scan × track for all detections within each CFMG-year, divided by CFMG area. Each point represents one CFMG-year. Boxes show median and interquartile range; y-axis is on a log scale."
+#| fig-height: 4
+
+fire_annual |>
+  ggplot(aes(x = period, y = burn_fraction, fill = period)) +
+  geom_boxplot(width = 0.5, alpha = 0.7, outlier.shape = NA) +
+  geom_jitter(width = 0.15, alpha = 0.4, size = 1.5, colour = "grey30") +
+  scale_y_log10(name = "Fire footprint fraction (log scale)") +
+  scale_x_discrete(name = NULL) +
+  scale_fill_manual(values = c("Before" = "#E9C46A", "After" = "#2A9D8F")) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position    = "none",
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5)
+  )
+```
+
+```{r}
+#| label: tbl-burned_area_model
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Gamma GLMM results for annual fire footprint fraction before and after CF establishment."
+
+re_area   <- as.data.frame(VarCorr(M_area))
+cfmg_area <- round(re_area$vcov[re_area$grp == "NAME"], 3)
+r2_area   <- suppressWarnings(performance::r2_nakagawa(M_area))
+
+tidy(M_area, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"  ~ "Intercept (Before)",
+    "periodAfter"  ~ "After",
+    "gov_index"    ~ "Governance index"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term = "Factor", estimate = "Estimate", std.error = "SE",
+             p.value = md("*P* value")) |>
+  fmt_number(columns = c(estimate, std.error), decimals = 3) |>
+  fmt_number(columns = p.value, decimals = 4) |>
+  tab_header(
+    title    = "Model results for fire footprint fraction — before vs after establishment",
+    subtitle = glue(
+      "Gamma GLMM with log link and random intercept for CFMG. ",
+      "Fixed effects: period (ref = Before) and governance index. ",
+      "CFMG variance = {cfmg_area}. ",
+      "Marginal R² = {round(r2_area$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_area$R2_conditional, 3)}. ",
+      "n = {nobs(M_area)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "center", columns = -term) |>
+  cols_align(align = "left",   columns = term) |>
+  tab_style(style = cell_text(align = "center"),
+            locations = cells_column_labels(columns = term)) |>
+  sub_missing()
+```
+
+## Fire radiative power
+
+```{r}
+#| label: fig-frp
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Annual total fire radiative power (FRP) per km² per CFMG before and after establishment. Total FRP summed across all detections within each CFMG-year and divided by CFMG area. Each point represents one CFMG-year. Boxes show median and interquartile range; y-axis is on a log scale."
+#| fig-height: 4
+
+fire_annual |>
+  ggplot(aes(x = period, y = frp_density, fill = period)) +
+  geom_boxplot(width = 0.5, alpha = 0.7, outlier.shape = NA) +
+  geom_jitter(width = 0.15, alpha = 0.4, size = 1.5, colour = "grey30") +
+  scale_y_log10(name = expression("Total FRP per km"^2*" per year (log scale)")) +
+  scale_x_discrete(name = NULL) +
+  scale_fill_manual(values = c("Before" = "#E9C46A", "After" = "#2A9D8F")) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position    = "none",
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5)
+  )
+```
+
+```{r}
+#| label: tbl-frp_model
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Linear mixed model results for log-transformed annual total FRP per km² before and after CF establishment."
+
+re_frp    <- as.data.frame(VarCorr(M_frp))
+cfmg_frp  <- round(re_frp$vcov[re_frp$grp == "NAME"],     3)
+resid_frp <- round(re_frp$vcov[re_frp$grp == "Residual"], 3)
+r2_frp    <- suppressWarnings(performance::r2_nakagawa(M_frp))
+
+tidy(M_frp, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"  ~ "Intercept (Before)",
+    "periodAfter"  ~ "After",
+    "gov_index"    ~ "Governance index"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term = "Factor", estimate = "Estimate", std.error = "SE",
+             p.value = md("*P* value")) |>
+  fmt_number(columns = c(estimate, std.error), decimals = 3) |>
+  fmt_number(columns = p.value, decimals = 4) |>
+  tab_header(
+    title    = "Model results for total FRP per km² (log-transformed) — before vs after establishment",
+    subtitle = glue(
+      "Linear mixed model with random intercept for CFMG. ",
+      "Response = log(total FRP / CFMG area + 1). Fixed effects: period (ref = Before) and governance index. ",
+      "CFMG variance = {cfmg_frp}; residual variance = {resid_frp}. ",
+      "Marginal R² = {round(r2_frp$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_frp$R2_conditional, 3)}. ",
+      "n = {nobs(M_frp)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "center", columns = -term) |>
+  cols_align(align = "left",   columns = term) |>
+  tab_style(style = cell_text(align = "center"),
+            locations = cells_column_labels(columns = term)) |>
+  sub_missing()
+```
+
+## Deforestation
+
+*To do*
+
+## Discussion
+
+*To do*

@@ -1,0 +1,21 @@
+{
+  "hash": "66e26ddec6d62ba00f96b9b3448a163e",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Remote Sensing\"\nauthor: \"Rhett D Harrison\"\nformat:\n        html:\n                css: custom.css\n        pdf: default\nfilters:\n- collapse-output\neditor: visual\n---\n\n\n\n\n\n## Introduction\n\n*To do*\n\n\n\n## Fire incidence\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Annual fire detection count per CFMG before and after establishment. Each point represents one CFMG-year. Boxes show median and interquartile range; y-axis is on a log scale.](Remote-Sensing_files/figure-pdf/fig-fire_count-1.pdf){#fig-fire_count}\n:::\n:::\n\n\n\n::: {#tbl-fire_count_model .cell tbl-cap='Linear mixed model results for log-transformed annual fire count before and after CF establishment.'}\n::: {.cell-output-display}\n\\begin{longtable}{lccc}\n\\caption*{\n{\\large Model results for annual fire count (log-transformed) — before vs after establishment} \\\\ \n{\\small Linear mixed model with random intercept for CFMG. Reference = Before. CFMG variance = 3.779; residual variance = 0.21. Marginal R² = 0.001; conditional R² = 0.947. n = 423.}\n} \\\\ \n\\toprule\nFactor & Estimate & SE & \\emph{P} value \\\\ \n\\midrule\\addlinespace[2.5pt]\nIntercept (Before) & $3.788$ & $0.309$ & $0.0000$ \\\\ \nAfter & $-0.126$ & $0.048$ & $0.0091$ \\\\ \n\\bottomrule\n\\end{longtable}\n\n:::\n:::\n\n\n## Burned area\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Annual burned area (km²) per CFMG before and after establishment. Burned area estimated as the sum of scan × track for all fire detections within each CFMG-year. Each point represents one CFMG-year. Boxes show median and interquartile range; y-axis is on a log scale.](Remote-Sensing_files/figure-pdf/fig-burned_area-1.pdf){#fig-burned_area}\n:::\n:::\n\n\n\n::: {#tbl-burned_area_model .cell tbl-cap='Linear mixed model results for log-transformed annual burned area before and after CF establishment.'}\n::: {.cell-output-display}\n\\begin{longtable}{lccc}\n\\caption*{\n{\\large Model results for annual burned area (log-transformed) — before vs after establishment} \\\\ \n{\\small Linear mixed model with random intercept for CFMG. Reference = Before. CFMG variance = 2.893; residual variance = 0.148. Marginal R² = 0.001; conditional R² = 0.951. n = 423.}\n} \\\\ \n\\toprule\nFactor & Estimate & SE & \\emph{P} value \\\\ \n\\midrule\\addlinespace[2.5pt]\nIntercept (Before) & $2.538$ & $0.270$ & $0.0000$ \\\\ \nAfter & $-0.135$ & $0.040$ & $0.0009$ \\\\ \n\\bottomrule\n\\end{longtable}\n\n:::\n:::\n\n\n## Fire radiative power\n\n\n::: {.cell}\n::: {.cell-output-display}\n![Mean annual fire radiative power (FRP, MW) per CFMG before and after establishment. FRP is averaged across all fire detections within each CFMG-year. Each point represents one CFMG-year. Boxes show median and interquartile range.](Remote-Sensing_files/figure-pdf/fig-frp-1.pdf){#fig-frp}\n:::\n:::\n\n\n\n::: {#tbl-frp_model .cell tbl-cap='Linear mixed model results for mean annual fire radiative power before and after CF establishment.'}\n::: {.cell-output-display}\n\\begin{longtable}{lccc}\n\\caption*{\n{\\large Model results for mean annual FRP — before vs after establishment} \\\\ \n{\\small Linear mixed model with random intercept for CFMG. Reference = Before. CFMG variance = 6.103; residual variance = 14.758. Marginal R² = 0.001; conditional R² = 0.293. n = 423.}\n} \\\\ \n\\toprule\nFactor & Estimate & SE & \\emph{P} value \\\\ \n\\midrule\\addlinespace[2.5pt]\nIntercept (Before) & $8.472$ & $0.465$ & $0.0000$ \\\\ \nAfter & $-0.312$ & $0.399$ & $0.4346$ \\\\ \n\\bottomrule\n\\end{longtable}\n\n:::\n:::\n\n\n## Deforestation\n\n*To do*\n\n## Discussion\n\n*To do*\n",
+    "supporting": [
+      "Remote-Sensing_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "\\usepackage{booktabs}\n\\usepackage{caption}\n\\usepackage{longtable}\n\\usepackage{colortbl}\n\\usepackage{array}\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": null,
+    "postProcess": false
+  }
+}

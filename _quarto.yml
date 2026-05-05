@@ -23,6 +23,8 @@ website:
         href: "CFMG ET.qmd"
       - text: "Equity and Inclusion"
         href: "CFMG BS.qmd"
+      - text: "Remote Sensing"
+        href: "Remote Sensing.qmd"
       - text: "Discussion"
         href: Conclusions.qmd
       - text: "Recommendations"
