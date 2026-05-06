@@ -170,6 +170,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#burned-area" id="toc-burned-area" class="nav-link" data-scroll-target="#burned-area">Burned area</a></li>
   <li><a href="#fire-radiative-power" id="toc-fire-radiative-power" class="nav-link" data-scroll-target="#fire-radiative-power">Fire radiative power</a></li>
   <li><a href="#deforestation" id="toc-deforestation" class="nav-link" data-scroll-target="#deforestation">Deforestation</a></li>
+  <li><a href="#above-ground-biomass" id="toc-above-ground-biomass" class="nav-link" data-scroll-target="#above-ground-biomass">Above ground biomass</a></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Remote-Sensing.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
@@ -220,7 +221,7 @@ ul.task-list li input[type="checkbox"] {
 <img src="Remote-Sensing_files/figure-html/fig-fire_count-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fire_count-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Annual fire detection density (detections per km²) per CFMG before and after establishment. Each point represents one CFMG-year. Boxes show median and interquartile range; y-axis is on a log scale.
+Figure&nbsp;1: Annual fire detection density (detections per km²) per CFMG before and after establishment, for CF cores and 1 km buffer zones. Each point represents one CFMG-year. Boxes show median and interquartile range.
 </figcaption>
 </figure>
 </div>
@@ -234,23 +235,23 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
 </figcaption>
 <div aria-describedby="tbl-fire_count_model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="hthtausypz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hthtausypz table {
+<div id="laqgbocmld" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#laqgbocmld table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hthtausypz thead, #hthtausypz tbody, #hthtausypz tfoot, #hthtausypz tr, #hthtausypz td, #hthtausypz th {
+#laqgbocmld thead, #laqgbocmld tbody, #laqgbocmld tfoot, #laqgbocmld tr, #laqgbocmld td, #laqgbocmld th {
   border-style: none;
 }
 
-#hthtausypz p {
+#laqgbocmld p {
   margin: 0;
   padding: 0;
 }
 
-#hthtausypz .gt_table {
+#laqgbocmld .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -276,12 +277,12 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   border-left-color: #D3D3D3;
 }
 
-#hthtausypz .gt_caption {
+#laqgbocmld .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hthtausypz .gt_title {
+#laqgbocmld .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -293,7 +294,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   border-bottom-width: 0;
 }
 
-#hthtausypz .gt_subtitle {
+#laqgbocmld .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -305,7 +306,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   border-top-width: 0;
 }
 
-#hthtausypz .gt_heading {
+#laqgbocmld .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -317,13 +318,13 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   border-right-color: #D3D3D3;
 }
 
-#hthtausypz .gt_bottom_border {
+#laqgbocmld .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hthtausypz .gt_col_headings {
+#laqgbocmld .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -338,7 +339,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   border-right-color: #D3D3D3;
 }
 
-#hthtausypz .gt_col_heading {
+#laqgbocmld .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -358,7 +359,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   overflow-x: hidden;
 }
 
-#hthtausypz .gt_column_spanner_outer {
+#laqgbocmld .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -370,15 +371,15 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   padding-right: 4px;
 }
 
-#hthtausypz .gt_column_spanner_outer:first-child {
+#laqgbocmld .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hthtausypz .gt_column_spanner_outer:last-child {
+#laqgbocmld .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hthtausypz .gt_column_spanner {
+#laqgbocmld .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -390,11 +391,11 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   width: 100%;
 }
 
-#hthtausypz .gt_spanner_row {
+#laqgbocmld .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hthtausypz .gt_group_heading {
+#laqgbocmld .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -420,7 +421,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   text-align: left;
 }
 
-#hthtausypz .gt_empty_group_heading {
+#laqgbocmld .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -435,15 +436,15 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   vertical-align: middle;
 }
 
-#hthtausypz .gt_from_md > :first-child {
+#laqgbocmld .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hthtausypz .gt_from_md > :last-child {
+#laqgbocmld .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hthtausypz .gt_row {
+#laqgbocmld .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -462,7 +463,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   overflow-x: hidden;
 }
 
-#hthtausypz .gt_stub {
+#laqgbocmld .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -475,7 +476,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   padding-right: 5px;
 }
 
-#hthtausypz .gt_stub_row_group {
+#laqgbocmld .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -489,15 +490,15 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   vertical-align: top;
 }
 
-#hthtausypz .gt_row_group_first td {
+#laqgbocmld .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hthtausypz .gt_row_group_first th {
+#laqgbocmld .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hthtausypz .gt_summary_row {
+#laqgbocmld .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -507,16 +508,16 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   padding-right: 5px;
 }
 
-#hthtausypz .gt_first_summary_row {
+#laqgbocmld .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hthtausypz .gt_first_summary_row.thick {
+#laqgbocmld .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hthtausypz .gt_last_summary_row {
+#laqgbocmld .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -526,7 +527,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   border-bottom-color: #D3D3D3;
 }
 
-#hthtausypz .gt_grand_summary_row {
+#laqgbocmld .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -536,7 +537,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   padding-right: 5px;
 }
 
-#hthtausypz .gt_first_grand_summary_row {
+#laqgbocmld .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -546,7 +547,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   border-top-color: #D3D3D3;
 }
 
-#hthtausypz .gt_last_grand_summary_row_top {
+#laqgbocmld .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -556,11 +557,11 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   border-bottom-color: #D3D3D3;
 }
 
-#hthtausypz .gt_striped {
+#laqgbocmld .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hthtausypz .gt_table_body {
+#laqgbocmld .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -569,7 +570,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   border-bottom-color: #D3D3D3;
 }
 
-#hthtausypz .gt_footnotes {
+#laqgbocmld .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -583,7 +584,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   border-right-color: #D3D3D3;
 }
 
-#hthtausypz .gt_footnote {
+#laqgbocmld .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -592,7 +593,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   padding-right: 5px;
 }
 
-#hthtausypz .gt_sourcenotes {
+#laqgbocmld .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -606,7 +607,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   border-right-color: #D3D3D3;
 }
 
-#hthtausypz .gt_sourcenote {
+#laqgbocmld .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -614,63 +615,63 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
   padding-right: 5px;
 }
 
-#hthtausypz .gt_left {
+#laqgbocmld .gt_left {
   text-align: left;
 }
 
-#hthtausypz .gt_center {
+#laqgbocmld .gt_center {
   text-align: center;
 }
 
-#hthtausypz .gt_right {
+#laqgbocmld .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hthtausypz .gt_font_normal {
+#laqgbocmld .gt_font_normal {
   font-weight: normal;
 }
 
-#hthtausypz .gt_font_bold {
+#laqgbocmld .gt_font_bold {
   font-weight: bold;
 }
 
-#hthtausypz .gt_font_italic {
+#laqgbocmld .gt_font_italic {
   font-style: italic;
 }
 
-#hthtausypz .gt_super {
+#laqgbocmld .gt_super {
   font-size: 65%;
 }
 
-#hthtausypz .gt_footnote_marks {
+#laqgbocmld .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hthtausypz .gt_asterisk {
+#laqgbocmld .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hthtausypz .gt_indent_1 {
+#laqgbocmld .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hthtausypz .gt_indent_2 {
+#laqgbocmld .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hthtausypz .gt_indent_3 {
+#laqgbocmld .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hthtausypz .gt_indent_4 {
+#laqgbocmld .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hthtausypz .gt_indent_5 {
+#laqgbocmld .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -681,7 +682,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
 <td colspan="4" class="gt_heading gt_title gt_font_normal">Model results for fire detection density (log-transformed) &lt;U+2014&gt; before vs after establishment</td>
 </tr>
 <tr class="gt_heading even">
-<td colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Linear mixed model with random intercept for CFMG. Response = log(detections per km&lt;U+00B2&gt; + 1). Fixed effects: period (ref = Before) and governance index. CFMG variance = 0.548; residual variance = 0.067. Marginal R&lt;U+00B2&gt; = 0.009; conditional R&lt;U+00B2&gt; = 0.892. n = 401.</td>
+<td colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Linear mixed model with random intercept for CFMG. Response = log(detections per km&lt;U+00B2&gt; + 1). Fixed effects: period (ref = Before) and governance index. CFMG variance = 0.145; residual variance = 0.191. Marginal R&lt;U+00B2&gt; = 0.055; conditional R&lt;U+00B2&gt; = 0.463. n = 817.</td>
 </tr>
 <tr class="gt_col_headings header">
 <th id="Factor" class="gt_col_heading gt_columns_bottom_border gt_left" style="text-align: center;" data-quarto-table-cell-role="th" scope="col">Factor</th>
@@ -692,22 +693,34 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="term">Intercept (Before)</td>
-<td class="gt_row gt_center" headers="estimate">1.168</td>
-<td class="gt_row gt_center" headers="std.error">0.300</td>
-<td class="gt_row gt_center" headers="p.value">0.0004</td>
+<td class="gt_row gt_left" headers="term">Intercept (Before, Core)</td>
+<td class="gt_row gt_center" headers="estimate">1.098</td>
+<td class="gt_row gt_center" headers="std.error">0.161</td>
+<td class="gt_row gt_center" headers="p.value">0.0000</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="term">After</td>
-<td class="gt_row gt_center" headers="estimate">−0.088</td>
-<td class="gt_row gt_center" headers="std.error">0.028</td>
-<td class="gt_row gt_center" headers="p.value">0.0019</td>
+<td class="gt_row gt_center" headers="estimate">−0.121</td>
+<td class="gt_row gt_center" headers="std.error">0.046</td>
+<td class="gt_row gt_center" headers="p.value">0.0083</td>
 </tr>
 <tr class="odd">
+<td class="gt_row gt_left" headers="term">Buffer</td>
+<td class="gt_row gt_center" headers="estimate">−0.303</td>
+<td class="gt_row gt_center" headers="std.error">0.040</td>
+<td class="gt_row gt_center" headers="p.value">0.0000</td>
+</tr>
+<tr class="even">
 <td class="gt_row gt_left" headers="term">Governance index</td>
-<td class="gt_row gt_center" headers="estimate">−0.027</td>
-<td class="gt_row gt_center" headers="std.error">0.057</td>
-<td class="gt_row gt_center" headers="p.value">0.6393</td>
+<td class="gt_row gt_center" headers="estimate">−0.007</td>
+<td class="gt_row gt_center" headers="std.error">0.030</td>
+<td class="gt_row gt_center" headers="p.value">0.8290</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">After &lt;U+00D7&gt; Buffer</td>
+<td class="gt_row gt_center" headers="estimate">0.095</td>
+<td class="gt_row gt_center" headers="std.error">0.062</td>
+<td class="gt_row gt_center" headers="p.value">0.1278</td>
 </tr>
 </tbody>
 </table>
@@ -729,7 +742,7 @@ Table&nbsp;1: Linear mixed model results for log-transformed annual fire count b
 <img src="Remote-Sensing_files/figure-html/fig-burned_area-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-burned_area-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Annual fire footprint as a fraction of CFMG area before and after establishment. Fire footprint estimated as the sum of scan × track for all detections within each CFMG-year, divided by CFMG area. Each point represents one CFMG-year. Boxes show median and interquartile range; y-axis is on a log scale.
+Figure&nbsp;2: Annual fire footprint as a fraction of area before and after CF establishment, for cores and 1 km buffers. Fire footprint estimated as the sum of scan × track for all detections within each zone-year, divided by zone area. Each point represents one CFMG-year. Boxes show median and interquartile range.
 </figcaption>
 </figure>
 </div>
@@ -743,23 +756,23 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
 </figcaption>
 <div aria-describedby="tbl-burned_area_model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="guaqsbhpyl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#guaqsbhpyl table {
+<div id="udpxdsqdbh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#udpxdsqdbh table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#guaqsbhpyl thead, #guaqsbhpyl tbody, #guaqsbhpyl tfoot, #guaqsbhpyl tr, #guaqsbhpyl td, #guaqsbhpyl th {
+#udpxdsqdbh thead, #udpxdsqdbh tbody, #udpxdsqdbh tfoot, #udpxdsqdbh tr, #udpxdsqdbh td, #udpxdsqdbh th {
   border-style: none;
 }
 
-#guaqsbhpyl p {
+#udpxdsqdbh p {
   margin: 0;
   padding: 0;
 }
 
-#guaqsbhpyl .gt_table {
+#udpxdsqdbh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -785,12 +798,12 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   border-left-color: #D3D3D3;
 }
 
-#guaqsbhpyl .gt_caption {
+#udpxdsqdbh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#guaqsbhpyl .gt_title {
+#udpxdsqdbh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -802,7 +815,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   border-bottom-width: 0;
 }
 
-#guaqsbhpyl .gt_subtitle {
+#udpxdsqdbh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -814,7 +827,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   border-top-width: 0;
 }
 
-#guaqsbhpyl .gt_heading {
+#udpxdsqdbh .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -826,13 +839,13 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   border-right-color: #D3D3D3;
 }
 
-#guaqsbhpyl .gt_bottom_border {
+#udpxdsqdbh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#guaqsbhpyl .gt_col_headings {
+#udpxdsqdbh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -847,7 +860,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   border-right-color: #D3D3D3;
 }
 
-#guaqsbhpyl .gt_col_heading {
+#udpxdsqdbh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -867,7 +880,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   overflow-x: hidden;
 }
 
-#guaqsbhpyl .gt_column_spanner_outer {
+#udpxdsqdbh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -879,15 +892,15 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   padding-right: 4px;
 }
 
-#guaqsbhpyl .gt_column_spanner_outer:first-child {
+#udpxdsqdbh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#guaqsbhpyl .gt_column_spanner_outer:last-child {
+#udpxdsqdbh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#guaqsbhpyl .gt_column_spanner {
+#udpxdsqdbh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -899,11 +912,11 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   width: 100%;
 }
 
-#guaqsbhpyl .gt_spanner_row {
+#udpxdsqdbh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#guaqsbhpyl .gt_group_heading {
+#udpxdsqdbh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -929,7 +942,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   text-align: left;
 }
 
-#guaqsbhpyl .gt_empty_group_heading {
+#udpxdsqdbh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -944,15 +957,15 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   vertical-align: middle;
 }
 
-#guaqsbhpyl .gt_from_md > :first-child {
+#udpxdsqdbh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#guaqsbhpyl .gt_from_md > :last-child {
+#udpxdsqdbh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#guaqsbhpyl .gt_row {
+#udpxdsqdbh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -971,7 +984,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   overflow-x: hidden;
 }
 
-#guaqsbhpyl .gt_stub {
+#udpxdsqdbh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -984,7 +997,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   padding-right: 5px;
 }
 
-#guaqsbhpyl .gt_stub_row_group {
+#udpxdsqdbh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -998,15 +1011,15 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   vertical-align: top;
 }
 
-#guaqsbhpyl .gt_row_group_first td {
+#udpxdsqdbh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#guaqsbhpyl .gt_row_group_first th {
+#udpxdsqdbh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#guaqsbhpyl .gt_summary_row {
+#udpxdsqdbh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1016,16 +1029,16 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   padding-right: 5px;
 }
 
-#guaqsbhpyl .gt_first_summary_row {
+#udpxdsqdbh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#guaqsbhpyl .gt_first_summary_row.thick {
+#udpxdsqdbh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#guaqsbhpyl .gt_last_summary_row {
+#udpxdsqdbh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1035,7 +1048,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   border-bottom-color: #D3D3D3;
 }
 
-#guaqsbhpyl .gt_grand_summary_row {
+#udpxdsqdbh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1045,7 +1058,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   padding-right: 5px;
 }
 
-#guaqsbhpyl .gt_first_grand_summary_row {
+#udpxdsqdbh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1055,7 +1068,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   border-top-color: #D3D3D3;
 }
 
-#guaqsbhpyl .gt_last_grand_summary_row_top {
+#udpxdsqdbh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1065,11 +1078,11 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   border-bottom-color: #D3D3D3;
 }
 
-#guaqsbhpyl .gt_striped {
+#udpxdsqdbh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#guaqsbhpyl .gt_table_body {
+#udpxdsqdbh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1078,7 +1091,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   border-bottom-color: #D3D3D3;
 }
 
-#guaqsbhpyl .gt_footnotes {
+#udpxdsqdbh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1092,7 +1105,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   border-right-color: #D3D3D3;
 }
 
-#guaqsbhpyl .gt_footnote {
+#udpxdsqdbh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1101,7 +1114,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   padding-right: 5px;
 }
 
-#guaqsbhpyl .gt_sourcenotes {
+#udpxdsqdbh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1115,7 +1128,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   border-right-color: #D3D3D3;
 }
 
-#guaqsbhpyl .gt_sourcenote {
+#udpxdsqdbh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1123,63 +1136,63 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
   padding-right: 5px;
 }
 
-#guaqsbhpyl .gt_left {
+#udpxdsqdbh .gt_left {
   text-align: left;
 }
 
-#guaqsbhpyl .gt_center {
+#udpxdsqdbh .gt_center {
   text-align: center;
 }
 
-#guaqsbhpyl .gt_right {
+#udpxdsqdbh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#guaqsbhpyl .gt_font_normal {
+#udpxdsqdbh .gt_font_normal {
   font-weight: normal;
 }
 
-#guaqsbhpyl .gt_font_bold {
+#udpxdsqdbh .gt_font_bold {
   font-weight: bold;
 }
 
-#guaqsbhpyl .gt_font_italic {
+#udpxdsqdbh .gt_font_italic {
   font-style: italic;
 }
 
-#guaqsbhpyl .gt_super {
+#udpxdsqdbh .gt_super {
   font-size: 65%;
 }
 
-#guaqsbhpyl .gt_footnote_marks {
+#udpxdsqdbh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#guaqsbhpyl .gt_asterisk {
+#udpxdsqdbh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#guaqsbhpyl .gt_indent_1 {
+#udpxdsqdbh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#guaqsbhpyl .gt_indent_2 {
+#udpxdsqdbh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#guaqsbhpyl .gt_indent_3 {
+#udpxdsqdbh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#guaqsbhpyl .gt_indent_4 {
+#udpxdsqdbh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#guaqsbhpyl .gt_indent_5 {
+#udpxdsqdbh .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1190,7 +1203,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
 <td colspan="4" class="gt_heading gt_title gt_font_normal">Model results for fire footprint fraction &lt;U+2014&gt; before vs after establishment</td>
 </tr>
 <tr class="gt_heading even">
-<td colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Gamma GLMM with log link and random intercept for CFMG. Fixed effects: period (ref = Before) and governance index. CFMG variance = 0.329. Marginal R&lt;U+00B2&gt; = 0.035; conditional R&lt;U+00B2&gt; = 0.615. n = 401.</td>
+<td colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Gamma GLMM with log link and random intercept for CFMG. Fixed effects: period (ref = Before) and governance index. CFMG variance = 0.194. Marginal R&lt;U+00B2&gt; = 0.056; conditional R&lt;U+00B2&gt; = 0.437. n = 817.</td>
 </tr>
 <tr class="gt_col_headings header">
 <th id="Factor" class="gt_col_heading gt_columns_bottom_border gt_left" style="text-align: center;" data-quarto-table-cell-role="th" scope="col">Factor</th>
@@ -1202,21 +1215,33 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="term">Intercept (Before)</td>
-<td class="gt_row gt_center" headers="estimate">−0.748</td>
-<td class="gt_row gt_center" headers="std.error">0.432</td>
-<td class="gt_row gt_center" headers="p.value">0.0831</td>
+<td class="gt_row gt_center" headers="estimate">−0.774</td>
+<td class="gt_row gt_center" headers="std.error">0.307</td>
+<td class="gt_row gt_center" headers="p.value">0.0118</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="term">After</td>
-<td class="gt_row gt_center" headers="estimate">−0.131</td>
-<td class="gt_row gt_center" headers="std.error">0.051</td>
-<td class="gt_row gt_center" headers="p.value">0.0104</td>
+<td class="gt_row gt_center" headers="estimate">−0.181</td>
+<td class="gt_row gt_center" headers="std.error">0.068</td>
+<td class="gt_row gt_center" headers="p.value">0.0073</td>
 </tr>
 <tr class="odd">
+<td class="gt_row gt_left" headers="term">—</td>
+<td class="gt_row gt_center" headers="estimate">−0.318</td>
+<td class="gt_row gt_center" headers="std.error">0.062</td>
+<td class="gt_row gt_center" headers="p.value">0.0000</td>
+</tr>
+<tr class="even">
 <td class="gt_row gt_left" headers="term">Governance index</td>
-<td class="gt_row gt_center" headers="estimate">−0.059</td>
-<td class="gt_row gt_center" headers="std.error">0.082</td>
-<td class="gt_row gt_center" headers="p.value">0.4731</td>
+<td class="gt_row gt_center" headers="estimate">−0.026</td>
+<td class="gt_row gt_center" headers="std.error">0.058</td>
+<td class="gt_row gt_center" headers="p.value">0.6603</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">—</td>
+<td class="gt_row gt_center" headers="estimate">0.086</td>
+<td class="gt_row gt_center" headers="std.error">0.091</td>
+<td class="gt_row gt_center" headers="p.value">0.3481</td>
 </tr>
 </tbody>
 </table>
@@ -1238,7 +1263,7 @@ Table&nbsp;2: Gamma GLMM results for annual fire footprint fraction before and a
 <img src="Remote-Sensing_files/figure-html/fig-frp-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-frp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Annual total fire radiative power (FRP) per km² per CFMG before and after establishment. Total FRP summed across all detections within each CFMG-year and divided by CFMG area. Each point represents one CFMG-year. Boxes show median and interquartile range; y-axis is on a log scale.
+Figure&nbsp;3: Annual total fire radiative power (FRP) per km² per CFMG before and after establishment, by zone. Total FRP summed across all detections within each CFMG-year-zone and divided by zone area. Each point represents one CFMG-year. Boxes show median and interquartile range. Buffer zone results provide a leakage check.
 </figcaption>
 </figure>
 </div>
@@ -1252,23 +1277,23 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
 </figcaption>
 <div aria-describedby="tbl-frp_model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="fswdpjfizt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fswdpjfizt table {
+<div id="qcdmnttwaw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qcdmnttwaw table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fswdpjfizt thead, #fswdpjfizt tbody, #fswdpjfizt tfoot, #fswdpjfizt tr, #fswdpjfizt td, #fswdpjfizt th {
+#qcdmnttwaw thead, #qcdmnttwaw tbody, #qcdmnttwaw tfoot, #qcdmnttwaw tr, #qcdmnttwaw td, #qcdmnttwaw th {
   border-style: none;
 }
 
-#fswdpjfizt p {
+#qcdmnttwaw p {
   margin: 0;
   padding: 0;
 }
 
-#fswdpjfizt .gt_table {
+#qcdmnttwaw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1294,12 +1319,12 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   border-left-color: #D3D3D3;
 }
 
-#fswdpjfizt .gt_caption {
+#qcdmnttwaw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fswdpjfizt .gt_title {
+#qcdmnttwaw .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1311,7 +1336,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   border-bottom-width: 0;
 }
 
-#fswdpjfizt .gt_subtitle {
+#qcdmnttwaw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1323,7 +1348,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   border-top-width: 0;
 }
 
-#fswdpjfizt .gt_heading {
+#qcdmnttwaw .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -1335,13 +1360,13 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   border-right-color: #D3D3D3;
 }
 
-#fswdpjfizt .gt_bottom_border {
+#qcdmnttwaw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fswdpjfizt .gt_col_headings {
+#qcdmnttwaw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1356,7 +1381,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   border-right-color: #D3D3D3;
 }
 
-#fswdpjfizt .gt_col_heading {
+#qcdmnttwaw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1376,7 +1401,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   overflow-x: hidden;
 }
 
-#fswdpjfizt .gt_column_spanner_outer {
+#qcdmnttwaw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1388,15 +1413,15 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   padding-right: 4px;
 }
 
-#fswdpjfizt .gt_column_spanner_outer:first-child {
+#qcdmnttwaw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fswdpjfizt .gt_column_spanner_outer:last-child {
+#qcdmnttwaw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fswdpjfizt .gt_column_spanner {
+#qcdmnttwaw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1408,11 +1433,11 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   width: 100%;
 }
 
-#fswdpjfizt .gt_spanner_row {
+#qcdmnttwaw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fswdpjfizt .gt_group_heading {
+#qcdmnttwaw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1438,7 +1463,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   text-align: left;
 }
 
-#fswdpjfizt .gt_empty_group_heading {
+#qcdmnttwaw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1453,15 +1478,15 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   vertical-align: middle;
 }
 
-#fswdpjfizt .gt_from_md > :first-child {
+#qcdmnttwaw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fswdpjfizt .gt_from_md > :last-child {
+#qcdmnttwaw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fswdpjfizt .gt_row {
+#qcdmnttwaw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1480,7 +1505,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   overflow-x: hidden;
 }
 
-#fswdpjfizt .gt_stub {
+#qcdmnttwaw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1493,7 +1518,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   padding-right: 5px;
 }
 
-#fswdpjfizt .gt_stub_row_group {
+#qcdmnttwaw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1507,15 +1532,15 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   vertical-align: top;
 }
 
-#fswdpjfizt .gt_row_group_first td {
+#qcdmnttwaw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fswdpjfizt .gt_row_group_first th {
+#qcdmnttwaw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fswdpjfizt .gt_summary_row {
+#qcdmnttwaw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1525,16 +1550,16 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   padding-right: 5px;
 }
 
-#fswdpjfizt .gt_first_summary_row {
+#qcdmnttwaw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fswdpjfizt .gt_first_summary_row.thick {
+#qcdmnttwaw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fswdpjfizt .gt_last_summary_row {
+#qcdmnttwaw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1544,7 +1569,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   border-bottom-color: #D3D3D3;
 }
 
-#fswdpjfizt .gt_grand_summary_row {
+#qcdmnttwaw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1554,7 +1579,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   padding-right: 5px;
 }
 
-#fswdpjfizt .gt_first_grand_summary_row {
+#qcdmnttwaw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1564,7 +1589,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   border-top-color: #D3D3D3;
 }
 
-#fswdpjfizt .gt_last_grand_summary_row_top {
+#qcdmnttwaw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1574,11 +1599,11 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   border-bottom-color: #D3D3D3;
 }
 
-#fswdpjfizt .gt_striped {
+#qcdmnttwaw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fswdpjfizt .gt_table_body {
+#qcdmnttwaw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1587,7 +1612,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   border-bottom-color: #D3D3D3;
 }
 
-#fswdpjfizt .gt_footnotes {
+#qcdmnttwaw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1601,7 +1626,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   border-right-color: #D3D3D3;
 }
 
-#fswdpjfizt .gt_footnote {
+#qcdmnttwaw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1610,7 +1635,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   padding-right: 5px;
 }
 
-#fswdpjfizt .gt_sourcenotes {
+#qcdmnttwaw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1624,7 +1649,7 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   border-right-color: #D3D3D3;
 }
 
-#fswdpjfizt .gt_sourcenote {
+#qcdmnttwaw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1632,63 +1657,63 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
   padding-right: 5px;
 }
 
-#fswdpjfizt .gt_left {
+#qcdmnttwaw .gt_left {
   text-align: left;
 }
 
-#fswdpjfizt .gt_center {
+#qcdmnttwaw .gt_center {
   text-align: center;
 }
 
-#fswdpjfizt .gt_right {
+#qcdmnttwaw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fswdpjfizt .gt_font_normal {
+#qcdmnttwaw .gt_font_normal {
   font-weight: normal;
 }
 
-#fswdpjfizt .gt_font_bold {
+#qcdmnttwaw .gt_font_bold {
   font-weight: bold;
 }
 
-#fswdpjfizt .gt_font_italic {
+#qcdmnttwaw .gt_font_italic {
   font-style: italic;
 }
 
-#fswdpjfizt .gt_super {
+#qcdmnttwaw .gt_super {
   font-size: 65%;
 }
 
-#fswdpjfizt .gt_footnote_marks {
+#qcdmnttwaw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fswdpjfizt .gt_asterisk {
+#qcdmnttwaw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fswdpjfizt .gt_indent_1 {
+#qcdmnttwaw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fswdpjfizt .gt_indent_2 {
+#qcdmnttwaw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fswdpjfizt .gt_indent_3 {
+#qcdmnttwaw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fswdpjfizt .gt_indent_4 {
+#qcdmnttwaw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fswdpjfizt .gt_indent_5 {
+#qcdmnttwaw .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1696,10 +1721,10 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
 <table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <thead>
 <tr class="gt_heading header">
-<td colspan="4" class="gt_heading gt_title gt_font_normal">Model results for total FRP per km&lt;U+00B2&gt; (log-transformed) &lt;U+2014&gt; before vs after establishment</td>
+<td colspan="4" class="gt_heading gt_title gt_font_normal">Model results for total FRP per km&lt;U+00B2&gt; (log-transformed) &lt;U+2014&gt; Core vs Buffer, before vs after establishment</td>
 </tr>
 <tr class="gt_heading even">
-<td colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Linear mixed model with random intercept for CFMG. Response = log(total FRP / CFMG area + 1). Fixed effects: period (ref = Before) and governance index. CFMG variance = 1.042; residual variance = 0.333. Marginal R&lt;U+00B2&gt; = 0.019; conditional R&lt;U+00B2&gt; = 0.762. n = 401.</td>
+<td colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Linear mixed model with random intercept for CFMG. Response = log(total FRP / zone area + 1). Fixed effects: period (ref = Before), zone (ref = Core), period &lt;U+00D7&gt; zone interaction (After &lt;U+00D7&gt; Buffer = leakage test), and governance index. CFMG variance = 0.381; residual variance = 0.549. Marginal R&lt;U+00B2&gt; = 0.029; conditional R&lt;U+00B2&gt; = 0.426. n = 817.</td>
 </tr>
 <tr class="gt_col_headings header">
 <th id="Factor" class="gt_col_heading gt_columns_bottom_border gt_left" style="text-align: center;" data-quarto-table-cell-role="th" scope="col">Factor</th>
@@ -1710,22 +1735,34 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="term">Intercept (Before)</td>
-<td class="gt_row gt_center" headers="estimate">2.892</td>
-<td class="gt_row gt_center" headers="std.error">0.418</td>
+<td class="gt_row gt_left" headers="term">Intercept (Before, Core)</td>
+<td class="gt_row gt_center" headers="estimate">2.748</td>
+<td class="gt_row gt_center" headers="std.error">0.261</td>
 <td class="gt_row gt_center" headers="p.value">0.0000</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="term">After</td>
-<td class="gt_row gt_center" headers="estimate">−0.152</td>
-<td class="gt_row gt_center" headers="std.error">0.062</td>
-<td class="gt_row gt_center" headers="p.value">0.0154</td>
+<td class="gt_row gt_center" headers="estimate">−0.219</td>
+<td class="gt_row gt_center" headers="std.error">0.078</td>
+<td class="gt_row gt_center" headers="p.value">0.0050</td>
 </tr>
 <tr class="odd">
+<td class="gt_row gt_left" headers="term">Buffer</td>
+<td class="gt_row gt_center" headers="estimate">−0.298</td>
+<td class="gt_row gt_center" headers="std.error">0.068</td>
+<td class="gt_row gt_center" headers="p.value">0.0000</td>
+</tr>
+<tr class="even">
 <td class="gt_row gt_left" headers="term">Governance index</td>
-<td class="gt_row gt_center" headers="estimate">−0.067</td>
-<td class="gt_row gt_center" headers="std.error">0.080</td>
-<td class="gt_row gt_center" headers="p.value">0.4076</td>
+<td class="gt_row gt_center" headers="estimate">−0.028</td>
+<td class="gt_row gt_center" headers="std.error">0.049</td>
+<td class="gt_row gt_center" headers="p.value">0.5738</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">After &lt;U+00D7&gt; Buffer</td>
+<td class="gt_row gt_center" headers="estimate">0.110</td>
+<td class="gt_row gt_center" headers="std.error">0.105</td>
+<td class="gt_row gt_center" headers="p.value">0.2991</td>
 </tr>
 </tbody>
 </table>
@@ -1739,7 +1776,1045 @@ Table&nbsp;3: Linear mixed model results for log-transformed annual total FRP pe
 </section>
 <section id="deforestation" class="level2">
 <h2 class="anchored" data-anchor-id="deforestation">Deforestation</h2>
-<p><em>To do</em></p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-deforest" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-deforest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Remote-Sensing_files/figure-html/fig-deforest-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-deforest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Annual tree cover loss (% of area) in CF cores and 1 km buffer zones before and after CF establishment. Loss derived from Hansen GFC 2024 lossyear data (2014–2024). Each point represents one CFMG-year. Boxes show median and interquartile range.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-deforest_model" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-deforest_model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: Linear mixed model results for log-transformed annual tree cover loss rate in CF cores and buffer zones before and after establishment.
+</figcaption>
+<div aria-describedby="tbl-deforest_model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="pylgkakvcq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pylgkakvcq table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#pylgkakvcq thead, #pylgkakvcq tbody, #pylgkakvcq tfoot, #pylgkakvcq tr, #pylgkakvcq td, #pylgkakvcq th {
+  border-style: none;
+}
+
+#pylgkakvcq p {
+  margin: 0;
+  padding: 0;
+}
+
+#pylgkakvcq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#pylgkakvcq .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#pylgkakvcq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pylgkakvcq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pylgkakvcq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pylgkakvcq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pylgkakvcq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pylgkakvcq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#pylgkakvcq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#pylgkakvcq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#pylgkakvcq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#pylgkakvcq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#pylgkakvcq .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#pylgkakvcq .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#pylgkakvcq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pylgkakvcq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pylgkakvcq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pylgkakvcq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#pylgkakvcq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pylgkakvcq .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#pylgkakvcq .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#pylgkakvcq .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#pylgkakvcq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pylgkakvcq .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#pylgkakvcq .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#pylgkakvcq .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pylgkakvcq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pylgkakvcq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#pylgkakvcq .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pylgkakvcq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#pylgkakvcq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pylgkakvcq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pylgkakvcq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pylgkakvcq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pylgkakvcq .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pylgkakvcq .gt_left {
+  text-align: left;
+}
+
+#pylgkakvcq .gt_center {
+  text-align: center;
+}
+
+#pylgkakvcq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pylgkakvcq .gt_font_normal {
+  font-weight: normal;
+}
+
+#pylgkakvcq .gt_font_bold {
+  font-weight: bold;
+}
+
+#pylgkakvcq .gt_font_italic {
+  font-style: italic;
+}
+
+#pylgkakvcq .gt_super {
+  font-size: 65%;
+}
+
+#pylgkakvcq .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#pylgkakvcq .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#pylgkakvcq .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#pylgkakvcq .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#pylgkakvcq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#pylgkakvcq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#pylgkakvcq .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<td colspan="4" class="gt_heading gt_title gt_font_normal">Model results for annual tree cover loss rate (log-transformed) &lt;U+2014&gt; core vs buffer, before vs after</td>
+</tr>
+<tr class="gt_heading even">
+<td colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Linear mixed model with random intercept for CFMG. Response = log(annual loss % + 1). Fixed effects: period (ref = Before), zone (ref = Core), their interaction, and governance index. A significant After &lt;U+00D7&gt; Buffer interaction indicates leakage. CFMG variance = 0.065; residual variance = 0.063. Marginal R&lt;U+00B2&gt; = 0.086; conditional R&lt;U+00B2&gt; = 0.55. n = 803.</td>
+</tr>
+<tr class="gt_col_headings header">
+<th id="Factor" class="gt_col_heading gt_columns_bottom_border gt_left" style="text-align: center;" data-quarto-table-cell-role="th" scope="col">Factor</th>
+<th id="Estimate" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Estimate</th>
+<th id="SE" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">SE</th>
+<th id="<em>P</em> value" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><em>P</em> value</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">Intercept (Before, Core)</td>
+<td class="gt_row gt_center" headers="estimate">0.323</td>
+<td class="gt_row gt_center" headers="std.error">0.106</td>
+<td class="gt_row gt_center" headers="p.value">0.0044</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">After</td>
+<td class="gt_row gt_center" headers="estimate">−0.010</td>
+<td class="gt_row gt_center" headers="std.error">0.026</td>
+<td class="gt_row gt_center" headers="p.value">0.7087</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">Buffer</td>
+<td class="gt_row gt_center" headers="estimate">0.103</td>
+<td class="gt_row gt_center" headers="std.error">0.024</td>
+<td class="gt_row gt_center" headers="p.value">0.0000</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">—</td>
+<td class="gt_row gt_center" headers="estimate">−0.015</td>
+<td class="gt_row gt_center" headers="std.error">0.020</td>
+<td class="gt_row gt_center" headers="p.value">0.4737</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">After &lt;U+00D7&gt; Buffer</td>
+<td class="gt_row gt_center" headers="estimate">0.170</td>
+<td class="gt_row gt_center" headers="std.error">0.036</td>
+<td class="gt_row gt_center" headers="p.value">0.0000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="above-ground-biomass" class="level2">
+<h2 class="anchored" data-anchor-id="above-ground-biomass">Above ground biomass</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-agb" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-agb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Remote-Sensing_files/figure-html/fig-agb-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-agb-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Mean above ground biomass (Mg/ha) per CFMG before and after establishment, for CF cores and 1 km buffer zones. Values are annual means from 2018–2024; core values are area-weighted across polygons. Each point represents one CFMG-year. Boxes show median and interquartile range.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div id="tbl-agb_model" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-agb_model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: Linear mixed model results for mean above ground biomass in CF cores and buffer zones before and after establishment.
+</figcaption>
+<div aria-describedby="tbl-agb_model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="sskedoembk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sskedoembk table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#sskedoembk thead, #sskedoembk tbody, #sskedoembk tfoot, #sskedoembk tr, #sskedoembk td, #sskedoembk th {
+  border-style: none;
+}
+
+#sskedoembk p {
+  margin: 0;
+  padding: 0;
+}
+
+#sskedoembk .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#sskedoembk .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#sskedoembk .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#sskedoembk .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#sskedoembk .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sskedoembk .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sskedoembk .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sskedoembk .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#sskedoembk .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#sskedoembk .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#sskedoembk .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#sskedoembk .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#sskedoembk .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#sskedoembk .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#sskedoembk .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#sskedoembk .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#sskedoembk .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#sskedoembk .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#sskedoembk .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sskedoembk .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#sskedoembk .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#sskedoembk .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#sskedoembk .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sskedoembk .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#sskedoembk .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#sskedoembk .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sskedoembk .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sskedoembk .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#sskedoembk .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sskedoembk .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#sskedoembk .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sskedoembk .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sskedoembk .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sskedoembk .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sskedoembk .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sskedoembk .gt_left {
+  text-align: left;
+}
+
+#sskedoembk .gt_center {
+  text-align: center;
+}
+
+#sskedoembk .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#sskedoembk .gt_font_normal {
+  font-weight: normal;
+}
+
+#sskedoembk .gt_font_bold {
+  font-weight: bold;
+}
+
+#sskedoembk .gt_font_italic {
+  font-style: italic;
+}
+
+#sskedoembk .gt_super {
+  font-size: 65%;
+}
+
+#sskedoembk .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#sskedoembk .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#sskedoembk .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#sskedoembk .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#sskedoembk .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#sskedoembk .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#sskedoembk .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+
+<table class="gt_table do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading header">
+<td colspan="4" class="gt_heading gt_title gt_font_normal">Model results for mean above ground biomass &lt;U+2014&gt; core vs buffer, before vs after establishment</td>
+</tr>
+<tr class="gt_heading even">
+<td colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border">Linear mixed model with random intercept for CFMG. Fixed effects: period (ref = Before), zone (ref = Core), their interaction, and governance index. A significant After &lt;U+00D7&gt; Buffer interaction indicates leakage. CFMG variance = 363.972; residual variance = 59.557. Marginal R&lt;U+00B2&gt; = 0.052; conditional R&lt;U+00B2&gt; = 0.867. n = 518.</td>
+</tr>
+<tr class="gt_col_headings header">
+<th id="Factor" class="gt_col_heading gt_columns_bottom_border gt_left" style="text-align: center;" data-quarto-table-cell-role="th" scope="col">Factor</th>
+<th id="Estimate" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Estimate</th>
+<th id="SE" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">SE</th>
+<th id="<em>P</em> value" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><em>P</em> value</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">Intercept (Before, Core)</td>
+<td class="gt_row gt_center" headers="estimate">49.880</td>
+<td class="gt_row gt_center" headers="std.error">7.815</td>
+<td class="gt_row gt_center" headers="p.value">0.0000</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">After</td>
+<td class="gt_row gt_center" headers="estimate">4.480</td>
+<td class="gt_row gt_center" headers="std.error">1.087</td>
+<td class="gt_row gt_center" headers="p.value">0.0000</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">Buffer</td>
+<td class="gt_row gt_center" headers="estimate">−7.974</td>
+<td class="gt_row gt_center" headers="std.error">1.191</td>
+<td class="gt_row gt_center" headers="p.value">0.0000</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="term">Governance index</td>
+<td class="gt_row gt_center" headers="estimate">−0.181</td>
+<td class="gt_row gt_center" headers="std.error">1.482</td>
+<td class="gt_row gt_center" headers="p.value">0.9035</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="term">After &lt;U+00D7&gt; Buffer</td>
+<td class="gt_row gt_center" headers="estimate">−1.302</td>
+<td class="gt_row gt_center" headers="std.error">1.449</td>
+<td class="gt_row gt_center" headers="p.value">0.3692</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>

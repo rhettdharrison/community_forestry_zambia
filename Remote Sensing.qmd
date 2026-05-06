@@ -51,21 +51,26 @@ cfmg_attrs <- cfmg |>
   ) |>
   mutate(join_key = normalise_name(as.character(cfmg_name)))
 
-fire_raw <- read_csv("../data/fire_with_zones.csv", show_col_types = FALSE) |>
+buf_areas <- read_csv("cfm_hansen_buffer_loss_2014_2024.csv", show_col_types = FALSE) |>
+  mutate(join_key = normalise_name(NAME)) |>
+  select(join_key, buffer_km2 = buffer_ha) |>
+  mutate(buffer_km2 = buffer_km2 / 100)
+
+fire_raw <- read_csv("fire_cfmg_zones.csv", show_col_types = FALSE) |>
   mutate(
-    acq_date  = dmy(acq_date),
+    acq_date  = as.Date(acq_date),
     date_est  = ymd(DATEEST),
     month     = month(acq_date),
     NAME      = str_to_sentence(NAME),
-    # fix known spelling variant
-    NAME      = if_else(NAME == "Kaluzya", "Kalunzyu", NAME),
     join_key  = normalise_name(NAME),
     period    = factor(
       if_else(acq_date < date_est, "Before", "After"),
       levels = c("Before", "After")
-    )
+    ),
+    zone      = factor(zone, levels = c("Core", "Buffer"))
   ) |>
-  left_join(cfmg_attrs |> select(join_key, area_km2, gov_index), by = "join_key")
+  left_join(cfmg_attrs |> select(join_key, area_km2, gov_index), by = "join_key") |>
+  left_join(buf_areas, by = "join_key")
 ```
 
 ## Introduction
@@ -81,27 +86,29 @@ fire_raw <- read_csv("../data/fire_with_zones.csv", show_col_types = FALSE) |>
 
 fire_annual <- fire_raw |>
   mutate(det_area = scan * track) |>
-  group_by(NAME, PROVINCE, Year, period, area_km2, gov_index) |>
+  group_by(NAME, PROVINCE, Year, period, zone, area_km2, buffer_km2, gov_index) |>
   summarise(
     fire_count  = n(),
     burned_area = sum(det_area, na.rm = TRUE),
     total_frp   = sum(frp,      na.rm = TRUE),
     .groups = "drop"
   ) |>
-  filter(!is.na(area_km2), !is.na(gov_index)) |>
+  filter(!is.na(gov_index)) |>
   mutate(
-    fire_density  = fire_count  / area_km2,
-    burn_fraction = burned_area / area_km2,
-    frp_density   = total_frp   / area_km2,
+    zone_km2      = if_else(zone == "Core", area_km2, buffer_km2),
+    fire_density  = fire_count  / zone_km2,
+    burn_fraction = burned_area / zone_km2,
+    frp_density   = total_frp   / zone_km2,
     log_density   = log1p(fire_density),
-    log_burn      = log1p(burn_fraction),    # kept for reference; model uses raw burn_fraction
+    log_burn      = log1p(burn_fraction),
     log_frp_dens  = log1p(frp_density)
-  )
+  ) |>
+  filter(!is.na(zone_km2))
 
-M_count <- lmer(log_density  ~ period + gov_index + (1 | NAME), data = fire_annual, REML = TRUE)
-M_area  <- glmer(burn_fraction ~ period + gov_index + (1 | NAME),
+M_count <- lmer(log_density   ~ period * zone + gov_index + (1 | NAME), data = fire_annual, REML = TRUE)
+M_area  <- glmer(burn_fraction ~ period * zone + gov_index + (1 | NAME),
                  family = Gamma(link = "log"), data = fire_annual)
-M_frp   <- lmer(log_frp_dens ~ period + gov_index + (1 | NAME), data = fire_annual, REML = TRUE)
+M_frp   <- lmer(log_frp_dens  ~ period * zone + gov_index + (1 | NAME), data = fire_annual, REML = TRUE)
 ```
 
 ## Fire incidence
@@ -112,16 +119,17 @@ M_frp   <- lmer(log_frp_dens ~ period + gov_index + (1 | NAME), data = fire_annu
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Annual fire detection density (detections per km²) per CFMG before and after establishment. Each point represents one CFMG-year. Boxes show median and interquartile range; y-axis is on a log scale."
+#| fig-cap: "Annual fire detection density (detections per km²) per CFMG before and after establishment, for CF cores and 1 km buffer zones. Each point represents one CFMG-year. Boxes show median and interquartile range."
 #| fig-height: 4
 
 fire_annual |>
   ggplot(aes(x = period, y = fire_density, fill = period)) +
   geom_boxplot(width = 0.5, alpha = 0.7, outlier.shape = NA) +
   geom_jitter(width = 0.15, alpha = 0.4, size = 1.5, colour = "grey30") +
-  scale_y_log10(name = expression("Fire detections per km"^2*" per year (log scale)")) +
+  scale_y_log10(name = expression("Fire detections per km"^2*" per year")) +
   scale_x_discrete(name = NULL) +
   scale_fill_manual(values = c("Before" = "#E9C46A", "After" = "#2A9D8F")) +
+  facet_wrap(~ zone) +
   theme_minimal(base_size = 14) +
   theme(
     legend.position    = "none",
@@ -146,9 +154,11 @@ r2_count    <- suppressWarnings(performance::r2_nakagawa(M_count))
 
 tidy(M_count, effects = "fixed") |>
   mutate(term = case_match(term,
-    "(Intercept)"  ~ "Intercept (Before)",
-    "periodAfter"  ~ "After",
-    "gov_index"    ~ "Governance index"
+    "(Intercept)"            ~ "Intercept (Before, Core)",
+    "periodAfter"            ~ "After",
+    "zoneBuffer"             ~ "Buffer",
+    "periodAfter:zoneBuffer" ~ "After × Buffer",
+    "gov_index"              ~ "Governance index"
   )) |>
   select(term, estimate, std.error, p.value) |>
   gt() |>
@@ -183,16 +193,17 @@ tidy(M_count, effects = "fixed") |>
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Annual fire footprint as a fraction of CFMG area before and after establishment. Fire footprint estimated as the sum of scan × track for all detections within each CFMG-year, divided by CFMG area. Each point represents one CFMG-year. Boxes show median and interquartile range; y-axis is on a log scale."
+#| fig-cap: "Annual fire footprint as a fraction of area before and after CF establishment, for cores and 1 km buffers. Fire footprint estimated as the sum of scan × track for all detections within each zone-year, divided by zone area. Each point represents one CFMG-year. Boxes show median and interquartile range."
 #| fig-height: 4
 
 fire_annual |>
   ggplot(aes(x = period, y = burn_fraction, fill = period)) +
   geom_boxplot(width = 0.5, alpha = 0.7, outlier.shape = NA) +
   geom_jitter(width = 0.15, alpha = 0.4, size = 1.5, colour = "grey30") +
-  scale_y_log10(name = "Fire footprint fraction (log scale)") +
+  scale_y_log10(name = "Fire footprint fraction") +
   scale_x_discrete(name = NULL) +
   scale_fill_manual(values = c("Before" = "#E9C46A", "After" = "#2A9D8F")) +
+  facet_wrap(~ zone) +
   theme_minimal(base_size = 14) +
   theme(
     legend.position    = "none",
@@ -216,9 +227,9 @@ r2_area   <- suppressWarnings(performance::r2_nakagawa(M_area))
 
 tidy(M_area, effects = "fixed") |>
   mutate(term = case_match(term,
-    "(Intercept)"  ~ "Intercept (Before)",
-    "periodAfter"  ~ "After",
-    "gov_index"    ~ "Governance index"
+    "(Intercept)" ~ "Intercept (Before)",
+    "periodAfter" ~ "After",
+    "gov_index"   ~ "Governance index"
   )) |>
   select(term, estimate, std.error, p.value) |>
   gt() |>
@@ -253,16 +264,17 @@ tidy(M_area, effects = "fixed") |>
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Annual total fire radiative power (FRP) per km² per CFMG before and after establishment. Total FRP summed across all detections within each CFMG-year and divided by CFMG area. Each point represents one CFMG-year. Boxes show median and interquartile range; y-axis is on a log scale."
+#| fig-cap: "Annual total fire radiative power (FRP) per km² per CFMG before and after establishment, by zone. Total FRP summed across all detections within each CFMG-year-zone and divided by zone area. Each point represents one CFMG-year. Boxes show median and interquartile range. Buffer zone results provide a leakage check."
 #| fig-height: 4
 
 fire_annual |>
   ggplot(aes(x = period, y = frp_density, fill = period)) +
   geom_boxplot(width = 0.5, alpha = 0.7, outlier.shape = NA) +
   geom_jitter(width = 0.15, alpha = 0.4, size = 1.5, colour = "grey30") +
-  scale_y_log10(name = expression("Total FRP per km"^2*" per year (log scale)")) +
+  scale_y_log10(name = expression("Total FRP per km"^2*" per year")) +
   scale_x_discrete(name = NULL) +
   scale_fill_manual(values = c("Before" = "#E9C46A", "After" = "#2A9D8F")) +
+  facet_wrap(~ zone) +
   theme_minimal(base_size = 14) +
   theme(
     legend.position    = "none",
@@ -287,9 +299,11 @@ r2_frp    <- suppressWarnings(performance::r2_nakagawa(M_frp))
 
 tidy(M_frp, effects = "fixed") |>
   mutate(term = case_match(term,
-    "(Intercept)"  ~ "Intercept (Before)",
-    "periodAfter"  ~ "After",
-    "gov_index"    ~ "Governance index"
+    "(Intercept)"          ~ "Intercept (Before, Core)",
+    "periodAfter"          ~ "After",
+    "zoneBuffer"           ~ "Buffer",
+    "periodAfter:zoneBuffer" ~ "After × Buffer",
+    "gov_index"            ~ "Governance index"
   )) |>
   select(term, estimate, std.error, p.value) |>
   gt() |>
@@ -298,10 +312,11 @@ tidy(M_frp, effects = "fixed") |>
   fmt_number(columns = c(estimate, std.error), decimals = 3) |>
   fmt_number(columns = p.value, decimals = 4) |>
   tab_header(
-    title    = "Model results for total FRP per km² (log-transformed) — before vs after establishment",
+    title    = "Model results for total FRP per km² (log-transformed) — Core vs Buffer, before vs after establishment",
     subtitle = glue(
       "Linear mixed model with random intercept for CFMG. ",
-      "Response = log(total FRP / CFMG area + 1). Fixed effects: period (ref = Before) and governance index. ",
+      "Response = log(total FRP / zone area + 1). Fixed effects: period (ref = Before), zone (ref = Core), ",
+      "period × zone interaction (After × Buffer = leakage test), and governance index. ",
       "CFMG variance = {cfmg_frp}; residual variance = {resid_frp}. ",
       "Marginal R² = {round(r2_frp$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_frp$R2_conditional, 3)}. ",
@@ -318,7 +333,228 @@ tidy(M_frp, effects = "fixed") |>
 
 ## Deforestation
 
-*To do*
+```{r}
+#| label: data_deforest
+#| include: false
+#| warning: false
+#| message: false
+#| error:   false
+
+prep_loss <- function(csv, area_col, zone_label) {
+  read_csv(csv, show_col_types = FALSE) |>
+    mutate(DATEEST  = ymd(DATEEST),
+           join_key = normalise_name(NAME)) |>
+    pivot_longer(starts_with("Y20"), names_to = "year_col", values_to = "loss_ha") |>
+    mutate(year = as.integer(str_extract(year_col, "[0-9]+"))) |>
+    left_join(cfmg_attrs |> select(join_key, gov_index), by = "join_key") |>
+    mutate(
+      area_ha  = .data[[area_col]],
+      loss_pct = loss_ha / area_ha * 100,
+      period   = factor(if_else(year < year(DATEEST), "Before", "After"),
+                        levels = c("Before", "After")),
+      zone     = zone_label
+    ) |>
+    drop_na(loss_pct, gov_index)
+}
+
+deforest <- bind_rows(
+  prep_loss("cfm_hansen_loss_2014_2024.csv",        "area_ha",   "Core"),
+  prep_loss("cfm_hansen_buffer_loss_2014_2024.csv", "buffer_ha", "Buffer")
+) |>
+  mutate(zone = factor(zone, levels = c("Core", "Buffer")))
+
+M_deforest <- lmer(
+  log1p(loss_pct) ~ period * zone + gov_index + (1 | NAME),
+  data = deforest, REML = TRUE
+)
+```
+
+```{r}
+#| label: fig-deforest
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Annual tree cover loss (% of area) in CF cores and 1 km buffer zones before and after CF establishment. Loss derived from Hansen GFC 2024 lossyear data (2014–2024). Each point represents one CFMG-year. Boxes show median and interquartile range."
+#| fig-height: 4
+
+deforest |>
+  ggplot(aes(x = period, y = loss_pct, fill = period)) +
+  geom_boxplot(width = 0.5, alpha = 0.7, outlier.shape = NA) +
+  geom_jitter(width = 0.15, alpha = 0.4, size = 1.5, colour = "grey30") +
+  scale_y_log10(name = "Annual tree cover loss (% of area)") +
+  scale_x_discrete(name = NULL) +
+  scale_fill_manual(values = c("Before" = "#E9C46A", "After" = "#2A9D8F")) +
+  facet_wrap(~ zone) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position    = "none",
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5)
+  )
+```
+
+```{r}
+#| label: tbl-deforest_model
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Linear mixed model results for log-transformed annual tree cover loss rate in CF cores and buffer zones before and after establishment."
+
+re_def    <- as.data.frame(VarCorr(M_deforest))
+cfmg_def  <- round(re_def$vcov[re_def$grp == "NAME"],     3)
+resid_def <- round(re_def$vcov[re_def$grp == "Residual"], 3)
+r2_def    <- suppressWarnings(performance::r2_nakagawa(M_deforest))
+
+tidy(M_deforest, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"         ~ "Intercept (Before, Core)",
+    "periodAfter"         ~ "After",
+    "zoneBuffer"          ~ "Buffer",
+    "periodAfter:zoneBuffer" ~ "After × Buffer"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term = "Factor", estimate = "Estimate", std.error = "SE",
+             p.value = md("*P* value")) |>
+  fmt_number(columns = c(estimate, std.error), decimals = 3) |>
+  fmt_number(columns = p.value, decimals = 4) |>
+  tab_header(
+    title    = "Model results for annual tree cover loss rate (log-transformed) — core vs buffer, before vs after",
+    subtitle = glue(
+      "Linear mixed model with random intercept for CFMG. ",
+      "Response = log(annual loss % + 1). ",
+      "Fixed effects: period (ref = Before), zone (ref = Core), their interaction, and governance index. ",
+      "A significant After × Buffer interaction indicates leakage. ",
+      "CFMG variance = {cfmg_def}; residual variance = {resid_def}. ",
+      "Marginal R² = {round(r2_def$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_def$R2_conditional, 3)}. ",
+      "n = {nobs(M_deforest)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "center", columns = -term) |>
+  cols_align(align = "left",   columns = term) |>
+  tab_style(style = cell_text(align = "center"),
+            locations = cells_column_labels(columns = term)) |>
+  sub_missing()
+```
+
+## Above ground biomass
+
+```{r}
+#| label: data_agb
+#| include: false
+#| warning: false
+#| message: false
+#| error:   false
+
+agb_core <- read_csv(normalizePath("../cbfm_agb_SH.csv"), show_col_types = FALSE) |>
+  mutate(DATEEST  = dmy(DATEEST),
+         NAME     = str_to_sentence(NAME),
+         join_key = normalise_name(NAME)) |>
+  select(NAME, DATEEST, join_key, area, matches("^[0-9]{4}_mean$")) |>
+  pivot_longer(matches("^[0-9]{4}_mean$"), names_to = "year_col", values_to = "mean_agb") |>
+  mutate(year = as.integer(str_extract(year_col, "[0-9]+"))) |>
+  group_by(NAME, DATEEST, join_key, year) |>
+  summarise(mean_agb = weighted.mean(mean_agb, area, na.rm = TRUE), .groups = "drop") |>
+  mutate(zone = "Core")
+
+agb_buffer <- read_csv(normalizePath("../CFMG_buffer_1km_AGB_SH.csv"), show_col_types = FALSE) |>
+  mutate(DATEEST  = dmy(DATEEST),
+         NAME     = str_to_sentence(NAME),
+         join_key = normalise_name(NAME)) |>
+  select(NAME, DATEEST, join_key, starts_with("agb_")) |>
+  pivot_longer(starts_with("agb_"), names_to = "year_col", values_to = "mean_agb") |>
+  mutate(year = as.integer(str_extract(year_col, "[0-9]+")),
+         zone = "Buffer")
+
+agb_annual <- bind_rows(agb_core, agb_buffer) |>
+  left_join(cfmg_attrs |> select(join_key, gov_index), by = "join_key") |>
+  mutate(
+    period = factor(if_else(year < year(DATEEST), "Before", "After"),
+                    levels = c("Before", "After")),
+    zone   = factor(zone, levels = c("Core", "Buffer"))
+  ) |>
+  drop_na(mean_agb, gov_index)
+
+M_agb <- lmer(mean_agb ~ period * zone + gov_index + (1 | NAME), data = agb_annual, REML = TRUE)
+```
+
+```{r}
+#| label: fig-agb
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| fig-cap: "Mean above ground biomass (Mg/ha) per CFMG before and after establishment, for CF cores and 1 km buffer zones. Values are annual means from 2018–2024; core values are area-weighted across polygons. Each point represents one CFMG-year. Boxes show median and interquartile range."
+#| fig-height: 4
+
+agb_annual |>
+  ggplot(aes(x = period, y = mean_agb, fill = period)) +
+  geom_boxplot(width = 0.5, alpha = 0.7, outlier.shape = NA) +
+  geom_jitter(width = 0.15, alpha = 0.4, size = 1.5, colour = "grey30") +
+  scale_y_continuous(name = "Mean above ground biomass (Mg/ha)") +
+  scale_x_discrete(name = NULL) +
+  scale_fill_manual(values = c("Before" = "#E9C46A", "After" = "#2A9D8F")) +
+  facet_wrap(~ zone) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position    = "none",
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5)
+  )
+```
+
+```{r}
+#| label: tbl-agb_model
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Linear mixed model results for mean above ground biomass in CF cores and buffer zones before and after establishment."
+
+re_agb    <- as.data.frame(VarCorr(M_agb))
+cfmg_agb  <- round(re_agb$vcov[re_agb$grp == "NAME"],     3)
+resid_agb <- round(re_agb$vcov[re_agb$grp == "Residual"], 3)
+r2_agb    <- suppressWarnings(performance::r2_nakagawa(M_agb))
+
+tidy(M_agb, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"            ~ "Intercept (Before, Core)",
+    "periodAfter"            ~ "After",
+    "zoneBuffer"             ~ "Buffer",
+    "periodAfter:zoneBuffer" ~ "After × Buffer",
+    "gov_index"              ~ "Governance index"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term = "Factor", estimate = "Estimate", std.error = "SE",
+             p.value = md("*P* value")) |>
+  fmt_number(columns = c(estimate, std.error), decimals = 3) |>
+  fmt_number(columns = p.value, decimals = 4) |>
+  tab_header(
+    title    = "Model results for mean above ground biomass — core vs buffer, before vs after establishment",
+    subtitle = glue(
+      "Linear mixed model with random intercept for CFMG. ",
+      "Fixed effects: period (ref = Before), zone (ref = Core), their interaction, and governance index. ",
+      "A significant After × Buffer interaction indicates leakage. ",
+      "CFMG variance = {cfmg_agb}; residual variance = {resid_agb}. ",
+      "Marginal R² = {round(r2_agb$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_agb$R2_conditional, 3)}. ",
+      "n = {nobs(M_agb)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align = "center", columns = -term) |>
+  cols_align(align = "left",   columns = term) |>
+  tab_style(style = cell_text(align = "center"),
+            locations = cells_column_labels(columns = term)) |>
+  sub_missing()
+```
 
 ## Discussion
 
