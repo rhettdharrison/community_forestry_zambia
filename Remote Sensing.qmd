@@ -122,6 +122,9 @@ M_frp   <- lmer(log_frp_dens  ~ period * zone + gov_index + (1 | NAME), data = f
 #| fig-cap: "Annual fire detection density (detections per km²) per CFMG before and after establishment, for CF cores and 1 km buffer zones. Each point represents one CFMG-year. Boxes show median and interquartile range."
 #| fig-height: 4
 
+y_floor_count <- with(filter(fire_annual, fire_density > 0),
+                      quantile(fire_density, 0.05, na.rm = TRUE))
+
 fire_annual |>
   ggplot(aes(x = period, y = fire_density, fill = period)) +
   geom_boxplot(width = 0.5, alpha = 0.7, outlier.shape = NA) +
@@ -129,6 +132,7 @@ fire_annual |>
   scale_y_log10(name = expression("Fire detections per km"^2*" per year")) +
   scale_x_discrete(name = NULL) +
   scale_fill_manual(values = c("Before" = "#E9C46A", "After" = "#2A9D8F")) +
+  coord_cartesian(ylim = c(y_floor_count, NA)) +
   facet_wrap(~ zone) +
   theme_minimal(base_size = 14) +
   theme(
@@ -196,6 +200,9 @@ tidy(M_count, effects = "fixed") |>
 #| fig-cap: "Annual fire footprint as a fraction of area before and after CF establishment, for cores and 1 km buffers. Fire footprint estimated as the sum of scan × track for all detections within each zone-year, divided by zone area. Each point represents one CFMG-year. Boxes show median and interquartile range."
 #| fig-height: 4
 
+y_floor_area <- with(filter(fire_annual, burn_fraction > 0),
+                     quantile(burn_fraction, 0.05, na.rm = TRUE))
+
 fire_annual |>
   ggplot(aes(x = period, y = burn_fraction, fill = period)) +
   geom_boxplot(width = 0.5, alpha = 0.7, outlier.shape = NA) +
@@ -203,6 +210,7 @@ fire_annual |>
   scale_y_log10(name = "Fire footprint fraction") +
   scale_x_discrete(name = NULL) +
   scale_fill_manual(values = c("Before" = "#E9C46A", "After" = "#2A9D8F")) +
+  coord_cartesian(ylim = c(y_floor_area, NA)) +
   facet_wrap(~ zone) +
   theme_minimal(base_size = 14) +
   theme(
@@ -227,9 +235,11 @@ r2_area   <- suppressWarnings(performance::r2_nakagawa(M_area))
 
 tidy(M_area, effects = "fixed") |>
   mutate(term = case_match(term,
-    "(Intercept)" ~ "Intercept (Before)",
-    "periodAfter" ~ "After",
-    "gov_index"   ~ "Governance index"
+    "(Intercept)"            ~ "Intercept (Before, Core)",
+    "periodAfter"            ~ "After",
+    "zoneBuffer"             ~ "Buffer",
+    "periodAfter:zoneBuffer" ~ "After × Buffer",
+    "gov_index"              ~ "Governance index"
   )) |>
   select(term, estimate, std.error, p.value) |>
   gt() |>
@@ -238,10 +248,10 @@ tidy(M_area, effects = "fixed") |>
   fmt_number(columns = c(estimate, std.error), decimals = 3) |>
   fmt_number(columns = p.value, decimals = 4) |>
   tab_header(
-    title    = "Model results for fire footprint fraction — before vs after establishment",
+    title    = "Model results for fire footprint fraction — Core vs Buffer, before vs after establishment",
     subtitle = glue(
       "Gamma GLMM with log link and random intercept for CFMG. ",
-      "Fixed effects: period (ref = Before) and governance index. ",
+      "Fixed effects: period (ref = Before), zone (ref = Core), period × zone interaction (After × Buffer = leakage test), and governance index. ",
       "CFMG variance = {cfmg_area}. ",
       "Marginal R² = {round(r2_area$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_area$R2_conditional, 3)}. ",
@@ -267,6 +277,9 @@ tidy(M_area, effects = "fixed") |>
 #| fig-cap: "Annual total fire radiative power (FRP) per km² per CFMG before and after establishment, by zone. Total FRP summed across all detections within each CFMG-year-zone and divided by zone area. Each point represents one CFMG-year. Boxes show median and interquartile range. Buffer zone results provide a leakage check."
 #| fig-height: 4
 
+y_floor_frp <- with(filter(fire_annual, frp_density > 0),
+                    quantile(frp_density, 0.05, na.rm = TRUE))
+
 fire_annual |>
   ggplot(aes(x = period, y = frp_density, fill = period)) +
   geom_boxplot(width = 0.5, alpha = 0.7, outlier.shape = NA) +
@@ -274,6 +287,7 @@ fire_annual |>
   scale_y_log10(name = expression("Total FRP per km"^2*" per year")) +
   scale_x_discrete(name = NULL) +
   scale_fill_manual(values = c("Before" = "#E9C46A", "After" = "#2A9D8F")) +
+  coord_cartesian(ylim = c(y_floor_frp, NA)) +
   facet_wrap(~ zone) +
   theme_minimal(base_size = 14) +
   theme(
@@ -410,10 +424,11 @@ r2_def    <- suppressWarnings(performance::r2_nakagawa(M_deforest))
 
 tidy(M_deforest, effects = "fixed") |>
   mutate(term = case_match(term,
-    "(Intercept)"         ~ "Intercept (Before, Core)",
-    "periodAfter"         ~ "After",
-    "zoneBuffer"          ~ "Buffer",
-    "periodAfter:zoneBuffer" ~ "After × Buffer"
+    "(Intercept)"            ~ "Intercept (Before, Core)",
+    "periodAfter"            ~ "After",
+    "zoneBuffer"             ~ "Buffer",
+    "periodAfter:zoneBuffer" ~ "After × Buffer",
+    "gov_index"              ~ "Governance index"
   )) |>
   select(term, estimate, std.error, p.value) |>
   gt() |>
