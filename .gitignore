@@ -8,6 +8,7 @@
 
 # Claude worktrees
 .claude/worktrees/
+docs/.claude/
 
 # LaTeX build artifacts
 *.aux
