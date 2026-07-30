@@ -9,27 +9,31 @@ execute:
   freeze: auto
 
 website:
-  title: "CFM in Zambia"
+  title: "Community Forest Management in Zambia: Is it Working?"
   navbar:
     left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Summary"
+        href: Summary.qmd
+      - text: "Recommendations"
+        href: Recommendations.qmd
       - text: "Introduction"
         href: Introduction.qmd
-      - text: "Survey overview"
+      - text: "Survey Overview"
         href: "CFMG Survey.qmd"
       - text: "Governance"
         href: "CFMG Governance.qmd"
       - text: "Sustainable Forest Management"
         href: "CFMG SFM.qmd"
+      - text: "Remote Sensing"
+        href: "Remote Sensing.qmd"
       - text: "Economic Transformation"
         href: "CFMG ET.qmd"
       - text: "Equity and Inclusion"
         href: "CFMG BS.qmd"
-      - text: "Remote Sensing"
-        href: "Remote Sensing.qmd"
       - text: "Discussion"
         href: Conclusions.qmd
-      - text: "Recommendations"
-        href: Recommendations.qmd
       - text: "Appendices"
         menu:
           - text: "Appendix I - Methods"
@@ -49,6 +53,7 @@ format:
     theme: cosmo
     css: custom.css
     append-hash: true
+    include-before-body: title-banner.html
     include-after-body: sidebar-footer.html
 
 filters:
