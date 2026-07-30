@@ -2,9 +2,12 @@
 title: "Economic Transformation"
 author: "Rhett D Harrison"
 format:
-        html:
-                css: custom.css
-        pdf: default
+  html:
+    css: custom.css
+  pdf:
+    include-in-header:
+      text: |
+        \pagenumbering{arabic}
 filters:
 - collapse-output
 editor: visual
@@ -38,13 +41,21 @@ load("cfmg.RData")
 
 ## Summary
 
-Most FGD groups reported that CFM had not improved access to natural resources for either household use or sale, though approximately one third indicated that access had increased. Community youth were significantly less likely than CFMG executive FGDs to report improved access for household use. Individual interviewees showed a similar pattern, with DFOs significantly more likely than CFMG executives or traditional leaders to consider that CFM had improved household resource access. Employment outcomes were more positive. Approximately half of FGD groups agreed that CFM had generated new employment opportunities, with a marked contrast between community youth (who were most likely to agree) and community female FGDs (who were most likely to disagree). Across the surveyed CFMGs, reported employment numbers increased substantially after CFM establishment, though there was considerable variation among provinces (means ranging from 3 in Western Province to 21 in Lusaka Province). Employment was strongly male-biased and the dominant employment category was HFO or Community Scout. Income earning opportunities from CFM remain limited for most communities. Around one third of CFMGs had received carbon finance payments, and awareness of carbon credit agreements was generally high. Carbon trader support was primarily directed at improved forest management and agricultural extension, rather than at developing forest product value chains. However, forest product value chains — particularly honey and mushrooms — dominated both realised and aspirational income sources among CF communities. Most forest products are sold only at local markets and private enterprise partnerships were uncommon, with the vast majority involving honey off-takers. Communities identified timber as the most important unrealised commercial opportunity, despite none of the surveyed CFMGs being involved in timber production. Opportunity costs of CFM were recognised by only about one third of FGD groups. Unexpectedly, non-timber forest product (NTFP) harvesting was frequently cited as a precluded activity, suggesting possible misunderstandings around forest use rules in some communities. It is evident from the survey that most CFMG business plans are overly reliant on carbon and potentially valuable NTFP value chains remain under-exploited.
+Most FGD groups reported that CFM had not improved access to natural resources for either household use or sale, though approximately one third indicated that access had increased. Approximately half of FGD groups agreed that CFM had generated new employment opportunities, with a marked contrast between community youth (who were most likely to agree) and community female FGDs (who were most likely to disagree). Employment was strongly male-biased and the dominant employment category was HFO or Community Scout. Income earning opportunities from CFM remain limited for most communities. Awareness of carbon credit agreements was generally high. However, although around 80% of CFMGs are involved in generating carbon credits, only around one third had received carbon payments. Carbon enterprise investment was primarily directed at improved forest management and agricultural extension, rather than at developing forest product value chains. However, forest product value chains — particularly honey and mushrooms — dominated both realised and aspirational income sources among CF communities. Most forest products are sold only at local markets. Partnerships with private enterprises were uncommon and mostly involved honey off-takers. Communities identified timber as the most important unrealised commercial opportunity, despite none of the surveyed CFMGs being involved in timber production. Opportunity costs of CFM were recognised by only about one third of FGD groups. Unexpectedly, non-timber forest product (NTFP) harvesting was frequently cited as a precluded activity, suggesting possible misunderstandings around forest use rules in many communities. It is evident from the survey that most CFMG business plans are overly reliant on carbon and potentially valuable NTFP value chains remain under-exploited. Furthermore, the governance index was a significant predictor of economic performance, at least from the perspective of the community FGD groups, which again underscores the importance of ensuring quality governance if the benefits of CFM are to be realised.
+
+::: {.callout-note icon="false"}
+## Key conclusions
+
+CFM is generating economic benefits for communities. However, these are currently very limited and overly focused on carbon, too concentrated in a few low paying roles, such as HFOs, and too unevenly distributed across communities, with women in particular not seeing sufficient economic benefits. To achieve an economic transformation through CFM, requires a diversified, layered forest enterprise model — one that exploits the full range of products, develops value chains and actively connects communities to markets. Such a vision is both achievable and arguably essential for long-term CFM viability, but requires a much greater effort from the FD and CFM partners, such as carbon enterprises, to identify opportunities and provide capacity development in forest resource management, value addition and business skills. 
+:::
 
 ## Introduction
+
 In this chapter, we consider the effect of CFM management on indicators of economic transformation.
 
 ### Access to natural resources
-We asked FGD groups whether CFM had improved access to natural resources for household use or for sale (@fig-et_household_resources, @fig-et_resources_for_sale).
+
+We asked FGD groups whether CFM had improved access to natural resources for household use (@fig-et_household_resources).
 
 ```{r}
 #| label: fig-et_household_resources
@@ -111,72 +122,7 @@ cfmg |>
   )
 ```
 
-```{r}
-#| label: fig-et_resources_for_sale
-#| echo: false
-#| warning: false
-#| message: false
-#| error:   false
-#| fig-cap: "Has CFM improved access to natural resources for sale? The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
-
-cfmg |>
-  filter(interview_type != "individual_interview") |>
-  mutate(
-    response = case_match(
-      as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_sale_e_g_timber_honey_mushrooms),
-      "1" ~ "Yes",
-      "0" ~ "No"
-    ),
-    response = factor(response, levels = c("Yes", "No")),
-    interview_type = factor(
-      case_match(
-        interview_type,
-        "cfmg_executive" ~ "Executive",
-        "cfmg_female"    ~ "Female",
-        "cfmg_male"      ~ "Male",
-        "cfmg_youth"     ~ "Youth"
-      ),
-      levels = c("Youth", "Male", "Female", "Executive")
-    )
-  ) |>
-  drop_na(response) |>
-  count(interview_type, response) |>
-  group_by(interview_type) |>
-  mutate(prop = n / sum(n)) |>
-  ungroup() |>
-  ggplot(aes(y = interview_type, x = prop, fill = response)) +
-  geom_col(width = 0.65, colour = "white", linewidth = 0.4) +
-  geom_text(
-    aes(label = ifelse(prop >= 0.05, n, "")),
-    position = position_stack(vjust = 0.5),
-    size = 3.5, fontface = "bold", colour = "white"
-  ) +
-  scale_x_continuous(
-    labels = percent_format(accuracy = 1),
-    expand = expansion(mult = 0.01),
-    name   = "Proportion of groups"
-  ) +
-  scale_fill_manual(
-    values = c("Yes" = "#2A9D8F", "No" = "#E07B54"),
-    guide  = guide_legend(reverse = TRUE)
-  ) +
-  labs(y = NULL, fill = NULL) +
-  theme_minimal(base_size = 14) +
-  theme(
-    panel.grid.major.y = element_blank(),
-    panel.grid.minor   = element_blank(),
-    panel.grid.major.x = element_blank(),
-    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
-    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
-    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
-    legend.position    = "bottom",
-    legend.text        = element_text(size = rel(1)),
-    plot.margin        = margin(10, 25, 10, 10)
-  )
-```
-
-Responses were similar for both household use and sale. Most FGD groups said that there was no increase in access to natural resources for household use or for sale. However, approximately one third of the groups indicated that access to natural resources has increased under CFM. Community youth were significantly more likely to say there had not been any improvement in access to natural resources for household use, as compared to CFMG executive FGDs. None of the other pairwise comparisons were significant.
+Most FGD groups reported no increase in access to natural resources for household use, though approximately one third indicated that access had improved under CFM. Community youth were significantly more likely to report no improvement compared to CFMG executive FGDs, but none of the other pairwise comparisons were significant. Most natural resources are currently accessed for household use and results were similar for those that are collected for sale.
 
 ```{r}
 #| label: model_et_fgd_household
@@ -221,7 +167,7 @@ pairwise.M1 <- pairs(emm.M1, adjust = "Tukey")
 re_M1    <- as.data.frame(VarCorr(M1))
 prov_M1  <- round(re_M1$vcov[re_M1$grp == "province"], 3)
 cfmg_M1  <- round(re_M1$vcov[re_M1$grp == "province_cfmg"], 3)
-r2_M1    <- suppressWarnings(performance::r2_nakagawa(M1))
+r2_M1    <- performance::r2_nakagawa(M1, verbose = FALSE)
 
 tidy(M1, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -279,108 +225,7 @@ as.data.frame(pairwise.M1) |>
   sub_missing()
 ```
 
-```{r}
-#| label: model_et_fgd_sale
-#| include: false
-#| warning: false
-#| message: false
-#| error:   false
-
-test.data <- cfmg |>
-  filter(interview_type != "individual_interview") |>
-  mutate(
-    sale = economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_sale_e_g_timber_honey_mushrooms,
-    interview_type = factor(
-      case_match(
-        interview_type,
-        "cfmg_executive" ~ "Executive",
-        "cfmg_female"    ~ "Female",
-        "cfmg_male"      ~ "Male",
-        "cfmg_youth"     ~ "Youth"
-      ),
-      levels = c("Executive", "Female", "Male", "Youth")
-    )
-  ) |>
-  drop_na(sale, gov_index) |>
-  mutate(province_cfmg = interaction(province, cfmg_name))
-
-M2 <- glmer(sale ~ interview_type + gov_index + (1 | province) + (1 | province_cfmg),
-            data = test.data, family = binomial)
-
-emm.M2      <- emmeans(M2, specs = ~ interview_type)
-pairwise.M2 <- pairs(emm.M2, adjust = "Tukey")
-```
-
-```{r}
-#| label: tbl-M2_et_fgd_sale
-#| echo: false
-#| warning: false
-#| message: false
-#| error:   false
-#| tbl-cap: "Results of the model examining the effect of FGD type and governance index on whether communities report improved access to natural resources for sale."
-
-re_M2    <- as.data.frame(VarCorr(M2))
-prov_M2  <- round(re_M2$vcov[re_M2$grp == "province"], 3)
-cfmg_M2  <- round(re_M2$vcov[re_M2$grp == "province_cfmg"], 3)
-r2_M2    <- suppressWarnings(performance::r2_nakagawa(M2))
-
-tidy(M2, effects = "fixed") |>
-  mutate(term = case_match(term,
-    "(Intercept)"          ~ "Intercept (Executive FGD)",
-    "interview_typeFemale" ~ "Female FGD",
-    "interview_typeMale"   ~ "Male FGD",
-    "interview_typeYouth"  ~ "Youth FGD",
-    "gov_index"            ~ "Governance index"
-  )) |>
-  select(term, estimate, std.error, p.value) |>
-  gt() |>
-  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
-  fmt_number(columns=c(estimate, std.error), decimals=3) |>
-  fmt_number(columns=p.value, decimals=4) |>
-  tab_header(
-    title    = "Model results for improved access to natural resources for sale — FGD type and governance index",
-    subtitle = glue::glue(
-      "Estimates are log-odds; reference = Executive FGD. ",
-      "Province variance = {prov_M2}; CF-within-province variance = {cfmg_M2}. ",
-      "Marginal R² = {round(r2_M2$R2_marginal, 3)}; ",
-      "conditional R² = {round(r2_M2$R2_conditional, 3)}. ",
-      "n = {nobs(M2)}."
-    )
-  ) |>
-  opt_align_table_header(align = "left") |>
-  cols_align(align="center", columns=-term) |>
-  cols_align(align="left", columns=term) |>
-  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
-  sub_missing()
-```
-
-```{r}
-#| label: tbl-pairwise_et_fgd_sale
-#| echo: false
-#| warning: false
-#| message: false
-#| error:   false
-#| include: false
-#| tbl-cap: "Pairwise comparisons among FGD types for improved access to natural resources for sale."
-
-as.data.frame(pairwise.M2) |>
-  select(contrast, estimate, SE, z.ratio, p.value) |>
-  gt() |>
-  cols_label(contrast="Contrast", estimate="Estimate", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
-  fmt_number(columns=c(estimate, SE, z.ratio), decimals=3) |>
-  fmt_number(columns=p.value, decimals=4) |>
-  tab_header(
-    title    = "Pairwise comparisons — FGD type",
-    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
-  ) |>
-  opt_align_table_header(align = "left") |>
-  cols_align(align="center", columns=-contrast) |>
-  cols_align(align="left", columns=contrast) |>
-  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
-  sub_missing()
-```
-
-Individual interviewees were also asked whether CFM had improved access to natural resources for household use or for sale. @tbl-et_individual_access shows the percentage reporting each by interviewee role. Again a majority of respondents indicated that they did not think that CFM had improved access to natural resources for either household use or sale. DFOs were significantly more likely to suggest that CFM had improved access to natural resources for household use than CFMG executives or traditional leaders. None of the other pairwise comparisons were significant.
+Individual interviewees were also asked whether CFM had improved access to natural resources for household use (@tbl-et_individual_access). Similar to the FGD results, a majority of respondents indicated that they did not think that CFM had improved access to natural resources for household use. However, DFOs were significantly more likely to suggest that CFM had improved access than CFMG executives or traditional leaders. None of the other pairwise comparisons were significant.
 
 ```{r}
 #| label: tbl-et_individual_access
@@ -394,8 +239,7 @@ cfmg |>
   filter(interview_type == "individual_interview") |>
   select(
     interviewee_role,
-    hh   = economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_household_use_e_g_firewood_building_materials,
-    sale = economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_sale_e_g_timber_honey_mushrooms
+    hh = economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_household_use_e_g_firewood_building_materials
   ) |>
   mutate(
     interviewee_role = case_match(
@@ -404,18 +248,17 @@ cfmg |>
       "cfmg_exec_member" ~ "CFMG executive member",
       "trad_leader"      ~ "Traditional leader",
       "dfo"              ~ "District Forestry Officer",
-      "NGO_rep"          ~ "NGO representative"
+      "NGO_rep"          ~ "Private enterprise rep"
     ),
     interviewee_role = factor(interviewee_role, levels = c(
       "Community member", "CFMG executive member", "Traditional leader",
-      "District Forestry Officer", "NGO representative"
+      "District Forestry Officer", "Private enterprise rep"
     ))
   ) |>
   group_by(interviewee_role) |>
   summarise(
     n         = n(),
-    Household = mean(hh,   na.rm = TRUE),
-    Sale      = mean(sale, na.rm = TRUE),
+    Household = mean(hh, na.rm = TRUE),
     .groups   = "drop"
   ) |>
   arrange(interviewee_role) |>
@@ -423,20 +266,19 @@ cfmg |>
   cols_label(
     interviewee_role = "Role",
     n                = "n",
-    Household        = "Household use",
-    Sale             = "For sale"
+    Household        = "Household use"
   ) |>
   fmt_percent(
-    columns  = c(Household, Sale),
+    columns  = Household,
     decimals = 0
   ) |>
   tab_header(
-    title    = "Improved access to natural resources from CFM as reported by individual interviewees",
-    subtitle = "Values represent the % of responses agreeing that CFM has improved assess to resources for household use or sale. n = the total number of interview responses."
+    title    = "Improved access to natural resources for household use as reported by individual interviewees",
+    subtitle = "Values represent the % of responses agreeing that CFM has improved access to resources for household use. n = the total number of interview responses."
   ) |>
   opt_align_table_header(align = "left") |>
   cols_align(align = "left",   columns = interviewee_role) |>
-  cols_align(align = "center", columns = c(n, Household, Sale)) |>
+  cols_align(align = "center", columns = c(n, Household)) |>
   tab_style(
     style     = cell_text(align = "center"),
     locations = cells_column_labels(columns = interviewee_role)
@@ -480,7 +322,7 @@ pairwise.M4 <- pairs(emm.M4, adjust = "Tukey")
 re_M4    <- as.data.frame(VarCorr(M4))
 prov_M4  <- round(re_M4$vcov[re_M4$grp == "province"], 3)
 cfmg_M4  <- round(re_M4$vcov[re_M4$grp == "province_cfmg"], 3)
-r2_M4    <- suppressWarnings(performance::r2_nakagawa(M4))
+r2_M4    <- performance::r2_nakagawa(M4, verbose = FALSE)
 
 tidy(M4, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -488,7 +330,7 @@ tidy(M4, effects = "fixed") |>
     "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
     "interviewee_roletrad_leader"        ~ "Traditional leader",
     "interviewee_roledfo"                ~ "District Forestry Officer",
-    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_roleNGO_rep"            ~ "Private enterprise rep",
     "interviewee_gendermale"             ~ "Male",
     "interviewee_age"                    ~ "Age"
   )) |>
@@ -540,105 +382,9 @@ as.data.frame(pairwise.M4) |>
   sub_missing()
 ```
 
-```{r}
-#| label: model_et_individual_sale
-#| include: false
-#| warning: false
-#| message: false
-#| error:   false
-
-test.data <- cfmg |>
-  filter(interview_type == "individual_interview") |>
-  mutate(
-    sale               = economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_sale_e_g_timber_honey_mushrooms,
-    interviewee_gender = demo_information_interviewee_gender,
-    interviewee_age    = demo_information_interviewee_age
-  ) |>
-  drop_na(sale) |>
-  mutate(province_cfmg = interaction(province, cfmg_name))
-
-M5 <- glmer(sale ~ interviewee_role + interviewee_gender + interviewee_age +
-              (1 | province) + (1 | province_cfmg),
-            data = test.data, family = binomial)
-
-emm.M5      <- emmeans(M5, specs = ~ interviewee_role)
-pairwise.M5 <- pairs(emm.M5, adjust = "Tukey")
-```
-
-```{r}
-#| label: tbl-M5_et_individual_sale
-#| echo: false
-#| warning: false
-#| message: false
-#| error:   false
-#| tbl-cap: "Results of the model examining the effect of interviewee role, gender and age on whether individuals report improved access to natural resources for sale."
-
-re_M5    <- as.data.frame(VarCorr(M5))
-prov_M5  <- round(re_M5$vcov[re_M5$grp == "province"], 3)
-cfmg_M5  <- round(re_M5$vcov[re_M5$grp == "province_cfmg"], 3)
-r2_M5    <- suppressWarnings(performance::r2_nakagawa(M5))
-
-tidy(M5, effects = "fixed") |>
-  mutate(term = case_match(term,
-    "(Intercept)"                        ~ "Intercept (Community member)",
-    "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
-    "interviewee_roletrad_leader"        ~ "Traditional leader",
-    "interviewee_roledfo"                ~ "District Forestry Officer",
-    "interviewee_roleNGO_rep"            ~ "NGO representative",
-    "interviewee_gendermale"             ~ "Male",
-    "interviewee_age"                    ~ "Age"
-  )) |>
-  select(term, estimate, std.error, p.value) |>
-  gt() |>
-  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
-  fmt_number(columns=c(estimate, std.error), decimals=3) |>
-  fmt_number(columns=p.value, decimals=4) |>
-  tab_header(
-    title    = "Model results for improved access to natural resources for sale — individual interviewees",
-    subtitle = glue::glue(
-      "Estimates are log-odds; reference = Community member. ",
-      "Province variance = {prov_M5}; CF-within-province variance = {cfmg_M5}. ",
-      "Marginal R² = {round(r2_M5$R2_marginal, 3)}; ",
-      "conditional R² = {round(r2_M5$R2_conditional, 3)}. ",
-      "n = {nobs(M5)}."
-    )
-  ) |>
-  opt_align_table_header(align = "left") |>
-  cols_align(align="center", columns=-term) |>
-  cols_align(align="left", columns=term) |>
-  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
-  sub_missing()
-```
-
-```{r}
-#| label: tbl-pairwise_et_individual_sale
-#| echo: false
-#| warning: false
-#| message: false
-#| error:   false
-#| include: false
-#| tbl-cap: "Pairwise comparisons among interviewee roles for improved access to natural resources for sale."
-
-as.data.frame(pairwise.M5) |>
-  select(contrast, estimate, SE, z.ratio, p.value) |>
-  gt() |>
-  cols_label(contrast="Contrast", estimate="Estimate", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
-  fmt_number(columns=c(estimate, SE, z.ratio), decimals=3) |>
-  fmt_number(columns=p.value, decimals=4) |>
-  tab_header(
-    title    = "Pairwise comparisons — interviewee role",
-    subtitle = "Estimates are log-odds differences on the emmeans scale. Tukey-adjusted p-values."
-  ) |>
-  opt_align_table_header(align = "left") |>
-  cols_align(align="center", columns=-contrast) |>
-  cols_align(align="left", columns=contrast) |>
-  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
-  sub_missing()
-```
-
 ### Employment
 
-We asked FGD groups whether CFM had generated new employment opportunities (@fig-et_employment).
+We asked FGD groups whether CFM had generated employment opportunities (@fig-et_employment).
 
 ```{r}
 #| label: fig-et_employment
@@ -705,6 +451,10 @@ cfmg |>
   )
 ```
 
+::: return-to-summary
+[← Return to Summary](Summary.html#economic-transformation)
+:::
+
 As can be seen from the figure, approximately half of the FGD groups agreed that CFM had increased employment opportunities. Interestingly, community youth were especially likely to agreed that CFM had created employment opportunities. In contrast, community female FGD groups were much more likely to say that CFM had not increased employment opportunities. All pairwise comparisons were highly significant.
 
 ```{r}
@@ -754,7 +504,7 @@ pairwise.M3 <- pairs(emm.M3, adjust = "Tukey")
 re_M3    <- as.data.frame(VarCorr(M3))
 prov_M3  <- round(re_M3$vcov[re_M3$grp == "province"], 3)
 cfmg_M3  <- round(re_M3$vcov[re_M3$grp == "province_cfmg"], 3)
-r2_M3    <- suppressWarnings(performance::r2_nakagawa(M3))
+r2_M3    <- performance::r2_nakagawa(M3, verbose = FALSE)
 
 tidy(M3, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -812,7 +562,7 @@ as.data.frame(pairwise.M3) |>
   sub_missing()
 ```
 
-Individual interviewees were also asked whether CFM had generated employment opportunities (@tbl-et_individual_employment). Interestingly, community respondents were much more likely to agree that CFM had created employment opportunities than NGO representatives or DFOs. The differences between DFOs and CFMG executives and traditional leaders were significant, but none of the other pairwise comparisons were significant.
+Individual interviewees were also asked whether CFM had generated employment opportunities (@tbl-et_individual_employment). Interestingly, community respondents were much more likely to agree that CFM had created employment opportunities than private enterprise representatives or DFOs. The differences between DFOs and CFMG executives and traditional leaders were significant, but none of the other pairwise comparisons were significant.
 
 ```{r}
 #| label: tbl-et_individual_employment
@@ -835,11 +585,11 @@ cfmg |>
       "cfmg_exec_member" ~ "CFMG executive member",
       "trad_leader"      ~ "Traditional leader",
       "dfo"              ~ "District Forestry Officer",
-      "NGO_rep"          ~ "NGO representative"
+      "NGO_rep"          ~ "Private enterprise rep"
     ),
     interviewee_role = factor(interviewee_role, levels = c(
       "Community member", "CFMG executive member", "Traditional leader",
-      "District Forestry Officer", "NGO representative"
+      "District Forestry Officer", "Private enterprise rep"
     )),
     empl = case_match(empl,
                       "yes" ~ 1,
@@ -918,7 +668,7 @@ pairwise.M6 <- pairs(emm.M6, adjust = "Tukey")
 re_M6    <- as.data.frame(VarCorr(M6))
 prov_M6  <- round(re_M6$vcov[re_M6$grp == "province"], 3)
 cfmg_M6  <- round(re_M6$vcov[re_M6$grp == "province_cfmg"], 3)
-r2_M6    <- suppressWarnings(performance::r2_nakagawa(M6))
+r2_M6    <- performance::r2_nakagawa(M6, verbose = FALSE)
 
 tidy(M6, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -926,7 +676,7 @@ tidy(M6, effects = "fixed") |>
     "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
     "interviewee_roletrad_leader"        ~ "Traditional leader",
     "interviewee_roledfo"                ~ "District Forestry Officer",
-    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_roleNGO_rep"            ~ "Private enterprise rep",
     "interviewee_gendermale"             ~ "Male",
     "interviewee_age"                    ~ "Age"
   )) |>
@@ -979,71 +729,9 @@ as.data.frame(pairwise.M6) |>
 ```
 
 
-#### Changes in numbers employed
-We asked CFMG Executive FGDs to estimate the number of people employed before and after CFM (@fig-et_num_employed). The mean number of people employed per CFMG varied from three in Western Province to 21 in Lusaka Province. The figure also indicates that the numbers of people employed in forest management had substantially increased.
+#### Full-time employment by gender, age group and province
 
-```{r}
-#| label: fig-et_num_employed
-#| echo: false
-#| warning: false
-#| message: false
-#| error:   false
-#| fig-cap: "Mean number of people per CFMG employed before and after CFM by province, as reported by CFMG Executives."
-#| fig-width: 8
-#| fig-height: 5
-
-cfmg |>
-  filter(interview_type == "cfmg_executive") |>
-  select(
-    province,
-    "Before CFM" = economic_transformation_num_employed_before_cfmg,
-    "After CFM"  = economic_transformation_num_employed_after_cfmg
-  ) |>
-  pivot_longer(-province, names_to = "timing", values_to = "n_employed") |>
-  filter(!is.na(n_employed)) |>
-  mutate(
-    timing     = factor(timing, levels = c("Before CFM", "After CFM")),
-    n_employed = if_else(province == "Western" & timing == "After CFM",
-                         n_employed / 2, n_employed)
-  ) |>
-  group_by(province, timing) |>
-  summarise(mean_employed = mean(n_employed, na.rm = TRUE), .groups = "drop") |>
-  ggplot(aes(y = reorder(province, mean_employed), x = mean_employed, fill = timing)) +
-  geom_col(
-    position = position_dodge(width = 0.7), width = 0.6,
-    colour = "white", linewidth = 0.3
-  ) +
-  geom_text(
-    aes(label = round(mean_employed, 0)),
-    position = position_dodge(width = 0.7),
-    hjust = -0.2, size = 3.5, colour = "grey25", fontface = "bold"
-  ) +
-  scale_x_continuous(
-    expand = expansion(mult = c(0, 0.18)),
-    name   = "Mean number employed per CFMG"
-  ) +
-  coord_cartesian(clip = "off") +
-  scale_fill_manual(
-    values = c("Before CFM" = "#E07B54", "After CFM" = "#2A9D8F")
-  ) +
-  labs(y = NULL, fill = NULL) +
-  theme_minimal(base_size = 18) +
-  theme(
-    panel.grid.major.y = element_blank(),
-    panel.grid.minor   = element_blank(),
-    panel.grid.major.x = element_line(colour = "grey85", linewidth = 0.4),
-    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
-    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
-    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
-    legend.position    = "bottom",
-    legend.text        = element_text(size = rel(1)),
-    plot.margin        = margin(10, 25, 10, 10)
-  )
-```
-
-#### Full-time senior employment by gender and province
-CFMG Executive FGDs also reported on the number of senior males and females in full-time employment in the CFMG (@fig-et_fulltime_gender). Clearly, there are many more senior men in full-time employment than women. According to the response across the 75 CFMGs surveyed, 278 senior men were employed as compared to 56 women.
+CFMG Executive FGDs reported on the number of males, females, and youth in full-time employment in the CFMG (@fig-et_fulltime_gender). Clearly, there are many more men in full-time employment than women. According to the responses across the 75 CFMGs surveyed, 278 men were employed compared to 56 women, and 207 male youths compared to 48 female youths.
 
 ```{r}
 #| label: fig-et_fulltime_gender
@@ -1051,31 +739,33 @@ CFMG Executive FGDs also reported on the number of senior males and females in f
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Number of males and females employed full-time in CFMGs, by province, as reported by executive FGDs."
-#| fig-width: 8
+#| fig-cap: "Number of males, females, male youth, and female youth employed full-time in CFMGs, by province, as reported by executive FGDs."
+#| fig-width: 9
 #| fig-height: 5
 
 cfmg |>
   filter(interview_type == "cfmg_executive") |>
   select(
     province,
-    "Male"   = economic_transformation_formal_employment_quests_formalemploymentdetails_1__males_employed_cfmg_full_time,
-    "Female" = economic_transformation_formal_employment_quests_formalemploymentdetails_1__females_employed_cfmg_full_time
+    "Male"         = economic_transformation_formal_employment_quests_formalemploymentdetails_1__males_employed_cfmg_full_time,
+    "Female"       = economic_transformation_formal_employment_quests_formalemploymentdetails_1__females_employed_cfmg_full_time,
+    "Male youth"   = economic_transformation_formal_employment_quests_formalemploymentdetails_1__male_youth_employed_cfmg_full_time,
+    "Female youth" = economic_transformation_formal_employment_quests_formalemploymentdetails_1__female_youth_employed_cfmg_full_time
   ) |>
-  pivot_longer(-province, names_to = "gender", values_to = "n_employed") |>
+  pivot_longer(-province, names_to = "category", values_to = "n_employed") |>
   filter(!is.na(n_employed)) |>
-  mutate(gender = factor(gender, levels = c("Male", "Female"))) |>
-  group_by(province, gender) |>
+  mutate(category = factor(category, levels = c("Male", "Female", "Male youth", "Female youth"))) |>
+  group_by(province, category) |>
   summarise(total = sum(n_employed, na.rm = TRUE), .groups = "drop") |>
-  ggplot(aes(y = reorder(province, total), x = total, fill = gender)) +
+  ggplot(aes(y = reorder(province, total), x = total, fill = category)) +
   geom_col(
-    position = position_dodge(width = 0.7), width = 0.6,
+    position = position_dodge(width = 0.85), width = 0.75,
     colour = "white", linewidth = 0.3
   ) +
   geom_text(
     aes(label = total),
-    position = position_dodge(width = 0.7),
-    hjust = -0.2, size = 3.5, colour = "grey25", fontface = "bold"
+    position = position_dodge(width = 0.85),
+    hjust = -0.2, size = 3, colour = "grey25", fontface = "bold"
   ) +
   scale_x_continuous(
     expand = expansion(mult = c(0, 0.18)),
@@ -1083,7 +773,12 @@ cfmg |>
   ) +
   coord_cartesian(clip = "off") +
   scale_fill_manual(
-    values = c("Male" = "#2A9D8F", "Female" = "#E07B54")
+    values = c(
+      "Male"         = "#2A9D8F",
+      "Female"       = "#E07B54",
+      "Male youth"   = "#76C8C0",
+      "Female youth" = "#F0B49A"
+    )
   ) +
   labs(y = NULL, fill = NULL) +
   theme_minimal(base_size = 18) +
@@ -1100,67 +795,9 @@ cfmg |>
     plot.margin        = margin(10, 25, 10, 10)
   )
 ```
-
-CFMG Executive FGDs also reported the number of male and female youth in full-time employment in the CFMG (@fig-et_fulltime_youth). Across the sample of 75 CFMGs, 207 male youths were employed compared to 48 female youths.
-
-```{r}
-#| label: fig-et_fulltime_youth
-#| echo: false
-#| warning: false
-#| message: false
-#| error:   false
-#| fig-cap: "Number of male and female youth employed full-time in CFMGs, by province, as reported by executive FGDs."
-#| fig-width: 8
-#| fig-height: 5
-
-cfmg |>
-  filter(interview_type == "cfmg_executive") |>
-  select(
-    province,
-    "Male youth"   = economic_transformation_formal_employment_quests_formalemploymentdetails_1__male_youth_employed_cfmg_full_time,
-    "Female youth" = economic_transformation_formal_employment_quests_formalemploymentdetails_1__female_youth_employed_cfmg_full_time
-  ) |>
-  pivot_longer(-province, names_to = "gender", values_to = "n_employed") |>
-  filter(!is.na(n_employed)) |>
-  mutate(gender = factor(gender, levels = c("Male youth", "Female youth"))) |>
-  group_by(province, gender) |>
-  summarise(total = sum(n_employed, na.rm = TRUE), .groups = "drop") |>
-  ggplot(aes(y = reorder(province, total), x = total, fill = gender)) +
-  geom_col(
-    position = position_dodge(width = 0.7), width = 0.6,
-    colour = "white", linewidth = 0.3
-  ) +
-  geom_text(
-    aes(label = total),
-    position = position_dodge(width = 0.7),
-    hjust = -0.2, size = 3.5, colour = "grey25", fontface = "bold"
-  ) +
-  scale_x_continuous(
-    expand = expansion(mult = c(0, 0.18)),
-    name   = "Number of youth employed full-time"
-  ) +
-  coord_cartesian(clip = "off") +
-  scale_fill_manual(
-    values = c("Male youth" = "#2A9D8F", "Female youth" = "#E07B54")
-  ) +
-  labs(y = NULL, fill = NULL) +
-  theme_minimal(base_size = 18) +
-  theme(
-    panel.grid.major.y = element_blank(),
-    panel.grid.minor   = element_blank(),
-    panel.grid.major.x = element_line(colour = "grey85", linewidth = 0.4),
-    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
-    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
-    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
-    legend.position    = "bottom",
-    legend.text        = element_text(size = rel(1)),
-    plot.margin        = margin(10, 25, 10, 10)
-  )
-```
-
 
 #### Types of formal employment opportunities
+
 Community female, male, and youth FGDs identified the types of formal employment opportunities generated by CFM (@fig-et_employment_types). Clearly, by far the largest type of job created is HFO or Community Scout.
 
 ```{r}
@@ -1247,8 +884,10 @@ ggplot(wc_data, aes(label = word, size = freq, colour = freq)) +
 ```
 
 ### Income earning opportunities
+
 #### Carbon finance
-We asked the CFMG executive FGDs whether their CFMG had received income from carbon finance (@fig-et_carbon_finance). According to the responses, around one third of CFs have received carbon finance. Later responses suggest this is an under-representation for the number of CFMGs involved in carbon finance and likely reflects only those CFMGs that have actually started to receive payouts from carbon.
+
+We asked the CFMG executive FGDs whether their CFMG had received income from carbon finance (@fig-et_carbon_finance). According to the responses, around one third of CFs have received carbon payments. This is an under-representation for the number of CFMGs involved in carbon finance, which is around 80% of CFMGs, and reflects only those that have actually started to receive payments.
 
 ```{r}
 #| label: fig-et_carbon_finance
@@ -1313,7 +952,11 @@ cfmg |>
   )
 ```
 
-FGD groups were also asked whether the community was aware of the carbon credit agreement (@fig-et_carbon_awareness). While most CFMG executive groups stated that the community was aware of the carbon finance agreement, interestingly two stated that they were not, which is a little surprising. Most community female and male groups indicated they were aware of the carbon finance agreement, but more than half of the community youth groups stated they were not aware of the carbon finance agreement. Community youth were significantly less likely to know about the carbon finance agreement than CFMG Executives, but other pairwise comparisons were not significant.
+::: return-to-summary
+[← Return to Summary](Summary.html#economic-transformation)
+:::
+
+FGD groups were also asked whether the community was aware of the carbon credit agreement (@fig-et_carbon_awareness). While most CFMG executive groups stated that the community was aware of the carbon finance agreement, interestingly two stated that they were not. Most community female and male groups indicated they were aware of the carbon finance agreement, but more than half of the community youth groups stated they were not aware of the carbon finance agreement. Community youth were significantly less likely to know about the carbon finance agreement than CFMG Executives, but other pairwise comparisons were not significant.
 
 ```{r}
 #| label: fig-et_carbon_awareness
@@ -1385,6 +1028,10 @@ cfmg |>
   )
 ```
 
+::: return-to-summary
+[← Return to Summary](Summary.html#economic-transformation)
+:::
+
 ```{r}
 #| label: model_et_fgd_carbon_awareness
 #| include: false
@@ -1439,7 +1086,7 @@ pairwise.M11 <- pairs(emm.M11, adjust = "Tukey")
 re_M11    <- as.data.frame(VarCorr(M11))
 prov_M11  <- round(re_M11$vcov[re_M11$grp == "province"], 3)
 cfmg_M11  <- round(re_M11$vcov[re_M11$grp == "province_cfmg"], 3)
-r2_M11    <- suppressWarnings(performance::r2_nakagawa(M11))
+r2_M11    <- performance::r2_nakagawa(M11, verbose = FALSE)
 
 tidy(M11, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -1497,7 +1144,7 @@ as.data.frame(pairwise.M11) |>
   sub_missing()
 ```
 
-Individual interviewees were also asked whether the community was aware of the carbon credit agreement (@tbl-et_individual_carbon_awareness). Most respondents indicated that the community was aware, but the percentage of positive responses varied across interviewee roles. Interestingly, the NGO represenatatives (a groups that also included carbon enterprise representatives), overwhelmingly (~95%) suggested the community was informed, but the only 70% of DFOs thought the communities were informed. However, none of these differences were significant.
+Individual interviewees were also asked whether the community was aware of the carbon credit agreement (@tbl-et_individual_carbon_awareness). Most respondents indicated that the community was aware, but the percentage of positive responses varied across interviewee roles. Interestingly, private enterprise representatives overwhelmingly (\~95%) suggested the community was informed, but the only 70% of DFOs thought the communities were informed, although the difference was not significant.
 
 ```{r}
 #| label: tbl-et_individual_carbon_awareness
@@ -1520,11 +1167,11 @@ cfmg |>
       "cfmg_exec_member" ~ "CFMG executive member",
       "trad_leader"      ~ "Traditional leader",
       "dfo"              ~ "District Forestry Officer",
-      "NGO_rep"          ~ "NGO representative"
+      "NGO_rep"          ~ "Private enterprise rep"
     ),
     interviewee_role = factor(interviewee_role, levels = c(
       "Community member", "CFMG executive member", "Traditional leader",
-      "District Forestry Officer", "NGO representative"
+      "District Forestry Officer", "Private enterprise rep"
     )),
     empl = case_match(empl,
                       "yes" ~ 1,
@@ -1603,7 +1250,7 @@ pairwise.M12 <- pairs(emm.M12, adjust = "Tukey")
 re_M12    <- as.data.frame(VarCorr(M12))
 prov_M12  <- round(re_M12$vcov[re_M12$grp == "province"], 3)
 cfmg_M12  <- round(re_M12$vcov[re_M12$grp == "province_cfmg"], 3)
-r2_M12    <- suppressWarnings(performance::r2_nakagawa(M12))
+r2_M12    <- performance::r2_nakagawa(M12, verbose = FALSE)
 
 tidy(M12, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -1611,7 +1258,7 @@ tidy(M12, effects = "fixed") |>
     "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
     "interviewee_roletrad_leader"        ~ "Traditional leader",
     "interviewee_roledfo"                ~ "District Forestry Officer",
-    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_roleNGO_rep"            ~ "Private enterprise rep",
     "interviewee_gendermale"             ~ "Male",
     "interviewee_age"                    ~ "Age"
   )) |>
@@ -1663,9 +1310,9 @@ as.data.frame(pairwise.M12) |>
   sub_missing()
 ```
 
+#### Carbon enterprise support
 
-#### Carbon trader support
-The types of CFM activities supported by the carbon trader are shown in @fig-et_trader_support. As can be seen support focused on aspects of forest management or agricultural extension. Other potential elements of support, such as NTFPs, infrastructure development or market access, featured substantially less.
+The types of CFM activities supported by carbon enterprises are shown in @fig-et_trader_support. As can be seen, support focused on aspects of forest management or agricultural extension. Other potential elements of support, such as NTFPs value chains, infrastructure development or market access, featured substantially less.
 
 ```{r}
 #| label: fig-et_trader_support
@@ -1718,7 +1365,8 @@ ggplot(ts_freq, aes(label = word, size = freq, colour = freq)) +
 ```
 
 #### Other income earning opportunities
-FGD groups also reported whether CFM had generated income earning opportunities through specific interventions, including market linkages, alternative livelihood interventions, conservation revenue, forest product processing and ecotourism (@fig-et_income_opportunities). Although some community FGDs indicated improvement in income earning opportunities under some categories, especially conservation revenue and forest product processing, most indicated that CFM had not generated new income earning opportunities in these areas.
+
+FGD groups also reported whether CFM had generated income earning opportunities through specific interventions, including market linkages, alternative livelihood interventions, conservation revenue, forest product processing and ecotourism (@fig-et_income_opportunities). Although some community FGDs indicated improvement in income earning opportunities under some categories, especially conservation revenue and forest product processing, most indicated that CFM had not generated income earning opportunities in these areas.
 
 ```{r}
 #| label: fig-et_income_opportunities
@@ -1816,7 +1464,7 @@ cfmg |>
   )()
 ```
 
-However, community female, male, and youth FGD groups did identified other additional sources of income generated by CFM (@fig-et_income_sources). Natural resource based value chains featured prominently among these, but interestingly community business was also mentioned.
+However, the community groups did identified other additional sources of income generated by CFM (@fig-et_income_sources). Natural resource based value chains featured prominently among these, but interestingly community business was also mentioned.
 
 ```{r}
 #| label: fig-et_income_sources
@@ -1862,7 +1510,7 @@ ggplot(income_freq, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-To better understand the importance of different income earning opportunities we asked the community female, male, and youth FGD groups to rank their top three additional sources of income from CFM (@fig-et_income_ranks). Interestingly, Among the 14 value chains identified, 12 were mentioned as 1st rank at least once. This immediately points to the diversity of forest products being harvested from CFs across the country, but also to the fact that for most CFs only one product features strongly as an addition source of income. Among these, mushrooms and honey are clearly the most frequently mentioned. 
+To better understand the importance of different income earning opportunities we asked the community female, male, and youth FGD groups to rank their top three additional sources of income from CFM (@fig-et_income_ranks). Interestingly, among the 14 value chains identified, 12 were mentioned as 1st rank at least once. This immediately points to the diversity of forest products being harvested from CFs across the country, but also to the fact that for most CFs only one product features strongly as an addition source of income. Among these, mushrooms and honey are clearly the most frequently mentioned.
 
 ```{r}
 #| label: fig-et_income_ranks
@@ -1930,57 +1578,6 @@ cfmg |>
   )
 ```
 
-CFMG executive FGDs were asked the estimated annual income generated through CFM (@fig-et_annual_income). Unfortunately, there was a lot of inconsistency in the responses to this question. Most FGD groups did not include income from carbon credit sales, but some did. The figure below includes only those that did not include the carbon credit income to facilitate comparison. 
-
-```{r}
-#| label: fig-et_annual_income
-#| echo: false
-#| warning: false
-#| message: false
-#| error:   false
-#| fig-cap: "Mean estimated annual income from CFM by province, as reported by executive FGDs."
-#| fig-width: 9
-#| fig-height: 5
-
-cfmg |>
-  filter(interview_type == "cfmg_executive") |>
-  select(
-    province,
-    income = economic_transformation_estimated_annual_income_from_cfm
-  ) |>
-  filter(!is.na(income), income <= 250000) |>
-  mutate(province = reorder(province, income, FUN = median)) |>
-  ggplot(aes(y = province, x = income)) +
-  geom_boxplot(
-    width = 0.5, fill = "grey92", colour = "grey40",
-    outlier.shape = NA
-  ) +
-  geom_jitter(
-    height = 0.15, width = 0,
-    size = 2, alpha = 0.7, colour = "#2A9D8F"
-  ) +
-  stat_summary(
-    fun = mean, geom = "point",
-    colour = "red", size = 3, shape = 16
-  ) +
-  scale_x_continuous(
-    labels = label_comma(),
-    expand = expansion(mult = c(0.02, 0.1)),
-    name   = "Estimated annual income from CFM"
-  ) +
-  labs(y = NULL) +
-  theme_minimal(base_size = 18) +
-  theme(
-    panel.grid.major.y = element_blank(),
-    panel.grid.minor   = element_blank(),
-    panel.grid.major.x = element_line(colour = "grey85", linewidth = 0.4),
-    axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
-    axis.text.y        = element_text(size = rel(1.14), colour = "grey20"),
-    axis.text.x        = element_text(size = rel(1.14), colour = "grey20"),
-    axis.title.x       = element_text(size = rel(1), colour = "grey40"),
-    plot.margin        = margin(10, 25, 10, 10)
-  )
-```
 
 Female, male, and youth FGDs also reported which forest products were harvested for household use (@fig-et_household_products). Mushrooms again featured prominently, but other natural resources are also clearly important, such as wild fruits, medicinal plants, thatching grass and caterpillars.
 
@@ -2086,6 +1683,10 @@ p1 <- cfmg |>
 
 p1
 ```
+
+::: return-to-summary
+[← Return to Summary](Summary.html#economic-transformation)
+:::
 
 The value chains that CFMGs reported working with through private enterprise partnerships are shown in @fig-et_value_chains. Sixteen out of 17 involved partnerships with honey off-takers and just one involved mushrooms.
 
@@ -2215,6 +1816,10 @@ ggplot(ur_freq, aes(label = word, size = freq, colour = freq)) +
   theme_minimal(base_size = 14) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
+
+::: return-to-summary
+[← Return to Summary](Summary.html#economic-transformation)
+:::
 
 The ranking of these unrealised opportunities is shown in @fig-et_unrealised_ranks. Again a wide range of resources are mentioned, but the top three are timber, honey and mushrooms. Again, it is interesting that community groups consider their timber resources to have high unrealised potential for commercial development.
 
@@ -2413,6 +2018,7 @@ cfmg |>
 ```
 
 ### Opportunity costs
+
 #### Precluded activities
 
 The community female, male, and youth FGD groups identified economic activities that are precluded under CFM regulations (@fig-et_precluded). While many of these are self evident, the fact that NTFP harvesting is listed quite prominently is surprising. Whether this reflects a misunderstanding on the part of the communities or indeed that they are being told they cannot collect NTFPs is not clear.
@@ -2465,8 +2071,8 @@ ggplot(p_freq, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-
 #### Other opportunity costs
+
 FGD groups were asked whether CFM entails opportunity costs for the community (@fig-et_opp_costs). Interestingly, many of the FGDs did not recognise any opportunity costs. However, about a third of the FGDs did. The proportion of FGDs recognising opportunity costs was highest among community male FGDs and lowest among community female FGDs. However, none of the pairwise comparisons were significant.
 
 ```{r}
@@ -2539,6 +2145,10 @@ cfmg |>
   )
 ```
 
+::: return-to-summary
+[← Return to Summary](Summary.html#economic-transformation)
+:::
+
 ```{r}
 #| label: model_et_fgd_opp_costs
 #| include: false
@@ -2593,7 +2203,9 @@ pairwise.M9 <- pairs(emm.M9, adjust = "Tukey")
 re_M9    <- as.data.frame(VarCorr(M9))
 prov_M9  <- round(re_M9$vcov[re_M9$grp == "province"], 3)
 cfmg_M9  <- round(re_M9$vcov[re_M9$grp == "province_cfmg"], 3)
-r2_M9    <- suppressWarnings(performance::r2_nakagawa(M9))
+r2_M9    <- performance::r2_nakagawa(M9, verbose = FALSE)
+r2_M9_marg <- if (!is.null(r2_M9$R2_marginal)   && !is.na(r2_M9$R2_marginal))   round(r2_M9$R2_marginal,   3) else "NA"
+r2_M9_cond <- if (!is.null(r2_M9$R2_conditional) && !is.na(r2_M9$R2_conditional)) round(r2_M9$R2_conditional, 3) else "not available (singular model)"
 
 tidy(M9, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -2613,8 +2225,8 @@ tidy(M9, effects = "fixed") |>
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Executive FGD. ",
       "Province variance = {prov_M9}; CF-within-province variance = {cfmg_M9}. ",
-      "Marginal R² = {round(r2_M9$R2_marginal, 3)}; ",
-      "conditional R² = {round(r2_M9$R2_conditional, 3)}. ",
+      "Marginal R² = {r2_M9_marg}; ",
+      "conditional R² = {r2_M9_cond}. ",
       "n = {nobs(M9)}."
     )
   ) |>
@@ -2651,7 +2263,7 @@ as.data.frame(pairwise.M9) |>
   sub_missing()
 ```
 
-Individual interviewees were also asked whether CFM entails opportunity costs. @tbl-et_individual_opp_costs shows the percentage reporting this broken down by interviewee role. Interestingly, the community traditional leaders and community members recognise opportunity costs less of the time than other individual interviewee types, although these differences were not significant.
+Individual interviewees were also asked whether CFM entails opportunity costs. @tbl-et_individual_opp_costs shows the percentage reporting this broken down by interviewee role.
 
 ```{r}
 #| label: tbl-et_individual_opp_costs
@@ -2674,11 +2286,11 @@ cfmg |>
       "cfmg_exec_member" ~ "CFMG executive member",
       "trad_leader"      ~ "Traditional leader",
       "dfo"              ~ "District Forestry Officer",
-      "NGO_rep"          ~ "NGO representative"
+      "NGO_rep"          ~ "Private enterprise rep"
     ),
     interviewee_role = factor(interviewee_role, levels = c(
       "Community member", "CFMG executive member", "Traditional leader",
-      "District Forestry Officer", "NGO representative"
+      "District Forestry Officer", "Private enterprise rep"
     )),
     empl = case_when(
       empl == "yes"           ~ 1,
@@ -2759,7 +2371,7 @@ pairwise.M10 <- pairs(emm.M10, adjust = "Tukey")
 re_M10    <- as.data.frame(VarCorr(M10))
 prov_M10  <- round(re_M10$vcov[re_M10$grp == "province"], 3)
 cfmg_M10  <- round(re_M10$vcov[re_M10$grp == "province_cfmg"], 3)
-r2_M10    <- suppressWarnings(performance::r2_nakagawa(M10))
+r2_M10    <- performance::r2_nakagawa(M10, verbose = FALSE)
 
 tidy(M10, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -2767,7 +2379,7 @@ tidy(M10, effects = "fixed") |>
     "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
     "interviewee_roletrad_leader"        ~ "Traditional leader",
     "interviewee_roledfo"                ~ "District Forestry Officer",
-    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_roleNGO_rep"            ~ "Private enterprise rep",
     "interviewee_gendermale"             ~ "Male",
     "interviewee_age"                    ~ "Age"
   )) |>
@@ -2888,7 +2500,7 @@ ggplot(wc_oc, aes(label = word, size = freq, colour = freq)) +
 
 ## Economic transformation index
 
-To summarise the overall economic transformation performance of each CFMG, we constructed an economic transformation score (0–5) by summing five binary indicators reported by FGD groups — improved access to natural resources for household use, improved access to natural resources for sale, new employment opportunities created, collaboration with a private enterprise (executive FGDs only), and absence of opportunity costs (No = 1, Yes = 0) — scored as 1 (positive outcome reported) or 0 (no positive outcome or worsening). The distribution of economic transformation scores across CFMGs is shown in @fig-et_index_dist. We then modelled this score using a linear mixed model with FGD type and the governance index as predictors, and random intercepts for province and CF within province, to test whether governance and FGD type were significant predictors of overall economic transformation performance (@tbl-et_index_model, @fig-et_index).
+To summarise the overall economic transformation performance of each CFMG, we constructed an economic transformation score (0–5) by summing five binary indicators reported by FGD groups — improved access to natural resources for household use, new employment opportunities created, carbon payments received (executive FGDs only), collaboration with a private enterprise (executive FGDs only), and absence of opportunity costs — scored as 1 (positive outcome reported) or 0 (no positive outcome or worsening). The distribution of economic transformation scores across CFMGs is shown in @fig-et_index_dist (Appendix III). We then modelled this score using a linear mixed model with the governance index as the predictor, and random intercepts for province and CF within province, to test whether governance was a significant predictor of overall economic transformation performance (@tbl-et_index_model, @fig-et_index).
 
 ```{r}
 #| label: data_et_index
@@ -2905,9 +2517,17 @@ et_data <- cfmg |>
       as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_household_use_e_g_firewood_building_materials) == "0" ~ 0,
       TRUE ~ NA_real_
     ),
-    si_sale = case_when(
-      as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_sale_e_g_timber_honey_mushrooms) == "1" ~ 1,
-      as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_sale_e_g_timber_honey_mushrooms) == "0" ~ 0,
+    si_carbon = case_when(
+      economic_transformation_cfma_involved_carbon_finance == "yes"                          ~ 1,
+      str_starts(economic_transformation_cfma_involved_carbon_finance, "Yes")                ~ 1,
+      economic_transformation_cfma_involved_carbon_finance == "no"                           ~ 0,
+      str_starts(economic_transformation_cfma_involved_carbon_finance, "No")                 ~ 0,
+      economic_transformation_cfma_involved_carbon_finance %in% c(
+        "Not yet", "At the moment_they are not",
+        "The cfmg is yet to enter into partnership with the carbon credit organization",
+        "The CFMG has not signed form 7 and MOU. They had to cancel the one they had signed earlier due to disagreements in the benefits sharing mechanism for income from carbon credits",
+        "Has not signed the agreement with CCS yet due to dispute  over percentages in the benefit sharing mechanism"
+      ) ~ 0,
       TRUE ~ NA_real_
     ),
     si_empl = case_when(
@@ -2932,9 +2552,9 @@ et_data <- cfmg |>
       TRUE ~ NA_real_
     ),
     et_score = ifelse(
-      rowSums(!is.na(cbind(si_hh, si_sale, si_empl, si_enterprise, si_opp_costs))) == 0,
+      rowSums(!is.na(cbind(si_hh, si_carbon, si_empl, si_enterprise, si_opp_costs))) == 0,
       NA_real_,
-      rowSums(cbind(si_hh, si_sale, si_empl, si_enterprise, si_opp_costs), na.rm = TRUE)
+      rowSums(cbind(si_hh, si_carbon, si_empl, si_enterprise, si_opp_costs), na.rm = TRUE)
     ),
     interview_type = factor(
       case_match(
@@ -2951,7 +2571,7 @@ et_data <- cfmg |>
   drop_na(et_score, gov_index)
 
 M_et <- lmer(
-  et_score ~ interview_type + gov_index + (1 | province) + (1 | province_cfmg),
+  et_score ~ gov_index + (1 | province) + (1 | province_cfmg),
   data = et_data,
   REML = TRUE
 )
@@ -2963,7 +2583,7 @@ M_et <- lmer(
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Distribution of mean economic transformation scores across CFMGs (0–5). Each bar represents the number of CFMGs with that mean score, averaged across all FGD types. The score sums five binary indicators: improved household resource access, improved resource access for sale, new employment opportunities, collaboration with a private enterprise, and absence of opportunity costs."
+#| fig-cap: "Distribution of mean economic transformation scores across CFMGs (0–5). Each bar represents the number of CFMGs with that mean score, averaged across all FGD types. The score sums five binary indicators: improved household resource access, new employment opportunities, carbon payments received, collaboration with a private enterprise, and absence of opportunity costs."
 #| fig-height: 3
 
 et_data |>
@@ -2987,21 +2607,18 @@ et_data |>
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "Results of the model examining the effect of FGD type and governance index on economic transformation performance."
+#| tbl-cap: "Results of the model examining the effect of the governance index on economic transformation performance."
 
 re_et    <- as.data.frame(VarCorr(M_et))
 prov_et  <- round(re_et$vcov[re_et$grp == "province"], 3)
 cfmg_et  <- round(re_et$vcov[re_et$grp == "province_cfmg"], 3)
 resid_et <- round(re_et$vcov[re_et$grp == "Residual"], 3)
-r2_et    <- suppressWarnings(performance::r2_nakagawa(M_et))
+r2_et    <- performance::r2_nakagawa(M_et, verbose = FALSE)
 
 tidy(M_et, effects = "fixed") |>
   mutate(term = case_match(term,
-    "(Intercept)"          ~ "Intercept",
-    "interview_typeFemale" ~ "Female",
-    "interview_typeMale"   ~ "Male",
-    "interview_typeYouth"  ~ "Youth",
-    "gov_index"            ~ "Governance index"
+    "(Intercept)" ~ "Intercept",
+    "gov_index"   ~ "Governance index"
   )) |>
   select(term, estimate, std.error, p.value) |>
   gt() |>
@@ -3009,10 +2626,9 @@ tidy(M_et, effects = "fixed") |>
   fmt_number(columns=c(estimate, std.error), decimals=3) |>
   fmt_number(columns=p.value, decimals=4) |>
   tab_header(
-    title    = "Model results for economic transformation performance — FGD type and governance index",
+    title    = "Model results for economic transformation performance — governance index",
     subtitle = glue::glue(
       "Linear mixed model with random intercepts for province and CF within province. ",
-      "Reference = Executive. ",
       "Province variance = {prov_et}; CF-within-province variance = {cfmg_et}; ",
       "residual variance = {resid_et}. ",
       "Marginal R² = {round(r2_et$R2_marginal, 3)}; ",
@@ -3057,16 +2673,18 @@ et_data |>
 
 Through the FGDs and the individual interviews, we investigated a diverse set of indicators of economic transformation. We covered access to natural resources for household use and sale, employment, income earning opportunities, including carbon finance and other sources of income, and opportunity costs.
 
-Most FGD groups and individual interviewees indicated that CFM had not increased access to natural resources for either household use or sale. Given that the communities were involved in harvesting forest products before the instigation of CFM, it is not surprising that most respondents do not recognise any change. However, around one third of respondent groups and individuals felt that access had improved under CFM. This presumably reflects the formalisation of community rights to access forest resources.
+Most FGD groups and individual interviewees indicated that CFM had not increased access to natural resources for either household use or sale. However, given that communities  have customary rights of access and were involved in harvesting forest products before the instigation of CFM, it is not surprising that most respondents do not recognise any change. Nevertheless, around one third of respondent groups and individuals felt that access had improved under CFM, presumably reflecting formalisation of community rights to access forest resources.
 
-A larger proportion of FGD groups considered that CFM had had a positive effect on full-time employment. However, the differences among different FGD types were highly significant. More community female groups suggested there was no change in employment and more community youth groups felt full-time formal employment opportunities had increased. We also showed that the numbers employed included many more men than women and, given that by far the most important employment roles were HFOs and Community Scouts, it is likely they also included a disproportionate number of youth, which would explain these differences in perception. Moreover, while CFM does appear to have increased formal employment, the numbers are quite paltry. In part, this may reflect the fact that employment in forest product harvesting and processing is rarely formal or full-time. While CMF does appear to have resulted in some new employment opportunities, these have been largely limited to HFO and Community Scout roles and have not benefited many women.
+A larger proportion of FGD groups considered that CFM had had a positive effect on full-time employment. However, the differences among FGD types were highly significant. More community female groups suggested there was no change in employment and more community youth groups felt full-time formal employment opportunities had increased. We also showed that the numbers employed included many more men than women, which would explain these differences in perception. Moreover, while CFM does appear to have increased formal employment, the quality of jobs was poor — most being HFOs or community scouts —  and the numbers are paltry. In part, this may reflect the fact that employment in forest product harvesting and processing is rarely formal or full-time but, as we also found, there has been very limited development of forest resource based enterprises. Thus, while CMF does appear to have resulted in some new employment opportunities, these have been largely limited to low paying jobs and have not benefited many women.
 
-A large proportion of CFs in Zambia were formed on the promise of carbon dollars. However, only approximately one third of the CFs in our sample appeared to have benefited from carbon income at the time of the survey. The fact that a number of the FDG groups, especially youth groups, were unaware of the carbon agreement is concerning. It suggests that the carbon trading companies may have failed to conduct a proper FPIC process involving the entire community and that the CFMG executives may not be communicating properly with their communities. Nevertheless, many carbon traders are clearly supporting communities. Most of the activities concern forest protection and agricultural extension for sustainable intensification, for example, climate smart agriculture. Both of which may be considered as essential to a carbon business plan. NTFPs and enterprise development were less often mentioned as a part of the carbon trader activities. This is perhaps an oversight on their part, because enhancing forest product value chains would increase the value of forest conservation for local communities.
+A large proportion of CFs in Zambia were formed on the promise of carbon dollars. However, only approximately one third of the CFs in our sample appeared to have benefited from carbon payments at the time of the survey. This number reflects the actual disbursement of carbon derived income to the community, as there clearly has been investment in communities by carbon enterprises. The fact that a number of the FGD groups, especially youth groups, were unaware of the carbon agreement is concerning. It suggests that the carbon enterprises may have failed to conduct a proper FPIC process involving the entire community and that the CFMG executives may not be communicating properly with their communities. Nevertheless, many carbon enterprises are clearly supporting communities. Most activities concern forest protection and agricultural extension for sustainable intensification, such as climate smart agriculture. Both of which may be considered as essential to a carbon business plan. However, NTFPs and forest resource based enterprise development were far less often mentioned. We suggest this is an oversight on the part of carbon enterprises. Enhancing forest product value chains would increase the value of forest conservation for local communities. Futhermore, carbon finance alone is unlikely to fund development in forest margin communities sufficiently. Hence, there is a significant risk that communities will become disillusioned with carbon finance, especially among sections of the community that feel there is an inequitable sharing of benefits. Investing in forest based enterprises should be considered essential to a carbon business plan.
 
-The above results are backed up by the response to questions concerning other income earning opportunities. It seems CFM has not led to increased income from market linkages, alternative livelihoods, conservation revenue, forest product processing or ecotourism except for in a very few cases. Nevertheless, a wide variety of forest products clearly contribute to household use and some additional income. Although honey and mushrooms were most often identified as the most important source of additional income, another ten NTFPs were mention as the most important at least once. However, these additional sources of income were identified in less than half of the CFs and only 13 identified a second rank. Thus, forest products are rarely being exploited as a source of additional income and if they are it is usually only one. Only a small number of CFMGs are partnering with an enterprise, such as an off-taker, and among those that do it almost exclusively concerns honey. Nonetheless, the communities identified a wide diversity of forest products that could potentially be harvested and processed to provide an additional source of income. Prominent among these were timber and wild fruit, as well as mushrooms and honey. In some cases timber harvesting may conflict with a carbon business plans, but not if plantations were established. The potential of CFM to support forest product enterprises is clearly massively under realised. 
+The above results are backed up by the response to questions concerning other income earning opportunities. It seems CFM has not led to increased income from market linkages, alternative livelihoods, conservation revenue, forest product processing or ecotourism except for in a very few cases. Nevertheless, a wide variety of forest products clearly contribute to household use and some additional income. Although honey and mushrooms were most often identified as the most important source of additional income, another ten NTFPs were mention as the most important at least once. However, these additional sources of income were identified in less than half of the CFs and only 13 CFs identified a second ranked forest product. Thus, forest products are rarely being exploited as a source of additional income and if they are it is usually just one. Only a small number of CFMGs (23%) are partnering with an enterprise, such as an off-taker, and among those that do it almost exclusively concerns honey. The communities identified a wide diversity of forest products that could potentially be harvested and processed to provide an additional source of income. Prominent among these were timber and wild fruit, as well as mushrooms and honey. In some cases timber harvesting may conflict with carbon business plans, but not if plantations were established. The potential of CFM to support forest product enterprises is clearly massively under realised.
 
-Unfortunately, the information on incomes from CFM were not very informative. Some clearly included income from carbon while most did not and it seems that the CFMG executives have little understanding of the value of forest products being harvested from their CFs. To get a more accurate picture of these values a more in depth PEN type survey is recommended.
+To get a more accurate picture of forest product values a more in depth PEN type survey, involving surveys of household forest product use repeated multiple times over a year, is recommended. The intensity of the survey would necessitate sub-sampling communities from our survey. However, the results of our survey could be used to stratify sampling, so that results could be extrapolated to the national level.
 
-The local communities identified a number of opportunity costs to CFM. Most of these pertained to activities that are precluded, such as those involving forest clearance. However, many groups also identified other opportunity costs, such as time costs and diverted resources. Recognition of opportunity costs is important to understand the cost-benefits of CFM for communities, especially as these costs are likely to be unevenly distributed among community members.
+The local communities identified a number of opportunity costs to CFM. Most of these pertained to activities that are precluded, such as those involving forest clearance. However, many groups also identified other opportunity costs, such as time costs and diverted resources. Recognition of opportunity costs is important to understand the cost-benefits of CFM for communities, especially as these costs are likely to be unevenly distributed among community members. It was concerning that many groups mentioned restricted access to NTFPs. Whether this results from a misunderstanding of the regulations surrounding CFM or is because community members are actually being barred from harvesting NTFPs needs to be resolved. CFM should facilitate access to resources and improve their management, not prevent access.
 
-Overall, a positive picture of economic transformation emerges from the responses of the FGDs and individual interviews. While changes in indicators, such as employment or additional income from forest products, many not appear substantial, they are in a positive direction. Most CFMGs will also receive carbon income, even if this has only benefited around one third of CFMGs so far. However, what is also evident is that CFMG business plans are over-reliant on just carbon or sometimes carbon and honey. Substantial opportunities for developing much more diversified business plans exist. These could include a range of different NTFPs and potentially also timber. In addition to simply increasing income earning opportunities, diversified business plans would also provide a buffer against fluctuating commodity prices and because different products are harvested at different times of the year, they can help stabilise income throughout the year.
+It is noteworthy that the governance index was a highly significant predictor of our economic transformation index. Thus, as with our results from the chapter on SFM, performance is predicated on good governance. It is imperative that the FD and other CFMG partners step up their oversight of CFMG governance to ensure long term positive outcomes from CFM.
+
+Overall, a positive picture of economic transformation emerges from the responses of the FGDs and individual interviews. While changes in indicators, such as employment or additional income from forest products, are not substantial, they are in a positive direction. In the future, most communities will also receive carbon income, even if this has only benefited around one third of CFs so far. However, it is also evident that CFMG business plans are over-reliant on carbon or sometimes carbon and honey. Substantial opportunities for developing much more diversified business plans exist. These could include a range of different NTFPs and potentially also timber or sustainable charcoal. In addition to simply increasing income earning opportunities, diversified business plans would also provide a buffer against fluctuating commodity prices and because different products are harvested at different times of the year, they can help stabilise income throughout the year.

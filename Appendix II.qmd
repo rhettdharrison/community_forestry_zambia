@@ -2,9 +2,12 @@
 title: "Appendix II - List of community forests surveyed"
 author: "Rhett D Harrison"
 format:
-        html:
-                css: custom.css
-        pdf: default
+  html:
+    css: custom.css
+  pdf:
+    include-in-header:
+      text: |
+        \pagenumbering{arabic}
 filters:
 - collapse-output
 editor: visual

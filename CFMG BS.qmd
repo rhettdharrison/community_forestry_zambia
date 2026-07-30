@@ -2,9 +2,12 @@
 title: "Equity and Inclusion"
 author: "Rhett D Harrison"
 format:
-        html:
-                css: custom.css
-        pdf: default
+  html:
+    css: custom.css
+  pdf:
+    include-in-header:
+      text: |
+        \pagenumbering{arabic}
 filters:
 - collapse-output
 editor: visual
@@ -37,7 +40,13 @@ load("cfmg.RData")
 
 ## Summary
 
-The overall picture for equity and inclusion is broadly positive, though with important caveats. A substantial majority of FGD groups reported that the benefits of CFM are being shared equitably and that women benefit from CFM without disproportionately suffering opportunity costs. Notably, a majority of community female FGD groups themselves agreed that women have benefited from CFM. Carbon benefit-sharing agreements between carbon companies and communities are dominated by revenue sharing, while employment and livelihood support components are less commonly included. Responsibility for carbon income sharing decisions within communities was roughly equally split between instances where the CFMG executive makes the decisions and those where the whole CFMG is involved. Importantly, community female and youth FGD groups were significantly more likely than executive and male FGD groups to report inequitable benefit sharing, inadequate participation of women in decision making, and a lack of transparency in benefit sharing. In some CFMGs, community youth groups also identified issues with elite capture and marginalisation of youth. This common divergence in perspective between community members and CFMG executives is a concerning pattern suggesting that a minority of CFMGs have real equity problems that are not visible from the executive's perspective. Poor transparency in benefit sharing and the non-existence of grievance and redress mechanisms were also noted for many CFMGs. Without functioning formal channels through which equity concerns can be raised and addressed, inequitable outcomes risk going undetected and uncorrected. Strengthening these governance mechanisms is essential if CFM is to deliver equitable outcomes for all community members, including women, youth and other vulnerable groups.
+The overall picture for equity and inclusion is broadly positive, though with important caveats. A substantial majority of FGD groups reported that the benefits of CFM are being shared equitably and that women benefit from CFM without disproportionately suffering opportunity costs. Notably, a majority of community female FGD groups themselves agreed that women have benefited from CFM. Carbon benefit-sharing agreements between carbon companies and communities are dominated by revenue sharing, while employment and livelihood support components are less commonly included. Responsibility for carbon income sharing decisions within communities was roughly equally split between instances where the CFMG executive makes the decisions and those where the whole CFMG is involved. Importantly, community female and youth FGD groups were significantly more likely than executive and male FGD groups to report inequitable benefit sharing, inadequate participation of women in decision making, and a lack of transparency in benefit sharing. In some CFMGs, community youth groups also identified issues with elite capture and marginalisation of youth. This common divergence in perspective between community members and CFMG executives is a concerning pattern suggesting that a minority of CFMGs have real equity problems that are either not visible from the executive's perspective or deliberately ignored. Poor transparency in benefit sharing and the non-existence of grievance and redress mechanisms were also noted for many CFMGs. Without functioning formal channels through which equity concerns can be raised and addressed, inequitable outcomes risk going undetected and uncorrected. Strengthening these governance mechanisms is essential if CFM is to deliver equitable outcomes for all community members, including women, youth and other vulnerable groups.
+
+::: {.callout-note icon="false"}
+## Key conclusions
+
+The equity and inclusion outcomes of CFM in Zambia are broadly positive, with meaningful gains in women's formal participation in forest governance. However, the divergence between the perspectives of female and youth groups on one side and CFMG executives on the other is the most important finding of this chapter. It signals that equity problems exist in a subset of CFMGs, and that strengthening transparency, grievance & redress mechanisms and community-wide engagement — particularly with youth — is essential to ensuring CFM delivers equitable benefits to all.
+:::
 
 ## Introduction
 
@@ -45,7 +54,7 @@ In this chapter, we consider the equitable sharing of benefits arising from comm
 
 ## Benefit sharing
 
-We asked FGD groups whether the benefits of CFM were equitably distributed (@fig-bs_equity). On the one hand, a substantial majority of responses across the FGD groups asserted that benefits were being shared equitably. However, the proportion of community female and community youth groups that felt that benefits were not being shared equitably was significantly higher than for the CFMG executive and community male FGD groups. Moreover, even among the CFMG executive and community male groups, there were some that agreeded that benefits were not being shared equitably.
+We asked FGD groups whether the benefits of CFM were equitably distributed (@fig-bs_equity). On the one hand, a substantial majority of responses across the FGD groups asserted that benefits were being shared equitably. However, the proportion of community female and community youth groups that felt that benefits were not being shared equitably was significantly higher than for the CFMG executive and community male FGD groups. Moreover, even among the CFMG executive and community male groups, there were some that agreed that benefits were not being shared equitably.
 
 ```{r}
 #| label: fig-bs_equity
@@ -112,6 +121,10 @@ cfmg |>
   )
 ```
 
+::: return-to-summary
+[← Return to Summary](Summary.html#equity-and-inclusion)
+:::
+
 ```{r}
 #| label: model_bs_fgd_equity
 #| include: false
@@ -159,7 +172,7 @@ pairwise.M1 <- pairs(emm.M1, adjust = "Tukey")
 re_M1    <- as.data.frame(VarCorr(M1))
 prov_M1  <- round(re_M1$vcov[re_M1$grp == "province"], 3)
 cfmg_M1  <- round(re_M1$vcov[re_M1$grp == "province_cfmg"], 3)
-r2_M1    <- suppressWarnings(performance::r2_nakagawa(M1))
+r2_M1    <- performance::r2_nakagawa(M1, verbose = FALSE)
 
 tidy(M1, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -217,7 +230,7 @@ as.data.frame(pairwise.M1) |>
   sub_missing()
 ```
 
-Individual interviewees were also asked whether the benefits of CFM were equitably shared. @tbl-bs_individual_equity shows the percentage reporting this broken down by interviewee role. Again a substantial majority of respondents (83% - 92%) thought that benefits were being shared equitably, and the differences among respondents were not significant. However, there was still minority of respondents that did not think benefits were being equitably shared. This suggests that there are some CFs where the benefit sharing arrangements are not optimal or appropriate arrangements are in place but not being followed.
+Individual interviewees were also asked whether the benefits of CFM were equitably shared. @tbl-bs_individual_equity shows the percentage reporting this broken down by interviewee role. Again a substantial majority of respondents (83% - 92%) thought that benefits were being shared equitably, and the differences among respondents were not significant. However, there was still minority of respondents that did not think benefits were being equitably shared. This suggests that there are some CFs where the benefit sharing arrangements are not optimal or appropriate arrangements are in place but are not being followed.
 
 ```{r}
 #| label: tbl-bs_individual_equity
@@ -240,11 +253,11 @@ cfmg |>
       "cfmg_exec_member" ~ "CFMG executive member",
       "trad_leader"      ~ "Traditional leader",
       "dfo"              ~ "District Forestry Officer",
-      "NGO_rep"          ~ "NGO representative"
+      "NGO_rep"          ~ "Private enterprise rep"
     ),
     interviewee_role = factor(interviewee_role, levels = c(
       "Community member", "CFMG executive member", "Traditional leader",
-      "District Forestry Officer", "NGO representative"
+      "District Forestry Officer", "Private enterprise rep"
     )),
     empl = case_match(empl,
                       "yes" ~ 1,
@@ -323,7 +336,7 @@ pairwise.M2 <- pairs(emm.M2, adjust = "Tukey")
 re_M2    <- as.data.frame(VarCorr(M2))
 prov_M2  <- round(re_M2$vcov[re_M2$grp == "province"], 3)
 cfmg_M2  <- round(re_M2$vcov[re_M2$grp == "province_cfmg"], 3)
-r2_M2    <- suppressWarnings(performance::r2_nakagawa(M2))
+r2_M2    <- performance::r2_nakagawa(M2, verbose = FALSE)
 
 tidy(M2, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -331,7 +344,7 @@ tidy(M2, effects = "fixed") |>
     "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
     "interviewee_roletrad_leader"        ~ "Traditional leader",
     "interviewee_roledfo"                ~ "District Forestry Officer",
-    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_roleNGO_rep"            ~ "Private enterprise rep",
     "interviewee_gendermale"             ~ "Male",
     "interviewee_age"                    ~ "Age"
   )) |>
@@ -387,7 +400,7 @@ as.data.frame(pairwise.M2) |>
 
 ### Company-community arrangements
 
-CFMG executive FGDs reported on the components were included in their carbon finance benefit-sharing arrangement with the carbon trading enterprise (@fig-bs_benefit_sharing). Clearly the agreements are dominated by revenue sharing, with relatively few also containing agreements on employment, infrastructure development and livelihood support.
+CFMG executive FGDs reported on the components that were included in their carbon finance benefit-sharing arrangement with the carbon enterprise (@fig-bs_benefit_sharing). Clearly the agreements are dominated by revenue sharing, with relatively few also containing agreements on employment, infrastructure development and livelihood support.
 
 ```{r}
 #| label: fig-bs_benefit_sharing
@@ -395,7 +408,7 @@ CFMG executive FGDs reported on the components were included in their carbon fin
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Components included in the carbon finance benefit-sharing arrangement between the carbon company and the community as reported by CFMG executive FGDs. The sample includes only those CFMGs that stated they had an agreement with a carbon trading company."
+#| fig-cap: "Components included in the carbon finance benefit-sharing arrangement between the carbon company and the community as reported by CFMG executive FGDs. n = 28 CFMGs with a carbon finance arrangement responded. Multiple components could be selected."
 #| fig-width: 9
 #| fig-height: 4
 
@@ -440,7 +453,7 @@ cfmg |>
 
 ### Within-community sharing
 
-We also asked FGD groups about the carbon income sharing arrangements within the community. We first asked who is responsible for the decision-making (@fig-bs_benefit_sharing_decision) and then we asked on what principles the benefit sharing was based (@fig-bs_benefit_sharing_principles). As can be seen there is broad agreement among the FGD groups on who makes the decision about the carbon benefit sharing arrangements. In approximately half the CFs the CFMG executive is responsible for the decision, while in the other half the entire CFMG is responsible.
+We also asked CFMG executive FGDs about the carbon income sharing arrangements within the community. We first asked who is responsible for the decision-making (@fig-bs_benefit_sharing_decision) and then we asked on what principles the benefit sharing was based (@fig-bs_benefit_sharing_principles). In 12 CFs, the benefit sharing arrangements are defined in the constitution. Of the remainder, the CFMG executive is responsible for the decision in six, while in seven the entire CFMG is responsible.
 
 ```{r}
 #| label: fig-bs_benefit_sharing_decision
@@ -448,9 +461,9 @@ We also asked FGD groups about the carbon income sharing arrangements within the
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Who decides how carbon income is shared within the community by FGD group. The length of the segments is equal to the number of times that option was mentioned by the FGD group. Note: for 12 CFs the benefit-sharing arrangement is defined in the CFMG constitution."
-#| fig-width: 10
-#| fig-height: 5
+#| fig-cap: "Who decides how carbon income is shared within the community, as reported by CFMG executive FGDs. n = 28 CFMGs responded. Multiple options could be selected."
+#| fig-width: 9
+#| fig-height: 3.5
 
 prefix_bsc <- "economic_transformation_benefit_sharing_arrangement_carbon_income_"
 
@@ -462,46 +475,26 @@ decision_labels <- c(
 full_decision_vars <- paste0(prefix_bsc, names(decision_labels))
 
 cfmg |>
-  filter(interview_type %in% c("cfmg_executive", "cfmg_female",
-                                "cfmg_male", "cfmg_youth")) |>
-  mutate(group = factor(
-    case_match(
-      interview_type,
-      "cfmg_executive" ~ "Executive",
-      "cfmg_female"    ~ "Female",
-      "cfmg_male"      ~ "Male",
-      "cfmg_youth"     ~ "Youth"
-    ),
-    levels = c("Youth", "Male", "Female", "Executive")
-  )) |>
-  select(group, all_of(full_decision_vars)) |>
-  pivot_longer(all_of(full_decision_vars), names_to = "variable", values_to = "val") |>
+  filter(interview_type == "cfmg_executive") |>
+  select(all_of(full_decision_vars)) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "val") |>
   filter(val == 1) |>
   mutate(mechanism = factor(
     decision_labels[sub(prefix_bsc, "", variable, fixed = TRUE)],
-    levels = decision_labels
+    levels = rev(decision_labels)
   )) |>
-  count(group, mechanism) |>
-  ggplot(aes(y = group, x = n, fill = mechanism)) +
-  geom_col(width = 0.65, colour = "white", linewidth = 0.3) +
-  geom_text(
-    aes(label = n),
-    position = position_stack(vjust = 0.5),
-    size = 3.5, colour = "white", fontface = "bold"
-  ) +
-  scale_fill_manual(
-    values = c(
-      "Whole CFMG"         = "#2A9D8F",
-      "Executive decision" = "#E07B54"
-    ),
-    guide = guide_legend(reverse = TRUE)
-  ) +
+  count(mechanism) |>
+  bind_rows(tibble(mechanism = factor("Defined in constitution"), n = 12L)) |>
+  mutate(mechanism = fct_relevel(mechanism, "Defined in constitution", after = 0)) |>
+  ggplot(aes(x = n, y = mechanism)) +
+  geom_col(fill = "#2A9D8F", width = 0.55) +
+  geom_text(aes(label = n), hjust = -0.3, size = 5, colour = "grey30") +
   scale_x_continuous(
-    expand = expansion(mult = c(0, 0.05)),
-    name   = "Number of FGDs"
+    expand = expansion(mult = c(0, 0.15)),
+    name   = "Number of CFMGs"
   ) +
   scale_y_discrete(expand = expansion(add = 0.5)) +
-  labs(y = NULL, fill = NULL) +
+  labs(y = NULL) +
   theme_minimal(base_size = 18) +
   theme(
     panel.grid.major.y = element_blank(),
@@ -510,11 +503,11 @@ cfmg |>
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
     axis.text.x        = element_text(colour = "grey20"),
     axis.text.y        = element_text(size = 14, colour = "grey20"),
-    legend.position    = "bottom",
-    legend.text        = element_text(size = rel(0.85)),
-    plot.margin        = margin(10, 15, 10, 10)
+    plot.margin        = margin(10, 25, 10, 10)
   )
 ```
+
+The fact that only the CFMG Executives determine the sharing of carbon revenue in several cases is concerning. This is a lot of authority for the CFMG Executive to assume, and even if the benefit sharing is done appropriately it is likely to attract accusations of nepotism or corruption. 
 
 ```{r}
 #| label: fig-bs_benefit_sharing_principles
@@ -522,9 +515,9 @@ cfmg |>
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Principles governing carbon income sharing within the community by FGD group. The length of the segments is equal to the number of times that option was mentioned by the FGD group. Note: for 12 CFs the benefit-sharing arrangement is defined in the CFMG constitution."
-#| fig-width: 10
-#| fig-height: 5
+#| fig-cap: "Principles governing carbon income sharing within the community, as reported by CFMG executive FGDs. n = 28 CFMGs responded. Multiple options could be selected."
+#| fig-width: 9
+#| fig-height: 4
 
 prefix_bsc <- "economic_transformation_benefit_sharing_arrangement_carbon_income_"
 
@@ -537,47 +530,26 @@ principle_labels <- c(
 full_principle_vars <- paste0(prefix_bsc, names(principle_labels))
 
 cfmg |>
-  filter(interview_type %in% c("cfmg_executive", "cfmg_female",
-                                "cfmg_male", "cfmg_youth")) |>
-  mutate(group = factor(
-    case_match(
-      interview_type,
-      "cfmg_executive" ~ "Executive",
-      "cfmg_female"    ~ "Female",
-      "cfmg_male"      ~ "Male",
-      "cfmg_youth"     ~ "Youth"
-    ),
-    levels = c("Youth", "Male", "Female", "Executive")
-  )) |>
-  select(group, all_of(full_principle_vars)) |>
-  pivot_longer(all_of(full_principle_vars), names_to = "variable", values_to = "val") |>
+  filter(interview_type == "cfmg_executive") |>
+  select(all_of(full_principle_vars)) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "val") |>
   filter(val == 1) |>
   mutate(mechanism = factor(
     principle_labels[sub(prefix_bsc, "", variable, fixed = TRUE)],
-    levels = principle_labels
+    levels = rev(principle_labels)
   )) |>
-  count(group, mechanism) |>
-  ggplot(aes(y = group, x = n, fill = mechanism)) +
-  geom_col(width = 0.65, colour = "white", linewidth = 0.3) +
-  geom_text(
-    aes(label = n),
-    position = position_stack(vjust = 0.5),
-    size = 3.5, colour = "white", fontface = "bold"
-  ) +
-  scale_fill_manual(
-    values = c(
-      "Equal shares"        = "#2A9D8F",
-      "By contribution"     = "#57B8B0",
-      "Marginalised groups" = "#E9C46A"
-    ),
-    guide = guide_legend(reverse = TRUE)
-  ) +
+  count(mechanism) |>
+  bind_rows(tibble(mechanism = factor("Defined in constitution"), n = 12L)) |>
+  mutate(mechanism = fct_relevel(mechanism, "Defined in constitution", after = 0)) |>
+  ggplot(aes(x = n, y = mechanism)) +
+  geom_col(fill = "#2A9D8F", width = 0.55) +
+  geom_text(aes(label = n), hjust = -0.3, size = 5, colour = "grey30") +
   scale_x_continuous(
-    expand = expansion(mult = c(0, 0.05)),
-    name   = "Number of FGDs"
+    expand = expansion(mult = c(0, 0.15)),
+    name   = "Number of CFMGs"
   ) +
   scale_y_discrete(expand = expansion(add = 0.5)) +
-  labs(y = NULL, fill = NULL) +
+  labs(y = NULL) +
   theme_minimal(base_size = 18) +
   theme(
     panel.grid.major.y = element_blank(),
@@ -586,17 +558,15 @@ cfmg |>
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
     axis.text.x        = element_text(colour = "grey20"),
     axis.text.y        = element_text(size = 14, colour = "grey20"),
-    legend.position    = "bottom",
-    legend.text        = element_text(size = rel(0.85)),
-    plot.margin        = margin(10, 15, 10, 10)
+    plot.margin        = margin(10, 25, 10, 10)
   )
 ```
 
-According to the responses of the CFMG executives, seven CFs shared benefits according to members contribution to CFM while six shared them equally among the community households. Only two said that consideration of marginalised or vulnerable groups was a consideration. The other FGD groups were broadly similar in their responses and differences may be due to their knowledge of the arrangements, rather than actual differences in the arrangements.
+According to the responses of the CFMG executives, seven CFs shared benefits according to community members' contribution to CFM while six shared them equally among the community households. Meanwhile, only two said that consideration of marginalised or vulnerable groups was a factor in benefit sharing. For 12 of the CFs, the benefit sharing arrangements are determined in the consitution.
 
 ### External determination of benefit sharing
 
-We also asked FGD groups whether stakeholders outside the community were also involved in determining the benefit-sharing arrangement (@fig-bs_benefit_sharing_external).
+We also asked CFMG executive FGDs whether stakeholders outside the community were involved in determining the benefit-sharing arrangement (@fig-bs_benefit_sharing_external). Again, in 12 CFs the benefit sharing arrangement is determined in the constitution. Of the remaining CFs, carbon enterprises are involved in determining the benefit sharing arrangement in 13 cases, while FD is involved in three cases and an NGO or traditional leader in one case each.
 
 ```{r}
 #| label: fig-bs_benefit_sharing_external
@@ -604,66 +574,40 @@ We also asked FGD groups whether stakeholders outside the community were also in
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Who determines the benefit-sharing arrangement outside the community, by FGD group."
-#| fig-width: 10
-#| fig-height: 5
+#| fig-cap: "Who from outside the community determines the benefit-sharing arrangement, as reported by CFMG executive FGDs. n = 28 CFMGs responded. Multiple options could be selected. In 12 of the CFMGs, the benefit sharing arrangements are stipulated in the constitution."
+#| fig-width: 9
+#| fig-height: 4
 
 prefix_bse <- "economic_transformation_benefit_sharing_mechanism_determined_by_"
 
 bse_labels <- c(
-  "carbon_trader"                        = "Carbon trader",
-  "the_forestry_department_fd"           = "Forestry Dept",
-  "an_ngo_or_external_organization"      = "NGO",
-  "a_multiple_stakeholder_joint_decision"= "Joint decision",
-  "traditional_leaders"                  = "Traditional leaders"
+  "carbon_trader"                   = "Carbon enterprise",
+  "the_forestry_department_fd"      = "Forestry Dept",
+  "an_ngo_or_external_organization" = "NGO",
+  "traditional_leaders"             = "Traditional leaders"
 )
 
 full_bse_vars <- paste0(prefix_bse, names(bse_labels))
 
 cfmg |>
-  filter(interview_type %in% c("cfmg_executive", "cfmg_female",
-                                "cfmg_male", "cfmg_youth")) |>
-  mutate(group = factor(
-    case_match(
-      interview_type,
-      "cfmg_executive" ~ "Executive",
-      "cfmg_female"    ~ "Female",
-      "cfmg_male"      ~ "Male",
-      "cfmg_youth"     ~ "Youth"
-    ),
-    levels = c("Youth", "Male", "Female", "Executive")
-  )) |>
-  select(group, all_of(full_bse_vars)) |>
-  pivot_longer(all_of(full_bse_vars), names_to = "variable", values_to = "val") |>
+  filter(interview_type == "cfmg_executive") |>
+  select(all_of(full_bse_vars)) |>
+  pivot_longer(everything(), names_to = "variable", values_to = "val") |>
   filter(val == 1) |>
   mutate(mechanism = factor(
     bse_labels[sub(prefix_bse, "", variable, fixed = TRUE)],
-    levels = bse_labels
+    levels = rev(bse_labels)
   )) |>
-  count(group, mechanism) |>
-  ggplot(aes(y = group, x = n, fill = mechanism)) +
-  geom_col(width = 0.65, colour = "white", linewidth = 0.3) +
-  geom_text(
-    aes(label = n),
-    position = position_stack(vjust = 0.5),
-    size = 3.5, colour = "white", fontface = "bold"
-  ) +
-  scale_fill_manual(
-    values = c(
-      "Carbon trader"      = "#2A9D8F",
-      "Forestry Dept"      = "#57B8B0",
-      "NGO"                = "#E9C46A",
-      "Joint decision"     = "#F4A261",
-      "Traditional leaders"= "#E07B54"
-    ),
-    guide = guide_legend(reverse = TRUE, nrow = 2, byrow = TRUE)
-  ) +
+  count(mechanism) |>
+  ggplot(aes(x = n, y = mechanism)) +
+  geom_col(fill = "#2A9D8F", width = 0.55) +
+  geom_text(aes(label = n), hjust = -0.3, size = 5, colour = "grey30") +
   scale_x_continuous(
-    expand = expansion(mult = c(0, 0.05)),
-    name   = "Number of FGDs"
+    expand = expansion(mult = c(0, 0.15)),
+    name   = "Number of CFMGs"
   ) +
   scale_y_discrete(expand = expansion(add = 0.5)) +
-  labs(y = NULL, fill = NULL) +
+  labs(y = NULL) +
   theme_minimal(base_size = 18) +
   theme(
     panel.grid.major.y = element_blank(),
@@ -672,15 +616,13 @@ cfmg |>
     axis.line.x.bottom = element_line(colour = "grey30", linewidth = 0.5),
     axis.text.x        = element_text(colour = "grey20"),
     axis.text.y        = element_text(size = 14, colour = "grey20"),
-    legend.position    = "bottom",
-    legend.text        = element_text(size = rel(0.85)),
-    plot.margin        = margin(10, 15, 10, 10)
+    plot.margin        = margin(10, 25, 10, 10)
   )
 ```
 
 ## Gender equity
 
-We asked FGD groups whether women benefit from CFM (@fig-bs_equity_women_benefit).
+We asked FGD groups whether women benefit from CFM (@fig-bs_equity_women_benefit). As can be seen in the figure, across all FGD types a majority of groups reported that women benefit from CFM. However, a minority of FGD groups across all types stated that women do not benefit and, moreover, the proportion of FGD groups reporting that women do not benefit was significantly higher for female and youth FGD groups, compared to CFMG Executive and Male groups. The governance index was not a significant prediction of this response. 
 
 ```{r}
 #| label: fig-bs_equity_women_benefit
@@ -747,6 +689,10 @@ cfmg |>
   )
 ```
 
+::: return-to-summary
+[← Return to Summary](Summary.html#equity-and-inclusion)
+:::
+
 ```{r}
 #| label: model_bs_fgd_women_benefit
 #| include: false
@@ -794,7 +740,7 @@ pairwise.M3 <- pairs(emm.M3, adjust = "Tukey")
 re_M3    <- as.data.frame(VarCorr(M3))
 prov_M3  <- round(re_M3$vcov[re_M3$grp == "province"], 3)
 cfmg_M3  <- round(re_M3$vcov[re_M3$grp == "province_cfmg"], 3)
-r2_M3    <- suppressWarnings(performance::r2_nakagawa(M3))
+r2_M3    <- performance::r2_nakagawa(M3, verbose = FALSE)
 
 tidy(M3, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -852,7 +798,7 @@ as.data.frame(pairwise.M3) |>
   sub_missing()
 ```
 
-Individual interviewees were also asked whether women benefit from CFM. @tbl-bs_individual_women_benefit shows the percentage reporting this broken down by interviewee role.
+Individual interviewees were also asked whether women benefit from CFM. @tbl-bs_individual_women_benefit shows the percentage reporting this broken down by interviewee role. Among the individual interviewee respondents a substantial majority agreed that women benefited from CFM. Values varied from 79% of respondents agreeing among traditional leaders to 100% among enterprise representatives. However, these differences among interviewee roles were not significant, and neither was the gender or age of the respondent a significant factor.
 
 ```{r}
 #| label: tbl-bs_individual_women_benefit
@@ -875,11 +821,11 @@ cfmg |>
       "cfmg_exec_member" ~ "CFMG executive member",
       "trad_leader"      ~ "Traditional leader",
       "dfo"              ~ "District Forestry Officer",
-      "NGO_rep"          ~ "NGO representative"
+      "NGO_rep"          ~ "Private enterprise rep"
     ),
     interviewee_role = factor(interviewee_role, levels = c(
       "Community member", "CFMG executive member", "Traditional leader",
-      "District Forestry Officer", "NGO representative"
+      "District Forestry Officer", "Private enterprise rep"
     )),
     empl = case_match(empl,
                       "yes" ~ 1,
@@ -957,7 +903,7 @@ pairwise.M4 <- pairs(emm.M4, adjust = "Tukey")
 re_M4    <- as.data.frame(VarCorr(M4))
 prov_M4  <- round(re_M4$vcov[re_M4$grp == "province"], 3)
 cfmg_M4  <- round(re_M4$vcov[re_M4$grp == "province_cfmg"], 3)
-r2_M4    <- suppressWarnings(performance::r2_nakagawa(M4))
+r2_M4    <- performance::r2_nakagawa(M4, verbose = FALSE)
 
 tidy(M4, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -965,7 +911,7 @@ tidy(M4, effects = "fixed") |>
     "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
     "interviewee_roletrad_leader"        ~ "Traditional leader",
     "interviewee_roledfo"                ~ "District Forestry Officer",
-    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_roleNGO_rep"            ~ "Private enterprise rep",
     "interviewee_gendermale"             ~ "Male",
     "interviewee_age"                    ~ "Age"
   )) |>
@@ -1019,7 +965,7 @@ as.data.frame(pairwise.M4) |>
 
 ### Women disproportionately suffer opportunity costs
 
-We asked FGD groups whether women disproportionately suffer the opportunity costs of CFM (@fig-bs_opp_costs).
+We asked FGD groups whether women disproportionately suffer the opportunity costs of CFM (@fig-bs_opp_costs). The results are almost a perfect mirror image of the the results the previous question on whether women benefit from CFM. Across all FGD types most groups said 'No', but there was a significantly greater proportion of female and youth FGD groups that felt women did suffer higher opportunity costs.
 
 ```{r}
 #| label: fig-bs_opp_costs
@@ -1133,7 +1079,7 @@ pairwise.M5 <- pairs(emm.M5, adjust = "Tukey")
 re_M5    <- as.data.frame(VarCorr(M5))
 prov_M5  <- round(re_M5$vcov[re_M5$grp == "province"], 3)
 cfmg_M5  <- round(re_M5$vcov[re_M5$grp == "province_cfmg"], 3)
-r2_M5    <- suppressWarnings(performance::r2_nakagawa(M5))
+r2_M5    <- performance::r2_nakagawa(M5, verbose = FALSE)
 
 tidy(M5, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -1191,7 +1137,7 @@ as.data.frame(pairwise.M5) |>
   sub_missing()
 ```
 
-Individual interviewees were also asked whether women disproportionately suffer the opportunity costs of CFM. @tbl-bs_individual_opp_costs shows the percentage reporting this broken down by interviewee role.
+Individual interviewees were also asked whether women disproportionately suffer the opportunity costs of CFM. @tbl-bs_individual_opp_costs shows the percentage reporting this broken down by interviewee role. Again the results were a mirror image of those obtained for whether women benefitted from CFM. Only this time age was a significant factor in determining responses, with older respondents more likely to state that women did experience higher opportunity costs.
 
 ```{r}
 #| label: tbl-bs_individual_opp_costs
@@ -1214,11 +1160,11 @@ cfmg |>
       "cfmg_exec_member" ~ "CFMG executive member",
       "trad_leader"      ~ "Traditional leader",
       "dfo"              ~ "District Forestry Officer",
-      "NGO_rep"          ~ "NGO representative"
+      "NGO_rep"          ~ "Private enterprise rep"
     ),
     interviewee_role = factor(interviewee_role, levels = c(
       "Community member", "CFMG executive member", "Traditional leader",
-      "District Forestry Officer", "NGO representative"
+      "District Forestry Officer", "Private enterprise rep"
     )),
     empl = case_match(empl,
                       "yes" ~ 1,
@@ -1296,7 +1242,7 @@ pairwise.M6 <- pairs(emm.M6, adjust = "Tukey")
 re_M6    <- as.data.frame(VarCorr(M6))
 prov_M6  <- round(re_M6$vcov[re_M6$grp == "province"], 3)
 cfmg_M6  <- round(re_M6$vcov[re_M6$grp == "province_cfmg"], 3)
-r2_M6    <- suppressWarnings(performance::r2_nakagawa(M6))
+r2_M6    <- performance::r2_nakagawa(M6, verbose = FALSE)
 
 tidy(M6, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -1304,7 +1250,7 @@ tidy(M6, effects = "fixed") |>
     "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
     "interviewee_roletrad_leader"        ~ "Traditional leader",
     "interviewee_roledfo"                ~ "District Forestry Officer",
-    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_roleNGO_rep"            ~ "Private enterprise rep",
     "interviewee_gendermale"             ~ "Male",
     "interviewee_age"                    ~ "Age"
   )) |>
@@ -1358,7 +1304,7 @@ as.data.frame(pairwise.M6) |>
 
 ### Women participate in decision making
 
-We asked FGD groups whether women participate in CFM decision making (@fig-bs_decision_making).
+We asked FGD groups whether women participate in CFM decision making (@fig-bs_decision_making). The results were very similar to those obtained for the question on whether women benefited from CFM. A substantial majority of groups stated that women did participate in decision making, but a significantly greater proportion of female and youth FGD groups said they did not.
 
 ```{r}
 #| label: fig-bs_decision_making
@@ -1425,6 +1371,10 @@ cfmg |>
   )
 ```
 
+::: return-to-summary
+[← Return to Summary](Summary.html#equity-and-inclusion)
+:::
+
 ```{r}
 #| label: model_bs_fgd_decision_making
 #| include: false
@@ -1472,7 +1422,7 @@ pairwise.M7 <- pairs(emm.M7, adjust = "Tukey")
 re_M7    <- as.data.frame(VarCorr(M7))
 prov_M7  <- round(re_M7$vcov[re_M7$grp == "province"], 3)
 cfmg_M7  <- round(re_M7$vcov[re_M7$grp == "province_cfmg"], 3)
-r2_M7    <- suppressWarnings(performance::r2_nakagawa(M7))
+r2_M7    <- performance::r2_nakagawa(M7, verbose = FALSE)
 
 tidy(M7, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -1530,7 +1480,7 @@ as.data.frame(pairwise.M7) |>
   sub_missing()
 ```
 
-Individual interviewees were also asked whether women participate in CFM decision making. @tbl-bs_individual_decision_making shows the percentage reporting this broken down by interviewee role.
+Individual interviewees were also asked whether women participate in CFM decision making. @tbl-bs_individual_decision_making shows the percentage reporting this broken down by interviewee role. Very high proportions of individual interviewees responded that women did praticipate in decision making, varying from 92% among traditional leaders and DFOs to 100% among community members. There were no significant differences among interviewee roles in their responses to this question.
 
 ```{r}
 #| label: tbl-bs_individual_decision_making
@@ -1553,11 +1503,11 @@ cfmg |>
       "cfmg_exec_member" ~ "CFMG executive member",
       "trad_leader"      ~ "Traditional leader",
       "dfo"              ~ "District Forestry Officer",
-      "NGO_rep"          ~ "NGO representative"
+      "NGO_rep"          ~ "Private enterprise rep"
     ),
     interviewee_role = factor(interviewee_role, levels = c(
       "Community member", "CFMG executive member", "Traditional leader",
-      "District Forestry Officer", "NGO representative"
+      "District Forestry Officer", "Private enterprise rep"
     )),
     empl = case_match(empl,
                       "yes" ~ 1,
@@ -1635,7 +1585,7 @@ pairwise.M8 <- pairs(emm.M8, adjust = "Tukey")
 re_M8    <- as.data.frame(VarCorr(M8))
 prov_M8  <- round(re_M8$vcov[re_M8$grp == "province"], 3)
 cfmg_M8  <- round(re_M8$vcov[re_M8$grp == "province_cfmg"], 3)
-r2_M8    <- suppressWarnings(performance::r2_nakagawa(M8))
+r2_M8    <- performance::r2_nakagawa(M8, verbose = FALSE)
 
 tidy(M8, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -1643,7 +1593,7 @@ tidy(M8, effects = "fixed") |>
     "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
     "interviewee_roletrad_leader"        ~ "Traditional leader",
     "interviewee_roledfo"                ~ "District Forestry Officer",
-    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_roleNGO_rep"            ~ "Private enterprise rep",
     "interviewee_gendermale"             ~ "Male",
     "interviewee_age"                    ~ "Age"
   )) |>
@@ -1697,7 +1647,7 @@ as.data.frame(pairwise.M8) |>
 
 ### Transparency in benefit sharing
 
-We asked FGD groups whether there is transparency in CFM benefit sharing (@fig-bs_transparency).
+We asked FGD groups whether there is transparency in CFM benefit sharing (@fig-bs_transparency). Interestingly, the answers to this question were more varied than to the previous questions. However, across all FGD types a majority of groups agreed that there was transparency in the benefit sharing. However, all the community FGD types were significantly more likely to disagree as compared to the CFMG Executive FGDs. In addition, the CFMG level governance index score was a highly significant predictor of the probability that a FGD group would agree that benefit sharing was transparent.
 
 ```{r}
 #| label: fig-bs_transparency
@@ -1764,6 +1714,10 @@ cfmg |>
   )
 ```
 
+::: return-to-summary
+[← Return to Summary](Summary.html#equity-and-inclusion)
+:::
+
 ```{r}
 #| label: model_bs_fgd_transparency
 #| include: false
@@ -1811,7 +1765,7 @@ pairwise.M9 <- pairs(emm.M9, adjust = "Tukey")
 re_M9    <- as.data.frame(VarCorr(M9))
 prov_M9  <- round(re_M9$vcov[re_M9$grp == "province"], 3)
 cfmg_M9  <- round(re_M9$vcov[re_M9$grp == "province_cfmg"], 3)
-r2_M9    <- suppressWarnings(performance::r2_nakagawa(M9))
+r2_M9    <- performance::r2_nakagawa(M9, verbose = FALSE)
 
 tidy(M9, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -1869,7 +1823,7 @@ as.data.frame(pairwise.M9) |>
   sub_missing()
 ```
 
-Individual interviewees were also asked whether there is transparency in CFM benefit sharing. @tbl-bs_individual_transparency shows the percentage reporting this broken down by interviewee role.
+Individual interviewees were also asked whether there is transparency in CFM benefit sharing. @tbl-bs_individual_transparency shows the percentage reporting this broken down by interviewee role. A substantial majority of individual interviewees agreed that benefit sharing was transparent, varying from 76% among traditional leaders to 93% among CFMG Executive members. The differences among interviewee roles were not significant.
 
 ```{r}
 #| label: tbl-bs_individual_transparency
@@ -1892,11 +1846,11 @@ cfmg |>
       "cfmg_exec_member" ~ "CFMG executive member",
       "trad_leader"      ~ "Traditional leader",
       "dfo"              ~ "District Forestry Officer",
-      "NGO_rep"          ~ "NGO representative"
+      "NGO_rep"          ~ "Private enterprise rep"
     ),
     interviewee_role = factor(interviewee_role, levels = c(
       "Community member", "CFMG executive member", "Traditional leader",
-      "District Forestry Officer", "NGO representative"
+      "District Forestry Officer", "Private enterprise rep"
     )),
     empl = case_match(empl,
                       "yes" ~ 1,
@@ -1974,7 +1928,7 @@ pairwise.M10 <- pairs(emm.M10, adjust = "Tukey")
 re_M10    <- as.data.frame(VarCorr(M10))
 prov_M10  <- round(re_M10$vcov[re_M10$grp == "province"], 3)
 cfmg_M10  <- round(re_M10$vcov[re_M10$grp == "province_cfmg"], 3)
-r2_M10    <- suppressWarnings(performance::r2_nakagawa(M10))
+r2_M10    <- performance::r2_nakagawa(M10, verbose = FALSE)
 
 tidy(M10, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -1982,7 +1936,7 @@ tidy(M10, effects = "fixed") |>
     "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
     "interviewee_roletrad_leader"        ~ "Traditional leader",
     "interviewee_roledfo"                ~ "District Forestry Officer",
-    "interviewee_roleNGO_rep"            ~ "NGO representative",
+    "interviewee_roleNGO_rep"            ~ "Private enterprise rep",
     "interviewee_gendermale"             ~ "Male",
     "interviewee_age"                    ~ "Age"
   )) |>
@@ -2034,8 +1988,7 @@ as.data.frame(pairwise.M10) |>
   sub_missing()
 ```
 
-
-We examined which mechanisms are being used to achieve transparency in benefit sharing among the community female, male, and youth FGDs (@fig-bs_transparency_mechanisms).
+We examined which mechanisms are being used to achieve transparency in benefit sharing among the community female, male, and youth FGDs (@fig-bs_transparency_mechanisms). As can be seen from the figure, community meetings were recognised as by far the most important mechanism for achieving transparency. It is noteworthy that written agreements and financial reports/audits were relatively infrequently mentioned. Although community meetings may be the most important to communicate, the formal CFMG processes such as annual financial reporting are also critical underpinnings of transparency. As our results from the governance chapter also showed, reporting by CFMGs does not appear adequate.
 
 ```{r}
 #| label: fig-bs_transparency_mechanisms
@@ -2118,7 +2071,7 @@ cfmg |>
 
 ### Grievance and Redress
 
-We asked FGD groups whether their CFMG has a grievance and redress mechanism in place (@fig-bs_grievance).
+We asked FGD groups whether their CFMG has a grievance and redress mechanism in place (@fig-bs_grievance). As can be seen in the figure, a substantial majority of FGD groups reported that they had a grievance and redress mechanism. However, a small number of Executive FGDs reported they did not have any mechanism, which is concerning. Moreover, a larger number of community FGD groups said there was no grievance and redress mechanism, which suggests that information about the availability of the process is not always being adequately communicated. The differences in responses between Executive FGDs and all three community groups were significant.
 
 ```{r}
 #| label: fig-bs_grievance
@@ -2222,30 +2175,73 @@ pairwise.M11 <- pairs(emm.M11, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M11_bs_fgd_grievance
+#| label: tbl-M11_bs_fgd_grievance
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Grievance and redress – FGD model results (click to expand)"
+#| tbl-cap: "Results of the model examining the effect of FGD type on whether communities report having a grievance and redress mechanism."
 
-summary(M11)
+re_M11    <- as.data.frame(VarCorr(M11))
+prov_M11  <- round(re_M11$vcov[re_M11$grp == "province"], 3)
+cfmg_M11  <- round(re_M11$vcov[re_M11$grp == "province_cfmg"], 3)
+r2_M11    <- performance::r2_nakagawa(M11, verbose = FALSE)
+
+tidy(M11, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"          ~ "Intercept (Executive FGD)",
+    "interview_typeFemale" ~ "Female FGD",
+    "interview_typeMale"   ~ "Male FGD",
+    "interview_typeYouth"  ~ "Youth FGD"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for grievance and redress mechanism — FGD type",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference = Executive FGD. ",
+      "Province variance = {prov_M11}; CF-within-province variance = {cfmg_M11}. ",
+      "Marginal R² = {round(r2_M11$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M11$R2_conditional, 3)}. ",
+      "n = {nobs(M11)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_bs_fgd_grievance
+#| label: tbl-pairwise_bs_fgd_grievance
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Grievance and redress – FGD pairwise comparisons (click to expand)"
+#| tbl-cap: "Pairwise comparisons among FGD types for grievance and redress mechanism."
 
-summary(pairwise.M11)
+as.data.frame(pairwise.M11) |>
+  select(contrast, odds.ratio, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(contrast="Contrast", odds.ratio="Odds ratio", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
+  fmt_number(columns=c(odds.ratio, SE, z.ratio), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Pairwise comparisons — FGD type",
+    subtitle = "Estimates are odds ratios on the response scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-contrast) |>
+  cols_align(align="left", columns=contrast) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
+  sub_missing()
 ```
 
-Individual interviewees were also asked whether their CFMG has a grievance and redress mechanism. @tbl-bs_individual_grievance shows the percentage reporting this broken down by interviewee role.
+Individual interviewees were also asked whether their CFMG has a grievance and redress mechanism. @tbl-bs_individual_grievance shows the percentage reporting this broken down by interviewee role and as can be seen most stated that there was a mechanism in place. However, minority of around 10-20% stated that the CFMG lacked any such process. The differences among interviewee roles were not significant.
 
 ```{r}
 #| label: tbl-bs_individual_grievance
@@ -2268,11 +2264,11 @@ cfmg |>
       "cfmg_exec_member" ~ "CFMG executive member",
       "trad_leader"      ~ "Traditional leader",
       "dfo"              ~ "District Forestry Officer",
-      "NGO_rep"          ~ "NGO representative"
+      "NGO_rep"          ~ "Private enterprise rep"
     ),
     interviewee_role = factor(interviewee_role, levels = c(
       "Community member", "CFMG executive member", "Traditional leader",
-      "District Forestry Officer", "NGO representative"
+      "District Forestry Officer", "Private enterprise rep"
     )),
     empl = case_match(empl,
                       "yes" ~ 1,
@@ -2340,30 +2336,76 @@ pairwise.M12 <- pairs(emm.M12, adjust = "Tukey")
 ```
 
 ```{r}
-#| label: M12_bs_individual_grievance
+#| label: tbl-M12_bs_individual_grievance
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Grievance and redress – Individual model results (click to expand)"
+#| tbl-cap: "Results of the model examining the effect of interviewee role, gender and age on whether individuals report having a grievance and redress mechanism."
 
-summary(M12)
+re_M12    <- as.data.frame(VarCorr(M12))
+prov_M12  <- round(re_M12$vcov[re_M12$grp == "province"], 3)
+cfmg_M12  <- round(re_M12$vcov[re_M12$grp == "province_cfmg"], 3)
+r2_M12    <- performance::r2_nakagawa(M12, verbose = FALSE)
+
+tidy(M12, effects = "fixed") |>
+  mutate(term = case_match(term,
+    "(Intercept)"                        ~ "Intercept (Community member)",
+    "interviewee_rolecfmg_exec_member"   ~ "CFMG executive member",
+    "interviewee_roletrad_leader"        ~ "Traditional leader",
+    "interviewee_roledfo"                ~ "District Forestry Officer",
+    "interviewee_roleNGO_rep"            ~ "Private enterprise rep",
+    "interviewee_gendermale"             ~ "Male",
+    "interviewee_age"                    ~ "Age"
+  )) |>
+  select(term, estimate, std.error, p.value) |>
+  gt() |>
+  cols_label(term="Factor", estimate="Estimate", std.error="SE", p.value=md("*P* value")) |>
+  fmt_number(columns=c(estimate, std.error), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Model results for grievance and redress mechanism — individual interviewees",
+    subtitle = glue::glue(
+      "Estimates are log-odds; reference = Community member. ",
+      "Province variance = {prov_M12}; CF-within-province variance = {cfmg_M12}. ",
+      "Marginal R² = {round(r2_M12$R2_marginal, 3)}; ",
+      "conditional R² = {round(r2_M12$R2_conditional, 3)}. ",
+      "n = {nobs(M12)}."
+    )
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-term) |>
+  cols_align(align="left", columns=term) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=term)) |>
+  sub_missing()
 ```
 
 ```{r}
-#| label: pairwise_bs_individual_grievance
+#| label: tbl-pairwise_bs_individual_grievance
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| output-fold: true
-#| output-summary: "Grievance and redress – Individual pairwise comparisons (click to expand)"
+#| tbl-cap: "Pairwise comparisons among interviewee roles for grievance and redress mechanism."
 
-summary(pairwise.M12)
+as.data.frame(pairwise.M12) |>
+  select(contrast, odds.ratio, SE, z.ratio, p.value) |>
+  gt() |>
+  cols_label(contrast="Contrast", odds.ratio="Odds ratio", SE="SE", z.ratio="z ratio", p.value=md("*P* value")) |>
+  fmt_number(columns=c(odds.ratio, SE, z.ratio), decimals=3) |>
+  fmt_number(columns=p.value, decimals=4) |>
+  tab_header(
+    title    = "Pairwise comparisons — interviewee role",
+    subtitle = "Estimates are odds ratios on the response scale. Tukey-adjusted p-values."
+  ) |>
+  opt_align_table_header(align = "left") |>
+  cols_align(align="center", columns=-contrast) |>
+  cols_align(align="left", columns=contrast) |>
+  tab_style(style=cell_text(align="center"), locations=cells_column_labels(columns=contrast)) |>
+  sub_missing()
 ```
 
-We also examined which mechanisms are being used to achieve grievance and redress among the community female, male, and youth FGDs (@fig-bs_grievance_mechanisms).
+We also examined which mechanisms are being used to achieve grievance and redress among the community female, male, and youth FGDs (@fig-bs_grievance_mechanisms). As can be seen, the main mechanism include community meetings, mediation by traditional leaders and formal grievance and redress committees. The focus on local solutions is a positive finding.
 
 ```{r}
 #| label: fig-bs_grievance_mechanisms
@@ -2447,7 +2489,7 @@ cfmg |>
 
 ### Impact on poverty
 
-We asked the community female, male, and youth FGDs to identify the ways in which CFM has had an impact on poverty in their communities (@fig-bs_poverty_impact).
+We asked the community female, male, and youth FGDs to identify the ways in which CFM has had an impact on poverty in their communities (@fig-bs_poverty_impact). Increase in household incomes was the most commonly stated impact on poverty followed by increased nutrition and food security. However, it is intersting to note the number of different types of responses that were given.
 
 ```{r}
 #| label: fig-bs_poverty_impact
@@ -2528,9 +2570,13 @@ cfmg |>
   )
 ```
 
+::: return-to-summary
+[← Return to Summary](Summary.html#equity-and-inclusion)
+:::
+
 ### Barriers to poorer community members
 
-We asked the community female, male, and youth FGDs to identify the barriers that prevent poorer community members from benefiting from CFM (@fig-bs_poverty_barriers).
+We asked the community female, male, and youth FGDs to identify the barriers that prevent poorer community members from benefiting from CFM (@fig-bs_poverty_barriers). Most often mentioned was "Limited information". However, more concerning were responses like, "Excluded from decisions", "Unequal benefit distribution" and "No trust in leadership". 
 
 ```{r}
 #| label: fig-bs_poverty_barriers
@@ -2605,7 +2651,7 @@ ggplot(barriers_all, aes(label = word, size = freq, colour = freq)) +
 
 ### Addressing challenges
 
-We asked the community female, male, and youth FGDs to suggest solutions to address the barriers facing poorer community members in benefiting from CFM (@fig-bs_solutions).
+We asked the community female, male, and youth FGDs to suggest solutions to address the barriers facing poorer community members in benefiting from CFM (@fig-bs_solutions). Far and away the most popular solution for addressing these barries was community meetings. 
 
 ```{r}
 #| label: fig-bs_solutions
@@ -2686,7 +2732,7 @@ cfmg |>
 
 ## Equity and inclusion index
 
-To summarise the overall equity and inclusion performance of each CFMG, we constructed an equity and inclusion score (0–5) by summing five binary indicators reported by FGD groups — equitable benefit sharing, women benefiting from CFM, women participating in decision making, transparency in benefit sharing, and existence of a grievance and redress mechanism — each scored as 1 (positive outcome reported) or 0 (no positive outcome). The distribution of equity and inclusion scores across CFMGs is shown in @fig-bs_index_dist. We then modelled this score using a linear mixed model with FGD type and the governance index as predictors, and random intercepts for province and CF within province, to test whether governance and FGD type were significant predictors of overall equity and inclusion performance (@tbl-bs_index_model, @fig-bs_index).
+To summarise the overall equity and inclusion performance of each CFMG, we constructed an equity and inclusion score (0–5) by summing five binary indicators reported by FGD groups — equitable benefit sharing, women benefiting from CFM, women participating in decision making, transparency in benefit sharing, and existence of a grievance and redress mechanism — each scored as 1 (positive outcome reported) or 0 (no positive outcome). The distribution of equity and inclusion scores across CFMGs is shown in @fig-bs_index_dist (Appendix III). We then modelled this score using a linear mixed model with FGD type and the governance index as predictors, and random intercepts for province and CF within province, to test whether governance and FGD type were significant predictors of overall equity and inclusion performance (@tbl-bs_index_model, @fig-bs_index).
 
 ```{r}
 #| label: data_bs_index
@@ -2780,7 +2826,7 @@ re_bs    <- as.data.frame(VarCorr(M_bs))
 prov_bs  <- round(re_bs$vcov[re_bs$grp == "province"], 3)
 cfmg_bs  <- round(re_bs$vcov[re_bs$grp == "province_cfmg"], 3)
 resid_bs <- round(re_bs$vcov[re_bs$grp == "Residual"], 3)
-r2_bs    <- suppressWarnings(performance::r2_nakagawa(M_bs))
+r2_bs    <- performance::r2_nakagawa(M_bs, verbose = FALSE)
 
 tidy(M_bs, effects = "fixed") |>
   mutate(term = case_match(term,
@@ -2840,6 +2886,8 @@ bs_data |>
   )
 ```
 
+As can be seen from the model results, all three community FGD groups had significantly lower Equity and Inclusion scores compared to the CFMG Executive FGDs. Thus, the community groups all scored their CFM lower on Equite and Inclusion compared to the CFMG Executives. This indicates a pervasive difference in perception between communities and the CFMG Executives concerning the fairness of the CFM processes. The governance index was also a highly significant preditor of the Equite and Inclusion score, indication that better governed CFMGs had better equity and inclusion scores.
+
 ## Discussion
 
 Through the FGDs and individual interviews, we investigated a wide range of equity and inclusion indicators, covering benefit sharing, gender equity, transparency, grievance and redress, and poverty impacts.
@@ -2852,4 +2900,4 @@ Carbon benefit-sharing agreements between companies and communities are almost e
 
 The reported poverty impacts of CFM — primarily increased household incomes and new income-generating activities — are broadly consistent with the economic transformation chapter findings. However, barriers to poorer community members benefiting remain, including limited access to resources, capital and markets. The solutions communities themselves proposed — financial support, targeted programmes for marginalised groups, and better governance — align closely with the governance and economic transformation recommendations identified elsewhere in this report.
 
-In conclusion, the equity and inclusion outcomes of CFM in Zambia are broadly positive but uneven. The divergence between female and youth perspectives and those of CFMG executives is the most important finding of this chapter. It signals that equity problems in a subset of CFMGs are likely more widespread than executive-level data alone would suggest, and that strengthening transparency, grievance and redress mechanisms and community-wide engagement is essential to ensuring CFM benefits reach all community members equitably.
+In conclusion, the equity and inclusion outcomes of CFM in Zambia are broadly positive but uneven. The divergence between female and youth perspectives and those of CFMG executives is the most important finding of this chapter. It signals that equity problems in a subset of CFMGs, and that strengthening transparency, grievance and redress mechanisms and community-wide engagement is essential to ensuring CFM benefits reach all community members equitably.

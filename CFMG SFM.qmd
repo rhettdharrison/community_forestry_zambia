@@ -2,9 +2,12 @@
 title: "Sustainable Forest Management"
 author: "Rhett D Harrison"
 format:
-        html:
-                css: custom.css
-        pdf: default
+  html:
+    css: custom.css
+  pdf:
+    include-in-header:
+      text: |
+        \pagenumbering{arabic}
 filters:
 - collapse-output
 editor: visual
@@ -35,11 +38,17 @@ load("cfmg.RData")
 
 ## Summary
 
-Most respondents indicated that deforestation, charcoal production and fire frequency were decreasing, wildlife populations were increasing and natural resource management was improving within CFs. Most FDG groups also indicated that both deforestation and charcoal production were also decreasing outside their CF, suggesting there is no leakage effect. Community female FDGs tended to have a more positive view of the impact of CFM compared to the other groups, which is noteworthy given it is primarily the women who harvest forest products, but who often do not have voice in traditional natural resource management. However, it is also important to note that a small number of FDG groups and individual interviewees suggested the situation was worsening in their CFs. It will be important to identify CFs that are doing less well and address the problems. Not many CFMGs were practising natural forest restoration or establishing plantations. Existing CFs should be expanded and new one designed, so that they incorporate degraded areas that can become the focus of restoration and plantation activities. There is a considerable opportunity for CFM to contribute to national restoration and plantation targets, but currently this is not being realised. 
+Most FGD respondents indicated that deforestation, charcoal production and fire frequency were decreasing and wildlife populations were increasing with their CFs, and natural resource management was improving within their CFs. In addition, most FGD groups indicated that both deforestation and charcoal production were decreasing outside their CF, suggesting there is no leakage or potentially a positive leakage effect. Community female FGDs tended to have a more positive view of the impact of CFM on SFM compared to the other groups, which is noteworthy given it is primarily the women who harvest forest products, but who often do not have voice in traditional natural resource management. However, it is also important to note that a minority of FGD groups and individual interviewees suggested the situation was worsening in their CFs. Furthermore, the governance index was a significant predictor of SFM performance, at least according to the perceptions expressed by the FGDs. Not many CFMGs were practising restoration or establishing plantations. Existing CFs should be expanded and new ones designed so that they incorporate degraded areas and contribute to national restoration and plantation targets.
+
+::: {.callout-note icon="false"}
+## Key conclusions
+
+According to the perceptions expressed by the FGDs, CFM in Zambia is improving SFM across a substantial majority of surveyed communities, with positive spillover effects in the surrounding landscape and encouraging indications of women's engagement in forest governance. However, the survey identified a minority of CFs in which the situation was worsening and the governance index was a significant predictor of SFM performance. The identified link between governance quality and SFM performance is critical and underscores the need for improving governance across the CFM portfolio to ensure Zambia can solidify existing gains and extend them. Zambia could also benefit from a systematic approach to restoration and plantation through CFM.
+:::
 
 ## Introduction
 
-In this chapter, we consider the effect of community forestry on indicators of SFM. The information analysed is based entirely only on the responses of interviewees to our survey tool. In the next chapter we will consider the effects of CF on SMF as measured through remote sensing derived metrics.
+In this chapter, we consider the effect of community forestry on indicators of SFM. The information analysed is based entirely only on the responses of interviewees to our survey tool. In the next chapter, we will consider the effects of CF on SMF as measured through remote sensing derived metrics.
 
 ### Deforestation
 
@@ -128,7 +137,11 @@ cfmg |>
   )
 ```
 
-A majority of groups reported either a moderate or significant reduction in deforestation inside the CF (@fig-reduced_forest_clearing). Moreover, these answers were consistent across the FGD groups. There were no significant differences in response among FGD types (@tbl-M1_deforestation_fgd). However, the quality of governance, as measured by the governance index we generated in the previous chapter, was a highly significant predictor of the perceived decrease in deforestation within the CF (@tbl-M1_deforestation_fgd).
+::: return-to-summary
+[← Return to Summary](Summary.html#sustainable-forest-management)
+:::
+
+A majority of groups reported either a moderate or significant reduction in deforestation inside the CF (@fig-reduced_forest_clearing). Moreover, these answers were consistent across the FGD groups. There were no significant differences in response among FGD types (@tbl-M1_deforestation_fgd). The quality of governance, as measured by the governance index we generated in the previous chapter, was a highly significant predictor of the perceived decrease in deforestation within the CF (@tbl-M1_deforestation_fgd).
 
 ```{r}
 #| label: model_deforestation_fgd
@@ -277,10 +290,10 @@ cfmg |>
         "cfmg_member"      ~ "Community member",
         "trad_leader"      ~ "Traditional leader",
         "dfo"              ~ "District Forestry Officer",
-        "NGO_rep"          ~ "NGO representative"
+        "NGO_rep"          ~ "Private enterprise rep"
       ),
       levels = c("CFMG executive member", "Community member", "Traditional leader",
-                 "District Forestry Officer", "NGO representative")
+                 "District Forestry Officer", "Private enterprise rep")
     )
   ) |>
   filter(!is.na(deforestation)) |>
@@ -365,7 +378,7 @@ tidy(M2) |>
     "interviewee_rolecfmg_exec_member" ~ "CFMG executive member",
     "interviewee_roletrad_leader"      ~ "Traditional leader",
     "interviewee_roledfo"              ~ "DFO",
-    "interviewee_roleNGO_rep"          ~ "NGO representative",
+    "interviewee_roleNGO_rep"          ~ "Private enterprise rep",
     "interviewee_gendermale"           ~ "Gender: male",
     "interviewee_age"                  ~ "Age",
     .default = term
@@ -510,7 +523,11 @@ cfmg |>
   )
 ```
 
-Contrary to the expectations of leakage, a majority of the FGD groups responded that CFM had actually reduced deforestation outside their CF. This result was consistent across FGD groups and the effect of governance index was not significant (@tbl-M3_deforestation_outside_fgd). Although the effect of FGD type female was significant when compared to the baseline group (Executive FGD), the more conservative pairwise test was not significant (@tbl-pairwise_deforestation_outside_fgd). 
+::: return-to-summary
+[← Return to Summary](Summary.html#sustainable-forest-management)
+:::
+
+Contrary to the expectations of leakage, a majority of the FGD groups responded that CFM had actually reduced deforestation outside their CF. This result was consistent across FGD groups and the effect of governance index was not significant (@tbl-M3_deforestation_outside_fgd; (@tbl-pairwise_deforestation_outside_fgd).
 
 ```{r}
 #| label: model_deforestation_outside_fgd
@@ -626,7 +643,7 @@ as.data.frame(summary(pairwise.M3)) |>
   sub_missing()
 ```
 
-Among the individual interviewees (@tbl-deforestation_outside_individual), the individuals from the communities agreed that deforestation outside their CF had decreased. However, DFOs were less likely to suggest deforestation had decreased outside the CF and more likely to suggest an increase in deforestation.
+Among the individual interviewees (@tbl-deforestation_outside_individual), the individuals from the communities agreed that deforestation outside their CF had decreased. However, DFOs were less likely to suggest deforestation had decreased outside the CF.
 
 ```{r}
 #| label: tbl-deforestation_outside_individual
@@ -663,10 +680,10 @@ cfmg |>
         "cfmg_member"      ~ "Community member",
         "trad_leader"      ~ "Traditional leader",
         "dfo"              ~ "District Forestry Officer",
-        "NGO_rep"          ~ "NGO representative"
+        "NGO_rep"          ~ "Private enterprise rep"
       ),
       levels = c("CFMG executive member", "Community member", "Traditional leader",
-                 "District Forestry Officer", "NGO representative")
+                 "District Forestry Officer", "Private enterprise rep")
     )
   ) |>
   filter(!is.na(deforestation)) |>
@@ -755,7 +772,7 @@ tidy(M4) |>
     "interviewee_rolecfmg_exec_member" ~ "CFMG executive member",
     "interviewee_roletrad_leader"      ~ "Traditional leader",
     "interviewee_roledfo"              ~ "DFO",
-    "interviewee_roleNGO_rep"          ~ "NGO representative",
+    "interviewee_roleNGO_rep"          ~ "Private enterprise rep",
     "interviewee_gendermale"           ~ "Gender: male",
     "interviewee_age"                  ~ "Age",
     .default = term
@@ -1058,10 +1075,10 @@ cfmg |>
         "cfmg_member"      ~ "Community member",
         "trad_leader"      ~ "Traditional leader",
         "dfo"              ~ "District Forestry Officer",
-        "NGO_rep"          ~ "NGO representative"
+        "NGO_rep"          ~ "Private enterprise rep"
       ),
       levels = c("CFMG executive member", "Community member", "Traditional leader",
-                 "District Forestry Officer", "NGO representative")
+                 "District Forestry Officer", "Private enterprise rep")
     )
   ) |>
   filter(!is.na(charcoal)) |>
@@ -1154,7 +1171,7 @@ if (!is.null(M6)) {
       "interviewee_rolecfmg_exec_member" ~ "CFMG executive member",
       "interviewee_roletrad_leader"      ~ "Traditional leader",
       "interviewee_roledfo"              ~ "DFO",
-      "interviewee_roleNGO_rep"          ~ "NGO representative",
+      "interviewee_roleNGO_rep"          ~ "Private enterprise rep",
       "interviewee_gendermale"           ~ "Gender: male",
       "interviewee_age"                  ~ "Age",
       .default = term
@@ -1313,7 +1330,7 @@ cfmg |>
   )
 ```
 
-As can be seen, the vast majority of groups indicated that charcoal making had either decreased outside their CF or there was no change. However, there were a small number that indicated charcoal making had increased, with some indicating it had increased significantly. Female FGD groups were significantly more likely to indicate that charcoal making had decreased outside the CF than all other groups (CFMG executive members, male or youth community members) (@tbl-M7_charcoal_outside_fgd; @tbl-pairwise_charcoal_outside_fgd). There were no significant differences among these other groups and the effect of the governance index was also not significant.  
+As can be seen, the vast majority of groups indicated that charcoal making had either decreased outside their CF or there was no change. However, there were a small number that indicated charcoal making had increased, with some indicating it had increased significantly. Female FGD groups were significantly more likely to indicate that charcoal making had decreased outside the CF than other groups (@tbl-M7_charcoal_outside_fgd; @tbl-pairwise_charcoal_outside_fgd). There were no significant differences among these other groups and the effect of the governance index was also not significant.
 
 ```{r}
 #| label: model_charcoal_outside_fgd
@@ -1456,7 +1473,7 @@ if (!is.null(pairwise.M7)) {
 }
 ```
 
-Among the individual interviewees (@tbl-charcoal_outside_individual), similar to the results on deforestation, most community interviewees suggested there had been a decrease or no change in charcoal production outside the CF. However, NGO representatives and DFOs were significantly more likely to indicate that there had been an increase in charcoal production outside the CF (@tbl-M8_charcoal_outside_individual, @tbl-pairwise_charcoal_outside_individual). Interviewee age was also significant -- older respondents were more likely to state that there had been an increase in charcoal production outside the CF.
+Among the individual interviewees (@tbl-charcoal_outside_individual), similar to the results on deforestation, most community interviewees suggested there had been a decrease or no change in charcoal production outside the CF. However, private enterprise representatives and DFOs were significantly more likely to indicate that there had been an increase in charcoal production outside the CF (@tbl-M8_charcoal_outside_individual, @tbl-pairwise_charcoal_outside_individual). Interviewee age was also significant — older respondents were more likely to state that there had been an increase in charcoal production outside the CF.
 
 ```{r}
 #| label: tbl-charcoal_outside_individual
@@ -1505,10 +1522,10 @@ cfmg |>
         "cfmg_member"      ~ "Community member",
         "trad_leader"      ~ "Traditional leader",
         "dfo"              ~ "District Forestry Officer",
-        "NGO_rep"          ~ "NGO representative"
+        "NGO_rep"          ~ "Private enterprise rep"
       ),
       levels = c("CFMG executive member", "Community member", "Traditional leader",
-                 "District Forestry Officer", "NGO representative")
+                 "District Forestry Officer", "Private enterprise rep")
     )
   ) |>
   filter(!is.na(charcoal)) |>
@@ -1615,7 +1632,7 @@ if (!is.null(M8)) {
       "interviewee_rolecfmg_exec_member" ~ "CFMG executive member",
       "interviewee_roletrad_leader"      ~ "Traditional leader",
       "interviewee_roledfo"              ~ "DFO",
-      "interviewee_roleNGO_rep"          ~ "NGO representative",
+      "interviewee_roleNGO_rep"          ~ "Private enterprise rep",
       "interviewee_gendermale"           ~ "Gender: male",
       "interviewee_age"                  ~ "Age",
       .default = term
@@ -1827,7 +1844,11 @@ cfmg |>
   )
 ```
 
-As can be seen, a majority of groups reported a moderate or significant reduction in fire incidence in the CF. Female FDGs reported more significant declines in fire frequency compared to the other groups (@tbl-M9_fire_fgd). These differences between female FDG groups and the other FDG groups (CFMG Executives, male and youth) were significant (@tbl-pairwise_fire_fgd). The effect of governance index was also significant, indicating that CFs with higher governance scores had greater perceived declines in fire incidence.
+::: return-to-summary
+[← Return to Summary](Summary.html#sustainable-forest-management)
+:::
+
+As can be seen, a majority of groups reported a moderate or significant reduction in fire incidence in the CF. Female FGDs reported more significant declines in fire frequency compared to the other groups (@tbl-M9_fire_fgd). These differences between female FGD groups and the other FGD groups were significant (@tbl-pairwise_fire_fgd). The effect of the governance index was also significant, indicating that CFs with higher governance scores had greater perceived declines in fire incidence.
 
 ```{r}
 #| label: model_fire_fgd
@@ -1984,10 +2005,10 @@ cfmg |>
         "cfmg_member"      ~ "Community member",
         "trad_leader"      ~ "Traditional leader",
         "dfo"              ~ "District Forestry Officer",
-        "NGO_rep"          ~ "NGO representative"
+        "NGO_rep"          ~ "Private enterprise rep"
       ),
       levels = c("CFMG executive member", "Community member", "Traditional leader",
-                 "District Forestry Officer", "NGO representative")
+                 "District Forestry Officer", "Private enterprise rep")
     )
   ) |>
   filter(!is.na(fire)) |>
@@ -2076,7 +2097,7 @@ if (!is.null(M10)) {
       "interviewee_rolecfmg_exec_member" ~ "CFMG executive member",
       "interviewee_roletrad_leader"      ~ "Traditional leader",
       "interviewee_roledfo"              ~ "DFO",
-      "interviewee_roleNGO_rep"          ~ "NGO representative",
+      "interviewee_roleNGO_rep"          ~ "Private enterprise rep",
       "interviewee_gendermale"           ~ "Gender: male",
       "interviewee_age"                  ~ "Age",
       .default = term
@@ -2216,6 +2237,10 @@ cfmg |>
   )
 ```
 
+::: return-to-summary
+[← Return to Summary](Summary.html#sustainable-forest-management)
+:::
+
 As can be seen, a majority of groups indicated a significant or moderate increase in wildlife in their CF. However, there were some that indicated there had been a decrease. The responses among FGD types were not significantly different (@tbl-M11_wildlife_fgd). The effect of governance index was also not significant.
 
 ```{r}
@@ -2341,7 +2366,7 @@ if (!is.null(pairwise.M11)) {
 }
 ```
 
-Among the individual interviewees (@tbl-wildlife_individual), there were also some differences in opinion, but again these differences were not significant (@tbl-M12_wildlife_individual). The effects of interviewee gender and age were also not significant.
+Among the individual interviewees (@tbl-wildlife_individual), there were some differences in opinion, but again these differences were not significant (@tbl-M12_wildlife_individual). The effects of interviewee gender and age were also not significant.
 
 ```{r}
 #| label: tbl-wildlife_individual
@@ -2371,10 +2396,10 @@ cfmg |>
         "cfmg_member"      ~ "Community member",
         "trad_leader"      ~ "Traditional leader",
         "dfo"              ~ "District Forestry Officer",
-        "NGO_rep"          ~ "NGO representative"
+        "NGO_rep"          ~ "Private enterprise rep"
       ),
       levels = c("CFMG executive member", "Community member", "Traditional leader",
-                 "District Forestry Officer", "NGO representative")
+                 "District Forestry Officer", "Private enterprise rep")
     )
   ) |>
   filter(!is.na(wildlife)) |>
@@ -2462,7 +2487,7 @@ if (!is.null(M12)) {
       "interviewee_rolecfmg_exec_member" ~ "CFMG executive member",
       "interviewee_roletrad_leader"      ~ "Traditional leader",
       "interviewee_roledfo"              ~ "DFO",
-      "interviewee_roleNGO_rep"          ~ "NGO representative",
+      "interviewee_roleNGO_rep"          ~ "Private enterprise rep",
       "interviewee_gendermale"           ~ "Gender: male",
       "interviewee_age"                  ~ "Age",
       .default = term
@@ -2602,7 +2627,7 @@ cfmg |>
   )
 ```
 
-As can be seen, while responses vary among FGD groups, most groups agreed that the management of forest resources had improved moderately or significantly under CFM, and only a small number of primarily youth groups considered that it had gotten worse. A very high proportion of community female FDG groups considered that the management of forest resources was significantly better under CFM, a difference that was statistically significant (@tbl-M13_frm_fgd, @tbl-pairwise_frm_fgd). The effect of governance index was also significant.
+As can be seen, while responses vary among FGD groups, the vast majority of groups agreed that the management of forest resources had improved moderately or significantly under CFM, and only a small number of primarily youth groups considered that it had gotten worse. A very high proportion of community female FGD groups considered that the management of forest resources was significantly better under CFM, a difference that was statistically significant (@tbl-M13_frm_fgd, @tbl-pairwise_frm_fgd). The effect of governance index was also significant.
 
 ```{r}
 #| label: model_frm_fgd
@@ -2806,10 +2831,10 @@ cfmg |>
         "cfmg_member"      ~ "Community member",
         "trad_leader"      ~ "Traditional leader",
         "dfo"              ~ "District Forestry Officer",
-        "NGO_rep"          ~ "NGO representative"
+        "NGO_rep"          ~ "Private enterprise rep"
       ),
       levels = c("CFMG executive member", "Community member", "Traditional leader",
-                 "District Forestry Officer", "NGO representative")
+                 "District Forestry Officer", "Private enterprise rep")
     )
   ) |>
   filter(!is.na(frm)) |>
@@ -2900,7 +2925,7 @@ if (!is.null(M14)) {
       "interviewee_rolecfmg_exec_member" ~ "CFMG executive member",
       "interviewee_roletrad_leader"      ~ "Traditional leader",
       "interviewee_roledfo"              ~ "DFO",
-      "interviewee_roleNGO_rep"          ~ "NGO representative",
+      "interviewee_roleNGO_rep"          ~ "Private enterprise rep",
       "interviewee_gendermale"           ~ "Gender: male",
       "interviewee_age"                  ~ "Age",
       .default = term
@@ -2963,7 +2988,7 @@ if (!is.null(pairwise.M14)) {
 
 ### Restoration
 
-We asked CFMG executives whether natural forest restoration is practised inside the community forest (@fig-natural_forest_restoration). We restrict the responses for this question to CFMG executives, because this is the group that should be best informed about the activities of the CFMG (and the differences in responses among groups to this question are no of substantive interest).
+We asked CFMG executives whether natural forest restoration is practised inside the community forest (@fig-natural_forest_restoration). We restricted the responses for this question to CFMG executives, because this is the group that should be best informed about the activities of the CFMG (and the differences in responses among groups to this question are not of interest).
 
 ```{r}
 #| label: fig-natural_forest_restoration
@@ -3025,7 +3050,11 @@ cfmg |>
   )
 ```
 
-Natural forest restoration is being practiced across approximately half of the CFs in our sample, mostly in Muchinga, Central and Northern provinces. We also asked CFMG executives about the specific restoration methods applied inside their CF (@fig-restoration_methods). The majority were protecting natural regeneration. Only one CFMG was involved in planting native species and removal of invasives was not practised.
+::: return-to-summary
+[← Return to Summary](Summary.html#sustainable-forest-management)
+:::
+
+Natural forest restoration is being practised across approximately half of the CFs in our sample, mostly in Muchinga, Central and Northern provinces. We also asked CFMG executives about the specific restoration methods applied inside their CF (@fig-restoration_methods). The majority were protecting natural regeneration. Only one CFMG was involved in planting native species and removal of invasives was not practised.
 
 ```{r}
 #| label: fig-restoration_methods
@@ -3089,7 +3118,7 @@ cfmg |>
 
 ### Plantations
 
-In addition, we asked CFMG executives whether any plantations has been established inside the CF (@fig-plantation_establishment). Only seven out the the 75 CFs were practicing any plantation establishment.
+In addition, we asked CFMG executives whether any plantations had been established inside their CF (@fig-plantation_establishment). Only seven out the the 75 CFs were practising any plantation establishment.
 
 ```{r}
 #| label: fig-plantation_establishment
@@ -3148,7 +3177,7 @@ cfmg |>
   )
 ```
 
-We also asked executives to estimate the number of hectares planted in the plantation. A small number (~9% of the sample) had established tree plantation inside their CF. However, the hectares planted were few (@fig-hectares_planted).
+We also asked executives to estimate the number of hectares planted in the plantation (@fig-hectares_planted), but as can bee seen the planted area is very small.
 
 ```{r}
 #| label: fig-hectares_planted
@@ -3180,7 +3209,7 @@ cfmg |>
 
 ### Agroforestry
 
-Last, we asked CFMG executives whether CFM has involved introducing agroforestry practices (@fig-yn_agroforestry). In this context, agroforestry is implemented on agricultural land as a means for achieving sustainable intensification and reducing pressure on forests. Around 40% of CFMGs said that agroforestry had been introduced under CFM.
+Last, we asked CFMG executives whether CFM has involved introducing agroforestry practices (@fig-yn_agroforestry). In this context, agroforestry is implemented on agricultural land outside the CF as a means for achieving sustainable intensification and reducing pressure on forests. Around 40% of CFMGs said that agroforestry had been introduced under CFM.
 
 ```{r}
 #| label: fig-yn_agroforestry
@@ -3304,9 +3333,9 @@ cfmg |>
   )
 ```
 
-Among the 30 CFMGs practising agroforestry most were employing intercropping with leguminous shrubs for soil health management, but planting boundary trees or woodlots and homegardens were also practised. 
+Among the 30 CFMGs practising agroforestry most were employing intercropping with leguminous shrubs for soil health management, but some were planting boundary trees or woodlots and homegardens.
 
-Among the species used (@fig-agroforestry_species), we can see that *Gliricidia* and *Faidherbia*, leguminous shrubs and trees, respectively, that are used for intercropping were the most popular.
+Among the species used (@fig-agroforestry_species), we can see that *Gliricidia* and *Faidherbia*, leguminous shrubs and trees, respectively, that are used for intercropping, were the most popular.
 
 ```{r}
 #| label: fig-agroforestry_species
@@ -3374,7 +3403,7 @@ cfmg |>
 
 ## SFM index
 
-To summarise the overall SFM performance of each CFMG, we constructed an SFM score (0–5) by summing five binary indicators of change inside the CF — decrease in deforestation, decrease in charcoal production, decrease in fire incidence, increase in wildlife, and improved natural resources management — scored as 1 (positive change reported) or 0 (no change or worsening). The distribution of SFM scores across CFMGs is shown in @fig-sfm_index_dist. We then modelled this score using a linear mixed model with FGD type and the governance index as predictors, and random intercepts for province and CF within province, to test whether governance and FGD type were significant predictors of overall SFM performance (@tbl-sfm_index_model, @fig-sfm_index).
+To summarise the overall SFM performance of each CFMG, we constructed an SFM score (0–5) by summing five binary indicators of change inside the CF — decrease in deforestation, decrease in charcoal production, decrease in fire incidence, increase in wildlife, and improved natural resources management — scored as 1 (positive change reported) or 0 (no change or worsening). The distribution of SFM scores across CFMGs is shown in @fig-sfm_index_dist (Appendix III). We then modelled this score using a linear mixed model with FGD type and the governance index as predictors, and random intercepts for province and CF within province, to test whether governance and FGD type were significant predictors of overall SFM performance (@tbl-sfm_index_model, @fig-sfm_index).
 
 ```{r}
 #| label: data_sfm_index
@@ -3588,13 +3617,12 @@ sfm_data |>
 
 ## Discussion
 
-All the indicators of SFM point to a situation that is improving under CFM, including deforestation, charcoal production, fire frequency, wildlife abundance and natural resource management. Interestingly, there does not appear to be any indication of leakage for most CFs. Most FDG groups indicated that both deforestation and charcoal production were also decreasing outside their CF. There were some differences in responses among the different FDG groups, with community female FDGs tending to have a more positive view of the impact of CFM compared to the other groups. This is interesting and may indicate that under CFM females have more of a voice in forest and forest resource management. Traditionally, women are highly dependent on forest resources, but usually have little say in forest management decisions. It would be worth following up this study to investigate what is driving this positive take on CFM among community women.
+All the indicators of SFM point to a situation that is improving across that vast majority of CFs, including deforestation, charcoal production, fire frequency, wildlife abundance and natural resource management. Interestingly, there does not appear to be any indication of leakage for most CFs, as most FGD groups indicated that both deforestation and charcoal production were also decreasing outside their CF. In fact, there is some suggestion of positive leakage, whereby the improved management inside CFs has had a positive effect on their surroundings. There were some differences in responses among the different FGD groups, with community female FGDs tending to have a more positive view of the impact of CFM on SFM compared to the other groups. This is interesting and may indicate that under CFM females have more of a voice in forest and forest resource management. Traditionally, women are highly dependent on forest resources, but usually have little say in forest management decisions. It would be worth following up this study to investigate what is driving this positive take on CFM among community women.
 
-Among the individual interviewees, NGO representatives and DFOs tended to have a somewhat more conservative view with respect to positive changes, as compared to individuals from the communities. This may reflect that these professionals have a broader perspective from which to understand changes in forest and forest resource management. However, it could also arise from the fact that they are not as intimately involved in the forest management and hence less aware of the changes. Ultimately, monitoring over a longer period will enable better understanding of how CFM is changing forest management.
+Among the individual interviewees, private enterprise representatives and DFOs tended to have a somewhat more conservative view with respect to positive changes, as compared to individuals from the communities. This may reflect that these professionals have a broader perspective from which to understand changes in forest and forest resource management. However, it could also arise from the fact that they are not as intimately involved in the forest management and hence less aware of the changes. Ultimately, monitoring over a longer period will enable better understanding of how CFM is changing forest management.
 
-Overall, CFM appears to be engendering a change towards improved SFM. However, it is important to note that a small number of FDG groups and individual interviewees suggested the situation was worsening in their CFs. For the success of CFM in Zambia, it will be important to identify CFs that are doing less well, diagnose the causes and implement changes.
+Overall, CFM appears to be engendering a change towards improved SFM. However, it is important to note that a small number of FGD groups and individual interviewees suggested the situation was worsening in their CFs. Moreover, the governance index was a highly signficant predictor of the SFM index. For the success of CFM in Zambia, it will be important to identify CFs that are doing less well, and identify and address the governance issues.
 
-Some CFMGs were practicing forest restoration, mostly through protecting natural regeneration, and a few were establishing plantations. However, these activities were not widespread among CFMGs. Restoration - especially through protection of natural regeneration - should integral to CFM and could be implement across all CFs in Zambia. As this is an important indicator of SFM and there are government targets to restore 2,000,000 ha by 2030, the FD should integrate restoration targets into forest management plans for CFMGs and monitor outcomes. A problem is that the boundaries of many existing CFs were drawn around areas containing on relatively good forest. The FD and communities should consider expand CF boundaries to incorporate areas for restoration activities, and for new CFs such areas should be incorporated from the outset. Agroforestry was also not widely practised by CFMGs, but is recognised tool for restoration of degraded agricultural land and can reduce pressure on forests. Plantations are also an important opportunity for CFM. Plantations can supply local building and fuelwood needs, thereby reducing pressure on natural forests. Through sustainable charcoal programmes, they can also supply energy for urban dwellers and again reduce pressure on natural forests. Last, Zambia has an acute shortage of high quality timber for uses such as telegraph poles and construction and imports large amounts of wood. A focus on developing plantations through CFM would go some way to meeting these needs, as well as generating a valuable additional source of income for rural communities.
+Some CFMGs were practising forest restoration, mostly through protecting natural regeneration, and a few were establishing plantations. However, these activities were not widespread among CFMGs. Restoration - especially through protection of natural regeneration - should integral to CFM and could be implement across virtually all CFs in Zambia. As this is an important indicator of SFM and there are government targets to restore 2,000,000 ha by 2030, the FD should integrate restoration targets into forest management plans for CFMGs. A problem is that the boundaries of many existing CFs were drawn around areas containing on relatively good forest (historical deforestation rates are very low in most CFs — see next chapter on remote sensing). The FD and communities should consider expanding CF boundaries to incorporate areas for restoration activities and for new CFs such areas should be incorporated from the outset. Plantations are also an important opportunity for CFM. Plantations can supply local building and fuelwood needs, thereby reducing pressure on natural forests. Furthermore, through sustainable charcoal programmes, they can also supply energy for urban dwellers and again reduce pressure on natural forests. Zambia also has an acute shortage of high quality timber and imports large amounts. A focus on developing plantations through CFM would go some way to meeting these needs, as well as generating a valuable additional source of income for rural communities. As with restoration, the boundaries of CFs should be planned with plantation activities in mind, and these should be focused on heavily degraded area.
 
-In conclusion, our data suggest that CFM in Zambia is driving substantial improvements in SFM, reducing deforestation, charcoal production, and fire frequency, increasing wildlife populations, and improving natural resource management. However, it is important to note that these changes were not ubiquitous across all CFs. While some CFMGs are practising restoration and establishing plantations, there is a substantial opportunity to expand the role of CFM in meeting national restoration and plantation targets.
-
+In conclusion, our survey data suggest that CFM in Zambia is driving substantial improvements in SFM, reducing deforestation, charcoal production, and fire frequency, increasing wildlife populations, and improving natural resource management. However, it is important to note that these changes were not ubiquitous across all CFs and CFMGs with lower governance index scores were performing significantly more poorly. While some CFMGs are practising restoration and establishing plantations, there is a substantial opportunity to expand the role of CFM in meeting national restoration and plantation targets.

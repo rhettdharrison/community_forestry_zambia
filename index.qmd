@@ -1,35 +1,77 @@
 ---
 title: "Community Forest Management in Zambia: Is It Working?"
-subtitle: "DRAFT REPORT"
+subtitle: "Final Report"
 author: "Rhett D Harrison"
 date: today
 bibliography: references.bib
 suppress-bibliography: true
+format:
+  html:
+    css: custom.css
+  pdf:
+    documentclass: article
+    geometry: "margin=2.5cm"
+    include-in-header:
+      text: |
+        \usepackage{graphicx}
+        \pagenumbering{roman}
 ---
 
-This report presents findings from a survey of Community Forest Management Groups (CFMGs) across Zambia, assessing the effectiveness of community-based forest management and identifying opportunities for improved implementation.
+::: {.content-visible when-format="pdf"}
+```{=latex}
+\vfill
+\begin{center}
+  \includegraphics[height=2.2cm]{images/Landscape-Alliance-logo.png}
+  \hspace{2cm}
+  \includegraphics[height=2.2cm]{images/SAFE_logos.png}
+\end{center}
+\clearpage
+```
+:::
 
-Use the navigation tabs above to move between chapters.
+## Foreword
 
-## Summary
+*[Foreword text to be inserted]*
 
-Community forest management (CFM) has expanded rapidly in Zambia. As of 2025, 351 Community Forest Management Groups (CFMGs) preside over approximately 9.4 million hectares of community forests across all ten provinces. This report presents findings from a survey of 75 CFMGs across eight provinces, drawing on focus group discussions (FGDs) with CFMG executives and community female, male and youth groups, and individual interviews with community members, traditional leaders, District Forestry Officers (DFOs) and non-governmental organisation (NGO) representatives. The survey was designed to assess whether CFM is achieving its intended outcomes of improved sustainable forest management and rural development, and to identify where improvements are needed.
+---
 
-**The headline finding is that CFM implementation is broadly working, but with significant weaknesses that need to be addressed.**
+## Acknowledgements
 
-In terms of sustainable forest management (SFM), the evidence is encouraging. Clear majorities of community groups report that CFM has reduced deforestation, lowered fire frequency and increased wildlife populations inside their community forests. Importantly, most groups also report that deforestation is decreasing in areas outside their community forests, suggesting that CFM is not simply displacing pressure elsewhere. Conservation NGOs and carbon trading enterprises have been the primary drivers of these improvements, funding forest patrols, fire management, and agricultural extension for climate-smart agriculture across the CFMG communities.
+::: {.index-logos}
+![Landscape Alliance logo](images/Landscape-Alliance-logo.png)
+![SAFE project logos](images/SAFE_logos.png)
+:::
 
-However, the governance foundations underpinning these outcomes are fragile. Many CFMGs have not completed all the required legal processes. Basic financial management processes — bank accounts, receipt books, financial reporting — are absent in a large proportion of CFMGs. Most are overdue for elections and thereby in breach of their own bylaws. Business plans, annual workplans and budgets are lacking in many cases. These are not peripheral concerns. Without sound governance, CFMGs cannot manage finances, account for income, or sustain the improvements in SFM that have been achieved. The Forestry Department (FD) has a statutory duty to support and oversee CFMGs, but DFO visits are infrequent across most of the country, leaving many CFMGs without meaningful state support. Where conservation NGOs and carbon enterprises are present they partly fill this gap, but coverage is uneven and a substantial number of CFMGs receive no external support at all.
+::: {.acknowledgements-text}
+This activity is a partnership between Landscape Alliance and the SAFE (Sustainable Agriculture for Forest Ecosystems) project, financed by the European Union (EU), the Ministry of Foreign Affairs of Netherlands and the German Federal Ministry for Economic Cooperation and Development (BMZ). SAFE is part of the Fund for the Promotion of Innovation in Agriculture (i4Ag) and implemented by Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ). The aim of this collaboration is to understand whether community forestry in Zambia is delivering the desired outcomes in terms of sustainable forest management and economic development.
 
-The economic outcomes of CFM remain limited and unevenly distributed. Approximately one third of CFMGs had received carbon payments at the time of the survey — a significant achievement, but one that leaves two thirds with little tangible financial return. Employment has grown under CFM, but is concentrated in low-paying roles such as Honorary Forest Officers (HFOs), is strongly male-dominated, and is absent or minimal in many communities. Beyond carbon and honey — the only forest commodity exploited by more than a small minority of CFMGs — the considerable potential of Zambia's forest products as a basis for community enterprise is almost entirely unrealised. Timber, wild fruits, medicinal plants, mushrooms, bamboo and resins are all harvested from community forests, but overwhelmingly for household use or local sale with minimal value-addition. CFM has the potential to be a platform for diverse, layered forest enterprises, but that potential is a long way from being captured.
+The activity is also a collaboration between Landscape Alliance and the Government of the Republic of Zambia through the Ministry of Green Economy and Environment and the Department of Forestry.
 
-Equity outcomes are broadly positive. Most female FGD groups reported that benefits are shared equitably, that women benefit from CFM, and that women participate in decision making — a more positive picture than might be expected given that natural resource management in Zambia has traditionally been male-dominated. The formal governance structures mandated by CFM, including elections and executive positions with female representation, appear to have given women a degree of voice they previously lacked. However, a minority of female and youth groups identified problems with elite capture, lack of transparency, and exclusion from decision making. Youth groups were consistently the most critical of CFM outcomes across all domains. These are warning signals that should be taken seriously. Elite capture and inequitable benefit distribution, if left uncorrected, will erode community support for CFM and undermine its long-term viability.
+The contents of this report are the sole responsibility of Landscape Alliance and do not necessarily reflect the views of the EU, the Federal Ministry for Economic Cooperation and Development (BMZ), the Ministry of Foreign Affairs of the Netherlands, or the Government of the Republic of Zambia.
+:::
 
-Communities themselves are clear-eyed about both the strengths and the gaps in CFM. Their feedback on what is working — forest management, wildlife recovery, some livelihood improvements — matches the quantitative findings. Their identification of what needs improving — transparency, governance, community awareness, livelihoods and partnerships — provides a practical agenda for action. Their training requests, spanning fire management and conservation through to financial management, marketing and business development, reflect the full scope of what effective CFM demands of community members.
+---
 
-In short, CFM in Zambia has achieved real gains in SFM and, in many communities, in livelihoods and equity. However, those gains are at risk if governance weaknesses are not addressed, if the FD does not fulfil its oversight role, and if economic development remains narrowly dependent on carbon. The opportunity to build on the progress made so far, through extending effective support and shoring up governance and diversifying the economic base, is substantial. [Detailed recommendations for government, NGOs and carbon trading enterprises are provided in the Recommendations chapter.](Recommendations.html)
+## Contents
 
+| Chapter | Title |
+|:--------|:------|
+| [Summary](Summary.html) | Executive summary of findings and headline conclusions |
+| [Recommendations](Recommendations.html) | Recommendations for government, NGOs and carbon enterprises |
+| [Introduction](Introduction.html) | Background, policy context and objectives |
+| [Survey Overview](CFMG Survey.html) | Survey design, sample characteristics and methods |
+| [Governance](CFMG Governance.html) | CFMG legal, governance and business processes |
+| [Sustainable Forest Management](CFMG SFM.html) | Community perceptions of forest condition and SFM outcomes |
+| [Remote Sensing Analysis](Remote Sensing.html) | Satellite evidence on fire, deforestation and biomass change |
+| [Economic Transformation](CFMG ET.html) | Employment, income, carbon finance and forest enterprises |
+| [Equity and Inclusion](CFMG BS.html) | Benefit sharing, gender equity and poverty impacts |
+| [Discussion](Conclusions.html) | Synthesis and cross-cutting findings |
+| [Appendix I – Methods](Methods.html) | Detailed methodology |
+| [Appendix II – Survey tool](Appendix.html) | Survey instrument |
+| [Appendix III – List of CFs surveyed](Appendix II.html) | All community forests in the sample |
+| [Appendix IV – CFMG performance index scores](Appendix III.html) | Governance, SFM, economic and equity index scores by CFMG |
 
+---
 
 ## Abbreviations
 
@@ -39,7 +81,7 @@ In short, CFM in Zambia has achieved real gains in SFM and, in many communities,
 | CF | Community Forest |
 | CFM | Community Forest Management |
 | CFMG | Community Forest Management Group |
-| CIFOR-ICRAF | Center for International Forestry Research – World Agroforestry |
+| Landscape Alliance | Landscape Alliance (formerly CIFOR-ICRAF) |
 | CLMM | Cumulative Link Mixed Model |
 | COMACO | Community Markets for Conservation |
 | CRB | Community Resource Board |
@@ -59,5 +101,3 @@ In short, CFM in Zambia has achieved real gains in SFM and, in many communities,
 | SFM | Sustainable Forest Management |
 | SI | Statutory Instrument |
 | ZIFLP | Zambia Integrated Forest Landscape Programme |
-
-
