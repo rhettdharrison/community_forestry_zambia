@@ -1,0 +1,122 @@
+/* ============================================================
+   PDF / Print styles for CFM in Zambia report
+   Used via: format: html: css: [custom.css, pdf-print.css]
+   These rules only fire when printing or generating PDF.
+   ============================================================ */
+
+@media print {
+
+  /* --- Page setup --- */
+  @page {
+    size: A4;
+    margin: 2.5cm 2cm 2.5cm 2cm;
+
+    /* Page numbers in footer */
+    @bottom-center {
+      content: counter(page);
+      font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
+      font-size: 10pt;
+      color: #495057;
+    }
+
+    /* Report title in header */
+    @top-center {
+      content: "CFM in Zambia";
+      font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
+      font-size: 9pt;
+      color: #6c757d;
+    }
+  }
+
+  @page :first {
+    @bottom-center { content: none; }
+    @top-center    { content: none; }
+  }
+
+  /* --- Page breaks --- */
+  /* Force a new page before each major section heading */
+  h1, h2.anchored:not(:first-of-type) {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  /* Never break immediately after a heading */
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  /* Keep figures and tables together with their captions */
+  figure, .quarto-float {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Keep callout boxes intact */
+  .callout, .callout-note, .callout-important {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Keep table rows from splitting across pages */
+  tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* --- Hide screen-only elements --- */
+  .navbar,
+  #quarto-sidebar,
+  #quarto-toc-toggle,
+  .quarto-secondary-nav,
+  #quarto-margin-sidebar,
+  .sidebar,
+  footer,
+  .nav-footer,
+  .quarto-appendix-secondary-label,
+  #sidebar-footer {
+    display: none !important;
+  }
+
+  /* --- Typography adjustments for print --- */
+  body {
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #000;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  /* Show URL in parentheses after external links */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #6c757d;
+  }
+
+  /* Don't expand internal anchor links */
+  a[href^="#"]:after {
+    content: none;
+  }
+
+  /* --- Callout box print styling --- */
+  .callout {
+    border: 1px solid #ccc;
+    border-left-width: 4px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+    background: #f8f8f8 !important;
+  }
+
+  .callout-note {
+    border-left-color: #2A9D8F !important;
+  }
+
+  .callout-important {
+    border-left-color: #1A6B63 !important;
+  }
+
+}

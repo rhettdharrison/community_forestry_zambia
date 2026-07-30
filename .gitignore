@@ -14,3 +14,15 @@ docs/.claude/
 *.aux
 *.log
 *.tex
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Raw remote-sensing inputs — large, re-downloadable via download_firms_fire.R
+# and download_hansen_deforestation.R; not meant to be committed
+firms_data/
+hansen_tiles/
+
+# Stray local plot output
+Rplots.pdf
