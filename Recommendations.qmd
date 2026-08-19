@@ -13,7 +13,7 @@ filters:
 editor: visual
 ---
 
-Derived from our experiences with this project, we make the following recommendations. This is not an exhaustive list, and moreover we recognise that many of these actions may be in hand to some degree. However, we attempt to cover key changes that need to be made to improve CFM implementation in Zambia. We have structured these recommendations around the same four domains that the report focuses on, namely governance, SFM, economic transformation and equity and inclusion.
+Derived from our experiences with this project, we make the following recommendations. This is not an exhaustive list, and moreover we recognise that some of these actions may be in hand to some degree. However, we attempt to cover key changes that need to be made to improve CFM implementation in Zambia. We have structured these recommendations around the same four domains that the report focuses on, namely governance, SFM, economic transformation and equity and inclusion.
 
 ## Governance
 
