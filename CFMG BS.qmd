@@ -52,6 +52,10 @@ The equity and inclusion outcomes of CFM in Zambia are broadly positive, with me
 
 In this chapter, we consider the equitable sharing of benefits arising from community forest management (CFM) and what the impacts of CFM are on vulnerable groups.
 
+### Hypothesis
+
+We expected that CFM benefits would be unevenly distributed, with women, youth, and vulnerable households receiving less than CFMG executives and older men. We predicted that elite capture and transparency gaps would be more visible to community members than to CFMG leaders, and that CFMGs with better governance would report more equitable benefit-sharing. We also expected that transparent mechanisms for grievance and redress would be rare, making it difficult for disadvantaged groups to challenge inequitable outcomes.
+
 ## Benefit sharing
 
 We asked FGD groups whether the benefits of CFM were equitably distributed (@fig-bs_equity). On the one hand, a substantial majority of responses across the FGD groups asserted that benefits were being shared equitably. However, the proportion of community female and community youth groups that felt that benefits were not being shared equitably was significantly higher than for the CFMG executive and community male FGD groups. Moreover, even among the CFMG executive and community male groups, there were some that agreed that benefits were not being shared equitably.

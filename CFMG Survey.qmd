@@ -29,17 +29,17 @@ load("cfmg.RData")
 
 ## Summary
 
-We surveyed 80 CFs across eight provinces and conducted `{r} with(cfmg, sum(table(cfmg_name)))` interviews in total. The sample included CFs from \~20 ha to \>80,000 ha and that varied in years since establishment from one to 7 yrs. In each community forest, we conducted four FGDs with (i) the CFMG executive, (ii) community men, (iii) community women, and (iv) community youths. This enables us to examine differences in perspectives across these stakeholder groups. In addition, we surveyed individual key stakeholders, including DFOs, CFMG executive members (usually the Secretary), private sector partners including NGOs and for-profit enterprises, and traditional leaders. Overall, the sample was male biased, reflecting gender biases in roles at the community level, but our information is balanced through specifically including a female FGD in each community. The sample included a wide range of ages from \~20 to \>80 years. Although most interviewees had lived all their lives in the community, the sample include some who had moved into the community recently. Our sampling approach ensured an unbiased selection and these data demonstrate that we covered a wide range of CFs, in terms of geography, size and age, and interviewees, in terms of gender, age and roles. Hence, our results may be considered generalisable at the national level.
+We surveyed 80 CFs across eight provinces and conducted `{r} with(cfmg, sum(table(cfmg_name)))` interviews in total. The sample included CFs from \~20 ha to \>80,000 ha and that varied in years since establishment from one to seven years. In each community forest, we conducted four Focal Group Discussions (FGD, total 292) with (i) the CFMG executive, (ii) community men, (iii) community women, and (iv) community youths. This enabled us to examine differences in perspectives across these groups. In addition, we conducted individual interviews (total = 257) with key stakeholders, including DFOs, CFMG executive members (usually the Secretary), community members, private sector partners including NGOs and for-profit enterprises, and traditional leaders. The same interview tool was used for both FGDs and individual interviews. Overall, the sample was male biased, reflecting gender biases in roles at the community level, but our information is balanced through specifically including a female FGD in each community. The sample included a wide range of ages from \~20 to \>80 years. Although most interviewees had lived all their lives in the community, the sample include some who had moved into the community recently. Our sampling approach ensured an unbiased selection and these data demonstrate that we covered a wide range of CFs, in terms of geography, size and age, and interviewees, in terms of gender, age and roles. Hence, our results may be considered generalisable at the national level.
 
 ::: {.callout-note icon="false"}
 ## Key conclusions
 
-The stratified random selection of CFs, combined with the structured multi-perspective FGD design and the diversity of individual interviewee roles, gender, age and experience, provides a robust foundation for national-level inference about CFM implementation in Zambia. The sample is broadly representative, the design is sensitive to within-community heterogeneity, and the geographic and structural breadth of the sample is sufficient to support the conclusions drawn throughout this report.
+The stratified random selection of CFs, combined with the structured multi-perspective FGD design and the diversity of individual interviewee roles, gender, age and experience, provides a robust foundation for national-level inference about CFM implementation in Zambia. The design is sensitive to within-community heterogeneity, and the geographic and structural breadth of the sample is sufficient to support the conclusions drawn throughout this report.
 :::
 
 ## Community Forests surveyed
 
-The sampling protocol targeted 80 CFs across eight provinces. Initially we attempted to sample ten CFs per province. However, as some provinces had fewer than ten CFs, this was not possible. Hence, to make up the numbers, we selected up to 13 CFs from provinces with more.
+The sampling protocol targeted 80 CFs across eight provinces. Initially we attempted to sample ten CFs per province. However, some provinces had fewer than ten CFs. Hence, to make up the numbers, we selected extra CFs from provinces that had more.
 
 We were unable to collect data on five of the 80 CFs selected, because the Community Forest Management Group (CFMG) was defunct. The final sample for analysis, therefore, included 75 CFs. The list of surveyed CFs is given in Appendix 2.
 
@@ -125,7 +125,7 @@ cfmg |> group_by(province,Name) |>
 
 ```
 
-Through the survey tool, we asked respondents the size of their community forest (CF). Using only responses from the CFMG executive groups, their answers are plotted against the size given in the FD database (@fig-size_of_CF). We restricted answers to the CFMG executive group, as we expected them to be the best informed as the the official size of their CF.
+Through the survey tool, we asked respondents the size of their community forest (CF). Using only responses from the CFMG executive groups, their answers are plotted against the size given in the FD database (@fig-size_of_CF). We restricted answers to the CFMG executive group here, as we expected them to be the best informed as the the official size of their CF.
 
 ```{r}
 #| label: fig-size_of_CF
@@ -173,7 +173,7 @@ The regulations enabling the formation of CFs were approved in 2018. Hence, the 
 #| error:   false
 #| fig-width: 8
 #| fig-height: 6
-#| fig-cap: "Age of community forests surveyed by province. The black dots indicate the individual CFs. The boxes represent the 25th and 75th percentile and the 50th percentile is indicated with the black bar. The red dot indicates the mean."
+#| fig-cap: "Age of community forests (on 1st January 2025) surveyed by province. The black dots indicate the individual CFs. The boxes represent the 25th and 75th percentile and the 50th percentile is indicated with the black bar. The red dot indicates the mean."
 #| fig-cap-location: bottom
 
 cfmg |> group_by(province,Name) |>
@@ -197,7 +197,7 @@ cfmg |> group_by(province,Name) |>
               axis.title = element_text(size = rel(1.29)),
               ) +
         xlab("") +
-        ylab("Age of Community Forests on 01/01/2025")
+        ylab("Age of Community Forests")
 
 ```
 
@@ -280,14 +280,13 @@ cfmg |> filter(interview_type != "individual_interview") |>
         tab_header(title = "FGD groups by type",
                    subtitle = "n = number of FGD groups of each type.") |>
         opt_align_table_header(align = "left") |>
-        cols_align(align = "center", columns = everything()) |>
         tab_style(
           style     = cell_text(align = "left"),
           locations = cells_stub()
         ) |>
         tab_style(
           style     = cell_text(align = "center"),
-          locations = cells_stubhead()
+          locations = cells_body()
         ) |>
         sub_missing()
 ```
@@ -296,7 +295,7 @@ cfmg |> filter(interview_type != "individual_interview") |>
 [← Return to Summary](Summary.html#survey-details)
 :::
 
-The number of individual interviews with key stakeholders also varied among the CFs. However, we attempted to hold interviews with a CFMG executive member (usually the secretary), the DFO and the community headmen or headwoman in every CF (@tbl-Breakdown_interviews_by_interviewee_role).
+The number of individual interviews with key stakeholders varied among the CFs. However, we attempted to hold interviews with a CFMG executive member (usually the secretary), the DFO and the community headmen or headwoman in every CF (@tbl-Breakdown_interviews_by_interviewee_role). The same structured interview tool was used for both FGD and individual interviews.
 
 ```{r}
 #| label: tbl-Breakdown_interviews_by_interviewee_role
@@ -325,14 +324,13 @@ cfmg |> filter(!is.na(interviewee_role)) |>
         tab_header(title = "Individual interviews by interviewee role",
                    subtitle = "n = number of individual interviews by interviewee role.") |>
         opt_align_table_header(align = "left") |>
-        cols_align(align = "center", columns = everything()) |>
         tab_style(
           style     = cell_text(align = "left"),
           locations = cells_stub()
         ) |>
         tab_style(
           style     = cell_text(align = "center"),
-          locations = cells_stubhead()
+          locations = cells_body()
         ) |>
         sub_missing()
 ```
@@ -380,14 +378,13 @@ cfmg |> filter(interview_type != "individual_interview") |>
         tab_header(title = "Gender breakdown among FGD participants",
                    subtitle = "Values represent the mean number of participants of each gender/age group per FGD type") |>
         opt_align_table_header(align = "left") |>
-        cols_align(align = "center", columns = everything()) |>
         tab_style(
           style     = cell_text(align = "left"),
           locations = cells_stub()
         ) |>
         tab_style(
           style     = cell_text(align = "center"),
-          locations = cells_stubhead()
+          locations = cells_body()
         ) |>
         sub_missing()
 
@@ -622,7 +619,7 @@ The selection of CFs followed a stratified random design: CFs were randomly sele
 
 The multi-perspective FGD design is the key methodological feature that enables meaningful inference from interview data. By conducting four structured FGDs per CF — with the CFMG executive committee, community men, community women, and community youth — the survey is able to capture systematically divergent perspectives within each community. The near-complete coverage of all four FGD types across the 75 CFs means that differences in responses among these groups, which feature prominently throughout the report, can be interpreted with confidence.
 
-Individual interviews were targeted at five key stakeholder roles: CFMG executive members, DFOs, traditional leaders, forest user-group chairs, and external partners. Not all roles were available at every CF, which introduces some variation in coverage, but the most important roles — CFMG executives, DFOs, and traditional leaders — were represented at the large majority of sites.
+Individual interviews were targeted at five key stakeholder roles: CFMG executive members, DFOs, traditional leaders, forest user-group chairs, and external partners. Not all roles were available at every CF, which introduces some variation in coverage, but the sample sizes for each category are sufficient for quantitative analyses of the responses.
 
 The gender breakdown of interviewees reflects real-world patterns: men dominate most CFMG stakeholder roles, and so the overall sample is male-biased. However, the dedicated female FGD in each CF and the inclusion of female individual interviewees where available ensure that women's perspectives are not lost. The age structure and 'years living in the community' of interviewees suggest a broadly representative sample of community members, spanning both recent arrivals and long-term residents across all provinces. The years of CFMG involvement reported by interviewees are consistent with the age of the programme, and where involvement exceeds seven years it likely reflects participation in predecessor community resource management structures, such as CRBs.
 

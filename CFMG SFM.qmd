@@ -50,6 +50,10 @@ According to the perceptions expressed by the FGDs, CFM in Zambia is improving S
 
 In this chapter, we consider the effect of community forestry on indicators of SFM. The information analysed is based entirely only on the responses of interviewees to our survey tool. In the next chapter, we will consider the effects of CF on SMF as measured through remote sensing derived metrics.
 
+### Hypothesis
+
+We expected that communities with CFM would report significant reductions in deforestation, fire frequency, and charcoal production, and increases in wildlife populations and forest recovery. We also expected that CFMGs with better governance would report stronger improvements in forest conditions than those with weaker governance.
+
 ### Deforestation
 
 We asked interviewees whether CFM has reduced deforestation inside their CF and whether or not deforestation has increased outside their CF.

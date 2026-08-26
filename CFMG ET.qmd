@@ -53,6 +53,10 @@ CFM is generating economic benefits for communities. However, these are currentl
 
 In this chapter, we consider the effect of CFM management on indicators of economic transformation.
 
+### Hypothesis
+
+We expected that CFM would create employment and income-generating opportunities for communities, but that these would be unevenly distributed—concentrated in carbon-related activities, biased toward men and community leaders, and limited in scope. We predicted that CFMGs with better governance would achieve better economic outcomes, and that communities would identify untapped economic opportunities (such as timber and other forest products) that remain largely unexploited due to lack of enterprise development support.
+
 ### Access to natural resources
 
 We asked FGD groups whether CFM had improved access to natural resources for household use (@fig-et_household_resources).

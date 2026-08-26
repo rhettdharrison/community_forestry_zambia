@@ -95,6 +95,10 @@ We analysed three categories of remote sensing data. Fire dynamics were assessed
 
 For each metric, we compared values before and after CF establishment, using the formal establishment date of each CFMG. Fire and deforestation data covered the period 2014–2024. All analyses used linear mixed models (or, for the proportional burned area response, a Gamma generalised linear mixed model with a log link), with a random intercept for CFMG to account for the non-independence of repeated annual observations within the same CF. We included the CFMG governance index as a fixed covariate to test whether governance quality moderated outcomes. To assess leakage — the displacement of forest-damaging activities into the areas surrounding CFs — we included a 1 km buffer zone around each CF as a spatial control and tested whether the Before–After change differed between core and buffer zones (i.e. the period × zone interaction). A non-significant interaction would indicate that changes in the buffer mirrored those in the CF.
 
+### Hypothesis
+
+We expected satellite data would independently confirm the community reports of reduced fire and improvements in forest condition. We also tested whether governance quality predicted these satellite-observed changes. We included buffer zones around CFs to detect "leakage"—whether restrictions inside CFs simply shifted harmful activities (fire, deforestation) to surrounding areas.
+
 ```{r}
 #| label: data_fire
 #| include: false

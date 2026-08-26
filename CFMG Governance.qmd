@@ -49,6 +49,10 @@ CFMG governance is patchy. There are some areas of serious concern. The legal fr
 
 In this chapter, we consider questions concerning the governance and management of CFMGs. As our questions pertain to the running of the CFMGs, our analysis focuses on the responses of the CFMG executives. However, the responses from other FGDs and from the individual interviews are included for comparison where appropriate.
 
+### Hypothesis
+
+We expected that CFMGs with strong governance—completing legal requirements on time, maintaining transparent financial records, holding regular elections, and making decisions openly—would be more successful at protecting their forests and generating economic benefits for their communities. We test this by examining which governance processes have been completed, comparing these across CFMGs, and assessing whether better governance predicts better outcomes in forest management and economic development.
+
 ## CFMG legal processes
 
 We asked CFMG executives what required legal processes had been completed, including the recognition letter, forest management agreement, forest management plan, community forest registration certificate, forest user-rights permit, CFMG by-laws & constitution, and benefit sharing agreement (@tbl-legal_processes).
