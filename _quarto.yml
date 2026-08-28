@@ -37,13 +37,13 @@ website:
       - text: "Appendices"
         menu:
           - text: "Appendix I - Methods"
-            href: Methods.qmd
+            href: Appendix_I-Methods.qmd
           - text: "Appendix II - Survey tool"
-            href: Appendix.qmd
+            href: Appendix_II-Survey_tool.qmd
           - text: "Appendix III - List of CFs surveyed"
-            href: "Appendix II.qmd"
+            href: "Appendix_III-Surveyed_CFAs.qmd"
           - text: "Appendix IV - CFMG performance index scores"
-            href: "Appendix III.qmd"
+            href: "Appendix_IV-Index_scores.qmd"
 
 format:
   html:

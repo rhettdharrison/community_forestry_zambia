@@ -1,7 +1,5 @@
 ---
 title: "Literature cited"
-author: "
-"
 format:
         html:
                 css: custom.css

@@ -1,6 +1,5 @@
 ---
 title: "Economic Transformation"
-author: "Rhett D Harrison"
 format:
   html:
     css: custom.css
@@ -41,21 +40,19 @@ load("cfmg.RData")
 
 ## Summary
 
-Most FGD groups reported that CFM had not improved access to natural resources for either household use or sale, though approximately one third indicated that access had increased. Approximately half of FGD groups agreed that CFM had generated new employment opportunities, with a marked contrast between community youth (who were most likely to agree) and community female FGDs (who were most likely to disagree). Employment was strongly male-biased and the dominant employment category was HFO or Community Scout. Income earning opportunities from CFM remain limited for most communities. Awareness of carbon credit agreements was generally high. However, although around 80% of CFMGs are involved in generating carbon credits, only around one third had received carbon payments. Carbon enterprise investment was primarily directed at improved forest management and agricultural extension, rather than at developing forest product value chains. However, forest product value chains — particularly honey and mushrooms — dominated both realised and aspirational income sources among CF communities. Most forest products are sold only at local markets. Partnerships with private enterprises were uncommon and mostly involved honey off-takers. Communities identified timber as the most important unrealised commercial opportunity, despite none of the surveyed CFMGs being involved in timber production. Opportunity costs of CFM were recognised by only about one third of FGD groups. Unexpectedly, non-timber forest product (NTFP) harvesting was frequently cited as a precluded activity, suggesting possible misunderstandings around forest use rules in many communities. It is evident from the survey that most CFMG business plans are overly reliant on carbon and potentially valuable NTFP value chains remain under-exploited. Furthermore, the governance index was a significant predictor of economic performance, at least from the perspective of the community FGD groups, which again underscores the importance of ensuring quality governance if the benefits of CFM are to be realised.
+Most FGD groups reported that CFM had not improved access to natural resources for either household use or sale, though approximately one third indicated that access had increased. Approximately half of FGD groups agreed that CFM had generated new employment opportunities, with a marked contrast between community youth (who were most likely to agree) and community female FGDs (who were most likely to disagree). Employment was strongly male-biased and the dominant employment category was HFO or Community Scout. Income earning opportunities from CFM remain limited for most communities. Awareness of carbon finance agreements was generally high. However, although around 80% of CFMGs are involved in generating carbon credits, only around one third had received carbon payments. Carbon developer investment was primarily directed at improved forest management and agricultural extension, rather than at developing forest product value chains. However, forest product value chains — particularly honey and mushrooms — dominated both realised and aspirational income sources among CFA communities. Most forest products are sold only at local markets. Partnerships with private enterprises were uncommon and mostly involved honey off-takers. Communities identified timber as the most important unrealised commercial opportunity, although none of the surveyed CFMGs were involved in timber production. Opportunity costs of CFM were recognised by only about one third of FGD groups. Unexpectedly, non-timber forest product (NTFP) harvesting was frequently cited as a precluded activity, suggesting possible misunderstandings around forest use rules in many communities. It is evident from the survey that most CFMG business plans are overly reliant on carbon and potentially valuable NTFP value chains remain under-exploited. Furthermore, the governance index was a significant predictor of economic performance, at least from the perspective of the community FGD groups, which again underscores the importance of ensuring quality governance if the benefits of CFM are to be realised.
 
 ::: {.callout-note icon="false"}
 ## Key conclusions
 
-CFM is generating economic benefits for communities. However, these are currently very limited and overly focused on carbon, too concentrated in a few low paying roles, such as HFOs, and too unevenly distributed across communities, with women in particular not seeing sufficient economic benefits. To achieve an economic transformation through CFM, requires a diversified, layered forest enterprise model — one that exploits the full range of products, develops value chains and actively connects communities to markets. Such a vision is both achievable and arguably essential for long-term CFM viability, but requires a much greater effort from the FD and CFM partners, such as carbon enterprises, to identify opportunities and provide capacity development in forest resource management, value addition and business skills. 
+CFM is generating some economic benefits for communities. However, these are currently very limited and overly focused on carbon, too concentrated in a few low paying roles, such as HFOs, and too unevenly distributed across communities, with women in particular not seeing sufficient economic benefit. To achieve an economic transformation through CFM, requires a diversified, layered forest enterprise model — one that exploits the full range of products, develops value chains and actively connects communities to markets. Such a vision is both achievable and arguably essential for long-term CFM viability, but requires a much greater effort from the FD and CFM partners, such as carbon developers and conseervation NGOs, to identify opportunities and provide capacity development in forest resource management, value addition and business skills. 
 :::
 
 ## Introduction
 
 In this chapter, we consider the effect of CFM management on indicators of economic transformation.
 
-### Hypothesis
-
-We expected that CFM would create employment and income-generating opportunities for communities, but that these would be unevenly distributed—concentrated in carbon-related activities, biased toward men and community leaders, and limited in scope. We predicted that CFMGs with better governance would achieve better economic outcomes, and that communities would identify untapped economic opportunities (such as timber and other forest products) that remain largely unexploited due to lack of enterprise development support.
+We hypothesised that CFM would create employment and income-generating opportunities for communities. However, we expected that these would be unevenly distributed — concentrated in carbon-related activities, biased toward men and community leaders, and limited in scope. We also tested the hypothesis from the governance chapter that CFMGs with better governance would achieve better and more equitable economic outcomes. We also invited communities to identify untapped economic opportunities (such as timber and other forest products) that remain largely unexploited due to lack of enterprise development support.
 
 ### Access to natural resources
 
@@ -66,16 +63,30 @@ We asked FGD groups whether CFM had improved access to natural resources for hou
 #| echo: false
 #| warning: false
 #| message: false
-#| error:   false
+#| fig-width: 8
+#| fig-height: 5
 #| fig-cap: "Has CFM improved access to natural resources for household use? The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
 
-cfmg |>
+household_col <- "economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_household_use_e_g_firewood_building_materials"
+
+# Verify column exists
+if (!household_col %in% names(cfmg)) {
+  stop("Column not found: ", household_col, "\n",
+       "Available columns:\n", 
+       paste(grep("household", names(cfmg), value = TRUE, ignore.case = TRUE), collapse = "\n"))
+}
+
+# Prepare data with proper validation
+plot_data <- cfmg |>
   filter(interview_type != "individual_interview") |>
+  select(interview_type, all_of(household_col)) |>
+  filter(!is.na(.data[[household_col]])) |>
   mutate(
     response = case_match(
-      as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_household_use_e_g_firewood_building_materials),
+      as.character(.data[[household_col]]),
       "1" ~ "Yes",
-      "0" ~ "No"
+      "0" ~ "No",
+      .default = NA_character_
     ),
     response = factor(response, levels = c("Yes", "No")),
     interview_type = factor(
@@ -89,7 +100,15 @@ cfmg |>
       levels = c("Youth", "Male", "Female", "Executive")
     )
   ) |>
-  drop_na(response) |>
+  filter(!is.na(response))
+
+# Check if we have data before plotting
+if (nrow(plot_data) == 0) {
+  stop("No valid data available for fig-et_household_resources after filtering")
+}
+
+# Create plot
+plot_data |>
   count(interview_type, response) |>
   group_by(interview_type) |>
   mutate(prop = n / sum(n)) |>
@@ -190,7 +209,7 @@ tidy(M1, effects = "fixed") |>
     title    = "Model results for improved access to natural resources for household use — FGD type and governance index",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Executive FGD. ",
-      "Province variance = {prov_M1}; CF-within-province variance = {cfmg_M1}. ",
+      "Province variance = {prov_M1}; CFA-within-province variance = {cfmg_M1}. ",
       "Marginal R² = {round(r2_M1$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M1$R2_conditional, 3)}. ",
       "n = {nobs(M1)}."
@@ -347,7 +366,7 @@ tidy(M4, effects = "fixed") |>
     title    = "Model results for improved access to natural resources for household use — individual interviewees",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Community member. ",
-      "Province variance = {prov_M4}; CF-within-province variance = {cfmg_M4}. ",
+      "Province variance = {prov_M4}; CFA-within-province variance = {cfmg_M4}. ",
       "Marginal R² = {round(r2_M4$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M4$R2_conditional, 3)}. ",
       "n = {nobs(M4)}."
@@ -459,7 +478,7 @@ cfmg |>
 [← Return to Summary](Summary.html#economic-transformation)
 :::
 
-As can be seen from the figure, approximately half of the FGD groups agreed that CFM had increased employment opportunities. Interestingly, community youth were especially likely to agreed that CFM had created employment opportunities. In contrast, community female FGD groups were much more likely to say that CFM had not increased employment opportunities. All pairwise comparisons were highly significant.
+As can be seen from the figure, approximately half (but only half) of the FGD groups agreed that CFM had increased employment opportunities. Interestingly, community youth were especially likely to agreed that CFM had created employment opportunities. In contrast, community female FGD groups were much more likely to say that CFM had not increased employment opportunities. All pairwise comparisons were highly significant.
 
 ```{r}
 #| label: model_et_fgd_employment
@@ -527,7 +546,7 @@ tidy(M3, effects = "fixed") |>
     title    = "Model results for employment opportunities generated by CFM — FGD type and governance index",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Executive FGD. ",
-      "Province variance = {prov_M3}; CF-within-province variance = {cfmg_M3}. ",
+      "Province variance = {prov_M3}; CFA-within-province variance = {cfmg_M3}. ",
       "Marginal R² = {round(r2_M3$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M3$R2_conditional, 3)}. ",
       "n = {nobs(M3)}."
@@ -693,7 +712,7 @@ tidy(M6, effects = "fixed") |>
     title    = "Model results for employment opportunities generated by CFM — individual interviewees",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Community member. ",
-      "Province variance = {prov_M6}; CF-within-province variance = {cfmg_M6}. ",
+      "Province variance = {prov_M6}; CFA-within-province variance = {cfmg_M6}. ",
       "Marginal R² = {round(r2_M6$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M6$R2_conditional, 3)}. ",
       "n = {nobs(M6)}."
@@ -891,7 +910,7 @@ ggplot(wc_data, aes(label = word, size = freq, colour = freq)) +
 
 #### Carbon finance
 
-We asked the CFMG executive FGDs whether their CFMG had received income from carbon finance (@fig-et_carbon_finance). According to the responses, around one third of CFs have received carbon payments. This is an under-representation for the number of CFMGs involved in carbon finance, which is around 80% of CFMGs, and reflects only those that have actually started to receive payments.
+We asked the CFMG executive FGDs whether their CFMG had received income from carbon finance (@fig-et_carbon_finance). According to the responses, around one third of CFAs have received carbon payments. This is an under-representation for the number of CFMGs involved in carbon finance, which is around 80% of CFMGs, and reflects only those that have actually started to receive payments.
 
 ```{r}
 #| label: fig-et_carbon_finance
@@ -1109,7 +1128,7 @@ tidy(M11, effects = "fixed") |>
     title    = "Model results for community awareness of carbon credit agreement — FGD type and governance index",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Executive FGD. ",
-      "Province variance = {prov_M11}; CF-within-province variance = {cfmg_M11}. ",
+      "Province variance = {prov_M11}; CFA-within-province variance = {cfmg_M11}. ",
       "Marginal R² = {round(r2_M11$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M11$R2_conditional, 3)}. ",
       "n = {nobs(M11)}."
@@ -1275,7 +1294,7 @@ tidy(M12, effects = "fixed") |>
     title    = "Model results for community awareness of carbon credit agreement — individual interviewees",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Community member. ",
-      "Province variance = {prov_M12}; CF-within-province variance = {cfmg_M12}. ",
+      "Province variance = {prov_M12}; CFA-within-province variance = {cfmg_M12}. ",
       "Marginal R² = {round(r2_M12$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M12$R2_conditional, 3)}. ",
       "n = {nobs(M12)}."
@@ -1314,9 +1333,9 @@ as.data.frame(pairwise.M12) |>
   sub_missing()
 ```
 
-#### Carbon enterprise support
+#### Carbon developer support
 
-The types of CFM activities supported by carbon enterprises are shown in @fig-et_trader_support. As can be seen, support focused on aspects of forest management or agricultural extension. Other potential elements of support, such as NTFPs value chains, infrastructure development or market access, featured substantially less.
+The types of CFM activities supported by carbon developers are shown in @fig-et_trader_support. As can be seen, support focused on aspects of forest management or agricultural extension. Other potential elements of support, such as NTFPs value chains, infrastructure development or market access, featured substantially less.
 
 ```{r}
 #| label: fig-et_trader_support
@@ -1514,7 +1533,7 @@ ggplot(income_freq, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-To better understand the importance of different income earning opportunities we asked the community female, male, and youth FGD groups to rank their top three additional sources of income from CFM (@fig-et_income_ranks). Interestingly, among the 14 value chains identified, 12 were mentioned as 1st rank at least once. This immediately points to the diversity of forest products being harvested from CFs across the country, but also to the fact that for most CFs only one product features strongly as an addition source of income. Among these, mushrooms and honey are clearly the most frequently mentioned.
+To better understand the importance of different income earning opportunities we asked the community female, male, and youth FGD groups to rank their top three additional sources of income from CFM (@fig-et_income_ranks). Interestingly, among the 14 value chains identified, 12 were mentioned as 1st rank at least once. This immediately points to the diversity of forest products being harvested from CFAs across the country, but also to the fact that for most CFAs only one product features strongly as an addition source of income. Among these, mushrooms and honey are clearly the most frequently mentioned.
 
 ```{r}
 #| label: fig-et_income_ranks
@@ -1581,7 +1600,6 @@ cfmg |>
     plot.margin        = margin(10, 25, 10, 10)
   )
 ```
-
 
 Female, male, and youth FGDs also reported which forest products were harvested for household use (@fig-et_household_products). Mushrooms again featured prominently, but other natural resources are also clearly important, such as wild fruits, medicinal plants, thatching grass and caterpillars.
 
@@ -1753,7 +1771,7 @@ ggplot(vc_freq, aes(x = freq, y = reorder(label, freq))) +
   )
 ```
 
-We asked the community female, male, and youth FGD groups to identify economic opportunities that remained unrealised within their CFs (@fig-et_unrealised). Interestingly, although a wide range of different natural resource related value chains were mentioned, timber was mention the most often. This is noteworthy as none of the CFMGs we surveyed are involved in timber production.
+We asked the community female, male, and youth FGD groups to identify economic opportunities that remained unrealised within their CFAs (@fig-et_unrealised). Interestingly, although a wide range of different natural resource related value chains were mentioned, timber was mention the most often. This is noteworthy as none of the CFMGs we surveyed are involved in timber production.
 
 ```{r}
 #| label: fig-et_unrealised
@@ -2025,7 +2043,7 @@ cfmg |>
 
 #### Precluded activities
 
-The community female, male, and youth FGD groups identified economic activities that are precluded under CFM regulations (@fig-et_precluded). While many of these are self evident, the fact that NTFP harvesting is listed quite prominently is surprising. Whether this reflects a misunderstanding on the part of the communities or indeed that they are being told they cannot collect NTFPs is not clear.
+The community female, male, and youth FGD groups identified economic activities that are precluded under CFM regulations (@fig-et_precluded). While many of these are self evident (e.g. charcoal burning), the fact that NTFP harvesting is listed prominently is both surprising and concerning. Whether this reflects a misunderstanding on the part of the communities or indeed that they are being told they cannot collect NTFPs is not clear.
 
 ```{r}
 #| label: fig-et_precluded
@@ -2228,7 +2246,7 @@ tidy(M9, effects = "fixed") |>
     title    = "Model results for opportunity costs of CFM — FGD type and governance index",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Executive FGD. ",
-      "Province variance = {prov_M9}; CF-within-province variance = {cfmg_M9}. ",
+      "Province variance = {prov_M9}; CFA-within-province variance = {cfmg_M9}. ",
       "Marginal R² = {r2_M9_marg}; ",
       "conditional R² = {r2_M9_cond}. ",
       "n = {nobs(M9)}."
@@ -2396,7 +2414,7 @@ tidy(M10, effects = "fixed") |>
     title    = "Model results for opportunity costs of CFM — individual interviewees",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Community member. ",
-      "Province variance = {prov_M10}; CF-within-province variance = {cfmg_M10}. ",
+      "Province variance = {prov_M10}; CFA-within-province variance = {cfmg_M10}. ",
       "Marginal R² = {round(r2_M10$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M10$R2_conditional, 3)}. ",
       "n = {nobs(M10)}."
@@ -2504,7 +2522,7 @@ ggplot(wc_oc, aes(label = word, size = freq, colour = freq)) +
 
 ## Economic transformation index
 
-To summarise the overall economic transformation performance of each CFMG, we constructed an economic transformation score (0–5) by summing five binary indicators reported by FGD groups — improved access to natural resources for household use, new employment opportunities created, carbon payments received (executive FGDs only), collaboration with a private enterprise (executive FGDs only), and absence of opportunity costs — scored as 1 (positive outcome reported) or 0 (no positive outcome or worsening). The distribution of economic transformation scores across CFMGs is shown in @fig-et_index_dist (Appendix III). We then modelled this score using a linear mixed model with the governance index as the predictor, and random intercepts for province and CF within province, to test whether governance was a significant predictor of overall economic transformation performance (@tbl-et_index_model, @fig-et_index).
+To summarise the overall economic transformation performance of each CFMG, we constructed an economic transformation score (0–5) by summing five binary indicators reported by FGD groups — improved access to natural resources for household use, new employment opportunities created, carbon payments received (executive FGDs only), collaboration with a private enterprise (executive FGDs only), and absence of opportunity costs — scored as 1 (positive outcome reported) or 0 (no positive outcome or worsening). The distribution of economic transformation scores across CFMGs is shown in @fig-et_index_dist (Appendix III). We then modelled this score using a linear mixed model with the governance index as the predictor, and random intercepts for province and CFA within province, to test whether governance was a significant predictor of overall economic transformation performance (@tbl-et_index_model, @fig-et_index).
 
 ```{r}
 #| label: data_et_index
@@ -2632,8 +2650,8 @@ tidy(M_et, effects = "fixed") |>
   tab_header(
     title    = "Model results for economic transformation performance — governance index",
     subtitle = glue::glue(
-      "Linear mixed model with random intercepts for province and CF within province. ",
-      "Province variance = {prov_et}; CF-within-province variance = {cfmg_et}; ",
+      "Linear mixed model with random intercepts for province and CFA within province. ",
+      "Province variance = {prov_et}; CFA-within-province variance = {cfmg_et}; ",
       "residual variance = {resid_et}. ",
       "Marginal R² = {round(r2_et$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_et$R2_conditional, 3)}. ",
@@ -2673,22 +2691,24 @@ et_data |>
   )
 ```
 
+As can be seen, the governance index was a highly significant predictor of economic transformaion score, indicating that in better governance CFMGs the community also perceived better economic benefit from CFM.
+
 ## Discussion
 
 Through the FGDs and the individual interviews, we investigated a diverse set of indicators of economic transformation. We covered access to natural resources for household use and sale, employment, income earning opportunities, including carbon finance and other sources of income, and opportunity costs.
 
 Most FGD groups and individual interviewees indicated that CFM had not increased access to natural resources for either household use or sale. However, given that communities  have customary rights of access and were involved in harvesting forest products before the instigation of CFM, it is not surprising that most respondents do not recognise any change. Nevertheless, around one third of respondent groups and individuals felt that access had improved under CFM, presumably reflecting formalisation of community rights to access forest resources.
 
-A larger proportion of FGD groups considered that CFM had had a positive effect on full-time employment. However, the differences among FGD types were highly significant. More community female groups suggested there was no change in employment and more community youth groups felt full-time formal employment opportunities had increased. We also showed that the numbers employed included many more men than women, which would explain these differences in perception. Moreover, while CFM does appear to have increased formal employment, the quality of jobs was poor — most being HFOs or community scouts —  and the numbers are paltry. In part, this may reflect the fact that employment in forest product harvesting and processing is rarely formal or full-time but, as we also found, there has been very limited development of forest resource based enterprises. Thus, while CMF does appear to have resulted in some new employment opportunities, these have been largely limited to low paying jobs and have not benefited many women.
+A larger proportion of FGD groups considered that CFM had had a positive effect on full-time employment. However, the differences among FGD types were highly significant. More community female groups suggested there was no change in employment and more community youth groups felt full-time formal employment opportunities had increased. We also showed that the numbers employed included many more men than women, which would explain these differences in perception. Moreover, while CFM does appear to have increased formal employment, the quality of jobs was poor — most being HFOs or community scouts — and the numbers are paltry. In part, this may reflect the fact that employment in forest product harvesting and processing is rarely formal or full-time but, as we also found, there has been very limited development of forest resource based enterprises. Thus, while CMF does appear to have resulted in a small number of new employment opportunities, these have been largely limited to low paying jobs and have not benefited many women.
 
-A large proportion of CFs in Zambia were formed on the promise of carbon dollars. However, only approximately one third of the CFs in our sample appeared to have benefited from carbon payments at the time of the survey. This number reflects the actual disbursement of carbon derived income to the community, as there clearly has been investment in communities by carbon enterprises. The fact that a number of the FGD groups, especially youth groups, were unaware of the carbon agreement is concerning. It suggests that the carbon enterprises may have failed to conduct a proper FPIC process involving the entire community and that the CFMG executives may not be communicating properly with their communities. Nevertheless, many carbon enterprises are clearly supporting communities. Most activities concern forest protection and agricultural extension for sustainable intensification, such as climate smart agriculture. Both of which may be considered as essential to a carbon business plan. However, NTFPs and forest resource based enterprise development were far less often mentioned. We suggest this is an oversight on the part of carbon enterprises. Enhancing forest product value chains would increase the value of forest conservation for local communities. Futhermore, carbon finance alone is unlikely to fund development in forest margin communities sufficiently. Hence, there is a significant risk that communities will become disillusioned with carbon finance, especially among sections of the community that feel there is an inequitable sharing of benefits. Investing in forest based enterprises should be considered essential to a carbon business plan.
+A large proportion of CFAs in Zambia were formed on the promise of carbon dollars. However, only approximately one third of the CFAs in our sample appeared to have benefited from carbon payments at the time of the survey. This number reflects the actual disbursement of carbon derived income to the community, as there clearly has been investment in communities by carbon developers. The fact that a number of the FGD groups, especially youth groups, were unaware of the carbon agreement is concerning. It suggests that the carbon developers may have failed to conduct comprehensive FPIC processes involving the entire community and that the CFMG executives may not be communicating properly with their communities. Nevertheless, many carbon developers are clearly supporting communities. Most activities concern forest protection and agricultural extension for sustainable intensification, such as climate smart agriculture. Both of which may be considered as essential to a carbon business plan. However, NTFPs and forest resource based enterprise development were far less often mentioned. We suggest this is an oversight on the part of carbon developers. Enhancing forest product value chains would increase the value of forest conservation for local communities. Furthermore, carbon finance alone is unlikely to fund development in forest margin communities sufficiently. Hence, there is a significant risk that communities will become disillusioned with carbon finance, especially among sections of the community that feel there is an inequitable sharing of benefits. Investing in forest based enterprises should be considered essential to a carbon business plan.
 
-The above results are backed up by the response to questions concerning other income earning opportunities. It seems CFM has not led to increased income from market linkages, alternative livelihoods, conservation revenue, forest product processing or ecotourism except for in a very few cases. Nevertheless, a wide variety of forest products clearly contribute to household use and some additional income. Although honey and mushrooms were most often identified as the most important source of additional income, another ten NTFPs were mention as the most important at least once. However, these additional sources of income were identified in less than half of the CFs and only 13 CFs identified a second ranked forest product. Thus, forest products are rarely being exploited as a source of additional income and if they are it is usually just one. Only a small number of CFMGs (23%) are partnering with an enterprise, such as an off-taker, and among those that do it almost exclusively concerns honey. The communities identified a wide diversity of forest products that could potentially be harvested and processed to provide an additional source of income. Prominent among these were timber and wild fruit, as well as mushrooms and honey. In some cases timber harvesting may conflict with carbon business plans, but not if plantations were established. The potential of CFM to support forest product enterprises is clearly massively under realised.
+The above results are backed up by the response to questions concerning other income earning opportunities. It seems CFM has not led to increased income from market linkages, alternative livelihoods, conservation revenue, forest product processing or ecotourism except for in a very few cases. Nevertheless, a wide variety of forest products clearly contribute to household use and some additional income. Although honey and mushrooms were most often identified as the most important source of additional income, another ten NTFPs were mention as the most important at least once. However, these additional sources of income were identified in less than half of the CFAs and only 13 CFAs identified a second ranked forest product. Thus, forest products are only rarely being exploited as a source of additional income and if they are it is usually just one. Only a small number of CFMGs (23%) are partnering with an enterprise, such as an off-taker, and among those that do it almost exclusively concerns honey. The communities identified a wide diversity of forest products that could potentially be harvested and processed to provide an additional source of income. Prominent among these were timber and wild fruit, as well as mushrooms and honey. In some cases timber harvesting may conflict with carbon business plans, but not if plantations were established on degraded land. The potential of CFM to support forest product enterprises is clearly massively under realised.
 
 To get a more accurate picture of forest product values a more in depth PEN type survey, involving surveys of household forest product use repeated multiple times over a year, is recommended. The intensity of the survey would necessitate sub-sampling communities from our survey. However, the results of our survey could be used to stratify sampling, so that results could be extrapolated to the national level.
 
-The local communities identified a number of opportunity costs to CFM. Most of these pertained to activities that are precluded, such as those involving forest clearance. However, many groups also identified other opportunity costs, such as time costs and diverted resources. Recognition of opportunity costs is important to understand the cost-benefits of CFM for communities, especially as these costs are likely to be unevenly distributed among community members. It was concerning that many groups mentioned restricted access to NTFPs. Whether this results from a misunderstanding of the regulations surrounding CFM or is because community members are actually being barred from harvesting NTFPs needs to be resolved. CFM should facilitate access to resources and improve their management, not prevent access.
+The local communities identified a number of opportunity costs to CFM. Most of these pertained to activities that are precluded, such as those involving forest clearance. However, many groups also identified other opportunity costs, such as time costs and diverted resources. Recognition of opportunity costs is important to understand the cost-benefit of CFM for communities, especially as these costs are likely to be unevenly distributed among community members. It was concerning that many groups mentioned restricted access to NTFPs. Whether this results from a misunderstanding of the regulations surrounding CFM or is because community members are actually being barred from harvesting NTFPs needs to be resolved. CFM should facilitate access to resources and improve their management, not prevent access.
 
 It is noteworthy that the governance index was a highly significant predictor of our economic transformation index. Thus, as with our results from the chapter on SFM, performance is predicated on good governance. It is imperative that the FD and other CFMG partners step up their oversight of CFMG governance to ensure long term positive outcomes from CFM.
 
-Overall, a positive picture of economic transformation emerges from the responses of the FGDs and individual interviews. While changes in indicators, such as employment or additional income from forest products, are not substantial, they are in a positive direction. In the future, most communities will also receive carbon income, even if this has only benefited around one third of CFs so far. However, it is also evident that CFMG business plans are over-reliant on carbon or sometimes carbon and honey. Substantial opportunities for developing much more diversified business plans exist. These could include a range of different NTFPs and potentially also timber or sustainable charcoal. In addition to simply increasing income earning opportunities, diversified business plans would also provide a buffer against fluctuating commodity prices and because different products are harvested at different times of the year, they can help stabilise income throughout the year.
+Overall, a somewhat positive picture of economic transformation emerges from the responses of the FGDs and individual interviews. However, the responses also indicate that there are huge missed opportunities to diversity income sources and develop forest based enterprises. While changes in indicators, such as employment or additional income from forest products, are not substantial, they are in a positive direction. In the future, most communities will also receive carbon income, even if this has only benefited around one third of CFAs so far. However, CFMG business plans are clearly over-reliant on carbon or sometimes carbon and honey. Substantial opportunities for developing much more diversified business plans exist. These could include a range of different NTFPs and potentially also timber or sustainable charcoal. In addition to simply increasing income earning opportunities, diversified business plans would also provide a buffer against fluctuating commodity prices and because different products are harvested at different times of the year, they can help stabilise income throughout the year.

@@ -1,7 +1,6 @@
 ---
 title: "Community Forest Management in Zambia: Is It Working?"
 subtitle: "Final Report"
-author: "Rhett D Harrison"
 date: today
 bibliography: references.bib
 suppress-bibliography: true
@@ -29,6 +28,19 @@ format:
 ```
 :::
 
+## Authors
+
+Rhett D Harrison^1^*, Chipo Chisonga^1^, Edward Banda^1^, Thecla Masuku^2^, Kaala Moombe^1^, Hockings Mambwe^1^, and Hope Chama^2^
+
+*^1^ Landscape Alliance (formerly CIFOR-ICRAF), Zambia Office, 12-14 St Eugene Office Park, Lake Road, Lusaka, Zambia.*
+
+*^2^ Forestry Department, Ministry of Green Economy and Environment, Government of the Republic of Zambia, Kwacha House, Cairo Road, P.O. Box 50042, Lusaka, Zambia.*
+
+*\* Corresponding author: r.harrison@landscapealliance.org*
+
+---
+
+
 ## Foreword
 
 *[Foreword text to be inserted]*
@@ -43,12 +55,18 @@ format:
 :::
 
 ::: {.acknowledgements-text}
-This activity is a partnership between Landscape Alliance and the SAFE (Sustainable Agriculture for Forest Ecosystems) project, financed by the European Union (EU), the Ministry of Foreign Affairs of Netherlands and the German Federal Ministry for Economic Cooperation and Development (BMZ). SAFE is part of the Fund for the Promotion of Innovation in Agriculture (i4Ag) and implemented by Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ). The aim of this collaboration is to understand whether community forestry in Zambia is delivering the desired outcomes in terms of sustainable forest management and economic development.
+This activity is a partnership between Landscape Alliance and the SAFE (Sustainable Agriculture for Forest Ecosystems) project, financed by the European Union (EU), the Ministry of Foreign Affairs of Netherlands and the German Federal Ministry for Economic Cooperation and Development (BMZ). SAFE is part of the Fund for the Promotion of Innovation in Agriculture (i4Ag) and implemented by Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ). The aim of this collaboration is to understand whether community forestry in Zambia is delivering the desired outcomes in terms of sustainable forest management and rural economic development.
 
 The activity is also a collaboration between Landscape Alliance and the Government of the Republic of Zambia through the Ministry of Green Economy and Environment and the Department of Forestry.
 
-The contents of this report are the sole responsibility of Landscape Alliance and do not necessarily reflect the views of the EU, the Federal Ministry for Economic Cooperation and Development (BMZ), the Ministry of Foreign Affairs of the Netherlands, or the Government of the Republic of Zambia.
+The authors would like to thank the District Forest Officers, CFMG Executives and traditional leadership from the surveyed communities for helping to coordinated the survey. We would also like to thank the Focal Group Discussion members and indvidiaul interviewees from the surveyed communities for giving up their time and contributing to the success of the survey. The authors would further like to acknowledge Sam Harrison and Casey Ryan, both from the University of Edinburgh, UK, for generously contributing the forest biomass data that were used in the remote sensing chapter. We would like to thank the participants at the inception workshop, who contributed their expertise and advise freely and greatly improved the design of the study, as result. Last, we would like to thank Alistair Anton (ZIFLP), Anne Larson (Landscape Alliance) and other colleagues from GIZ, the EU delegation in Zambia, and the Landscape Alliance for reviewing and commenting on draft versions of the report.
+
+The contents of this report are the sole responsibility of the authors and the Landscape Alliance do not necessarily reflect the views of the EU, the Federal Ministry for Economic Cooperation and Development (BMZ), the Ministry of Foreign Affairs of the Netherlands, or the Government of the Republic of Zambia.
 :::
+
+## Suggested Citation
+
+Harrison, R. D., Chisonga, C., Banda, E., Masuku, T., Moombe, K., Mambwe, H., and Chama, H. (2026). Community forest management in Zambia: Is it working? Landscape Alliance, Lusaka, Zambia.
 
 ---
 
@@ -56,48 +74,56 @@ The contents of this report are the sole responsibility of Landscape Alliance an
 
 | Chapter | Title |
 |:--------|:------|
-| [Summary](Summary.html) | Executive summary of findings and headline conclusions |
-| [Recommendations](Recommendations.html) | Recommendations for government, NGOs and carbon enterprises |
-| [Introduction](Introduction.html) | Background, policy context and objectives |
-| [Survey Overview](CFMG Survey.html) | Survey design, sample characteristics and methods |
-| [Governance](CFMG Governance.html) | CFMG legal, governance and business processes |
-| [Sustainable Forest Management](CFMG SFM.html) | Community perceptions of forest condition and SFM outcomes |
-| [Remote Sensing Analysis](Remote Sensing.html) | Satellite evidence on fire, deforestation and biomass change |
-| [Economic Transformation](CFMG ET.html) | Employment, income, carbon finance and forest enterprises |
-| [Equity and Inclusion](CFMG BS.html) | Benefit sharing, gender equity and poverty impacts |
-| [Discussion](Conclusions.html) | Synthesis and cross-cutting findings |
-| [Appendix I – Methods](Methods.html) | Detailed methodology |
-| [Appendix II – Survey tool](Appendix.html) | Survey instrument |
-| [Appendix III – List of CFs surveyed](Appendix II.html) | All community forests in the sample |
-| [Appendix IV – CFMG performance index scores](Appendix III.html) | Governance, SFM, economic and equity index scores by CFMG |
+| [Summary](Summary.html) | Summary of findings and headline conclusions |
+| [Recommendations](Recommendations.html) | Recommendations for government, NGOs and carbon developers |
+| [Introduction](Introduction.html) | Background, policy context and study objectives |
+| [Survey Overview](CFMG Survey.html) | Survey design and sample characteristics |
+| [Governance](CFMG Governance.html) | Analysis of survey data on CFMG legal, governance and business processes |
+| [Sustainable Forest Management](CFMG SFM.html) | Analysis of survey data on forest condition and SFM outcomes |
+| [Remote Sensing Analysis](Remote Sensing.html) | Analysis of Earth observation evidence on fire, deforestation and biomass change |
+| [Economic Transformation](CFMG ET.html) | Analysis of survey data on employment, income, carbon finance and forest enterprises |
+| [Equity and Inclusion](CFMG BS.html) | Analysis of survey data on benefit sharing, gender equity and poverty impacts |
+| [Discussion](Conclusions.html) | Synthesis of study results and cross-cutting findings |
+| [Appendix I – Methods](Appendix_I-Methods.html) | Detailed account of analysis methods |
+| [Appendix II – Survey tool](Appendix_II-Survey_tool.html) | Survey instrument |
+| [Appendix III – List of CFAs surveyed](Appendix_III-Surveyed_CFAs.html) | Summary details of all community forests in the sample |
+| [Appendix IV – CFMG performance index scores](Appendix_IV-Index_scores.html) | Governance, SFM, economic and equity index scores for each CFMG surveyed |
 
 ---
+
 
 ## Abbreviations
 
 | Abbreviation | Definition |
 |:-------------|:-----------|
 | BCP | BioCarbon Partners |
-| CF | Community Forest |
+| BMZ | German Federal Ministry for Economic Cooperation and Development |
+| CFA | Community Forest Area |
 | CFM | Community Forest Management |
 | CFMG | Community Forest Management Group |
-| Landscape Alliance | Landscape Alliance (formerly CIFOR-ICRAF) |
 | CLMM | Cumulative Link Mixed Model |
 | COMACO | Community Markets for Conservation |
 | CRB | Community Resource Board |
 | DFO | District Forestry Officer |
+| EU | European Union |
 | FAO | Food and Agriculture Organization of the United Nations |
+| FD | Forestry Department |
 | FGD | Focus Group Discussion |
 | FPIC | Free, Prior and Informed Consent |
 | GIZ | Deutsche Gesellschaft für Internationale Zusammenarbeit |
 | GLMM | Generalised Linear Mixed Model |
 | GRZ | Government of the Republic of Zambia |
 | HFO | Honorary Forest Officer |
+| i4Ag | Fund for the Promotion of Innovation in Agriculture |
 | JFM | Joint Forest Management |
+| MoA | Ministry of Agriculture |
+| MoGEE | Ministry of Green Economy and Environment |
 | NDC | Nationally Determined Contribution |
 | NGO | Non-governmental Organisation |
 | NTFP | Non-timber Forest Product |
+| PACRA | Patents and Companies Registration Agency |
 | REDD+ | Reducing Emissions from Deforestation and forest Degradation |
+| SAFE | Sustainable Agriculture for Forest Ecosystems |
 | SFM | Sustainable Forest Management |
 | SI | Statutory Instrument |
 | ZIFLP | Zambia Integrated Forest Landscape Programme |

@@ -1,6 +1,5 @@
 ---
 title: "Governance"
-author: "Rhett D Harrison"
 format:
   html:
     css: custom.css
@@ -37,21 +36,19 @@ load("cfmg.RData")
 
 ## Summary
 
-The implementation of CFM processes is patchy. The legal processes required for establishment of a CF were mostly complete across our sample, but later processes such as the registration certificate, forest-use permits and benefit-sharing agreement have not been completed for a substantial number of CFs. While most CFMGs have held elections, have term-limits for executive officers and hold meetings with reasonable frequency, a large proportion have not opened a bank account, do not have a receipt book and have not completed annual financial and technical reports. Most CFMGs are overdue elections and hence are not compliant with their By-laws & Constitutions. This is worrying as, in some cases, it may reflect an attempt by CFMG executives to retain control for personal benefit. Business processes are even less well implemented. Many do not have a business plan, annual budgets or workplans. Many also do not have defined user groups or issue permits. Most CFMGs are only rarely visited by district forestry staff, but most are supported by conservation NGOs or carbon enterprises, who do visit more frequently. The frequency of visits by district forestry staff was significantly associated with a higher governance index score. Interest in expanding the CF, an indicator of satisfaction with CFM, was highest among CFMG executives and lowest among community youth, a difference that was significant. Among individual interview respondents, private enterprise representatives indicated they would like to expand the CF significantly more often than traditional leaders (usually headmen or headwomen) and community members. For those CFMGs that recognised forest user groups, these user-groups harvested a very wide variety of resources, but honey and mushrooms were particularly frequently mentioned.
+The implementation of CFM processes is patchy. The legal processes required for establishment of a CFA were mostly complete across our sample, but later processes such as the registration certificate, forest-use permits and benefit-sharing agreement have not been completed for a substantial number of CFAs. While most CFMGs have held elections, have term-limits for executive officers and hold meetings with reasonable frequency, a large proportion have not opened a bank account, do not have a receipt book and have not completed annual financial and technical reports. Most CFMGs are overdue elections and hence are not compliant with their By-laws & Constitutions. This is particularly worrying as, in some cases, it may reflect an attempt by CFMG executives to retain control for personal benefit. Business processes are even less well implemented. Many do not have a business plan, annual budgets or workplans. Many also do not have defined user groups or issue permits. Most CFMGs are only rarely visited by district forestry staff, but most are supported by conservation NGOs or carbon developers, who do visit more frequently. The frequency of visits by district forestry staff was significantly associated with a higher governance index score. Interest in expanding the CFA was highest among CFMG executives and lowest among community youth, while among individual interview respondents, private enterprise representatives indicated they would like to expand the CFA significantly more often than traditional leaders (usually headmen or headwomen) and community members. The governance index was a highly significant indicator of community interest in expanding the CFA, an indicator of satisfaction with CFM. Thus, conversely, poor governance constitutes a risk to the sustainability of CFM in Zambia.
 
 ::: {.callout-note icon="false"}
 ## Key conclusions
 
-CFMG governance is patchy. There are some areas of serious concern. The legal framework for CFM is in place across most CFMGs, but institutional and business management processes lag behind. Many CFMGs are not in compliance with their own by-laws and constitutions, with respect to annual reporting and term limits for executive officers. Oversight of CFM is a statutory duty of the FD, but visits from district forestry office staff are often rare to non-existent. Higher visit frequency from district forestry staff was a significant predictor of better governance. Strengthening financial management, ensuring timely elections, expanding district forestry staff engagement, and closing the gap between executive and community perspectives on CFM will be essential for CFM to fulfil its potential in Zambia.
+CFMG governance is patchy. There are some areas of serious concern. The legal framework for CFM is in place across most CFMGs, but institutional and business management processes lag behind. Many CFMGs are not in compliance with their own by-laws and constitutions, with respect to annual reporting and term limits for executive officers. Oversight of CFM is a statutory duty of the FD, but visits from district forestry office staff are often rare to non-existent. Higher visit frequency from district forestry staff was a significant predictor of better governance. Improving governance, primarily through strengthening financial management and CFMG democratic processes by expanding district forestry staff engagement, will be essential for CFM to fulfil its potential in Zambia.
 :::
 
 ## Introduction
 
 In this chapter, we consider questions concerning the governance and management of CFMGs. As our questions pertain to the running of the CFMGs, our analysis focuses on the responses of the CFMG executives. However, the responses from other FGDs and from the individual interviews are included for comparison where appropriate.
 
-### Hypothesis
-
-We expected that CFMGs with strong governance—completing legal requirements on time, maintaining transparent financial records, holding regular elections, and making decisions openly—would be more successful at protecting their forests and generating economic benefits for their communities. We test this by examining which governance processes have been completed, comparing these across CFMGs, and assessing whether better governance predicts better outcomes in forest management and economic development.
+We examine the hypothesis that CFMGs with stronger governance — completing legal requirements, maintaining transparent financial records, holding regular elections, and making decisions transparently — would be more successful at protecting their forests and generating economic benefits for their communities, thereby generating greater community support for CFM. We test this by examining the completion of governance processes, comparing these results across CFMGs, and interrogating community groups as to whether they would support expansion of the CFA, as an indicator of satisfaction with CFM. In later chapters, we assess whether better governance predicts better outcomes for forest management and economic development.
 
 ## CFMG legal processes
 
@@ -71,7 +68,7 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
                 `CFMG recongnition` = mean(
                         cfmg_governance_legal_documents_recognition_letter,
                         na.rm = TRUE),
-                `CF agreement` = mean(
+                `CFA agreement` = mean(
                         cfmg_governance_legal_documents_community_forest_management_agreement,
                         na.rm = TRUE),
                 `Management plan` = mean(
@@ -110,7 +107,7 @@ cfmg |> filter(interview_type == "cfmg_executive") |>
 [← Return to Summary](Summary.html#governance)
 :::
 
-Lusaka Province was the only province in which all processes had been completed across all CFMGs, while Eastern Province had the highest proportion of incomplete legal processes. Overall, completion of legal processes was quite patchy. Some processes, such as the Recognition letter, CF Agreement, Management Plan and By-laws & Constitution, seem to have been completed for most CFMGs, but the Registration Certificate, User-rights Permit and Benefit-sharing Agreement were less often completed. This assessment is based on the responses of the CFMG executives, who should be well informed. Nevertheless, it may be that more processes have been completed, especially where the CFMG is being supported by external partners, such as NGOs or carbon enterprises.
+Lusaka Province was the only province in which all processes had been completed across all CFMGs, while Eastern Province had the highest proportion of incomplete legal processes. Overall, completion of legal processes was quite patchy. Some processes, such as the Recognition letter, CFA Agreement, Management Plan and By-laws & Constitution, seem to have been completed for most CFMGs, but the Registration Certificate, User-rights Permit and Benefit-sharing Agreement were less often completed. This assessment is based on the responses of the CFMG executives, who should be well informed. Nevertheless, it may be that more processes have been completed, especially where the CFMG is being supported by external partners, such as NGOs or carbon developers.
 
 ## CFMG governance processes
 
@@ -680,7 +677,7 @@ cfmg |>
 [← Return to Summary](Summary.html#governance)
 :::
 
-Many CFMGs also operate in partnership with an NGO, such as a conservation organisation, or a private enterprise, such as a carbon enterprise (@fig-support).
+Many CFMGs also operate in partnership with an NGO, such as a conservation organisation, or a private enterprise, such as a carbon developer (@fig-support).
 
 ```{r}
 #| label: fig-support
@@ -688,7 +685,7 @@ Many CFMGs also operate in partnership with an NGO, such as a conservation organ
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "CFMGs partnered with an external organisation, such as a conservation NGO or carbon enterprise, by province. The length of the bars represents the number of CFMGs either partnered (Yes) or not partnered (No) with an external organisation. The numbers on the bars represent the actual number of CFMGs in each category."
+#| fig-cap: "CFMGs partnered with an external organisation, such as a conservation NGO or carbon developer, by province. The length of the bars represents the number of CFMGs either partnered (Yes) or not partnered (No) with an external organisation. The numbers on the bars represent the actual number of CFMGs in each category."
 
 cfmg |>
   filter(interview_type == "cfmg_executive") |>
@@ -984,7 +981,7 @@ gridExtra::grid.arrange(p_dfo, p_partner, ncol = 2, widths = c(2, 1))
 
 ## Interest in expanding the community forest
 
-Next we asked interviewees whether they were interested in expanding the area of their CF. A "yes" answer can be taken as an endorsement of CFM. On the other hand, a negative response might reflect dissatisfaction with the CFMG management or the benefits CFM has brought. However, a negative response could also reflect other reasons, such as a lack of sufficient additional forest area in the community. We compare the responses from different FGD groups.
+Next we asked interviewees whether they were interested in expanding the area of their CFA. A "yes" answer can be taken as an endorsement of CFM. On the other hand, a negative response might reflect dissatisfaction with the CFMG management or the benefits CFM has brought. However, a negative response could also reflect other reasons, such as a lack of sufficient additional forest area in the community. We compare the responses from different FGD groups.
 
 ```{r}
 #| label: fig-interest_in_expanding_FGDs
@@ -1064,7 +1061,7 @@ cfmg |>
 [← Return to Summary](Summary.html#governance)
 :::
 
-As can be seen in @fig-interest_in_expanding_FGDs, the CFMG executives were enthusiastic to expand the CF in most cases. However, among the community this number dropped to 41 for female groups, 37 for male groups and to just 23 for youth groups.
+As can be seen in @fig-interest_in_expanding_FGDs, the CFMG executives were enthusiastic to expand the CFA in most cases. However, among the community this number dropped to 41 for female groups, 37 for male groups and to just 23 for youth groups.
 
 The difference in attitudes between CFMG executive and youth FGD groups was significant, but the pairwise comparisons among other FGD groups were not significant. These results might suggest that CFM is not benefiting youth to the same degree as other groups, or perhaps that they bear higher opportunity costs. Our analyses in other sections will help elucidate the reasons.
 
@@ -1189,7 +1186,7 @@ as.data.frame(pairwise.M1) |>
   sub_missing()
 ```
 
-We also compared the responses from the individual interviewees (@tbl-interest_in_expanding_individual). The traditional leaders and community members more often reported that they did not want to expand the CF than other groups. However, the only pairwise comparisons that were significant were private enterprise with traditional leader and private enterprise with community member.
+We also compared the responses from the individual interviewees (@tbl-interest_in_expanding_individual). The traditional leaders and community members more often reported that they did not want to expand the CFA than other groups. However, the only pairwise comparisons that were significant were private enterprise with traditional leader and private enterprise with community member.
 
 ```{r}
 #| label: tbl-interest_in_expanding_individual
@@ -1430,16 +1427,16 @@ ggplot(wc_data, aes(label = word, size = freq, colour = freq)) +
   theme(plot.margin = margin(0, 0, 0, 0))
 ```
 
-Evidently, people are harvesting a wide variety of products from CFs, although honey and mushrooms appear especially important. It is not clear from the responses, if these user-groups are defined within the CF management plan or whether these are informal groups that are nevertheless recognised by the CFMG.
+Evidently, people are harvesting a wide variety of products from CFAs, although honey and mushrooms appear especially important. It is not clear from the responses, if these user-groups are defined within the CFA management plan or whether these are informal groups that are nevertheless recognised by the CFMG.
 
 ## Discussion
 
-In this chapter we assessed CFMG governance across five domains: legal processes, governance processes, business processes, external support, and community buy-in as reflected by interest in expanding the CF and the activities of user-groups.
+In this chapter we assessed CFMG governance across five domains: legal processes, governance processes, business processes, external support, and community buy-in as reflected by interest in expanding the CFA and the activities of user-groups.
 
 The most consistent pattern across all three process domains — legal, governance, and business — is that foundational steps have been taken by most CFMGs, but the more demanding, ongoing requirements are often incomplete. Early legal steps, such as obtaining a recognition letter and signing a forest management agreement, have been completed by most CFMGs, but later and more involved documents — the registration certificate, forest-use permit, and benefit-sharing agreement — are absent in a substantial proportion. Similarly with respect to governance processes, most CFMGs have held elections and have term limits in place, but basic management actions — opening bank accounts, operating receipt books, and financial and annual reporting — are frequently missing. Business processes are the weakest area of all. Annual workplans, budgets and business plans are rarely in place. Without these planning and financial management tools, CFMGs cannot sustainably manage their resources, are poorly positioned to account for and redistribute income — including carbon payments — and will struggle to demonstrate compliance with the forest management license or to agreements with external partners.
 
 The fact that most CFMGs are overdue for elections is particularly concerning. Timely elections are a basic requirement of the CFMG By-laws & Constitution, and overdue elections undermine the democratic legitimacy of the CFMG executives and could contribute to the perception of elite capture noted elsewhere in this report. These perceptions may be very valid in some cases. The enumerators noted that while some CFMGs had not held elections because they were no longer active, the CFMG executives of others stated that the CFMG had yet to receive carbon income and they were unwilling to hold elections, because they anticipated personal benefits from being a CFMG executive member once the carbon income started to flow. Still others had received carbon income and were unwilling to give up their positions because they do receive some kind of personal benefit. It is essential that this kind of corruption is stamped out, as it may threaten the legitimacy of CFM in the eyes of the community and potentially undo gains made in SFM and sustainable development. Ensuring that CFMGs hold elections on schedule and fairly should be a priority for the FD and for supporting partners.
 
-External support from the FD is insufficient. Most CFMGs are rarely or never visited by district forestry staff, despite the statutory duty of the FD to implement the CFM policy. This gap is partly compensated by conservation NGOs and carbon enterprises, many of which visit their partner CFMGs more frequently. However, this support is not universal: a significant proportion of CFMGs in our sample had no external partner. Given the governance deficits identified above, regular external support from CFMG partners for capacity building and oversight is clearly a necessity. The current model, in which CFM is effectively co-governed by the community and the private sector rather than the state, may be adequate for CFMGs with active and capable partners, but leaves others without meaningful support. It is noteworthy that, according to the analysis of our Governance Index, frequency of visits from district forestry staff was a highly significant predictor of governance performance.
+External support from the FD is insufficient. Most CFMGs are rarely or never visited by district forestry staff, despite the statutory duty of the FD to implement the CFM policy. This gap is partly compensated by conservation NGOs and carbon developers, many of which visit their partner CFMGs more frequently. However, this support is not universal: a significant proportion of CFMGs in our sample had no external partner. Given the governance deficits identified above, regular external support from CFMG partners for capacity building and oversight is clearly a necessity. The current model, in which CFM is effectively co-governed by the community and the private sector rather than the state, may be adequate for CFMGs with active and capable partners, but leaves others without meaningful support. It is noteworthy that, according to the analysis of our Governance Index, frequency of visits from district forestry staff was a highly significant predictor of governance performance.
 
-Interest in expanding the CF is highest among CFMG executives and drops markedly among community members, particularly youth. Among individual interviewees, Private enterprise reps are significantly more enthusiastic about expansion than traditional leaders or community members. This divergence — consistent with the equity chapter findings — suggests that the CFMG leadership and external partner stakeholders have a more optimistic view of CFM outcomes than the broader community. Although possibly not widespread a the moment, poor governance could lead to increased levels of community dissatisfaction with CFM and, if not addressed, could pose a long-term risk to the legitimacy and sustainability of CFM.
+Interest in expanding the CFA is highest among CFMG executives and drops markedly among community members, particularly youth. Among individual interviewees, Private enterprise reps are significantly more enthusiastic about expansion than traditional leaders or community members. This divergence — consistent with the equity chapter findings — suggests that the CFMG leadership and external partner stakeholders have a more optimistic view of CFM outcomes than the broader community. Furthermore, we found that our governance index was a highly significant predictor of community interest in expanding the CFA, which we take as a proxy indicator for satisfaction with CFM. Thus, as we hypothesised, when CFMGs are better governed there is greater community support for CFM. Thus, conversely, poor governance could lead to increased levels of community dissatisfaction with CFM and, if not addressed, could pose a long-term risk to the legitimacy and sustainability of CFM in Zambia.

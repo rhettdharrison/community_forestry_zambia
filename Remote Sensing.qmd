@@ -1,6 +1,5 @@
 ---
 title: "Remote Sensing Analysis"
-author: "Rhett D Harrison"
 format:
   html:
     css: custom.css
@@ -79,25 +78,23 @@ fire_raw <- read_csv("fire_cfmg_zones.csv", show_col_types = FALSE) |>
 
 ## Summary
 
-This chapter provides satellite-based evidence on the effects of CFM on fire, deforestation and above-ground biomass across the surveyed CFs and 1 km wide buffer zones surrounding them. Analyses used fire detection data (MODIS), tree cover loss data (Hansen Global Forest Change) and radar-based biomass estimates (Harrison et al, *in prep*), employing before-after models with a spatial core vs buffer control to assess leakage. Across all three fire metrics — detection density, burned area fraction and fire radiative power — there were statistically significant reductions within CF cores following establishment. Moreover, none of the fire models found any significant Before–After × Zone interaction, indicating that there was no measurable displacement of burning from CF cores into the surrounding buffer zones. According to the Hansen Global Forest Canopy dataset, tree cover loss rates within CF cores did not decrease significantly following establishment. However, the baseline deforestation rates within CF areas were already very low (median 0.14% per year), leaving limited scope for measurable decreases. There was a significant increase in tree cover loss in the 1 km buffer zones following CF establishment, but this should be interpreted with caution. The global tree cover product is known to be unreliable in miombo woodlands, where canopy cover is naturally sparse and can vary seasonally. Hence, continued monitoring over a longer period or the development of a miombo specific tree cover product are recommended before conclusions are drawn. Above-ground biomass increased significantly in both CF cores and buffer zones following CFMG establishment. For dry seasonal forests, biomass is a sensitive and ecologically meaningful indicator of forest condition, as it can detect incremental changes in tree recruitment and growth that gross deforestation metrics miss. Thus, these results support the community perspectives that forest condition is improving across a majority of CFs, as well as in their buffer zones. In contrast to the results from the survey, the governance index was not a significant predictor in models of the remote sensed data. This may reflect biases in the responses to the survey, where better or worse governance led to differing impressions of SFM performance without actually being associated with different outcomes. Alternatively, it may be that the communities are responding to small scale changes that they can appreciate, but that the signal is not yet strong enough to be detected via remote sensing. The very low levels of baseline deforestation rates within CFs raises a concern over the claims of additionality by carbon enterprises. It underlines the importance of moving from project based to jurisdictional estimates of carbon mitigation.
+This chapter provides satellite-based evidence on the effects of CFM on fire, deforestation and above-ground biomass across the surveyed CFAs and 1 km wide buffer zones surrounding them. The analysis was based on a sample of 40 CFAs for which boundary data were available out of the 75 in the survey. Analyses used fire detection data (MODIS), tree cover loss data (Hansen Global Forest Change) and radar-based biomass estimates (Harrison et al, *in prep*), employing before-after models with a spatial core vs buffer control to assess leakage. Across all three fire metrics — detection density, burned area fraction and fire radiative power — there were statistically significant reductions within CFA cores following establishment. Moreover, none of the fire models found any significant Before–After × Zone interaction, indicating that there was no measurable displacement of burning from CFA cores into the surrounding buffer zones. According to the Hansen Global Forest Canopy dataset, tree cover loss rates within CFA cores did not decrease significantly following establishment. However, the baseline deforestation rates within CFA areas were already very low (median 0.14% per year), leaving limited scope for measurable decreases. There was a significant increase in tree cover loss in the 1 km buffer zones following CFA establishment, but this should be interpreted with caution. The global tree cover product is known to be unreliable in miombo woodlands, where canopy cover is naturally sparse and can vary seasonally. Hence, continued monitoring over a longer period or the development of a miombo specific tree cover product are recommended before conclusions are drawn. Above-ground biomass increased significantly in both CFA cores and buffer zones following CFMG establishment. For dry seasonal forests, biomass is a sensitive and ecologically meaningful indicator of forest condition, as it can detect incremental changes in tree recruitment and growth that gross deforestation metrics miss. Thus, these results support the community perspectives that forest condition is improving across a majority of CFAs, as well as in their buffer zones. In contrast to the results from the survey, the governance index was not a significant predictor in models of the remote sensed data. This may reflect biases in the responses to the survey, where better or worse governance led to differing impressions of SFM performance without actually being associated with different outcomes. Alternatively, it may be that the communities are responding to small scale changes that they can appreciate, but that the signal is not yet strong enough to be detected via remote sensing. The very low levels of baseline deforestation rates within CFAs raises a concern over the claims of additionality by carbon developers. It underlines the importance of moving from project based to jurisdictional estimates of carbon mitigation.
 
 ::: {.callout-note icon="false"}
 ## Key conclusions
 
-Taken together, the remote sensing evidence presents a broadly positive picture of CFM effectiveness. CFM has demonstrably reduced fire disturbance and produced measurable gains in above-ground biomass across both CF cores and 1 km buffer zones, with no evidence of displacement of pressure into surrounding areas. The possible increase in deforestation in the buffer zones warrants continued monitoring. The very low baseline deforestation rates inside CFs raises questions over the validity of additionality claims by carbon enterprises.
+Taken together, the remote sensing evidence presents a broadly positive picture of CFM effectiveness. CFM has demonstrably reduced fire disturbance and produced measurable gains in above-ground biomass across both CFA cores and 1 km buffer zones, with no evidence of displacement of pressure into surrounding areas. The possible increase in deforestation in the buffer zones warrants continued monitoring. The very low baseline deforestation rates inside CFAs raises questions over the validity of additionality claims by carbon developers.
 :::
 
 ## Introduction
 
 The preceding chapter examined the effects of CFM on sustainable forest management based on community perceptions collected through FGDs and individual interviews. In this chapter we provide an independent assessment of CFM impacts on SFM using satellite-derived metrics. Remote sensing offers the advantage of objective, spatially consistent measurements that are free from reporting biases, and captures processes that may be difficult for community members to perceive and quantify. However, Earth observation data have their own limitations, including the spatial grain of remote sensed productions and the fact that the remote sensing does not directly measure the processes that generate the signals.
 
-We analysed three categories of remote sensing data. Fire dynamics were assessed using MODIS active fire detection data [@giglio2016], from which we derived three complementary metrics: fire detection density (detections per km² per year), burned area as a fraction of total zone area, and total fire radiative power (FRP) per km² — a measure of fire energy release that reflects combustion intensity and therefore the volume of biomass consumed. Deforestation was quantified using Hansen Global Forest Change 2024 tree cover loss data [@hansen2013], expressed as the annual percentage of zone area experiencing tree cover loss. Above ground biomass was assessed using a time series of 100 m resolution biomass maps from 2018-2024, generated by calibrating a generalised additive model between field plot data and radar backscatter from ALOS-2 PALSAR-2 ScanSAR [@harrisonSB_inprep]. Boundary data were only available for 40 out of the 75 surveyed CFs, so our remote sensing analyses were performed on this subset of the sample.
+We analysed three categories of remote sensing data. Fire dynamics were assessed using MODIS active fire detection data [@giglio2016], from which we derived three complementary metrics: fire detection density (detections per km² per year), burned area as a fraction of total zone area, and total fire radiative power (FRP) per km² — a measure of fire energy release that reflects combustion intensity and therefore the volume of biomass consumed. Deforestation was quantified using Hansen Global Forest Change 2024 tree cover loss data [@hansen2013], expressed as the annual percentage of zone area experiencing tree cover loss. Above ground biomass was assessed using a time series of 100 m resolution biomass maps from 2018-2024, generated by calibrating a generalised additive model between field plot data and radar backscatter from ALOS-2 PALSAR-2 ScanSAR [@harrisonSB_inprep]. Boundary data were only available for 40 out of the 75 surveyed CFAs, so our remote sensing analyses were performed on this subset of the sample.
 
-For each metric, we compared values before and after CF establishment, using the formal establishment date of each CFMG. Fire and deforestation data covered the period 2014–2024. All analyses used linear mixed models (or, for the proportional burned area response, a Gamma generalised linear mixed model with a log link), with a random intercept for CFMG to account for the non-independence of repeated annual observations within the same CF. We included the CFMG governance index as a fixed covariate to test whether governance quality moderated outcomes. To assess leakage — the displacement of forest-damaging activities into the areas surrounding CFs — we included a 1 km buffer zone around each CF as a spatial control and tested whether the Before–After change differed between core and buffer zones (i.e. the period × zone interaction). A non-significant interaction would indicate that changes in the buffer mirrored those in the CF.
+For each metric, we compared values before and after CFA establishment, using the formal establishment date of each CFMG. Fire and deforestation data covered the period 2014–2024. All analyses used linear mixed models (or, for the proportional burned area response, a Gamma generalised linear mixed model with a log link), with a random intercept for CFMG to account for the non-independence of repeated annual observations within the same CFA. We included the CFMG governance index as a fixed covariate to test whether governance quality moderated outcomes. To assess leakage — the displacement of forest-damaging activities into the areas surrounding CFAs — we included a 1 km buffer zone around each CFA as a spatial control and tested whether the Before–After change differed between core and buffer zones (i.e. the period × zone interaction). A non-significant interaction would indicate that changes in the buffer mirrored those in the CFA.
 
-### Hypothesis
-
-We expected satellite data would independently confirm the community reports of reduced fire and improvements in forest condition. We also tested whether governance quality predicted these satellite-observed changes. We included buffer zones around CFs to detect "leakage"—whether restrictions inside CFs simply shifted harmful activities (fire, deforestation) to surrounding areas.
+We hypothesised that from before to after establishment (i) in CFAs and (ii) in buffer zones; fire detection density, burned area and radiative power would decline, annual tree cover loss would decline, and biomass would increase. Thus, we expected the satellite data would independently confirm the community reports of reduced fire and improvements in forest condition. Following the predictions from the governance chapter, we also hypothesised that CFMGs with higher governance scores would show great improvements in these satellite derived SFM metrics. We included buffer zones around CFAs in the analysis to detect "leakage" — whether restrictions inside CFAs simply shifted harmful activities (fire, deforestation) to surrounding areas.
 
 ```{r}
 #| label: data_fire
@@ -141,7 +138,7 @@ M_frp   <- lmer(log_frp_dens  ~ period * zone + gov_index + (1 | NAME), data = f
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Annual fire detection density (detections per km²) per CF before and after establishment, for CF cores and 1 km buffer zones. Each point represents one CF-year. Boxes show median and interquartile range."
+#| fig-cap: "Annual fire detection density (detections per km²) per CFA before and after establishment, for CFA cores and 1 km buffer zones. Each point represents one CFA-year. Boxes show median and interquartile range."
 #| fig-height: 4
 
 y_floor_count <- with(filter(fire_annual, fire_density > 0),
@@ -175,7 +172,7 @@ fire_annual |>
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "Linear mixed model results for log-transformed annual fire count before and after CF establishment."
+#| tbl-cap: "Linear mixed model results for log-transformed annual fire count before and after CFA establishment."
 
 re_count    <- as.data.frame(VarCorr(M_count))
 cfmg_count  <- round(re_count$vcov[re_count$grp == "NAME"],     3)
@@ -201,7 +198,7 @@ tidy(M_count, effects = "fixed") |>
     subtitle = glue(
       "Linear mixed model with random intercept for CFMG. ",
       "Response = log(detections per km² + 1). Fixed effects: period (ref = Before) and governance index. ",
-      "CF variance = {cfmg_count}; residual variance = {resid_count}. ",
+      "CFA variance = {cfmg_count}; residual variance = {resid_count}. ",
       "Marginal R² = {round(r2_count$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_count$R2_conditional, 3)}. ",
       "n = {nobs(M_count)}."
@@ -215,7 +212,7 @@ tidy(M_count, effects = "fixed") |>
   sub_missing()
 ```
 
-On average, fire incidence was significantly reduced following the establishment of a CF and this effect was similar inside the CF and within its buffer zone. Interestingly, on average fire incidence was lower in the buffer zone compared to the CF. The Governance Index did not have an significant effect on these outcomes.
+On average, fire incidence was significantly reduced following the establishment of a CFA and this effect was similar inside the CFA and within its buffer zone. Interestingly, on average fire incidence was lower in the buffer zone compared to the CFA. The Governance Index did not have an significant effect on these outcomes.
 
 ## Burned area
 
@@ -225,7 +222,7 @@ On average, fire incidence was significantly reduced following the establishment
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Annual fire footprint as a fraction of area before and after CF establishment, for cores and 1 km buffers. Fire footprint estimated as the sum of scan × track for all detections within each zone-year, divided by zone area. Each point represents one CFMG-year. Boxes show median and interquartile range."
+#| fig-cap: "Annual fire footprint as a fraction of area before and after CFA establishment, for cores and 1 km buffers. Fire footprint estimated as the sum of scan × track for all detections within each zone-year, divided by zone area. Each point represents one CFMG-year. Boxes show median and interquartile range."
 #| fig-height: 4
 
 y_floor_area <- with(filter(fire_annual, burn_fraction > 0),
@@ -259,7 +256,7 @@ fire_annual |>
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "Gamma GLMM results for annual fire footprint fraction before and after CF establishment."
+#| tbl-cap: "Gamma GLMM results for annual fire footprint fraction before and after CFA establishment."
 
 re_area   <- as.data.frame(VarCorr(M_area))
 cfmg_area <- round(re_area$vcov[re_area$grp == "NAME"], 3)
@@ -298,7 +295,7 @@ tidy(M_area, effects = "fixed") |>
   sub_missing()
 ```
 
-The results for burned area mirrored those obtained for fire incidence. The burned area declined following establishment of community forestry in both CFs and buffer zones. There was no significant effect of Governance Index on the burned area.
+The results for burned area mirrored those obtained for fire incidence. The burned area declined following establishment of community forestry in both CFAs and buffer zones. There was no significant effect of Governance Index on the burned area.
 
 ## Fire radiative power
 
@@ -342,7 +339,7 @@ fire_annual |>
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "Linear mixed model results for log-transformed annual total FRP per km² before and after CF establishment."
+#| tbl-cap: "Linear mixed model results for log-transformed annual total FRP per km² before and after CFA establishment."
 
 re_frp    <- as.data.frame(VarCorr(M_frp))
 cfmg_frp  <- round(re_frp$vcov[re_frp$grp == "NAME"],     3)
@@ -429,7 +426,7 @@ M_deforest <- lmer(
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Annual tree cover loss (% of area) in CF cores and 1 km buffer zones before and after CF establishment. Loss derived from Hansen GFC 2024 lossyear data (2014–2024). Each point represents one CFMG-year. Boxes show median and interquartile range."
+#| fig-cap: "Annual tree cover loss (% of area) in CFA cores and 1 km buffer zones before and after CFA establishment. Loss derived from Hansen GFC 2024 lossyear data (2014–2024). Each point represents one CFMG-year. Boxes show median and interquartile range."
 #| fig-height: 4
 
 deforest |>
@@ -459,7 +456,7 @@ deforest |>
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "Linear mixed model results for log-transformed annual tree cover loss rate in CF cores and buffer zones before and after establishment."
+#| tbl-cap: "Linear mixed model results for log-transformed annual tree cover loss rate in CFA cores and buffer zones before and after establishment."
 
 re_def    <- as.data.frame(VarCorr(M_deforest))
 cfmg_def  <- round(re_def$vcov[re_def$grp == "NAME"],     3)
@@ -501,7 +498,7 @@ tidy(M_deforest, effects = "fixed") |>
   sub_missing()
 ```
 
-The rate of tree cover loss, as measured using the Hansen Global Forest Watch data set, did not change significantly within the CF zones following the establishment of community forestry, but increased significantly in the 1 km buffer zones. The Governance Index did not have any significant effect.
+The rate of tree cover loss, as measured using the Hansen Global Forest Watch data set, did not change significantly within the CFA zones following the establishment of community forestry, but increased significantly in the 1 km buffer zones. The Governance Index did not have any significant effect.
 
 ## Above ground biomass
 
@@ -550,7 +547,7 @@ M_agb <- lmer(mean_agb ~ period * zone + gov_index + (1 | NAME), data = agb_annu
 #| warning: false
 #| message: false
 #| error:   false
-#| fig-cap: "Mean above ground biomass (Mg/ha) per CF before and after establishment, for CF cores and 1 km buffer zones. Values are annual means from 2018–2024; core values are area-weighted across polygons. Each point represents one CF-year. Boxes show median and interquartile range."
+#| fig-cap: "Mean above ground biomass (Mg/ha) per CFA before and after establishment, for CFA cores and 1 km buffer zones. Values are annual means from 2018–2024; core values are area-weighted across polygons. Each point represents one CFA-year. Boxes show median and interquartile range."
 #| fig-height: 4
 
 agb_annual |>
@@ -580,7 +577,7 @@ agb_annual |>
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "Linear mixed model results for mean above ground biomass in CF cores and buffer zones before and after establishment."
+#| tbl-cap: "Linear mixed model results for mean above ground biomass in CFA cores and buffer zones before and after establishment."
 
 re_agb    <- as.data.frame(VarCorr(M_agb))
 cfmg_agb  <- round(re_agb$vcov[re_agb$grp == "NAME"],     3)
@@ -604,10 +601,10 @@ tidy(M_agb, effects = "fixed") |>
   tab_header(
     title    = "Model results for mean above ground biomass — core vs buffer, before vs after establishment",
     subtitle = glue(
-      "Linear mixed model with random intercept for CF. ",
+      "Linear mixed model with random intercept for CFA. ",
       "Fixed effects: period (ref = Before), zone (ref = Core), their interaction, and governance index. ",
       "A significant After × Buffer interaction indicates leakage. ",
-      "CF variance = {cfmg_agb}; residual variance = {resid_agb}. ",
+      "CFA variance = {cfmg_agb}; residual variance = {resid_agb}. ",
       "Marginal R² = {round(r2_agb$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_agb$R2_conditional, 3)}. ",
       "n = {nobs(M_agb)}."
@@ -621,18 +618,18 @@ tidy(M_agb, effects = "fixed") |>
   sub_missing()
 ```
 
-Above ground biomass, as measured using radar backscatter, increased in both CF core areas and their buffer zones following establishment of community forestry. There was no significant effect of Governance Index.
+Above ground biomass, as measured using radar backscatter, increased in both CFA core areas and their buffer zones following establishment of community forestry. There was no significant effect of Governance Index.
 
 ## Discussion
 
-Across all three fire metrics — detection density, burned area fraction, and fire radiative power — there were significant reductions in CF cores following establishment. These results provide robust, satellite-based confirmation that CFM has led to meaningful improvements in fire management. Importantly, in none of the fire models was the After × Buffer interaction significant, indicating that there was no measurable displacement of burning into the surrounding buffer zones. In fact, the mirrored results in the buffer zones suggests a positive leakage effect. That is, community fire management extends beyond the CF boundary. These results are consistent with the SFM chapter finding that most communities reported a reduction in fire both inside and outside their CFs.
+Across all three fire metrics — detection density, burned area fraction, and fire radiative power — there were significant reductions in CFA cores following establishment. These results provide robust, satellite-based confirmation that CFM has led to meaningful improvements in fire management. Importantly, in none of the fire models was the After × Buffer interaction significant, indicating that there was no measurable displacement of burning into the surrounding buffer zones. In fact, the mirrored results in the buffer zones suggests a positive leakage effect. That is, community fire management extends beyond the CFA boundary. These results are consistent with the SFM chapter findings.
 
-According to the Hansen data, tree cover loss rates in CF cores did not decrease significantly following establishment. This is in contrast to the community perceptions documented in the preceding chapter and also with the results obtained for biomass which showed that biomass increased in both CF core areas and buffer zones. Several explanations for this discrepancy are possible. First, the landsat derived tree cover data are often not reliable for miombo woodlands and other savannas, where tree cover is sparse and the relative strength of the grass versus tree canopy signal can vary seasonally. Second, the median rates of tree cover loss within the CF core area varied from 0.14% before establishment to 0.13% afterwards. Thus, the deforestation rate was already low before establishment and the change is in the desirable direction, even if it was small and non significant. Meanwhile, communities may perceive improvements through indirect process-based indicators — such as reduced charcoal production or fewer incursions — that may take time to reflect in remote sensed data. The significant increase in deforestation in the buffer zones from a median of 0.26% before to 0.49% afterwards is a concern. However, as mentioned above canopy cover is not always reliably measured, especially in low tree cover environments. For example, where farmers clear scrub as part of a crop rotation cycle, it may register as tree canopy cover loss but in fact be located in previously deforested areas. Thus, this result should be interpreted with caution. We recommend tracking tree cover change over a longer period and if possible developing a miombo specific tree canopy cover product.
+According to the Hansen data, tree cover loss rates in CFA cores did not decrease significantly following establishment. This is in contrast to the community perceptions documented in the preceding chapter and also with the results obtained for biomass which showed that biomass increased in both CFA core areas and buffer zones. Several explanations for this discrepancy are possible. First, the landsat derived tree cover data are often not reliable for miombo woodlands and other savannas, where tree cover is sparse and the relative strength of the grass versus tree canopy signal can vary seasonally. Second, the median rates of tree cover loss within the CFA core area varied from 0.14% before establishment to 0.13% afterwards. Thus, the deforestation rate was already very low before establishment and the change is in the desirable direction, even if it was small and non significant. Meanwhile, communities may perceive improvements through indirect process-based indicators — such as reduced charcoal production or fewer incursions — that may take time to reflect in remote sensed data. The significant increase in deforestation in the buffer zones from a median of 0.26% before to 0.49% afterwards is a concern. However, as mentioned above canopy cover is not always reliably measured, especially in low tree cover environments. For example, where farmers clear scrub as part of a crop rotation cycle, it may register as tree canopy cover loss but in fact be located in previously deforested areas. Thus, this result should be interpreted with caution. We recommend tracking tree cover change over a longer period and if possible developing a miombo specific tree canopy cover product.
 
-Currently, in seasonal dry forests biomass change is a more reliable indicator than tree cover change. However, it is also important to note that they measure different attributes. Biomass monitoring is able to detect small changes caused, for example, through the harvesting of individual trees, but tree growth and recruitment across the entire zone may cancel out small losses. Nevertheless, above-ground biomass increased significantly in CF cores and buffer zones after establishment. The biomass gain is consistent with — and may be largely attributable to — the reductions in fire disturbance documented above. Fire both kills trees directly and suppresses recruitment of woody species, so even modest reductions in annual burning can lead to measurable biomass accumulation.
+Currently, in seasonal dry forests biomass change is a more reliable indicator than tree cover change. However, it is also important to note that they measure different attributes. Biomass monitoring is able to detect small changes caused, for example, through the harvesting of individual trees, but tree growth and recruitment across the entire zone may cancel out small losses. Nevertheless, above-ground biomass increased significantly in CFA cores and buffer zones after establishment. The biomass gain is consistent with — and may be largely attributable to — the reductions in fire disturbance documented above. Fire both kills trees directly and suppresses recruitment of woody species, so even modest reductions in annual burning can lead to measurable biomass accumulation.
 
 The Governance Index was not a significant predictor of any outcome, in contrast to the SFM chapter where governance quality strongly predicted community perceptions of reduced fire frequency and deforestation. As discussed above, this could be because communities are focusing on process-based indicators, which may be more sensitive to governance quality. If this is the case, it may be too early to detect an effect of the governance quality in the remote sensed data. Alternative, community members may be biasing their responses based on the perception of the governance, when there is no actual real effect (or it is very weak). Indeed, both these possibilities may be true at the same time. Longer term tracking of governance and remote sensing outcomes may be necessary to resolve this.
 
-The fact that the baseline tree canopy cover loss rate in CFs was very low calls into question the validity of addtionality claims by carbon enterprises. Given that \~80% of CFs were established for generating carbon credits, this is concerning. It underscores the necessity of moving from project based accounting to a jurisdictional approach.
+The fact that the baseline tree canopy cover loss rate in CFAs was very low calls into question the validity of addtionality claims by carbon developers. Given that \~80% of CFAs were established for generating carbon credits, this is concerning. It underscores the necessity of moving from project based accounting to a jurisdictional approach.
 
 Taken together, the remote sensing evidence presents a nuanced picture of CFM effectiveness in Zambia. CFM has demonstrably reduced fire disturbance and has produced measurable gains in above-ground biomass — without evidence of displacement into surrounding buffer areas. However, there has not been any measurable decrease in deforestation — as detected through the Global Forest Canopy dataset — and there is an indication that deforestation may have increased in buffer areas, although this requires further investigation.

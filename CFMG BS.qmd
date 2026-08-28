@@ -1,6 +1,5 @@
 ---
 title: "Equity and Inclusion"
-author: "Rhett D Harrison"
 format:
   html:
     css: custom.css
@@ -52,9 +51,7 @@ The equity and inclusion outcomes of CFM in Zambia are broadly positive, with me
 
 In this chapter, we consider the equitable sharing of benefits arising from community forest management (CFM) and what the impacts of CFM are on vulnerable groups.
 
-### Hypothesis
-
-We expected that CFM benefits would be unevenly distributed, with women, youth, and vulnerable households receiving less than CFMG executives and older men. We predicted that elite capture and transparency gaps would be more visible to community members than to CFMG leaders, and that CFMGs with better governance would report more equitable benefit-sharing. We also expected that transparent mechanisms for grievance and redress would be rare, making it difficult for disadvantaged groups to challenge inequitable outcomes.
+We hypothesised that CFM benefits would be unevenly distributed, with women, youth, and vulnerable households receiving less benefit than CFMG executives and older men. We predicted that elite capture and transparency gaps would be more visible to community members than to CFMG leaders, and that CFMGs with better governance would report more equitable benefit-sharing. We also expected that transparent mechanisms for grievance and redress would be rare, making it difficult for disadvantaged groups to challenge inequitable outcomes.
 
 ## Benefit sharing
 
@@ -65,17 +62,29 @@ We asked FGD groups whether the benefits of CFM were equitably distributed (@fig
 #| echo: false
 #| warning: false
 #| message: false
-#| error:   false
 #| fig-cap: "Are the benefits of CFM are equitably shared? The length of each bar segment represents the proportion of groups in that category. The numbers superimposed on the bars represent the actual number of groups in each category."
 
-cfmg |>
+equity_col <- "economic_transformation_benefits_equity_across_groups"
+
+# Verify column exists
+if (!equity_col %in% names(cfmg)) {
+  stop("Column not found: ", equity_col, "\n",
+       "Available columns:\n", 
+       paste(grep("equity|benefits", names(cfmg), value = TRUE, ignore.case = TRUE), collapse = "\n"))
+}
+
+# Prepare data with proper validation
+plot_data <- cfmg |>
   filter(interview_type != "individual_interview") |>
+  select(interview_type, all_of(equity_col)) |>
+  filter(!is.na(.data[[equity_col]])) |>
   mutate(
-    response = economic_transformation_benefits_equity_across_groups,
-    response = case_match(response,
-                          "yes" ~ "Yes",
-                          "no" ~ "No",
-                          .default = NA),
+    response = case_match(
+      as.character(.data[[equity_col]]),
+      "yes" ~ "Yes",
+      "no" ~ "No",
+      .default = NA_character_
+    ),
     response = factor(response, levels = c("Yes", "No")),
     interview_type = factor(
       case_match(
@@ -88,7 +97,15 @@ cfmg |>
       levels = c("Youth", "Male", "Female", "Executive")
     )
   ) |>
-  drop_na(response) |>
+  filter(!is.na(response))
+
+# Check if we have data before plotting
+if (nrow(plot_data) == 0) {
+  stop("No valid data available for fig-bs_equity after filtering")
+}
+
+# Create plot
+plot_data |>
   count(interview_type, response) |>
   group_by(interview_type) |>
   mutate(prop = n / sum(n)) |>
@@ -124,6 +141,7 @@ cfmg |>
     plot.margin        = margin(10, 25, 10, 10)
   )
 ```
+
 
 ::: return-to-summary
 [← Return to Summary](Summary.html#equity-and-inclusion)
@@ -195,7 +213,7 @@ tidy(M1, effects = "fixed") |>
     title    = "Model results for equitable benefit sharing — FGD type and governance index",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Executive FGD. ",
-      "Province variance = {prov_M1}; CF-within-province variance = {cfmg_M1}. ",
+      "Province variance = {prov_M1}; CFA-within-province variance = {cfmg_M1}. ",
       "Marginal R² = {round(r2_M1$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M1$R2_conditional, 3)}. ",
       "n = {nobs(M1)}."
@@ -234,7 +252,7 @@ as.data.frame(pairwise.M1) |>
   sub_missing()
 ```
 
-Individual interviewees were also asked whether the benefits of CFM were equitably shared. @tbl-bs_individual_equity shows the percentage reporting this broken down by interviewee role. Again a substantial majority of respondents (83% - 92%) thought that benefits were being shared equitably, and the differences among respondents were not significant. However, there was still minority of respondents that did not think benefits were being equitably shared. This suggests that there are some CFs where the benefit sharing arrangements are not optimal or appropriate arrangements are in place but are not being followed.
+Individual interviewees were also asked whether the benefits of CFM were equitably shared. @tbl-bs_individual_equity shows the percentage reporting this broken down by interviewee role. Again a substantial majority of respondents (83% - 92%) thought that benefits were being shared equitably, and the differences among respondents were not significant. However, there was still minority of respondents that did not think benefits were being equitably shared.
 
 ```{r}
 #| label: tbl-bs_individual_equity
@@ -361,7 +379,7 @@ tidy(M2, effects = "fixed") |>
     title    = "Model results for equitable benefit sharing — individual interviewees",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Community member. ",
-      "Province variance = {prov_M2}; CF-within-province variance = {cfmg_M2}. ",
+      "Province variance = {prov_M2}; CFA-within-province variance = {cfmg_M2}. ",
       "Marginal R² = {round(r2_M2$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M2$R2_conditional, 3)}. ",
       "n = {nobs(M2)}."
@@ -404,7 +422,7 @@ as.data.frame(pairwise.M2) |>
 
 ### Company-community arrangements
 
-CFMG executive FGDs reported on the components that were included in their carbon finance benefit-sharing arrangement with the carbon enterprise (@fig-bs_benefit_sharing). Clearly the agreements are dominated by revenue sharing, with relatively few also containing agreements on employment, infrastructure development and livelihood support.
+CFMG executive FGDs reported on the components that were included in their carbon finance benefit-sharing arrangement with the carbon developer (@fig-bs_benefit_sharing). Clearly the agreements are dominated by revenue sharing, with relatively few also containing agreements on employment, infrastructure development and livelihood support.
 
 ```{r}
 #| label: fig-bs_benefit_sharing
@@ -457,7 +475,7 @@ cfmg |>
 
 ### Within-community sharing
 
-We also asked CFMG executive FGDs about the carbon income sharing arrangements within the community. We first asked who is responsible for the decision-making (@fig-bs_benefit_sharing_decision) and then we asked on what principles the benefit sharing was based (@fig-bs_benefit_sharing_principles). In 12 CFs, the benefit sharing arrangements are defined in the constitution. Of the remainder, the CFMG executive is responsible for the decision in six, while in seven the entire CFMG is responsible.
+We also asked CFMG executive FGDs about the carbon income sharing arrangements within the community. We first asked who is responsible for the decision-making (@fig-bs_benefit_sharing_decision) and then we asked on what principles the benefit sharing was based (@fig-bs_benefit_sharing_principles). In 12 CFAs, the benefit sharing arrangements are defined in the constitution. Of the remainder, the CFMG executive is responsible for the decision in six, while in seven the entire CFMG is responsible.
 
 ```{r}
 #| label: fig-bs_benefit_sharing_decision
@@ -511,7 +529,6 @@ cfmg |>
   )
 ```
 
-The fact that only the CFMG Executives determine the sharing of carbon revenue in several cases is concerning. This is a lot of authority for the CFMG Executive to assume, and even if the benefit sharing is done appropriately it is likely to attract accusations of nepotism or corruption. 
 
 ```{r}
 #| label: fig-bs_benefit_sharing_principles
@@ -566,11 +583,11 @@ cfmg |>
   )
 ```
 
-According to the responses of the CFMG executives, seven CFs shared benefits according to community members' contribution to CFM while six shared them equally among the community households. Meanwhile, only two said that consideration of marginalised or vulnerable groups was a factor in benefit sharing. For 12 of the CFs, the benefit sharing arrangements are determined in the consitution.
+According to the responses of the CFMG executives, seven CFAs shared benefits according to community members' contribution to CFM while six shared them equally among the community households. Meanwhile, only two said that consideration of marginalised or vulnerable groups was a factor in benefit sharing. For 12 of the CFAs, the benefit sharing arrangements are determined in the constitution.
 
 ### External determination of benefit sharing
 
-We also asked CFMG executive FGDs whether stakeholders outside the community were involved in determining the benefit-sharing arrangement (@fig-bs_benefit_sharing_external). Again, in 12 CFs the benefit sharing arrangement is determined in the constitution. Of the remaining CFs, carbon enterprises are involved in determining the benefit sharing arrangement in 13 cases, while FD is involved in three cases and an NGO or traditional leader in one case each.
+We also asked CFMG executive FGDs whether stakeholders outside the community were involved in determining the benefit-sharing arrangement (@fig-bs_benefit_sharing_external). Again, in 12 CFAs the benefit sharing arrangement is determined in the constitution. Of the remaining CFAs, carbon developers are involved in determining the benefit sharing arrangement in 13 cases, while FD is involved in three cases and an NGO or traditional leader in one case each.
 
 ```{r}
 #| label: fig-bs_benefit_sharing_external
@@ -585,7 +602,7 @@ We also asked CFMG executive FGDs whether stakeholders outside the community wer
 prefix_bse <- "economic_transformation_benefit_sharing_mechanism_determined_by_"
 
 bse_labels <- c(
-  "carbon_trader"                   = "Carbon enterprise",
+  "carbon_trader"                   = "Carbon developer",
   "the_forestry_department_fd"      = "Forestry Dept",
   "an_ngo_or_external_organization" = "NGO",
   "traditional_leaders"             = "Traditional leaders"
@@ -626,7 +643,7 @@ cfmg |>
 
 ## Gender equity
 
-We asked FGD groups whether women benefit from CFM (@fig-bs_equity_women_benefit). As can be seen in the figure, across all FGD types a majority of groups reported that women benefit from CFM. However, a minority of FGD groups across all types stated that women do not benefit and, moreover, the proportion of FGD groups reporting that women do not benefit was significantly higher for female and youth FGD groups, compared to CFMG Executive and Male groups. The governance index was not a significant prediction of this response. 
+We asked FGD groups whether women benefit from CFM (@fig-bs_equity_women_benefit). As can be seen in the figure, across all FGD types a majority of groups reported that women benefit from CFM. However, a minority of FGD groups across all types stated that women do not benefit and, moreover, the proportion of FGD groups reporting that women do not benefit was significantly higher for female and youth FGD groups, compared to CFMG Executive and male groups. The governance index was not a significant prediction of this response. 
 
 ```{r}
 #| label: fig-bs_equity_women_benefit
@@ -763,7 +780,7 @@ tidy(M3, effects = "fixed") |>
     title    = "Model results for women benefit from CFM — FGD type and governance index",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Executive FGD. ",
-      "Province variance = {prov_M3}; CF-within-province variance = {cfmg_M3}. ",
+      "Province variance = {prov_M3}; CFA-within-province variance = {cfmg_M3}. ",
       "Marginal R² = {round(r2_M3$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M3$R2_conditional, 3)}. ",
       "n = {nobs(M3)}."
@@ -928,7 +945,7 @@ tidy(M4, effects = "fixed") |>
     title    = "Model results for women benefit from CFM — individual interviewees",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Community member. ",
-      "Province variance = {prov_M4}; CF-within-province variance = {cfmg_M4}. ",
+      "Province variance = {prov_M4}; CFA-within-province variance = {cfmg_M4}. ",
       "Marginal R² = {round(r2_M4$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M4$R2_conditional, 3)}. ",
       "n = {nobs(M4)}."
@@ -1102,7 +1119,7 @@ tidy(M5, effects = "fixed") |>
     title    = "Model results for women disproportionately suffering opportunity costs — FGD type and governance index",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Executive FGD. ",
-      "Province variance = {prov_M5}; CF-within-province variance = {cfmg_M5}. ",
+      "Province variance = {prov_M5}; CFA-within-province variance = {cfmg_M5}. ",
       "Marginal R² = {round(r2_M5$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M5$R2_conditional, 3)}. ",
       "n = {nobs(M5)}."
@@ -1267,7 +1284,7 @@ tidy(M6, effects = "fixed") |>
     title    = "Model results for women disproportionately suffering opportunity costs — individual interviewees",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Community member. ",
-      "Province variance = {prov_M6}; CF-within-province variance = {cfmg_M6}. ",
+      "Province variance = {prov_M6}; CFA-within-province variance = {cfmg_M6}. ",
       "Marginal R² = {round(r2_M6$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M6$R2_conditional, 3)}. ",
       "n = {nobs(M6)}."
@@ -1445,7 +1462,7 @@ tidy(M7, effects = "fixed") |>
     title    = "Model results for women participation in CFM decision making — FGD type and governance index",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Executive FGD. ",
-      "Province variance = {prov_M7}; CF-within-province variance = {cfmg_M7}. ",
+      "Province variance = {prov_M7}; CFA-within-province variance = {cfmg_M7}. ",
       "Marginal R² = {round(r2_M7$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M7$R2_conditional, 3)}. ",
       "n = {nobs(M7)}."
@@ -1610,7 +1627,7 @@ tidy(M8, effects = "fixed") |>
     title    = "Model results for women participation in CFM decision making — individual interviewees",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Community member. ",
-      "Province variance = {prov_M8}; CF-within-province variance = {cfmg_M8}. ",
+      "Province variance = {prov_M8}; CFA-within-province variance = {cfmg_M8}. ",
       "Marginal R² = {round(r2_M8$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M8$R2_conditional, 3)}. ",
       "n = {nobs(M8)}."
@@ -1651,7 +1668,7 @@ as.data.frame(pairwise.M8) |>
 
 ### Transparency in benefit sharing
 
-We asked FGD groups whether there is transparency in CFM benefit sharing (@fig-bs_transparency). Interestingly, the answers to this question were more varied than to the previous questions. However, across all FGD types a majority of groups agreed that there was transparency in the benefit sharing. However, all the community FGD types were significantly more likely to disagree as compared to the CFMG Executive FGDs. In addition, the CFMG level governance index score was a highly significant predictor of the probability that a FGD group would agree that benefit sharing was transparent.
+We asked FGD groups whether there is transparency in CFM benefit sharing (@fig-bs_transparency). Interestingly, the answers to this question were more varied than to the previous questions. However, across all FGD types a majority of groups agreed that there was transparency in the benefit sharing. However, all the community FGD types were significantly more likely to disagree as compared to the CFMG Executive FGDs. In addition, governance index score was a highly significant predictor of the probability that a FGD group would agree that benefit sharing was transparent.
 
 ```{r}
 #| label: fig-bs_transparency
@@ -1788,7 +1805,7 @@ tidy(M9, effects = "fixed") |>
     title    = "Model results for transparency in CFM benefit sharing — FGD type and governance index",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Executive FGD. ",
-      "Province variance = {prov_M9}; CF-within-province variance = {cfmg_M9}. ",
+      "Province variance = {prov_M9}; CFA-within-province variance = {cfmg_M9}. ",
       "Marginal R² = {round(r2_M9$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M9$R2_conditional, 3)}. ",
       "n = {nobs(M9)}."
@@ -1953,7 +1970,7 @@ tidy(M10, effects = "fixed") |>
     title    = "Model results for transparency in CFM benefit sharing — individual interviewees",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Community member. ",
-      "Province variance = {prov_M10}; CF-within-province variance = {cfmg_M10}. ",
+      "Province variance = {prov_M10}; CFA-within-province variance = {cfmg_M10}. ",
       "Marginal R² = {round(r2_M10$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M10$R2_conditional, 3)}. ",
       "n = {nobs(M10)}."
@@ -1992,7 +2009,7 @@ as.data.frame(pairwise.M10) |>
   sub_missing()
 ```
 
-We examined which mechanisms are being used to achieve transparency in benefit sharing among the community female, male, and youth FGDs (@fig-bs_transparency_mechanisms). As can be seen from the figure, community meetings were recognised as by far the most important mechanism for achieving transparency. It is noteworthy that written agreements and financial reports/audits were relatively infrequently mentioned. Although community meetings may be the most important to communicate, the formal CFMG processes such as annual financial reporting are also critical underpinnings of transparency. As our results from the governance chapter also showed, reporting by CFMGs does not appear adequate.
+We examined which mechanisms are being used to achieve transparency in benefit sharing among the community female, male, and youth FGDs (@fig-bs_transparency_mechanisms). As can be seen from the figure, community meetings were recognised as by far the most important mechanism for achieving transparency. It is noteworthy that written agreements and financial reports were relatively infrequently mentioned. Although community meetings may be the most important to communicate, the formal CFMG processes such as annual financial reporting are also critical underpinnings of transparency. As our results from the governance chapter also showed, reporting by CFMGs does not appear to be adequate.
 
 ```{r}
 #| label: fig-bs_transparency_mechanisms
@@ -2207,7 +2224,7 @@ tidy(M11, effects = "fixed") |>
     title    = "Model results for grievance and redress mechanism — FGD type",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Executive FGD. ",
-      "Province variance = {prov_M11}; CF-within-province variance = {cfmg_M11}. ",
+      "Province variance = {prov_M11}; CFA-within-province variance = {cfmg_M11}. ",
       "Marginal R² = {round(r2_M11$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M11$R2_conditional, 3)}. ",
       "n = {nobs(M11)}."
@@ -2371,7 +2388,7 @@ tidy(M12, effects = "fixed") |>
     title    = "Model results for grievance and redress mechanism — individual interviewees",
     subtitle = glue::glue(
       "Estimates are log-odds; reference = Community member. ",
-      "Province variance = {prov_M12}; CF-within-province variance = {cfmg_M12}. ",
+      "Province variance = {prov_M12}; CFA-within-province variance = {cfmg_M12}. ",
       "Marginal R² = {round(r2_M12$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_M12$R2_conditional, 3)}. ",
       "n = {nobs(M12)}."
@@ -2493,7 +2510,7 @@ cfmg |>
 
 ### Impact on poverty
 
-We asked the community female, male, and youth FGDs to identify the ways in which CFM has had an impact on poverty in their communities (@fig-bs_poverty_impact). Increase in household incomes was the most commonly stated impact on poverty followed by increased nutrition and food security. However, it is intersting to note the number of different types of responses that were given.
+We asked the community female, male, and youth FGDs to identify the ways in which CFM has had an impact on poverty in their communities (@fig-bs_poverty_impact). Increase in household incomes was the most commonly stated impact on poverty followed by increased nutrition and food security. However, it is interesting to note the number of different types of responses that were given.
 
 ```{r}
 #| label: fig-bs_poverty_impact
@@ -2655,7 +2672,7 @@ ggplot(barriers_all, aes(label = word, size = freq, colour = freq)) +
 
 ### Addressing challenges
 
-We asked the community female, male, and youth FGDs to suggest solutions to address the barriers facing poorer community members in benefiting from CFM (@fig-bs_solutions). Far and away the most popular solution for addressing these barries was community meetings. 
+We asked the community female, male, and youth FGDs to suggest solutions to address the barriers facing poorer community members in benefiting from CFM (@fig-bs_solutions). Far and away the most popular solution for addressing these barriers was community meetings. 
 
 ```{r}
 #| label: fig-bs_solutions
@@ -2736,7 +2753,7 @@ cfmg |>
 
 ## Equity and inclusion index
 
-To summarise the overall equity and inclusion performance of each CFMG, we constructed an equity and inclusion score (0–5) by summing five binary indicators reported by FGD groups — equitable benefit sharing, women benefiting from CFM, women participating in decision making, transparency in benefit sharing, and existence of a grievance and redress mechanism — each scored as 1 (positive outcome reported) or 0 (no positive outcome). The distribution of equity and inclusion scores across CFMGs is shown in @fig-bs_index_dist (Appendix III). We then modelled this score using a linear mixed model with FGD type and the governance index as predictors, and random intercepts for province and CF within province, to test whether governance and FGD type were significant predictors of overall equity and inclusion performance (@tbl-bs_index_model, @fig-bs_index).
+To summarise the overall equity and inclusion performance of each CFMG, we constructed an equity and inclusion score (0–5) by summing five binary indicators reported by FGD groups — equitable benefit sharing, women benefiting from CFM, women participating in decision making, transparency in benefit sharing, and existence of a grievance and redress mechanism — each scored as 1 (positive outcome reported) or 0 (no positive outcome). The distribution of equity and inclusion scores across CFMGs is shown in @fig-bs_index_dist (Appendix III). We then modelled this score using a linear mixed model with FGD type and the governance index as predictors, and random intercepts for province and CFA within province, to test whether governance and FGD type were significant predictors of overall equity and inclusion performance (@tbl-bs_index_model, @fig-bs_index).
 
 ```{r}
 #| label: data_bs_index
@@ -2848,9 +2865,9 @@ tidy(M_bs, effects = "fixed") |>
   tab_header(
     title    = "Model results for equity and inclusion performance — FGD type and governance index",
     subtitle = glue::glue(
-      "Linear mixed model with random intercepts for province and CF within province. ",
+      "Linear mixed model with random intercepts for province and CFA within province. ",
       "Reference = Executive. ",
-      "Province variance = {prov_bs}; CF-within-province variance = {cfmg_bs}; ",
+      "Province variance = {prov_bs}; CFA-within-province variance = {cfmg_bs}; ",
       "residual variance = {resid_bs}. ",
       "Marginal R² = {round(r2_bs$R2_marginal, 3)}; ",
       "conditional R² = {round(r2_bs$R2_conditional, 3)}. ",
@@ -2890,7 +2907,7 @@ bs_data |>
   )
 ```
 
-As can be seen from the model results, all three community FGD groups had significantly lower Equity and Inclusion scores compared to the CFMG Executive FGDs. Thus, the community groups all scored their CFM lower on Equite and Inclusion compared to the CFMG Executives. This indicates a pervasive difference in perception between communities and the CFMG Executives concerning the fairness of the CFM processes. The governance index was also a highly significant preditor of the Equite and Inclusion score, indication that better governed CFMGs had better equity and inclusion scores.
+As can be seen from the model results, all three community FGD groups had significantly lower equity and inclusion scores compared to the CFMG Executive FGDs. Thus, the community groups all scored their CFM lower on equity and inclusion compared to the CFMG Executives. This indicates a pervasive difference in perception between communities and the CFMG Executives concerning the fairness of the CFM processes. The governance index was also a highly significant predictor of the equity and inclusion score, indicating that better governed CFMGs had better equity and inclusion scores.
 
 ## Discussion
 
@@ -2898,10 +2915,10 @@ Through the FGDs and individual interviews, we investigated a wide range of equi
 
 The most striking and consistent finding is a divergence in perspective by FGD group. Across virtually every indicator — equitable benefit sharing, women benefiting from CFM, women suffering disproportionate opportunity costs, women's participation in decision making, and transparency in benefit sharing — community female and youth groups were significantly more likely than CFMG executive and male groups to report negative outcomes. Given that CFMG executives and community males may typically be better informed about formal governance arrangements, it is possible that this divergence reflects an information asymmetry rather than disagreement about conditions. However, it may also reflect that the benefits and costs of CFM are being distributed unevenly, in ways that are visible to female and youth community members but not acknowledged — or perhaps not noticed — by those in the CFMG executives. It is also possible that these differences in perspective reflect elite capture or corruption.
 
-Notwithstanding these these issues, the overall picture is more positive than might have been expected. A clear majority of all FGD groups — including community female groups — reported that benefits are being shared equitably and that women benefit from CFM. Most female groups also stated that women do not disproportionately suffer opportunity costs and that women participate in CFM decision making. This is somewhat surprising, given that natural resource management decisions in Zambia are traditionally the purview of male community members. It may be that the formal governance structures mandated by CFM — elections, executive positions with female representation, and documented benefit-sharing arrangements — are providing women with a degree of recognition and voice that they would not otherwise have had.
+Notwithstanding these these issues, the overall picture is more positive than might have been expected. A clear majority of all FGD groups — including community female groups — reported that benefits are being shared equitably and that women benefit from CFM. Most female groups also stated that women do not disproportionately suffer opportunity costs and that women participate in CFM decision making. This is somewhat surprising, given that natural resource management decisions in Zambia are traditionally the purview of male community members. It may be that the formal governance structures mandated by CFM — elections, executive positions with female representation, and documented benefit-sharing arrangements — are providing women with a degree of recognition and voice that they would not otherwise have had. These results may also explain why women FGDs also had a more positive take on the effect of CFM on SFM, as mentioned in that chapter.
 
-Carbon benefit-sharing agreements between companies and communities are almost entirely structured around revenue sharing. Employment, infrastructure investment and livelihood support are less commonly included in these agreements. While revenue sharing provides a direct financial return, it means communities that have not yet received a carbon payment have little to show for CFM. Diversifying the components of company-community agreements could broaden both the distribution of benefits and community buy-in.
+Carbon benefit-sharing agreements between companies and communities are almost entirely structured around revenue sharing. Employment, infrastructure investment and livelihood support are less commonly included in these agreements. While revenue sharing provides a direct financial return, it means communities that have not yet received a carbon payment have little to show for CFM. Diversifying the components of company-community agreements could broaden both the distribution of benefits and community buy-in. The fact that only the CFMG Executives determine the sharing of carbon revenue in a number of CFMGs is concerning. This is a lot of authority for the CFMG Executive to assume, and even if the benefit sharing is done appropriately it is likely to attract accusations of nepotism or corruption. We suggest that there should be greater standardisation of benefit-sharing arrangements, both between the carbon developer and the community and within the community. It is also essential that the FD provide greater oversight to ensure agreed upon benefit-sharing arrangements are being properly implemented.
 
 The reported poverty impacts of CFM — primarily increased household incomes and new income-generating activities — are broadly consistent with the economic transformation chapter findings. However, barriers to poorer community members benefiting remain, including limited access to resources, capital and markets. The solutions communities themselves proposed — financial support, targeted programmes for marginalised groups, and better governance — align closely with the governance and economic transformation recommendations identified elsewhere in this report.
 
-In conclusion, the equity and inclusion outcomes of CFM in Zambia are broadly positive but uneven. The divergence between female and youth perspectives and those of CFMG executives is the most important finding of this chapter. It signals that equity problems in a subset of CFMGs, and that strengthening transparency, grievance and redress mechanisms and community-wide engagement is essential to ensuring CFM benefits reach all community members equitably.
+In conclusion, the equity and inclusion outcomes of CFM in Zambia are broadly positive but uneven. The divergence between female and youth perspectives and those of CFMG executives is the most important finding of this chapter. It signals that equity problems exist in a subset of CFMGs, and that strengthening transparency, grievance and redress mechanisms and community-wide engagement is essential to ensuring CFM benefits reach all community members equitably.
