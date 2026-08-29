@@ -3,6 +3,7 @@ title: "Economic Transformation"
 format:
   html:
     css: custom.css
+    fig-format: png
   pdf:
     include-in-header:
       text: |
@@ -10,6 +11,8 @@ format:
 filters:
 - collapse-output
 editor: visual
+execute:
+  eval: true
 ---
 
 ```{r}

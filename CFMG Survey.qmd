@@ -3,11 +3,14 @@ title: "Survey overview"
 format:
   html:
     css: custom.css
+    fig-format: png
   pdf:
     include-in-header:
       text: |
         \pagenumbering{arabic}
 editor: visual
+execute:
+  eval: true
 ---
 
 ```{r}
@@ -28,7 +31,7 @@ load("cfmg.RData")
 
 ## Summary
 
-We surveyed 80 CFAs across eight provinces and conducted `{r} with(cfmg, sum(table(cfmg_name)))` interviews in total. The sample included CFAs from \~20 ha to \>80,000 ha and that varied in years since establishment from one to seven years. In each community forest, we conducted four Focal Group Discussions (FGD, total 292) with (i) the CFMG executive, (ii) community men, (iii) community women, and (iv) community youths. This enabled us to examine differences in perspectives across these groups. In addition, we conducted individual interviews (total = 257) with key stakeholders, including DFOs, CFMG executive members (usually the Secretary), community members, private sector partners including NGOs and for-profit enterprises, and traditional leaders. The same interview tool was used for both FGDs and individual interviews. Overall, the sample was male biased, reflecting gender biases in roles at the community level, but our information is balanced through specifically including a female FGD in each community. The sample included a wide range of ages from \~20 to \>80 years. Although most interviewees had lived all their lives in the community, the sample include some who had moved into the community recently. Our sampling approach ensured an unbiased selection and these data demonstrate that we covered a wide range of CFAs, in terms of geography, size and age, and interviewees, in terms of gender, age and roles. Hence, our results may be considered generalisable at the national level.
+We surveyed 80 CFAs across eight provinces and conducted `r with(cfmg, sum(table(cfmg_name)))` interviews in total. The sample included CFAs from \~20 ha to \>80,000 ha and that varied in years since establishment from one to seven years. In each community forest, we conducted four Focal Group Discussions (FGD, total 292) with (i) the CFMG executive, (ii) community men, (iii) community women, and (iv) community youths. This enabled us to examine differences in perspectives across these groups. In addition, we conducted individual interviews (total = 257) with key stakeholders, including DFOs, CFMG executive members (usually the Secretary), community members, private sector partners including NGOs and for-profit enterprises, and traditional leaders. The same interview tool was used for both FGDs and individual interviews. Overall, the sample was male biased, reflecting gender biases in roles at the community level, but our information is balanced through specifically including a female FGD in each community. The sample included a wide range of ages from \~20 to \>80 years. Although most interviewees had lived all their lives in the community, the sample include some who had moved into the community recently. Our sampling approach ensured an unbiased selection and these data demonstrate that we covered a wide range of CFAs, in terms of geography, size and age, and interviewees, in terms of gender, age and roles. Hence, our results may be considered generalisable at the national level.
 
 ::: {.callout-note icon="false"}
 ## Key conclusions
@@ -208,7 +211,7 @@ cfmg |> group_by(province,Name) |>
 
 ### Number of interviews
 
-A total of `{r} with(cfmg, sum(table(cfmg_name)))` interviews across `{r} with(cfmg, sum(sign(table(cfmg_name))))` Community Forest Management Groups (CFMGs) were surveyed across the eight provinces. The number of interviews per CFMG varied from five to 14 (@fig-Interviews_by_Province).
+A total of `r with(cfmg, sum(table(cfmg_name)))` interviews across `r with(cfmg, sum(sign(table(cfmg_name))))` Community Forest Management Groups (CFMGs) were surveyed across the eight provinces. The number of interviews per CFMG varied from five to 14 (@fig-Interviews_by_Province).
 
 ```{r}
 #| label: fig-Interviews_by_Province
