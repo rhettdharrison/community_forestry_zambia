@@ -1,0 +1,213 @@
+---
+title: "Appendix IV - CFMG performance index scores"
+author: "Rhett D Harrison"
+format:
+  html:
+    css: custom.css
+  pdf:
+    include-in-header:
+      text: |
+        \pagenumbering{arabic}
+filters:
+- collapse-output
+editor: visual
+---
+
+### Community Forest Management in Zambia: Is It Working?
+
+```{r}
+#| label: load_data_appendix_iv
+#| include: false
+#| warning: false
+#| message: false
+#| error:   false
+
+library(tidyverse)
+library(gt)
+
+load("cfmg.RData")
+```
+
+```{r}
+#| label: tbl-index_summary
+#| echo: false
+#| warning: false
+#| message: false
+#| error:   false
+#| tbl-cap: "Mean performance index scores for each CFMG across the four thematic areas. Governance scores (0–10) are based on executive FGD responses only and count the number of ten governance features present. SFM, economic transformation, and equity and inclusion scores (0–5) are averaged across all four FGD types (executive, female, male, youth). Higher scores indicate better performance."
+
+# Governance index (one value per CFMG, from executive FGD)
+gov_scores <- cfmg |>
+  filter(interview_type == "cfmg_executive") |>
+  distinct(cfmg_name, province, .keep_all = TRUE) |>
+  select(province, cfmg_name, gov_index)
+
+# SFM score
+sfm_scores <- cfmg |>
+  filter(interview_type %in% c("cfmg_executive", "cfmg_male", "cfmg_female", "cfmg_youth")) |>
+  mutate(
+    si_deforest = case_match(
+      impact_on_sfm_cfm_reduced_forest_clearing_cfma,
+      "yes_significant" ~ 1, "yes_moderate" ~ 1,
+      "Yes there no more fields_  it's all forests" ~ 1,
+      "Yes_ significant reduction. There was chitemene system before CFM" ~ 1,
+      "no_increase" ~ 0, "no_change" ~ 0,
+      "no_there_has_never_been_clearing_for_agriculture" ~ 0,
+      "Agricultural practices ceased way before CFM" ~ 0,
+      "One field for cassava" ~ 0,
+      "dont_know" ~ NA_real_, .default = NA_real_
+    ),
+    si_charcoal = case_match(
+      impact_on_sfm_charcoal_production_in_cfma,
+      "yes_high" ~ 1, "no" ~ 1, "no_stopped" ~ 1, "yes_reduced" ~ 1,
+      "No_ charcoal production is not a common practice for community members" ~ 0,
+      "There has never been  charcoal  production" ~ 0,
+      "dont_know" ~ NA_real_, .default = NA_real_
+    ),
+    si_fire = case_match(
+      impact_on_sfm_fire_incidence_reduction_cfma,
+      "yes_significant_reduction" ~ 1, "yes_moderate_reduction" ~ 1,
+      "no_change" ~ 0, "no_incidents_have_increased" ~ 0,
+      "No change observed as at now" ~ 0,
+      "CFMG activities just starting. To be observed this year." ~ 0,
+      "Fire management team only recently received training" ~ 0,
+      "Fire monitoring just started this year" ~ 0,
+      "dont_know" ~ NA_real_, .default = NA_real_
+    ),
+    si_wildlife = case_match(
+      impact_on_sfm_wildlife_increase,
+      "yes_significant_increase" ~ 1, "yes_moderate_increase" ~ 1,
+      "Yes_ moderate increase for some species such as bush pig and antelope" ~ 1,
+      "Yes_ moderate increase. Impala_ waterbuck_ wild pigs_ guinea fowls can now ge seen in the community forest" ~ 1,
+      "Yes_ moderate increase. Not one goes to the forest because of distancing thus animals are freely multiplying" ~ 1,
+      "Yes_ significant increase. Leading to an increase in human an wildlife conflicts" ~ 1,
+      "Yes_ significant increase. The CFMA is in the GMA" ~ 1,
+      "Yes_ significant increase. Wild animals now coming closer to households" ~ 1,
+      "no_change" ~ 0, "no_reduced" ~ 0,
+      "No wild animals recorded" ~ 0,
+      "Other wildlife has decreased_ only the hyna population is on the increase" ~ 0,
+      "There  are no wildlife animals" ~ 0,
+      "There has never been  any wildlife recorded" ~ 0,
+      "There has never been wild animals in this community" ~ 0,
+      "There is no wildlife in this community" ~ 0,
+      "dont_know" ~ NA_real_, .default = NA_real_
+    ),
+    si_nrm = case_match(
+      impact_on_sfm_forest_resources_management,
+      "yes_significant_improvement" ~ 1, "yes_moderate_improvement" ~ 1,
+      "no_change" ~ 0, "no_management_has_worsened" ~ 0,
+      "dont_know" ~ NA_real_, .default = NA_real_
+    ),
+    sfm_score = ifelse(
+      rowSums(!is.na(cbind(si_deforest, si_charcoal, si_fire, si_wildlife, si_nrm))) == 0,
+      NA_real_,
+      rowSums(cbind(si_deforest, si_charcoal, si_fire, si_wildlife, si_nrm), na.rm = TRUE)
+    )
+  ) |>
+  group_by(cfmg_name) |>
+  summarise(sfm_score = mean(sfm_score, na.rm = TRUE), .groups = "drop")
+
+# ET score
+et_scores <- cfmg |>
+  filter(interview_type %in% c("cfmg_executive", "cfmg_male", "cfmg_female", "cfmg_youth")) |>
+  mutate(
+    si_hh = case_when(
+      as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_household_use_e_g_firewood_building_materials) == "1" ~ 1,
+      as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_household_use_e_g_firewood_building_materials) == "0" ~ 0,
+      TRUE ~ NA_real_
+    ),
+    si_sale = case_when(
+      as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_sale_e_g_timber_honey_mushrooms) == "1" ~ 1,
+      as.character(economic_transformation_economic_benefits_from_cfm_improved_access_to_natural_resources_for_sale_e_g_timber_honey_mushrooms) == "0" ~ 0,
+      TRUE ~ NA_real_
+    ),
+    si_empl = case_when(
+      economic_transformation_yn_formal_employment_opportunities_created_cfm == "yes" ~ 1,
+      economic_transformation_yn_formal_employment_opportunities_created_cfm == "no"  ~ 0,
+      TRUE ~ NA_real_
+    ),
+    si_enterprise = case_match(
+      economic_transformation_cfmg_private_enterprise_collaboration,
+      "yes" ~ 1, "no" ~ 0, .default = NA_real_
+    ),
+    si_opp_costs = case_when(
+      economic_transformation_opportunity_costs_of_cfm == "yes"           ~ 0,
+      economic_transformation_opportunity_costs_of_cfm == "no"            ~ 1,
+      str_starts(economic_transformation_opportunity_costs_of_cfm, "No_") ~ 1,
+      economic_transformation_opportunity_costs_of_cfm %in% c(
+        "Community forest situated very far from community",
+        "The Major livelihood for this community is fishing. They don't depend so much on the forest. They can still get materials for construction in the open areas"
+      ) ~ 1,
+      TRUE ~ NA_real_
+    ),
+    et_score = ifelse(
+      rowSums(!is.na(cbind(si_hh, si_sale, si_empl, si_enterprise, si_opp_costs))) == 0,
+      NA_real_,
+      rowSums(cbind(si_hh, si_sale, si_empl, si_enterprise, si_opp_costs), na.rm = TRUE)
+    )
+  ) |>
+  group_by(cfmg_name) |>
+  summarise(et_score = mean(et_score, na.rm = TRUE), .groups = "drop")
+
+# BS (equity and inclusion) score
+bs_scores <- cfmg |>
+  filter(interview_type %in% c("cfmg_executive", "cfmg_male", "cfmg_female", "cfmg_youth")) |>
+  mutate(
+    si_equity = case_match(
+      economic_transformation_benefits_equity_across_groups,
+      "yes" ~ 1, "no" ~ 0, .default = NA_real_
+    ),
+    si_women_benefit = case_match(
+      equity_and_inclusion_women_benefit_from_cfm,
+      "yes" ~ 1, "no" ~ 0, .default = NA_real_
+    ),
+    si_decision = case_match(
+      equity_and_inclusion_women_participate_in_decision_making,
+      "yes" ~ 1, "no" ~ 0, .default = NA_real_
+    ),
+    si_transparency = case_match(
+      equity_and_inclusion_transparency_in_benefit_sharing,
+      "yes" ~ 1, "no" ~ 0, .default = NA_real_
+    ),
+    si_grievance = case_match(
+      equity_and_inclusion_grievance_redress_mechanism,
+      "yes" ~ 1, "no" ~ 0, .default = NA_real_
+    ),
+    bs_score = ifelse(
+      rowSums(!is.na(cbind(si_equity, si_women_benefit, si_decision, si_transparency, si_grievance))) == 0,
+      NA_real_,
+      rowSums(cbind(si_equity, si_women_benefit, si_decision, si_transparency, si_grievance), na.rm = TRUE)
+    )
+  ) |>
+  group_by(cfmg_name) |>
+  summarise(bs_score = mean(bs_score, na.rm = TRUE), .groups = "drop")
+
+# Join all indexes and build table
+gov_scores |>
+  left_join(sfm_scores, by = "cfmg_name") |>
+  left_join(et_scores,  by = "cfmg_name") |>
+  left_join(bs_scores,  by = "cfmg_name") |>
+  mutate(cfmg_name = str_to_sentence(cfmg_name)) |>
+  arrange(province, cfmg_name) |>
+  gt(groupname_col = "province") |>
+  cols_label(
+    cfmg_name  = "Community forest",
+    gov_index  = html("Governance<br>(0–10)"),
+    sfm_score  = html("SFM<br>(0–5)"),
+    et_score   = html("Economic transformation<br>(0–5)"),
+    bs_score   = html("Equity and inclusion<br>(0–5)")
+  ) |>
+  fmt_number(columns = c(gov_index, sfm_score, et_score, bs_score), decimals = 1) |>
+  cols_align(align = "left",   columns = cfmg_name) |>
+  cols_align(align = "center", columns = c(gov_index, sfm_score, et_score, bs_score)) |>
+  tab_spanner(
+    label   = "Mean score",
+    columns = c(gov_index, sfm_score, et_score, bs_score)
+  ) |>
+  tab_style(
+    style     = cell_text(weight = "bold"),
+    locations = cells_row_groups()
+  ) |>
+  sub_missing(missing_text = "—") |>
+  opt_align_table_header(align = "left")
+```
