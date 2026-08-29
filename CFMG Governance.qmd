@@ -527,7 +527,7 @@ As is evident from the table, these business management processes were even more
 
 ## Governance index
 
-To summarise CFMG governance performance, we constructed a governance index (0–10) based on the presence or absence of ten selected features reported by CFMG executives: receipt book, bank account, financial reporting, annual reporting, issuing permits, HFOs appointed, workplan, budget, business plan, and term limits. We then tested whether two aspects of external support — the frequency of district forest office staff visits and the presence of a partner organisation — were associated with higher governance scores (@fig-gov_index; Appendix III).
+To summarise CFMG governance performance, we constructed a governance index (0–10) based on the presence or absence of ten selected features reported by CFMG executives: receipt book, bank account, financial reporting, annual reporting, issuing permits, HFOs appointed, workplan, budget, business plan, and term limits. We then tested whether two aspects of external support — the frequency of district forest office staff visits and the presence of a partner organisation — were associated with higher governance scores (@fig-gov_index; [Appendix III](Appendix_III-Surveyed_CFAs.qmd)).
 
 ```{r}
 #| label: fig-gov_index

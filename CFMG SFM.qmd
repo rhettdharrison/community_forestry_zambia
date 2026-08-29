@@ -3404,7 +3404,7 @@ cfmg |>
 
 ## SFM index
 
-To summarise the overall SFM performance of each CFMG, we constructed an SFM score (0–5) by summing five binary indicators of change inside the CFA — decrease in deforestation, decrease in charcoal production, decrease in fire incidence, increase in wildlife, and improved natural resources management — scored as 1 (positive change reported) or 0 (no change or worsening). The distribution of SFM scores across CFMGs is shown in @fig-sfm_index_dist (Appendix III). We then modelled this score using a linear mixed model with FGD type and the governance index as predictors, and random intercepts for province and CFA within province, to test whether governance and FGD type were significant predictors of overall SFM performance (@tbl-sfm_index_model, @fig-sfm_index).
+To summarise the overall SFM performance of each CFMG, we constructed an SFM score (0–5) by summing five binary indicators of change inside the CFA — decrease in deforestation, decrease in charcoal production, decrease in fire incidence, increase in wildlife, and improved natural resources management — scored as 1 (positive change reported) or 0 (no change or worsening). The distribution of SFM scores across CFMGs is shown in @fig-sfm_index_dist ([Appendix III](Appendix_III-Surveyed_CFAs.qmd)). We then modelled this score using a linear mixed model with FGD type and the governance index as predictors, and random intercepts for province and CFA within province, to test whether governance and FGD type were significant predictors of overall SFM performance (@tbl-sfm_index_model, @fig-sfm_index).
 
 ```{r}
 #| label: data_sfm_index
