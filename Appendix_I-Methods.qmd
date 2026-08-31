@@ -4,12 +4,10 @@ bibliography: references.bib
 format:
   html:
     css: custom.css
-    number-offset: 2
   pdf:
     include-in-header:
       text: |
         \pagenumbering{arabic}
-    number-offset: 2
 filters:
 - collapse-output
 editor: visual
@@ -79,13 +77,10 @@ The final list of CFAs surveyed is given in Appendix II.
 The surveys were conducted by the following interviewers (Table 3). Chipo Chisonga (Landscape Alliance), Edward Banda (Landscape Alliance) and Thecla Masuku (Forestry Department) comprised the principle survey team with others supporting them as required. Thecla Masuku, supported by Hope Chame (Forestry Department), were responsible for conducting the community female FGDs and female individual interviewees. Given the gender norms in local communities, it was felt that female interviewees might feel inhibited to answer honestly with male interviewers.
 
 ```{r}
-#| label: tbl-interviewers
 #| echo: false
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "Number of interviews conducted by each interviewer, by interview type."
-#| tbl-colwidths: [50,15,15,15,5]
 
 cfmg |>
   mutate(
@@ -110,6 +105,8 @@ cfmg |>
   cols_align(align = "left",   columns = demo_information_interviewer_name) |>
   cols_align(align = "center", columns = where(is.numeric))
 ```
+
+: Table 3: Number of interviews conducted by each interviewer, by interview type.
 
 ### Analysis of the survey results
 
