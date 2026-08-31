@@ -10,6 +10,8 @@ format:
     include-in-header:
       text: |
         \pagenumbering{arabic}
+filters:
+- collapse-output
 ---
 
 ### Community forestry

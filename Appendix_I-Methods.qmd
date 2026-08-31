@@ -82,7 +82,7 @@ The surveys were conducted by the following interviewers (Table 3). Chipo Chison
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "Number of interviews conducted by each interviewer, by interview type."
+#| tbl-cap: "Table 3: Number of interviews conducted by each interviewer, by interview type."
 
 cfmg |>
   mutate(
