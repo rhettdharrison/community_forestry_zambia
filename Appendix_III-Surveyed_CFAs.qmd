@@ -1,6 +1,5 @@
 ---
 title: "Appendix III - List of community forests surveyed"
-author: "Rhett D Harrison"
 format:
   html:
     css: custom.css

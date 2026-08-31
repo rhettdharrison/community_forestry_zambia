@@ -2,6 +2,7 @@
 title: "Introduction"
 editor: visual
 bibliography: references.bib
+suppress-bibliography: true
 ---
 
 ### Community forestry

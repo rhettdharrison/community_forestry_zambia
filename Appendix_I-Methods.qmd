@@ -1,6 +1,5 @@
 ---
 title: "Methods"
-author: "Rhett D Harrison"
 bibliography: references.bib
 format:
   html:
@@ -12,6 +11,7 @@ format:
 filters:
 - collapse-output
 editor: visual
+suppress-bibliography: true
 ---
 
 ```{r}
@@ -44,7 +44,9 @@ In each CFA forest, the team conducted four FGDs including (i) CFMG executive, a
 
 ### Survey of community forests
 
-The surveys were carried out according to the following schedule (@tbl-survey-schedule).
+The surveys were carried out according to the following schedule in Table 1.
+
+: **Table 1. CFA survey schedule**
 
 | Province      | Dates                          |
 |:--------------|:-------------------------------|
@@ -57,19 +59,18 @@ The surveys were carried out according to the following schedule (@tbl-survey-sc
 | North-western | 17 October to 11 November 2025 |
 | Western       | 26 November to 8 December 2025 |
 
-: {#tbl-survey-schedule} CFA survey schedule
+During the survey, five CFAs were dropped from the sample (Table 2). For various reasons these CFAs existed on paper, but were non-functioning on the ground.
 
-During the survey, a five CFAs were dropped from the sample (@tbl-not-surveyed). For various reasons these CFAs existed on paper, but were non-functioning on the ground.
+: **Table 2. CFAs selected but not surveyed**
 
 | Province | CFA | Reasons for omission |
-|:---|:---|:---|
+|:-----------------------|:-----------------------|:-----------------------|
 | Lusaka | Chalimbana | The CFA was not operational and currently exists only in the database. Only the initial establishment stages were completed. |
 | Central | Kaindu | The Chief had disbanded the executive committee and hence it was not possible to organise the community |
 | Muchinga | Nampando | The CFA was not operational and currently exists only in the database. Only the initial establishment stages were completed. |
 | Eastern | Kalumphila | This CFA has not been functional since the partner (Land Alliance) withdrew in 2022. The CFAMG establishment processes were not concluded. |
 | Eastern | Koloko | This CFA has not been functional since 2022 after the partner (Land Alliance) withdrew. |
 
-: {#tbl-not-surveyed} CFAs selected but not surveyed
 
 The final list of CFAs surveyed is given in Appendix II.
 
