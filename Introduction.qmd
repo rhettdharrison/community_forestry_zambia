@@ -1,6 +1,7 @@
 ---
 title: "Introduction"
 editor: visual
+bibliography: references.bib
 ---
 
 ### Community forestry

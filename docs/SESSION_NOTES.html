@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bibliography – Community Forest Management in Zambia: Is it Working?</title>
+<title>session_notes – Community Forest Management in Zambia: Is it Working?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -154,7 +135,7 @@ div.csl-indent {
 <span class="menu-text">Discussion</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./Bibliography.html" aria-current="page"> 
+    <a class="nav-link" href="./Bibliography.html"> 
 <span class="menu-text">Bibliography</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -191,42 +172,82 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#session-summary---august-31-2026" id="toc-session-summary---august-31-2026" class="nav-link active" data-scroll-target="#session-summary---august-31-2026">Session Summary - August 31, 2026</a>
+  <ul class="collapse">
+  <li><a href="#status-complete" id="toc-status-complete" class="nav-link" data-scroll-target="#status-complete">Status: ✅ COMPLETE</a></li>
+  <li><a href="#changes-made" id="toc-changes-made" class="nav-link" data-scroll-target="#changes-made">Changes Made</a></li>
+  <li><a href="#deployment" id="toc-deployment" class="nav-link" data-scroll-target="#deployment">Deployment</a></li>
+  <li><a href="#key-results" id="toc-key-results" class="nav-link" data-scroll-target="#key-results">Key Results</a></li>
+  <li><a href="#files-modified" id="toc-files-modified" class="nav-link" data-scroll-target="#files-modified">Files Modified</a></li>
+  </ul></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 <div class="site-title-banner">
   Community Forest Management in Zambia: Is it Working?
 </div>
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Bibliography</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
+<section id="session-summary---august-31-2026" class="level1">
+<h1>Session Summary - August 31, 2026</h1>
+<section id="status-complete" class="level2">
+<h2 class="anchored" data-anchor-id="status-complete">Status: ✅ COMPLETE</h2>
+<p>All changes successfully committed and pushed to production.</p>
+</section>
+<section id="changes-made" class="level2">
+<h2 class="anchored" data-anchor-id="changes-made">Changes Made</h2>
+<ol type="1">
+<li><strong>Fixed Appendix III title</strong> - Changed from “Appendix II” to “Appendix III - List of community forests surveyed”</li>
+<li><strong>Created Bibliography chapter</strong> - New Bibliography.qmd file with separate chapter for references (before Appendices in menu)</li>
+<li><strong>Removed bibliography from Introduction</strong> - Removed bibliography: references.bib from Introduction YAML to prevent duplicate bibliography</li>
+<li>**Updated _quarto.yml** - Added Bibliography link to navbar between Discussion and Appendices</li>
+<li><strong>Formatted Harrison et al.&nbsp;citation</strong> - Improved sentence structure in Appendix I Methods section, reformatted citation as <span class="citation" data-cites="harrisonSB_inprep">[@harrisonSB_inprep]</span></li>
+</ol>
+</section>
+<section id="deployment" class="level2">
+<h2 class="anchored" data-anchor-id="deployment">Deployment</h2>
+<ul>
+<li>Rendered all chapters individually to avoid memory issues</li>
+<li>Staged all rendered files in docs/ folder</li>
+<li><strong>Git commit:</strong> “Render all chapters: fix Appendix III/IV 404 errors, update bibliography chapter”</li>
+<li><strong>Status:</strong> ✅ Pushed successfully</li>
+</ul>
+</section>
+<section id="key-results" class="level2">
+<h2 class="anchored" data-anchor-id="key-results">Key Results</h2>
+<ul>
+<li>✅ Appendix III and IV now appear in docs/ folder (previously missing - caused 404 errors)</li>
+<li>✅ Bibliography chapter live on site (renamed from “Literature cited”)</li>
+<li>✅ Introduction no longer shows duplicate bibliography</li>
+<li>✅ All citations properly formatted</li>
+</ul>
+</section>
+<section id="files-modified" class="level2">
+<h2 class="anchored" data-anchor-id="files-modified">Files Modified</h2>
+<ul>
+<li>Appendix_I-Methods.qmd (citation formatting)</li>
+<li>Appendix_III-Surveyed_CFAs.qmd (title fix)</li>
+<li>Introduction.qmd (removed bibliography reference)</li>
+<li>Bibliography.qmd (new)</li>
+<li>_quarto.yml (added Bibliography menu item)</li>
+<li>docs/* (all HTML/PDF output files updated)</li>
+</ul>
 
-    
-  
-    
-  </div>
-  
 
-
-</header>
-
-
-<div id="refs" role="list">
-
-</div>
-
-
+</section>
+</section>
 
 </main> <!-- /main -->
 <!-- Sidebar footer content moved to index.qmd -->

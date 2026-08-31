@@ -58,7 +58,6 @@ format:
     append-hash: true
     include-before-body: title-banner.html
     include-after-body: sidebar-footer.html
-    bibliography: references.bib
 
 filters:
   - mcanouil/collapse-output

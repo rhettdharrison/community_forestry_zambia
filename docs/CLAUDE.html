@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bibliography – Community Forest Management in Zambia: Is it Working?</title>
+<title>claude – Community Forest Management in Zambia: Is it Working?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -154,7 +135,7 @@ div.csl-indent {
 <span class="menu-text">Discussion</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./Bibliography.html" aria-current="page"> 
+    <a class="nav-link" href="./Bibliography.html"> 
 <span class="menu-text">Bibliography</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -191,42 +172,45 @@ div.csl-indent {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#claude.md" id="toc-claude.md" class="nav-link active" data-scroll-target="#claude.md">CLAUDE.md</a>
+  <ul class="collapse">
+  <li><a href="#before-touching-anything-know-this" id="toc-before-touching-anything-know-this" class="nav-link" data-scroll-target="#before-touching-anything-know-this">Before touching anything, know this:</a></li>
+  </ul></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 <div class="site-title-banner">
   Community Forest Management in Zambia: Is it Working?
 </div>
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Bibliography</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<div id="refs" role="list">
-
-</div>
+<section id="claude.md" class="level1">
+<h1>CLAUDE.md</h1>
+<p>Quarto website project (report on Community Forest Management in Zambia). Full context, architecture, and current state: <strong><a href="./HANDOFF.html">HANDOFF.md</a></strong> — read it before making changes.</p>
+<section id="before-touching-anything-know-this" class="level2">
+<h2 class="anchored" data-anchor-id="before-touching-anything-know-this">Before touching anything, know this:</h2>
+<ol type="1">
+<li><strong>There is likely a large uncommitted diff sitting in the working tree.</strong> Run <code>git status</code> first. Don’t assume a clean tree, and don’t commit broadly without reviewing what’s actually staged — see HANDOFF.md §4 for what was in flight as of the last session.</li>
+<li><strong>Chapter filenames contain spaces on purpose</strong> (<code>CFMG ET.qmd</code>, <code>CFMG Survey.qmd</code>, etc. — renaming breaks published URLs). This triggers a known Quarto freeze bug where PDF figures get written to a hyphenated path but the freeze cache looks for them under the space-containing path, silently dropping figures from PDF renders. See HANDOFF.md §3 and <code>feedback_quarto_pdf_rendering.md</code> in memory for the fix procedure if this recurs after editing: CFMG ET, CFMG BS, CFMG Governance, CFMG SFM, CFMG Survey, or Remote Sensing.</li>
+<li><strong><code>PUBLICATION_STRATEGY.md</code> is the plan of record</strong>, not just a note — it defines the target structure (navbar order, index.qmd layout, per-chapter conclusions boxes) and what phase the project is in. Check it before restructuring navigation, the index page, or chapter layout.</li>
+<li><strong>Workflow: work directly on <code>main</code>, push directly — no branches or PRs</strong> for this project. Milestones are marked with git tags (<code>Draft1.0</code>, <code>Draft2.0</code>, …), not branches.</li>
+</ol>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <!-- Sidebar footer content moved to index.qmd -->

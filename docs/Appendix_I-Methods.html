@@ -56,7 +56,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -398,23 +418,23 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
 </figcaption>
 <div aria-describedby="tbl-interviewers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="dhtfmvfexe" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dhtfmvfexe table {
+<div id="hdwogxtolb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hdwogxtolb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dhtfmvfexe thead, #dhtfmvfexe tbody, #dhtfmvfexe tfoot, #dhtfmvfexe tr, #dhtfmvfexe td, #dhtfmvfexe th {
+#hdwogxtolb thead, #hdwogxtolb tbody, #hdwogxtolb tfoot, #hdwogxtolb tr, #hdwogxtolb td, #hdwogxtolb th {
   border-style: none;
 }
 
-#dhtfmvfexe p {
+#hdwogxtolb p {
   margin: 0;
   padding: 0;
 }
 
-#dhtfmvfexe .gt_table {
+#hdwogxtolb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -440,12 +460,12 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-left-color: #D3D3D3;
 }
 
-#dhtfmvfexe .gt_caption {
+#hdwogxtolb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dhtfmvfexe .gt_title {
+#hdwogxtolb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -457,7 +477,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-bottom-width: 0;
 }
 
-#dhtfmvfexe .gt_subtitle {
+#hdwogxtolb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -469,7 +489,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-top-width: 0;
 }
 
-#dhtfmvfexe .gt_heading {
+#hdwogxtolb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -481,13 +501,13 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-right-color: #D3D3D3;
 }
 
-#dhtfmvfexe .gt_bottom_border {
+#hdwogxtolb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dhtfmvfexe .gt_col_headings {
+#hdwogxtolb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -502,7 +522,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-right-color: #D3D3D3;
 }
 
-#dhtfmvfexe .gt_col_heading {
+#hdwogxtolb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -522,7 +542,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   overflow-x: hidden;
 }
 
-#dhtfmvfexe .gt_column_spanner_outer {
+#hdwogxtolb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -534,15 +554,15 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   padding-right: 4px;
 }
 
-#dhtfmvfexe .gt_column_spanner_outer:first-child {
+#hdwogxtolb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dhtfmvfexe .gt_column_spanner_outer:last-child {
+#hdwogxtolb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dhtfmvfexe .gt_column_spanner {
+#hdwogxtolb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -554,11 +574,11 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   width: 100%;
 }
 
-#dhtfmvfexe .gt_spanner_row {
+#hdwogxtolb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dhtfmvfexe .gt_group_heading {
+#hdwogxtolb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -584,7 +604,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   text-align: left;
 }
 
-#dhtfmvfexe .gt_empty_group_heading {
+#hdwogxtolb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -599,15 +619,15 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   vertical-align: middle;
 }
 
-#dhtfmvfexe .gt_from_md > :first-child {
+#hdwogxtolb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dhtfmvfexe .gt_from_md > :last-child {
+#hdwogxtolb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dhtfmvfexe .gt_row {
+#hdwogxtolb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -626,7 +646,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   overflow-x: hidden;
 }
 
-#dhtfmvfexe .gt_stub {
+#hdwogxtolb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -639,7 +659,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   padding-right: 5px;
 }
 
-#dhtfmvfexe .gt_stub_row_group {
+#hdwogxtolb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -653,15 +673,15 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   vertical-align: top;
 }
 
-#dhtfmvfexe .gt_row_group_first td {
+#hdwogxtolb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dhtfmvfexe .gt_row_group_first th {
+#hdwogxtolb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dhtfmvfexe .gt_summary_row {
+#hdwogxtolb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -671,16 +691,16 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   padding-right: 5px;
 }
 
-#dhtfmvfexe .gt_first_summary_row {
+#hdwogxtolb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dhtfmvfexe .gt_first_summary_row.thick {
+#hdwogxtolb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dhtfmvfexe .gt_last_summary_row {
+#hdwogxtolb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -690,7 +710,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-bottom-color: #D3D3D3;
 }
 
-#dhtfmvfexe .gt_grand_summary_row {
+#hdwogxtolb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -700,7 +720,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   padding-right: 5px;
 }
 
-#dhtfmvfexe .gt_first_grand_summary_row {
+#hdwogxtolb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -710,7 +730,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-top-color: #D3D3D3;
 }
 
-#dhtfmvfexe .gt_last_grand_summary_row_top {
+#hdwogxtolb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -720,11 +740,11 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-bottom-color: #D3D3D3;
 }
 
-#dhtfmvfexe .gt_striped {
+#hdwogxtolb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dhtfmvfexe .gt_table_body {
+#hdwogxtolb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -733,7 +753,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-bottom-color: #D3D3D3;
 }
 
-#dhtfmvfexe .gt_footnotes {
+#hdwogxtolb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -747,7 +767,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-right-color: #D3D3D3;
 }
 
-#dhtfmvfexe .gt_footnote {
+#hdwogxtolb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -756,7 +776,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   padding-right: 5px;
 }
 
-#dhtfmvfexe .gt_sourcenotes {
+#hdwogxtolb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -770,7 +790,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-right-color: #D3D3D3;
 }
 
-#dhtfmvfexe .gt_sourcenote {
+#hdwogxtolb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -778,72 +798,72 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   padding-right: 5px;
 }
 
-#dhtfmvfexe .gt_left {
+#hdwogxtolb .gt_left {
   text-align: left;
 }
 
-#dhtfmvfexe .gt_center {
+#hdwogxtolb .gt_center {
   text-align: center;
 }
 
-#dhtfmvfexe .gt_right {
+#hdwogxtolb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dhtfmvfexe .gt_font_normal {
+#hdwogxtolb .gt_font_normal {
   font-weight: normal;
 }
 
-#dhtfmvfexe .gt_font_bold {
+#hdwogxtolb .gt_font_bold {
   font-weight: bold;
 }
 
-#dhtfmvfexe .gt_font_italic {
+#hdwogxtolb .gt_font_italic {
   font-style: italic;
 }
 
-#dhtfmvfexe .gt_super {
+#hdwogxtolb .gt_super {
   font-size: 65%;
 }
 
-#dhtfmvfexe .gt_footnote_marks {
+#hdwogxtolb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dhtfmvfexe .gt_asterisk {
+#hdwogxtolb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dhtfmvfexe .gt_indent_1 {
+#hdwogxtolb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dhtfmvfexe .gt_indent_2 {
+#hdwogxtolb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dhtfmvfexe .gt_indent_3 {
+#hdwogxtolb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dhtfmvfexe .gt_indent_4 {
+#hdwogxtolb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dhtfmvfexe .gt_indent_5 {
+#hdwogxtolb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#dhtfmvfexe .katex-display {
+#hdwogxtolb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#dhtfmvfexe div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hdwogxtolb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -959,7 +979,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
 <h2 class="anchored" data-anchor-id="remote-sensing-analysis">Remote sensing analysis</h2>
 <section id="data-sources-and-metrics" class="level3">
 <h3 class="anchored" data-anchor-id="data-sources-and-metrics">Data sources and metrics</h3>
-<p>For the remote sensing analysis we used MODIS active fire detection data (fire detection density, burned area, fire radiative power), the Hansen Global Forest Change 2024 tree cover loss data, and ALOS-2 PALSAR-2 ScanSAR above-ground biomass estimates for 2018–2024 <span class="citation" data-cites="harrisonSB_inprep">[@harrisonSB_inprep]</span>.</p>
+<p>For the remote sensing analysis we used MODIS active fire detection data (fire detection density, burned area, fire radiative power), the Hansen Global Forest Change 2024 tree cover loss data, and ALOS-2 PALSAR-2 ScanSAR above-ground biomass estimates for 2018–2024 <span class="citation" data-cites="harrisonSB_inprep">(<a href="#ref-harrisonSB_inprep" role="doc-biblioref">Harrison et al. in prep</a>)</span>.</p>
 </section>
 <section id="spatial-and-temporal-scope" class="level3">
 <h3 class="anchored" data-anchor-id="spatial-and-temporal-scope">Spatial and temporal scope</h3>
@@ -970,10 +990,15 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
 <p>We employed Linear mixed models with random intercepts for CFMG and used a Before-After comparison and a Core vs.&nbsp;Buffer design. Any significant After:Buffer interaction would have indicated a leakage effect. Governance index was included as a fixed covariate. Linear mixed models assume normality of residuals and homogeneity of variance. We performed the normal model tests on the residuals to ensure they performed satisfactorily.</p>
 
 
+
 </section>
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-harrisonSB_inprep" class="csl-entry" role="listitem">
+Harrison, S. B., J. L. Godlee, D. T. Milodowski, et al. in prep. <span>“Carbon Accumulation in Tropical Dry Forests and Savannas Despite Widespread Land Cover Change, Revealed by Radar Remote Sensing.”</span>
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Sidebar footer content moved to index.qmd -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

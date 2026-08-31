@@ -1,6 +1,7 @@
 ---
 title: "Methods"
 author: "Rhett D Harrison"
+bibliography: references.bib
 format:
   html:
     css: custom.css
@@ -61,7 +62,7 @@ The surveys were carried out according to the following schedule (@tbl-survey-sc
 During the survey, a five CFAs were dropped from the sample (@tbl-not-surveyed). For various reasons these CFAs existed on paper, but were non-functioning on the ground.
 
 | Province | CFA | Reasons for omission |
-|:-----------------------|:-----------------------|:-----------------------|
+|:---|:---|:---|
 | Lusaka | Chalimbana | The CFA was not operational and currently exists only in the database. Only the initial establishment stages were completed. |
 | Central | Kaindu | The Chief had disbanded the executive committee and hence it was not possible to organise the community |
 | Muchinga | Nampando | The CFA was not operational and currently exists only in the database. Only the initial establishment stages were completed. |

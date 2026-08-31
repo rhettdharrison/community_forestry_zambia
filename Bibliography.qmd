@@ -1,7 +1,5 @@
 ---
 title: "Bibliography"
-author: "Rhett D Harrison"
-bibliography: references.bib
 ---
 
 ::: {#refs}
