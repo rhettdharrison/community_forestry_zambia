@@ -132,7 +132,7 @@ While the survey tool was pre-tested and refined, several limitations remain. **
 
 ### Data sources and metrics
 
-For the remote sensing analysis we used MODIS active fire detection data (fire detection density, burned area, fire radiative power), the Hansen Global Forest Change 2024 tree cover loss data, ALOS-2 PALSAR-2 ScanSAR biomass estimates (2018-2024; see Harrison et al 2026), which assesses above-ground biomass.
+For the remote sensing analysis we used MODIS active fire detection data (fire detection density, burned area, fire radiative power), the Hansen Global Forest Change 2024 tree cover loss data, and ALOS-2 PALSAR-2 ScanSAR above-ground biomass estimates for 2018–2024 [@harrisonSB_inprep].
 
 ### Spatial and temporal scope
 
@@ -140,4 +140,4 @@ We included all CFAs with boundary information which included 40 CFAs our of the
 
 ### Analysis method
 
-We employed Linear mixed models with random intercepts for CFMG and used a Before-After comparison and a Core vs. Buffer design. Any significant After:Buffer interaction would have indicated a leakage effect. Governance index was included as a fixed covariate. Linear mixed models assume normality of residuals and homogeneity of variance. We performed the normal model test on the residuals to ensure they performed satisfactorally.
+We employed Linear mixed models with random intercepts for CFMG and used a Before-After comparison and a Core vs. Buffer design. Any significant After:Buffer interaction would have indicated a leakage effect. Governance index was included as a fixed covariate. Linear mixed models assume normality of residuals and homogeneity of variance. We performed the normal model tests on the residuals to ensure they performed satisfactorily.

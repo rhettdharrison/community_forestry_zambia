@@ -35,6 +35,8 @@ website:
         href: "CFMG BS.qmd"
       - text: "Discussion"
         href: Conclusions.qmd
+      - text: "Bibliography"
+        href: Bibliography.qmd
       - text: "Appendices"
         menu:
           - text: "Appendix I - Methods"
