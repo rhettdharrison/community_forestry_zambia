@@ -4,10 +4,12 @@ bibliography: references.bib
 format:
   html:
     css: custom.css
+    number-offset: 2
   pdf:
     include-in-header:
       text: |
         \pagenumbering{arabic}
+    number-offset: 2
 filters:
 - collapse-output
 editor: visual
@@ -82,7 +84,8 @@ The surveys were conducted by the following interviewers (Table 3). Chipo Chison
 #| warning: false
 #| message: false
 #| error:   false
-#| tbl-cap: "Table 3: Number of interviews conducted by each interviewer, by interview type."
+#| tbl-cap: "Number of interviews conducted by each interviewer, by interview type."
+#| tbl-colwidths: [50,15,15,15,5]
 
 cfmg |>
   mutate(
