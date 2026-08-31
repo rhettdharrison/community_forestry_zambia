@@ -57,7 +57,7 @@ The surveys were carried out according to the following schedule (@tbl-survey-sc
 | North-western | 17 October to 11 November 2025 |
 | Western       | 26 November to 8 December 2025 |
 
-: CFA survey schedule
+: {#tbl-survey-schedule} CFA survey schedule
 
 During the survey, a five CFAs were dropped from the sample (@tbl-not-surveyed). For various reasons these CFAs existed on paper, but were non-functioning on the ground.
 
@@ -69,7 +69,7 @@ During the survey, a five CFAs were dropped from the sample (@tbl-not-surveyed).
 | Eastern | Kalumphila | This CFA has not been functional since the partner (Land Alliance) withdrew in 2022. The CFAMG establishment processes were not concluded. |
 | Eastern | Koloko | This CFA has not been functional since 2022 after the partner (Land Alliance) withdrew. |
 
-: CFAs selected but not surveyed
+: {#tbl-not-surveyed} CFAs selected but not surveyed
 
 The final list of CFAs surveyed is given in Appendix II.
 
