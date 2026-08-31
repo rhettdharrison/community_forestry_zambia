@@ -74,11 +74,11 @@ During the survey, five CFAs were dropped from the sample (Table 2). For various
 
 The final list of CFAs surveyed is given in Appendix II.
 
-The surveys were conducted by the following interviewers (@tbl-interviewers). Chipo Chisonga (Landscape Alliance), Edward Banda (Landscape Alliance) and Thecla Masuku (Forestry Department) comprised the principle survey team with others supporting them as required. Thecla Masuku, supported by Hope Chame (Forestry Department), were responsible for conducting the community female FGDs and female individual interviewees. Given the gender norms in local communities, it was felt that female interviewees might feel inhibited to answer honestly with male interviewers.
+The surveys were conducted by the following interviewers (Table 3). Chipo Chisonga (Landscape Alliance), Edward Banda (Landscape Alliance) and Thecla Masuku (Forestry Department) comprised the principle survey team with others supporting them as required. Thecla Masuku, supported by Hope Chame (Forestry Department), were responsible for conducting the community female FGDs and female individual interviewees. Given the gender norms in local communities, it was felt that female interviewees might feel inhibited to answer honestly with male interviewers.
 
 ```{r}
 #| label: tbl-interviewers
-#| code-fold: true
+#| echo: false
 #| warning: false
 #| message: false
 #| error:   false

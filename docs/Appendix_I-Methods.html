@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -357,33 +322,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>The final list of CFAs surveyed is given in Appendix II.</p>
-<p>The surveys were conducted by the following interviewers (<a href="#tbl-interviewers" class="quarto-xref">Table&nbsp;1</a>). Chipo Chisonga (Landscape Alliance), Edward Banda (Landscape Alliance) and Thecla Masuku (Forestry Department) comprised the principle survey team with others supporting them as required. Thecla Masuku, supported by Hope Chame (Forestry Department), were responsible for conducting the community female FGDs and female individual interviewees. Given the gender norms in local communities, it was felt that female interviewees might feel inhibited to answer honestly with male interviewers.</p>
+<p>The surveys were conducted by the following interviewers (Table 3). Chipo Chisonga (Landscape Alliance), Edward Banda (Landscape Alliance) and Thecla Masuku (Forestry Department) comprised the principle survey team with others supporting them as required. Thecla Masuku, supported by Hope Chame (Forestry Department), were responsible for conducting the community female FGDs and female individual interviewees. Given the gender norms in local communities, it was felt that female interviewees might feel inhibited to answer honestly with male interviewers.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cfmg <span class="sc">|&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">interview_type =</span> <span class="fu">case_match</span>(</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      interview_type,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">"CFAmg_executive"</span>      <span class="sc">~</span> <span class="st">"CFAMG Executive"</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">"CFAmg_female"</span>         <span class="sc">~</span> <span class="st">"Community Female"</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">"CFAmg_male"</span>           <span class="sc">~</span> <span class="st">"Community Male"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"CFAmg_youth"</span>          <span class="sc">~</span> <span class="st">"Community Youth"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="st">"individual_interview"</span> <span class="sc">~</span> <span class="st">"Individual interviews"</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> interview_type</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">demo_information_interviewer_name =</span> <span class="fu">str_to_title</span>(<span class="fu">str_replace_all</span>(demo_information_interviewer_name, <span class="st">"_"</span>, <span class="st">" "</span>))</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(demo_information_interviewer_name, interview_type) <span class="sc">|&gt;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> interview_type, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(<span class="st">`</span><span class="at">Individual interviews</span><span class="st">`</span>, <span class="at">.after =</span> <span class="fu">last_col</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Total =</span> <span class="fu">rowSums</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric)))) <span class="sc">|&gt;</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(demo_information_interviewer_name) <span class="sc">|&gt;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gt</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_label</span>(<span class="at">demo_information_interviewer_name =</span> <span class="st">"Interviewer"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"left"</span>,   <span class="at">columns =</span> demo_information_interviewer_name) <span class="sc">|&gt;</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cols_align</span>(<span class="at">align =</span> <span class="st">"center"</span>, <span class="at">columns =</span> <span class="fu">where</span>(is.numeric))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
 <div id="tbl-interviewers" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-interviewers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -391,23 +331,23 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
 </figcaption>
 <div aria-describedby="tbl-interviewers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="uaagsdcjtv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#uaagsdcjtv table {
+<div id="hakcnzgujl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hakcnzgujl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#uaagsdcjtv thead, #uaagsdcjtv tbody, #uaagsdcjtv tfoot, #uaagsdcjtv tr, #uaagsdcjtv td, #uaagsdcjtv th {
+#hakcnzgujl thead, #hakcnzgujl tbody, #hakcnzgujl tfoot, #hakcnzgujl tr, #hakcnzgujl td, #hakcnzgujl th {
   border-style: none;
 }
 
-#uaagsdcjtv p {
+#hakcnzgujl p {
   margin: 0;
   padding: 0;
 }
 
-#uaagsdcjtv .gt_table {
+#hakcnzgujl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -433,12 +373,12 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-left-color: #D3D3D3;
 }
 
-#uaagsdcjtv .gt_caption {
+#hakcnzgujl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#uaagsdcjtv .gt_title {
+#hakcnzgujl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -450,7 +390,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-bottom-width: 0;
 }
 
-#uaagsdcjtv .gt_subtitle {
+#hakcnzgujl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -462,7 +402,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-top-width: 0;
 }
 
-#uaagsdcjtv .gt_heading {
+#hakcnzgujl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -474,13 +414,13 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-right-color: #D3D3D3;
 }
 
-#uaagsdcjtv .gt_bottom_border {
+#hakcnzgujl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#uaagsdcjtv .gt_col_headings {
+#hakcnzgujl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -495,7 +435,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-right-color: #D3D3D3;
 }
 
-#uaagsdcjtv .gt_col_heading {
+#hakcnzgujl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -515,7 +455,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   overflow-x: hidden;
 }
 
-#uaagsdcjtv .gt_column_spanner_outer {
+#hakcnzgujl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -527,15 +467,15 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   padding-right: 4px;
 }
 
-#uaagsdcjtv .gt_column_spanner_outer:first-child {
+#hakcnzgujl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#uaagsdcjtv .gt_column_spanner_outer:last-child {
+#hakcnzgujl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#uaagsdcjtv .gt_column_spanner {
+#hakcnzgujl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -547,11 +487,11 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   width: 100%;
 }
 
-#uaagsdcjtv .gt_spanner_row {
+#hakcnzgujl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#uaagsdcjtv .gt_group_heading {
+#hakcnzgujl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -577,7 +517,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   text-align: left;
 }
 
-#uaagsdcjtv .gt_empty_group_heading {
+#hakcnzgujl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -592,15 +532,15 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   vertical-align: middle;
 }
 
-#uaagsdcjtv .gt_from_md > :first-child {
+#hakcnzgujl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#uaagsdcjtv .gt_from_md > :last-child {
+#hakcnzgujl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#uaagsdcjtv .gt_row {
+#hakcnzgujl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -619,7 +559,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   overflow-x: hidden;
 }
 
-#uaagsdcjtv .gt_stub {
+#hakcnzgujl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -632,7 +572,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   padding-right: 5px;
 }
 
-#uaagsdcjtv .gt_stub_row_group {
+#hakcnzgujl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -646,15 +586,15 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   vertical-align: top;
 }
 
-#uaagsdcjtv .gt_row_group_first td {
+#hakcnzgujl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#uaagsdcjtv .gt_row_group_first th {
+#hakcnzgujl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#uaagsdcjtv .gt_summary_row {
+#hakcnzgujl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -664,16 +604,16 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   padding-right: 5px;
 }
 
-#uaagsdcjtv .gt_first_summary_row {
+#hakcnzgujl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#uaagsdcjtv .gt_first_summary_row.thick {
+#hakcnzgujl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#uaagsdcjtv .gt_last_summary_row {
+#hakcnzgujl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -683,7 +623,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-bottom-color: #D3D3D3;
 }
 
-#uaagsdcjtv .gt_grand_summary_row {
+#hakcnzgujl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -693,7 +633,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   padding-right: 5px;
 }
 
-#uaagsdcjtv .gt_first_grand_summary_row {
+#hakcnzgujl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -703,7 +643,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-top-color: #D3D3D3;
 }
 
-#uaagsdcjtv .gt_last_grand_summary_row_top {
+#hakcnzgujl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -713,11 +653,11 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-bottom-color: #D3D3D3;
 }
 
-#uaagsdcjtv .gt_striped {
+#hakcnzgujl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#uaagsdcjtv .gt_table_body {
+#hakcnzgujl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -726,7 +666,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-bottom-color: #D3D3D3;
 }
 
-#uaagsdcjtv .gt_footnotes {
+#hakcnzgujl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -740,7 +680,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-right-color: #D3D3D3;
 }
 
-#uaagsdcjtv .gt_footnote {
+#hakcnzgujl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -749,7 +689,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   padding-right: 5px;
 }
 
-#uaagsdcjtv .gt_sourcenotes {
+#hakcnzgujl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -763,7 +703,7 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   border-right-color: #D3D3D3;
 }
 
-#uaagsdcjtv .gt_sourcenote {
+#hakcnzgujl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -771,72 +711,72 @@ Table&nbsp;1: Number of interviews conducted by each interviewer, by interview t
   padding-right: 5px;
 }
 
-#uaagsdcjtv .gt_left {
+#hakcnzgujl .gt_left {
   text-align: left;
 }
 
-#uaagsdcjtv .gt_center {
+#hakcnzgujl .gt_center {
   text-align: center;
 }
 
-#uaagsdcjtv .gt_right {
+#hakcnzgujl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#uaagsdcjtv .gt_font_normal {
+#hakcnzgujl .gt_font_normal {
   font-weight: normal;
 }
 
-#uaagsdcjtv .gt_font_bold {
+#hakcnzgujl .gt_font_bold {
   font-weight: bold;
 }
 
-#uaagsdcjtv .gt_font_italic {
+#hakcnzgujl .gt_font_italic {
   font-style: italic;
 }
 
-#uaagsdcjtv .gt_super {
+#hakcnzgujl .gt_super {
   font-size: 65%;
 }
 
-#uaagsdcjtv .gt_footnote_marks {
+#hakcnzgujl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#uaagsdcjtv .gt_asterisk {
+#hakcnzgujl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#uaagsdcjtv .gt_indent_1 {
+#hakcnzgujl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#uaagsdcjtv .gt_indent_2 {
+#hakcnzgujl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#uaagsdcjtv .gt_indent_3 {
+#hakcnzgujl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#uaagsdcjtv .gt_indent_4 {
+#hakcnzgujl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#uaagsdcjtv .gt_indent_5 {
+#hakcnzgujl .gt_indent_5 {
   text-indent: 25px;
 }
 
-#uaagsdcjtv .katex-display {
+#hakcnzgujl .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#uaagsdcjtv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#hakcnzgujl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>

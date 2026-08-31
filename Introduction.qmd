@@ -3,6 +3,13 @@ title: "Introduction"
 editor: visual
 bibliography: references.bib
 suppress-bibliography: true
+format:
+  html:
+    css: custom.css
+  pdf:
+    include-in-header:
+      text: |
+        \pagenumbering{arabic}
 ---
 
 ### Community forestry
