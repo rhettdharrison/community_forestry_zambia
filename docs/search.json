@@ -698,5 +698,47 @@
     "title": "HANDOFF — CFM in Zambia: Is It Working? (CFMG_analyses)",
     "section": "7. How to run it",
     "text": "7. How to run it\nRequirements: Quarto CLI, R with packages tidyverse, readxl, gt, ggplot2, lme4, lmerTest, emmeans, scales, gitcreds (data prep), plus sf, terra, exactextractr (spatial/remote-sensing scripts). PDF rendering needs a LaTeX engine (lualatex, via TinyTeX or full TeX Live) and pdfunite (poppler-utils) or ghostscript for splicing.\nRender the website:\nquarto render\nOutput goes to docs/ (matches output-dir in _quarto.yml). Preview locally:\nquarto preview\nRender a single chapter (e.g. after editing it) to pick up figure/table changes:\nquarto render \"CFMG ET.qmd\"\nRender + splice a full PDF (current, pre-book approach):\nbash render_pdf.sh\nOutput: CFM_in_Zambia_Final_Report.pdf (per-chapter PDFs also left alongside).\nData pipeline (run only if raw survey/spatial inputs change — outputs are already committed as .RData/.csv/.gpkg and consumed directly by the chapters via freeze):\nRscript CFMG_data_prep.R              # needs ../GIZ_CFM Survey_clean_Final.xlsx\nRscript create_cf_buffers.R           # needs ../CFMG_merged/cfmg_merged.shp\nRscript download_firms_fire.R         # needs firms_data/DL_FIRE_SV-C2_*.zip\nRscript download_hansen_deforestation.R\nRscript extract_buffer_deforestation.R\nGit: work on main, push directly (no PR workflow for this project). Tag milestones with Draft&lt;N&gt;.0."
+  },
+  {
+    "objectID": "SESSION_NOTES.html#status-complete-and-deployed",
+    "href": "SESSION_NOTES.html#status-complete-and-deployed",
+    "title": "Session Summary - August 31, 2026",
+    "section": "Status: ✅ COMPLETE AND DEPLOYED",
+    "text": "Status: ✅ COMPLETE AND DEPLOYED\nAll changes committed and pushed to production."
+  },
+  {
+    "objectID": "SESSION_NOTES.html#initial-changes-made",
+    "href": "SESSION_NOTES.html#initial-changes-made",
+    "title": "Session Summary - August 31, 2026",
+    "section": "Initial Changes Made",
+    "text": "Initial Changes Made\n\nFixed Appendix III title - Changed from “Appendix II” to “Appendix III - List of community forests surveyed”\nCreated Bibliography chapter - New Bibliography.qmd file with separate chapter for references (before Appendices in menu)\nRemoved bibliography from Introduction end - Removed bibliography references from bottom of Introduction, Remote Sensing, and Methods chapters using suppress-bibliography: true\n**Updated _quarto.yml** - Added Bibliography link to navbar between Discussion and Appendices; added bibliography at project level\nFormatted Harrison et al. citation - Improved sentence structure in Appendix I Methods section, reformatted citation as (Harrison et al. in prep)"
+  },
+  {
+    "objectID": "SESSION_NOTES.html#corrections-made-after-initial-deployment",
+    "href": "SESSION_NOTES.html#corrections-made-after-initial-deployment",
+    "title": "Session Summary - August 31, 2026",
+    "section": "Corrections Made After Initial Deployment",
+    "text": "Corrections Made After Initial Deployment\n\nFixed table references in Methods - Changed from broken cross-references (?@tbl-survey-schedule, ?@tbl-not-surveyed) to text references (“Table 1”, “Table 2”)\nHidden code block in Methods - Changed interviewers table from #| code-fold: true to #| echo: false to completely hide code\nUpdated table numbering - Interviewers table labeled “Table 3” (using text reference and number-offset: 2 in format)\nRemoved author lines - Removed author: \"Rhett D Harrison\" from all appendices (I, II, III, IV)\nAdded PDF format to Introduction - Added format specification with PDF output option\nAdded bibliography rendering - Added nocite: \"@*\" to Bibliography.qmd to include all references\nSuppressed bibliographies - Added suppress-bibliography: true to Introduction, Remote Sensing, and Appendix_I-Methods"
+  },
+  {
+    "objectID": "SESSION_NOTES.html#deployment-process",
+    "href": "SESSION_NOTES.html#deployment-process",
+    "title": "Session Summary - August 31, 2026",
+    "section": "Deployment Process",
+    "text": "Deployment Process\n\nRendered chapters individually to avoid memory issues\nFixed git lock file issues\nStaged all docs/ folder updates\nSuccessfully pushed to production"
+  },
+  {
+    "objectID": "SESSION_NOTES.html#final-file-status",
+    "href": "SESSION_NOTES.html#final-file-status",
+    "title": "Session Summary - August 31, 2026",
+    "section": "Final File Status",
+    "text": "Final File Status\n✅ All files rendered and deployed ✅ Bibliography chapter live and complete ✅ Appendix III and IV now showing (previously had 404 errors) ✅ No duplicate bibliographies ✅ All citations properly formatted ✅ Table numbering consistent across Methods chapter ✅ PDF export available for all chapters"
+  },
+  {
+    "objectID": "SESSION_NOTES.html#known-configuration",
+    "href": "SESSION_NOTES.html#known-configuration",
+    "title": "Session Summary - August 31, 2026",
+    "section": "Known Configuration",
+    "text": "Known Configuration\n\nProject-level bibliography: references.bib in format section of _quarto.yml\nIndividual chapters have bibliography: references.bib with suppress-bibliography: true\nBibliography.qmd has nocite: “” to include all references\nMethods chapter uses number-offset: 2 to preserve table numbering (Tables 1-3 instead of auto-numbered 1-3)"
   }
 ]

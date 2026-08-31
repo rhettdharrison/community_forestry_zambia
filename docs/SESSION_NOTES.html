@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -178,11 +198,12 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#session-summary---august-31-2026" id="toc-session-summary---august-31-2026" class="nav-link active" data-scroll-target="#session-summary---august-31-2026">Session Summary - August 31, 2026</a>
   <ul class="collapse">
-  <li><a href="#status-complete" id="toc-status-complete" class="nav-link" data-scroll-target="#status-complete">Status: ✅ COMPLETE</a></li>
-  <li><a href="#changes-made" id="toc-changes-made" class="nav-link" data-scroll-target="#changes-made">Changes Made</a></li>
-  <li><a href="#deployment" id="toc-deployment" class="nav-link" data-scroll-target="#deployment">Deployment</a></li>
-  <li><a href="#key-results" id="toc-key-results" class="nav-link" data-scroll-target="#key-results">Key Results</a></li>
-  <li><a href="#files-modified" id="toc-files-modified" class="nav-link" data-scroll-target="#files-modified">Files Modified</a></li>
+  <li><a href="#status-complete-and-deployed" id="toc-status-complete-and-deployed" class="nav-link" data-scroll-target="#status-complete-and-deployed">Status: ✅ COMPLETE AND DEPLOYED</a></li>
+  <li><a href="#initial-changes-made" id="toc-initial-changes-made" class="nav-link" data-scroll-target="#initial-changes-made">Initial Changes Made</a></li>
+  <li><a href="#corrections-made-after-initial-deployment" id="toc-corrections-made-after-initial-deployment" class="nav-link" data-scroll-target="#corrections-made-after-initial-deployment">Corrections Made After Initial Deployment</a></li>
+  <li><a href="#deployment-process" id="toc-deployment-process" class="nav-link" data-scroll-target="#deployment-process">Deployment Process</a></li>
+  <li><a href="#final-file-status" id="toc-final-file-status" class="nav-link" data-scroll-target="#final-file-status">Final File Status</a></li>
+  <li><a href="#known-configuration" id="toc-known-configuration" class="nav-link" data-scroll-target="#known-configuration">Known Configuration</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -202,54 +223,64 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="session-summary---august-31-2026" class="level1">
 <h1>Session Summary - August 31, 2026</h1>
-<section id="status-complete" class="level2">
-<h2 class="anchored" data-anchor-id="status-complete">Status: ✅ COMPLETE</h2>
-<p>All changes successfully committed and pushed to production.</p>
+<section id="status-complete-and-deployed" class="level2">
+<h2 class="anchored" data-anchor-id="status-complete-and-deployed">Status: ✅ COMPLETE AND DEPLOYED</h2>
+<p>All changes committed and pushed to production.</p>
 </section>
-<section id="changes-made" class="level2">
-<h2 class="anchored" data-anchor-id="changes-made">Changes Made</h2>
+<section id="initial-changes-made" class="level2">
+<h2 class="anchored" data-anchor-id="initial-changes-made">Initial Changes Made</h2>
 <ol type="1">
 <li><strong>Fixed Appendix III title</strong> - Changed from “Appendix II” to “Appendix III - List of community forests surveyed”</li>
 <li><strong>Created Bibliography chapter</strong> - New Bibliography.qmd file with separate chapter for references (before Appendices in menu)</li>
-<li><strong>Removed bibliography from Introduction</strong> - Removed bibliography: references.bib from Introduction YAML to prevent duplicate bibliography</li>
-<li>**Updated _quarto.yml** - Added Bibliography link to navbar between Discussion and Appendices</li>
-<li><strong>Formatted Harrison et al.&nbsp;citation</strong> - Improved sentence structure in Appendix I Methods section, reformatted citation as <span class="citation" data-cites="harrisonSB_inprep">[@harrisonSB_inprep]</span></li>
+<li><strong>Removed bibliography from Introduction end</strong> - Removed bibliography references from bottom of Introduction, Remote Sensing, and Methods chapters using <code>suppress-bibliography: true</code></li>
+<li>**Updated _quarto.yml** - Added Bibliography link to navbar between Discussion and Appendices; added bibliography at project level</li>
+<li><strong>Formatted Harrison et al.&nbsp;citation</strong> - Improved sentence structure in Appendix I Methods section, reformatted citation as <span class="citation" data-cites="harrisonSB_inprep">(<a href="#ref-harrisonSB_inprep" role="doc-biblioref">Harrison et al. in prep</a>)</span></li>
 </ol>
 </section>
-<section id="deployment" class="level2">
-<h2 class="anchored" data-anchor-id="deployment">Deployment</h2>
+<section id="corrections-made-after-initial-deployment" class="level2">
+<h2 class="anchored" data-anchor-id="corrections-made-after-initial-deployment">Corrections Made After Initial Deployment</h2>
+<ol type="1">
+<li><strong>Fixed table references in Methods</strong> - Changed from broken cross-references (<strong>?@tbl-survey-schedule</strong>, <strong>?@tbl-not-surveyed</strong>) to text references (“Table 1”, “Table 2”)</li>
+<li><strong>Hidden code block in Methods</strong> - Changed interviewers table from <code>#| code-fold: true</code> to <code>#| echo: false</code> to completely hide code</li>
+<li><strong>Updated table numbering</strong> - Interviewers table labeled “Table 3” (using text reference and number-offset: 2 in format)</li>
+<li><strong>Removed author lines</strong> - Removed <code>author: "Rhett D Harrison"</code> from all appendices (I, II, III, IV)</li>
+<li><strong>Added PDF format to Introduction</strong> - Added format specification with PDF output option</li>
+<li><strong>Added bibliography rendering</strong> - Added <code>nocite: "@*"</code> to Bibliography.qmd to include all references</li>
+<li><strong>Suppressed bibliographies</strong> - Added <code>suppress-bibliography: true</code> to Introduction, Remote Sensing, and Appendix_I-Methods</li>
+</ol>
+</section>
+<section id="deployment-process" class="level2">
+<h2 class="anchored" data-anchor-id="deployment-process">Deployment Process</h2>
 <ul>
-<li>Rendered all chapters individually to avoid memory issues</li>
-<li>Staged all rendered files in docs/ folder</li>
-<li><strong>Git commit:</strong> “Render all chapters: fix Appendix III/IV 404 errors, update bibliography chapter”</li>
-<li><strong>Status:</strong> ✅ Pushed successfully</li>
+<li>Rendered chapters individually to avoid memory issues</li>
+<li>Fixed git lock file issues</li>
+<li>Staged all docs/ folder updates</li>
+<li>Successfully pushed to production</li>
 </ul>
 </section>
-<section id="key-results" class="level2">
-<h2 class="anchored" data-anchor-id="key-results">Key Results</h2>
-<ul>
-<li>✅ Appendix III and IV now appear in docs/ folder (previously missing - caused 404 errors)</li>
-<li>✅ Bibliography chapter live on site (renamed from “Literature cited”)</li>
-<li>✅ Introduction no longer shows duplicate bibliography</li>
-<li>✅ All citations properly formatted</li>
-</ul>
+<section id="final-file-status" class="level2">
+<h2 class="anchored" data-anchor-id="final-file-status">Final File Status</h2>
+<p>✅ All files rendered and deployed ✅ Bibliography chapter live and complete ✅ Appendix III and IV now showing (previously had 404 errors) ✅ No duplicate bibliographies ✅ All citations properly formatted ✅ Table numbering consistent across Methods chapter ✅ PDF export available for all chapters</p>
 </section>
-<section id="files-modified" class="level2">
-<h2 class="anchored" data-anchor-id="files-modified">Files Modified</h2>
+<section id="known-configuration" class="level2">
+<h2 class="anchored" data-anchor-id="known-configuration">Known Configuration</h2>
 <ul>
-<li>Appendix_I-Methods.qmd (citation formatting)</li>
-<li>Appendix_III-Surveyed_CFAs.qmd (title fix)</li>
-<li>Introduction.qmd (removed bibliography reference)</li>
-<li>Bibliography.qmd (new)</li>
-<li>_quarto.yml (added Bibliography menu item)</li>
-<li>docs/* (all HTML/PDF output files updated)</li>
+<li>Project-level bibliography: references.bib in format section of _quarto.yml</li>
+<li>Individual chapters have bibliography: references.bib with suppress-bibliography: true</li>
+<li>Bibliography.qmd has nocite: “<span class="citation" data-cites="*"></span>” to include all references</li>
+<li>Methods chapter uses number-offset: 2 to preserve table numbering (Tables 1-3 instead of auto-numbered 1-3)</li>
 </ul>
 
 
+
 </section>
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-harrisonSB_inprep" class="csl-entry" role="listitem">
+Harrison, S. B., J. L. Godlee, D. T. Milodowski, et al. in prep. <span>“Carbon Accumulation in Tropical Dry Forests and Savannas Despite Widespread Land Cover Change, Revealed by Radar Remote Sensing.”</span>
+</div>
+</div></section></div></main> <!-- /main -->
 <!-- Sidebar footer content moved to index.qmd -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
